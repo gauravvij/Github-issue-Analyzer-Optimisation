@@ -367,3 +367,20 @@ The following document bindings use the same normalized projection described in 
 - `RESULTS.md` normalized projection SHA-256: `f2f7edea7058dfaef8d64b2761f10612f373d1666600c9c0eb318d1937120156`
 - Canonical inventory SHA-256 with the self-referential inventory digest field omitted: `6658b3ac196fa459527b6f53f873530ac15d38d28184dbb512c662d1de7c94ab`.
 
+### [2026-09-04] - W1 QA model cost campaign (gpt-4o-mini)
+- **Scope/method**: New `verification_bench` dev campaign only. Reused the preserved graph `verification_bench/jobs/w1-graph-restore/` (60 issues, 40 tasks, 121 GitHub requests). Three sequential QA-only jobs used `attempts=3`, `latencyMs=120`, and `keepGraph=true`; no holdout, W2, or W3 work was run.
+- **Candidate/pins**: QA model `openai/gpt-4o-mini`; candidate SUT fingerprint `843ed48e862b0927` (19 files); current-best/reference fingerprint `73acfdc375576226`. Extraction, comment summarization, judge, corpus, tasks, and harness were unchanged.
+- **Preserved evidence**: `verification_bench/jobs/w1-mini-1/report.json`, `w1-mini-2/report.json`, `w1-mini-3/report.json`; each has one JSONL trace in its `traces/` directory. Graph report and trace are `verification_bench/jobs/w1-graph-restore/report.json` and `verification_bench/jobs/w1-graph-restore/traces/github-issue-analyzer-2026-09-04T09-49-55-653Z-1443507.jsonl`.
+- **Measured quality**: deterministic scores were 93.333333%, 99.047619%, and 95.238095%; mean **95.873015873%**, range **93.333333%–99.047619%**, spread **5.714286 pp**. Solved every attempt was 35/40, 38/40, and 36/40. Overall mean was 96.111111111%; semantic scores were context only and did not drive the decision.
+- **Measured cost/usage**: QA cost `$0.48765695`; fixed-judge cost `$0.3093575`; combined scored QA+judge `$0.79701445`; 724 mini requests, 682,297 input tokens, and 42,304 output tokens. Ingestion was not repaid. The projected full-run SUT total remains `$0.5209` (56.2% below the `$1.1894` reference), but measured QA-only cost is reported separately.
+- **Guardrails**: every report is valid, canary passing, tool-use `1.0`, agent errors `0`, all integrity entries passing, 121 dev GitHub requests, 120 ms latency, and preserved graph provenance. Combined traces contain 1,533 spans, 724 generation requests, 45 summarize calls, 445 Neo4j query spans, and 319 query-tool spans; no trace errors were recorded.
+- **Failure mechanism**: raw task/tool-call evidence repeatedly shows reversed `(User)-[:AUTHORED_BY]->(Issue)` traversal on `dev-006` and `dev-010`, sometimes followed by a confident zero/no-data answer. Other misses occurred on reaction, label, issue-body/title, and semantic-summary tasks.
+- **Decision**: **REJECT**. The independent three-run instability and mean 95.873015873% are below the 97.14% conditional threshold (at least two deterministic tasks lost on average), despite projected cost savings and clean infrastructure guardrails. No holdout quality decision was made; stop W1 before W2/W3 and any holdout.
+
+### [2026-09-04] - H13 relationship-direction investigation pending
+- The next controlled step is a standalone relationship-direction probe for `openai/gpt-4o` and `openai/gpt-4o-mini`, followed by exactly one general guidance line if supported. No H13 score, fallback score, or confirmation authorization is claimed by this W1 entry.
+
+### [2026-09-04] - H13 relationship-direction hypothesis cancelled
+- **Decision**: **CANCELLED** before implementation. Do not add the relationship-direction guidance line and do not run `verification_bench/probe-relationship-direction.ts`; the probe file is preserved unchanged.
+- **Rationale**: The theoretical ceiling from removing the known direction failure was **98.10%**, but residual non-direction failures remained. The observed instability was unchanged and there was **no validation headroom** to justify spending on the probe or confirmation jobs.
+- **Scope**: No H13 score, prompt change, fingerprint change, or confirmation evidence exists. Proceed directly to the separately controlled `openai/gpt-4.1-mini` fallback, then stop before W2, W3, holdout, or any `bench/` scoring.

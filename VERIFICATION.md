@@ -514,3 +514,25 @@ Nothing downstream is invalidated — every scored fingerprint from `h8-confirm`
 including the champion and the sealed holdout, reproduces exactly. It is worth recording
 only because "the change was reverted" and "the tree returned to its previous bytes" are
 different claims, and the ledger makes the first while implying the second.
+
+## 9. Cost optimisation campaign
+
+This additive close-out covers only the preserved `verification_bench` development evidence. `RESULTS.md` remains byte-identical to its pre-campaign HEAD; the W1 material is recorded here so the historical verification report is not overwritten.
+
+### W1 — `openai/gpt-4o-mini` QA-only result
+
+The reusable graph is `verification_bench/jobs/w1-graph-restore/report.json` (60 issues, 40 tasks, 121 GitHub requests), with trace `verification_bench/jobs/w1-graph-restore/traces/github-issue-analyzer-2026-09-04T09-49-55-653Z-1443507.jsonl`. The candidate SUT fingerprint is `843ed48e862b0927` (19 files); the current-best/reference fingerprint is `73acfdc375576226`.
+
+| Job | Report | Trace directory | Deterministic | Solved every attempt |
+|---|---|---|---:|---:|
+| `w1-mini-1` | `verification_bench/jobs/w1-mini-1/report.json` | `verification_bench/jobs/w1-mini-1/traces/` | 93.333333% | 35/40 |
+| `w1-mini-2` | `verification_bench/jobs/w1-mini-2/report.json` | `verification_bench/jobs/w1-mini-2/traces/` | 99.047619% | 38/40 |
+| `w1-mini-3` | `verification_bench/jobs/w1-mini-3/report.json` | `verification_bench/jobs/w1-mini-3/traces/` | 95.238095% | 36/40 |
+
+Mean deterministic accuracy is **95.873015873%**, range **93.333333%–99.047619%**, and spread **5.714286 percentage points**; overall mean is **96.111111111%**. The independent run instability and mean below the **97.14%** conditional threshold reject a no-loss substitution. QA cost totals `$0.48765695`, judge cost totals `$0.3093575`, and combined scored QA+judge cost is `$0.79701445`; usage is 724 mini requests, 682,297 input tokens, and 42,304 output tokens. All reports are valid with canaries passing, tool-use 1.0, agent errors 0, integrity passing, latency 120 ms, 121 GitHub requests, and graph provenance tied to `w1-graph-restore`. Raw failed-task evidence records repeated reversed `User-[:AUTHORED_BY]->Issue` traversals and confident-zero answers, especially `dev-006` and `dev-010`.
+
+**W1 decision: REJECT.** The cheaper QA model was not shipped. The no-holdout decision is intentional: this candidate failed the development quality bar, so the campaign proceeds only to the prescribed fallback path, then stops before W2/W3 and any holdout.
+
+### H13 — CANCELLED
+
+H13 was cancelled without changing the guidance line and without running `verification_bench/probe-relationship-direction.ts`; that probe file remains preserved. The theoretical ceiling was **98.10%** if the known relationship-direction failure were removed, but residual non-direction failures remained. Instability was unchanged, and there was **no validation headroom** to justify the probe or confirmation runs. No H13 score or confirmation evidence is claimed.
