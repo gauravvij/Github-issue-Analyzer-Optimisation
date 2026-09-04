@@ -49,7 +49,8 @@ configured repository and answer questions about them.
 ## Nodes
 
 1. Issue — number (INTEGER), issueId (STRING), title (STRING), bodyText (STRING),
-   createdAt (STRING), updatedAt (STRING), state (STRING), authorLogin (STRING)
+   createdAt (STRING), updatedAt (STRING), state (STRING, one of: OPEN, CLOSED),
+   authorLogin (STRING)
 2. Comment — commentId (STRING), bodyText (STRING), createdAt (STRING), authorLogin (STRING)
 3. User — login (STRING), name (STRING), company (STRING)
 4. Label — name (STRING), description (STRING), color (STRING)
