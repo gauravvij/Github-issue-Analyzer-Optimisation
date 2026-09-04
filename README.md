@@ -6,6 +6,16 @@ about them.
 The system is ordinary. What is unusual is how it got faster and more accurate, and how
 that was checked.
 
+> **Every optimisation, benchmark and verification in this repository was carried out
+> autonomously by [NEO](https://heyneo.com) — Your Autonomous AI Engineering Agent.**
+> NEO profiled the codebase, built the benchmark, ran the optimisation loop, and then built
+> a second independent benchmark to check its own results.
+
+[![NEO](https://img.shields.io/badge/Built%20autonomously%20by-NEO-0B0B0B?style=for-the-badge)](https://heyneo.com)
+[![VS Code Extension](https://img.shields.io/badge/VS%20Code-Get%20the%20Extension-007ACC?style=for-the-badge&logo=visualstudiocode&logoColor=white)](https://marketplace.visualstudio.com/items?itemName=NeoResearchInc.heyneo)
+[![Cursor Extension](https://img.shields.io/badge/Cursor-Get%20the%20Extension-1F1F1F?style=for-the-badge&logo=cursor&logoColor=white)](https://marketplace.cursorapi.com/items/?itemName=NeoResearchInc.heyneo)
+[![Neo MCP Docs](https://img.shields.io/badge/Neo%20MCP-Documentation-6E56CF?style=for-the-badge&logo=readthedocs&logoColor=white)](https://docs.heyneo.com/neo-mcp)
+
 ---
 
 ## What happened here
@@ -156,6 +166,32 @@ the benchmark had recorded months of runs earlier.
 closed and fetched live from GitHub. New corpus, new questions, new oracles — and the same
 result, at three runs per version. The gain is real.
 
+### 5. Trying to make it cheaper — and reporting that it didn't work
+
+With quality settled, NEO ran a second campaign against cost. The system spends ~$1.19 per
+benchmark run on `gpt-4o`, split three ways: 59.8% on the QA agent, 28.6% on structured
+extraction during ingestion, 11.6% on the summarisation tool.
+
+Three attempts, three negative results, all reported rather than buried:
+
+| candidate | deterministic (3 runs) | verdict |
+|---|---|---|
+| QA agent → `gpt-4o-mini` | 95.87%, **5.71 pp spread** | **REJECT** — below bar, and unstable |
+| relationship-direction prompt hint | ceiling of 98.10% even if perfect | **CANCELLED** before implementation |
+| QA agent → `gpt-4.1-mini` | 76.19% | **REJECT** — 21 points below bar |
+
+The saving was real — `−72%` on the QA stage — but unpurchasable at that quality cost. The
+two cheap models failed differently, which is the useful part: `gpt-4o-mini` reversed
+relationship traversals (`(User)-[:AUTHORED_BY]->(Issue)`, backwards, 10 times in 319
+queries), while `gpt-4.1-mini` failed exact-set retrieval — 8 of its 10 lost tasks were
+"list every issue that…" questions.
+
+One honest gap remains: **extraction cost, the dominant cost in production, cannot be
+optimised safely yet** because nothing grades extraction quality. No benchmark question
+reads the extracted nodes, so a cheaper extraction model would show "cost down, score
+unchanged" whether or not it got worse. That is recorded as an open measurement gap, not
+attempted.
+
 ---
 
 ## What re-measuring taught us
@@ -295,3 +331,19 @@ Both corpora are frozen and pinned by `SPLITS.sha256`, checked on every run. Reb
 invalidates every score recorded against the old splits, so the builders are one-shot and
 deliberately not wired into any workflow. `verification_bench`'s builder needs a
 `GITHUB_TOKEN`; scored runs never touch the network.
+
+---
+
+## Built with NEO
+
+This repository is the output of an autonomous engineering run. NEO did the profiling, the
+benchmark construction, the twelve-hypothesis optimisation loop, the independent
+re-verification on a second corpus, and the cost campaign that followed — including the
+negative results, which are reported here in full.
+
+A narrative walkthrough of the whole run is in [`blog.md`](blog.md).
+
+[**NEO — Your Autonomous AI Engineering Agent**](https://heyneo.com) ·
+[VS Code](https://marketplace.visualstudio.com/items?itemName=NeoResearchInc.heyneo) ·
+[Cursor](https://marketplace.cursorapi.com/items/?itemName=NeoResearchInc.heyneo) ·
+[Neo MCP docs](https://docs.heyneo.com/neo-mcp)
