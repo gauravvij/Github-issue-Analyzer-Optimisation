@@ -1,0 +1,57 @@
+# yaml-language-server: $schema=https://astropods.com/schema/package.json
+spec: blueprint/v1
+name: "github-issue-analyzer"
+
+# Top-level inputs are prompted by `ast configure` and injected into every
+# container — including both ingestion entries below. Declare once here.
+inputs:
+  GITHUB_OWNER:
+    name: GITHUB_OWNER
+    datatype: string
+    description: "Owner of the GitHub repo to ingest issues from"
+  GITHUB_REPO:
+    name: GITHUB_REPO
+    datatype: string
+    description: "Name of the GitHub repo to ingest issues from"
+
+agent:
+  build:
+    context: .
+    dockerfile: Dockerfile
+
+models:
+  openai:
+    provider: openai
+
+integrations:
+  github:
+    provider: github
+
+knowledge:
+  graph:
+    provider: neo4j
+
+ingestion:
+  startup:
+    container:
+      build:
+        context: .
+        dockerfile: ingestion/Dockerfile
+        args:
+          SYNC_MODE: "startup"
+          ISSUE_LIMIT: "20"
+    trigger:
+      type: startup
+  schedule:
+    container:
+      build:
+        context: .
+        dockerfile: ingestion/Dockerfile
+        args:
+          SYNC_MODE: "schedule"
+          ISSUE_LIMIT: "0"
+    trigger:
+      type: schedule
+
+dev:
+  interfaces: [web]
