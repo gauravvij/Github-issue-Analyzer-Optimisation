@@ -64,7 +64,28 @@ function fingerprint(sut: string): string {
   return h.digest('hex').slice(0, 16);
 }
 
+// Credentials belong to the checkout, not to the version under test: a git
+// worktree of an older commit has no .env of its own. Load the SUT's if it has
+// one, then always top up from the primary tree.
 loadEnv();
+if (!process.env.OPENAI_API_KEY) {
+  const primary = join(HERE, '..', 'github_issue', '.env');
+  if (existsSync(primary)) {
+    for (const line of readFileSync(primary, 'utf-8').split('\n')) {
+      const t = line.trim();
+      if (!t || t.startsWith('#')) continue;
+      const eq = t.indexOf('=');
+      if (eq === -1) continue;
+      const k = t.slice(0, eq).trim();
+      if (!process.env[k]) process.env[k] = t.slice(eq + 1).trim().replace(/^["']|["']$/g, '');
+    }
+  }
+}
+if (!process.env.OPENAI_API_KEY) {
+  console.error('OPENAI_API_KEY not found. Put it in github_issue/.env or export it.');
+  process.exit(2);
+}
+
 await startNeo4j();
 process.env.NEO4J_URI = BOLT_URI;
 process.env.NEO4J_AUTH = 'none';
