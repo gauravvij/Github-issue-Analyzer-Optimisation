@@ -91,41 +91,62 @@ async function clearExistingAnalysis(session: Session, issueNumber: number): Pro
   );
 }
 
+export type AnalysisSourceType = 'commentId' | 'issueId';
+
+/** Validate model-produced source metadata before constructing a graph write. */
+export function validateAnalysisSource(source: unknown, sourceType: unknown): {
+  source: string;
+  sourceType: AnalysisSourceType;
+} {
+  if (typeof source !== 'string' || source.trim().length === 0) {
+    throw new Error('Analysis source must be a non-empty identifier');
+  }
+  if (sourceType !== 'commentId' && sourceType !== 'issueId') {
+    throw new Error(`Unsupported analysis sourceType: ${String(sourceType)}`);
+  }
+  return { source, sourceType };
+}
+
+export function sourcePersistenceMatch(sourceType: AnalysisSourceType, label: 'Solution' | 'Workaround'):
+  string {
+  const relationship = label === 'Solution' ? 'HAS_SOLUTION' : 'HAS_WORKAROUND';
+  if (sourceType === 'issueId') {
+    return `MATCH (i:Issue {issueId: $source})\n     MERGE (i)-[:${relationship}]->(${label === 'Solution' ? 's' : 'w'})`;
+  }
+  return `MATCH (c:Comment {commentId: $source})\n     MERGE (c)-[:${relationship}]->(${label === 'Solution' ? 's' : 'w'})\n     WITH ${label === 'Solution' ? 's' : 'w'}, c\n     MATCH (c)<-[:HAS_COMMENT]-(i:Issue)\n     MERGE (i)-[:${relationship}]->(${label === 'Solution' ? 's' : 'w'})`;
+}
+
 async function ingestSolution(session: Session, solution: SolutionAnalysis): Promise<void> {
+  const source = validateAnalysisSource(solution.source, solution.sourceType);
+  const match = sourcePersistenceMatch(source.sourceType, 'Solution');
   await session.run(
     `MERGE (s:Solution {solutionText: $text})
      SET s.embedding = []
      WITH s
-     MATCH (c:Comment {commentId: $source})
-     MERGE (c)-[:HAS_SOLUTION]->(s)
-     WITH s, c
-     MATCH (c)<-[:HAS_COMMENT]-(i:Issue)
-     MERGE (i)-[:HAS_SOLUTION]->(s)
+     ${match}
      WITH s
      UNWIND $keywords AS kw
      MERGE (k:Keyword {name: kw})
      MERGE (s)-[:HAS_KEYWORD]->(k)`,
-    { text: solution.solutionText, source: solution.source, keywords: solution.keywords ?? [] },
+    { text: solution.solutionText, source: source.source, keywords: solution.keywords ?? [] },
   );
 }
 
 async function ingestWorkaround(session: Session, workaround: WorkaroundAnalysis): Promise<void> {
+  const source = validateAnalysisSource(workaround.source, workaround.sourceType);
+  const match = sourcePersistenceMatch(source.sourceType, 'Workaround');
   await session.run(
     `MERGE (w:Workaround {workaroundText: $text})
      SET w.embedding = []
      WITH w
-     MATCH (c:Comment {commentId: $source})
-     MERGE (c)-[:HAS_WORKAROUND]->(w)
-     WITH w, c
-     MATCH (c)<-[:HAS_COMMENT]-(i:Issue)
-     MERGE (i)-[:HAS_WORKAROUND]->(w)
+     ${match}
      WITH w
      UNWIND $keywords AS kw
      MERGE (k:Keyword {name: kw})
      MERGE (w)-[:HAS_KEYWORD]->(k)`,
     {
       text: workaround.workaroundText,
-      source: workaround.source,
+      source: source.source,
       keywords: workaround.keywords ?? [],
     },
   );

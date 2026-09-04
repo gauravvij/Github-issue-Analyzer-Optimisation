@@ -21,13 +21,15 @@ export interface AnalysisInput {
 
 export interface SolutionAnalysis {
   solutionText: string;
-  source: string; // commentId
+  source: string; // commentId or issueId
+  sourceType: 'commentId' | 'issueId';
   keywords: string[];
 }
 
 export interface WorkaroundAnalysis {
   workaroundText: string;
-  source: string; // commentId
+  source: string; // commentId or issueId
+  sourceType: 'commentId' | 'issueId';
   keywords: string[];
 }
 
@@ -106,10 +108,18 @@ const JSON_SCHEMA = {
             type: 'string' as const,
             description: 'AI-generated description of the solution',
           },
-          source: { type: 'string' as const, description: 'commentId where mentioned' },
+          source: {
+            type: 'string' as const,
+            description: 'commentId or issueId where the solution is explicitly stated',
+          },
+          sourceType: {
+            type: 'string' as const,
+            enum: ['commentId', 'issueId'] as const,
+            description: 'Whether source is a commentId or the issueId for the issue body',
+          },
           keywords: { type: 'array' as const, items: { type: 'string' as const } },
         },
-        required: ['solutionText', 'source', 'keywords'] as const,
+        required: ['solutionText', 'source', 'sourceType', 'keywords'] as const,
         additionalProperties: false,
       },
     },
@@ -122,10 +132,18 @@ const JSON_SCHEMA = {
             type: 'string' as const,
             description: 'AI-generated description of the workaround',
           },
-          source: { type: 'string' as const, description: 'commentId where mentioned' },
+          source: {
+            type: 'string' as const,
+            description: 'commentId or issueId where the workaround is explicitly stated',
+          },
+          sourceType: {
+            type: 'string' as const,
+            enum: ['commentId', 'issueId'] as const,
+            description: 'Whether source is a commentId or the issueId for the issue body',
+          },
           keywords: { type: 'array' as const, items: { type: 'string' as const } },
         },
-        required: ['workaroundText', 'source', 'keywords'] as const,
+        required: ['workaroundText', 'source', 'sourceType', 'keywords'] as const,
         additionalProperties: false,
       },
     },
@@ -147,8 +165,9 @@ You are analyzing a GitHub issue and its comments to extract structured informat
 **CRITICAL INSTRUCTIONS:**
 - Only extract information that is explicitly stated in the text
 - Do NOT infer or assume anything
-- For competitors, solutions, and workarounds: ONLY extract from COMMENTS, not from the issue description
-- For each extracted item, provide the commentId as the source (this is the source of truth)
+- For competitors: ONLY extract explicit mentions from COMMENTS, not from the issue description
+- For solutions and workarounds: extract explicit statements from either the ISSUE BODY or COMMENTS; do not infer or assume
+- For each solution/workaround, provide the exact source identifier: the issueId for an issue-body source or the commentId for a comment source, plus the matching sourceType
 - For solutions and workarounds, generate a clear descriptive sentence explaining what it is
 - Then extract relevant keywords from your generated descriptive sentence
 - Keywords should be technical terms, features, tools, concepts, or important terms
@@ -156,8 +175,9 @@ You are analyzing a GitHub issue and its comments to extract structured informat
 - If you cannot find explicit information, return empty arrays/strings
 
 **Input Data:**
+Issue ID: ${issueData.issueId}
 Issue Title: ${issueData.title}
-Issue Description: ${issueData.description}
+Issue Description (source is issueId when used): ${issueData.description}
 Issue Labels: ${issueData.labels.join(', ')}
 
 Comments:
@@ -166,9 +186,10 @@ ${issueData.comments.map((c) => `Comment ID: ${c.commentId}\nText: ${c.text}\n--
 **Extract the following:**
 1. Summary: One-sentence summary of the issue
 2. Categories: Array of relevant categories
-3. Competitors: Only from comments — explicit mentions of competitor tools/services
-4. Solutions: Only from comments — user-proposed solutions mentioned explicitly
-5. Workarounds: Only from comments — user-found workarounds mentioned explicitly
+3. Competitors: Only from comments — explicit mentions of competitor tools/services; source is always a commentId
+4. Solutions: From the issue body or comments — user-proposed solutions mentioned explicitly; set sourceType to issueId for body text and commentId for comments
+5. Workarounds: From the issue body or comments — user-found workarounds mentioned explicitly; set sourceType to issueId for body text and commentId for comments
+6. For every body-derived solution/workaround, source must equal the supplied Issue ID exactly
 `;
 
   const completion = await withSpan(
