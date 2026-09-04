@@ -1,386 +1,271 @@
-# "There are currently no closed issues."
+# How NEO Optimized a GitHub Issue Analyzer
 
-**There were 54. Out of 60.**
+*Our autonomous engineering agent eliminated a silent accuracy defect, cut database work by 63%, and independently verified the result.*
 
-That sentence came out of a working GitHub issue analyzer — an agent that pulls issues into
-a Neo4j knowledge graph and answers questions about them. Asked how many issues were closed,
-it wrote a database query, got nothing back, and reported the emptiness as a fact.
+A GitHub issue analyzer was asked how many issues were closed. It queried its database, found no matching rows, and answered: **"There are currently no closed issues."**
 
-Nothing about it looked broken. No error, no timeout, no stack trace. It called its tools
-correctly, formatted the answer nicely, and was wrong about four times out of five.
+The correct answer was **54 out of 60**.
 
-That is the failure mode that should frighten anyone shipping an analytics agent. A crash
-gets noticed in minutes. A confident zero gets quoted in a meeting.
+Nothing looked broken. There was no error, timeout, or stack trace. The original analyzer called the right tool and returned a polished answer. It was also wrong about four times out of five.
 
-NEO found it, traced it to one line of a prompt, and fixed it. Then it did the less usual
-thing: it went back and tried to prove its own fix didn't matter.
+That is a dangerous failure in any analytics agent. A crash gets noticed. A confident zero can end up in a report or a meeting before anyone checks it.
 
-This is the full account — what NEO changed, how it measured itself, what survived
-re-testing on a benchmark built after the fact, and the three cost optimisations it tried
-and threw away. Every number here is reproducible from the repository. Where NEO could not
-support a claim, it says so — including about its own headline.
+NEO, our autonomous engineering agent, found the hidden cause and fixed it. It also reduced database work by 63%. Then it strengthened the result by testing it again on a new benchmark.
 
----
+This is what survived that audit:
 
-## The short version
+- Our agent traced almost the entire accuracy gap to one undocumented database value.
+- It eliminated the defect across 80 targeted trials.
+- It rebuilt the missing baseline byte-for-byte, making a valid comparison possible.
+- A fresh benchmark confirmed the deterministic gain on issues the system had never seen.
+- It cut Neo4j queries by 63% and database sessions by 97%.
+- It tested cheaper models and kept the stronger model when the alternatives missed the quality bar.
 
-| | before | after | change |
+## Accuracy improved while database work fell
+
+We built a corpus of 100 real `sympy/sympy` issues selected through SWE-bench, a dataset of real software tasks. The repeated comparison used its 60-issue development split. Neither version had been tuned on this corpus. Each ran three times, with three attempts across 40 questions, for 360 graded attempts per version.
+
+| Metric | Before | After | Change |
 |---|---:|---:|:---|
-| Deterministic accuracy | 94.29% | **100.00%** | ▲ +5.71 pp |
-| Overall benchmark score | 94.72% | **100.00%** | ▲ +5.28 pp |
-| Questions right on every attempt | 37 / 40 | **40 / 40** | ▲ +3 |
-| Wrong "there are none" answers | 32 in 40 trials | **0 in 80 trials** | ▼ eliminated |
-| Neo4j queries per ingestion | 698 | **255** | ▼ −63.5% |
-| Neo4j sessions per ingestion | 122 | **4** | ▼ −96.7% |
-| Schema constraints / indexes | 0 / 0 | **10 / 12** | ▲ added |
-| GitHub API requests | 121 | 121 | = unchanged |
-| Agent error rate | 0% | 0% | = unchanged |
-
-Measured on **100 real `sympy/sympy` GitHub issues selected by SWE-bench** — a corpus the
-system had never been tuned against — averaged over three independent runs per version,
-three attempts per question. 360 graded attempts per arm.
-
-Six percentage points does not sound like much until you look at what those points were.
-They were not rounding. They were an entire class of question the system got wrong almost
-every time, in a way no error handler would ever catch.
+| Deterministic accuracy | 94.29% | **100.00%** | +5.71 percentage points |
+| Overall benchmark score | 94.72% | **100.00%** | +5.28 percentage points |
+| Questions right on every attempt | 37 / 40 | **40 / 40** | +3 |
+| Confident wrong-zero answers | 32 in 40 trials | **0 in 80 trials** | Eliminated |
+| Neo4j queries per ingestion | 698 | **255** | 63.5% fewer |
+| Neo4j sessions per ingestion | 122 | **4** | 96.7% fewer |
+| Schema constraints / indexes | 0 / 0 | **10 / 12** | Added |
+| GitHub API requests | 121 | 121 | Unchanged |
+| Agent error rate | 0% | 0% | Unchanged |
 
 ![Deterministic accuracy on a corpus it had never seen](assets/accuracy-on-unseen-data.svg)
 
----
+The gain looks modest when compressed into 5.71 percentage points. Its shape matters more than its size. The fix removed a whole class of silent, repeated errors that normal error monitoring would not catch.
 
-## What "autonomous" meant in this experiment
+## Our agent ran the engineering loop end to end
 
-NEO operated the entire loop. It read the codebase and wrote the optimisation plan. It built
-the benchmark harness. It formed hypotheses, implemented them, scored them, and decided
-which to keep. It sealed a holdout split and ran it exactly once. When the campaign closed,
-it wrote its own report.
+A human set the objective and reviewed the result. Our agent handled the engineering loop.
 
-Then it did the part that makes this interesting: it went back and tried to falsify itself.
+It inspected the codebase, profiled the system, built the benchmark, proposed changes, implemented them, and scored each candidate. It kept changes that met their targets and reverted those that did not. It also sealed a holdout set, which is data reserved until the end, and ran it once.
 
-A human set the objective and reviewed the output. NEO did the engineering.
+After the campaign, it built a second benchmark and rebuilt the original implementation, which no longer existed on disk. It used both to verify the result independently.
 
----
+That final stage refined the headline from a single-run result into a repeatable measurement. It is also what makes the remaining numbers credible.
 
-## Step 1: NEO profiled the system
+## Measuring from outside the analyzer
 
-Before changing anything, NEO audited where time and money went and wrote it down:
+When one system changes both code and measurement, bias can enter the result. We reduced that risk by measuring from outside the analyzer.
 
-- GitHub issues were fetched strictly one at a time.
-- Every issue was written to Neo4j in its own session, statement by statement.
-- There were no uniqueness constraints and no indexes anywhere in the graph.
-- The pipeline wrote issues to the database and then immediately read the same rows back to
-  analyse them.
-- The agent's prompt documented the graph schema incompletely.
+The first harness used:
 
-That last one turned out to matter more than the other four combined. NEO did not know that
-yet.
+- A local stand-in for GitHub with a frozen 100-issue corpus, removing network changes from the comparison.
+- A real Neo4j database in an isolated Docker container, reset and verified empty before each run.
+- External meters around GitHub, Neo4j, and model calls, so editing the analyzer could not hide work.
+- Forty questions with answers computed from the corpus. Thirty-five used exact numerical or issue-set checks, while five used a fixed model judge.
+- Integrity checks that compared the graph with the source corpus and were proven to fail on deliberately damaged data.
+- A live preflight request that verified the model key and cost meter before a paid run began.
 
----
+Every report also stored a source fingerprint: a SHA-256 digest over the source files and lockfile. That fingerprint tied each score to the exact code bytes that produced it. The decision looked like bookkeeping at the time. It later made the whole comparison possible.
 
-## Step 2: NEO built a referee it could not game
+## Eight evidence-backed improvements made the cut
 
-An agent that optimises against a benchmark it also wrote is grading its own homework. NEO's
-first move was to make that as hard as possible.
+Before each experiment, the agent recorded which metric had to improve and which metrics could not regress. It tested twelve hypotheses.
 
-The harness it built:
+Eight changes stayed:
 
-- A **fake GitHub GraphQL server** serving a frozen 100-issue corpus, so no measurement
-  depends on the network.
-- A **real Neo4j** in Docker, reset and *verified* empty before every run.
-- **Wire-level meters** that wrap `fetch` and the Neo4j driver from *outside* the system
-  under test. The numbers cannot be improved by editing the code being measured.
-- **40 questions whose answers are computed from the corpus**, not written by a model — 35
-  graded by exact number or issue-set comparison, 5 by a fixed judge.
-- **Integrity assertions** comparing the graph against the corpus, each one proven to fail
-  on a deliberately corrupted graph.
-- A **preflight** that makes a live one-token API call and asserts the meter saw it. An
-  earlier loop had burned two hour-long jobs before noticing the API key never reached the
-  containers.
+- identity constraints and indexes for the graph;
+- batched Neo4j writes in one managed transaction;
+- cleanup limited to the issue being processed;
+- extraction from issue bodies and comments, with source tracking;
+- bounded concurrent GitHub fetching;
+- removal of a database read immediately after the same data was written;
+- exact database error feedback for query retries;
+- clearer graph schema guidance for the answering agent.
 
-It also wrote a **source fingerprint** into every result: a SHA-256 over every source file
-plus the lockfile. Any score can be traced back to the exact bytes that produced it. That
-decision paid off later in a way nobody anticipated.
+Comment filtering was fully implemented and tested, but it increased model cost without meeting its token target. The agent protected the stronger result by reverting it.
 
----
+Three original ideas were deferred. The campaign contract ruled out one model substitution, while two embedding and vector-search ideas needed resources the project did not define. We did not present unmeasurable changes as progress. A later cost campaign tested model substitutions under a separate contract.
 
-## Step 3: The loop
+The eight retained changes improved different parts of the system. One moved accuracy, while the others improved database efficiency, integrity, and operating headroom.
 
-Twelve hypotheses. Each one stated in advance the metric it had to move **and** the metric
-it was not allowed to regress. Every candidate passed a free seven-step gate before any
-money was spent, and anything worth keeping was re-confirmed at three attempts.
+## One missing schema detail explained the accuracy gap
 
-**8 kept** — identity constraints and indexes, `UNWIND` batching in a single managed
-transaction, issue-scoped orphan cleanup, body-level extraction with provenance, bounded
-fetch concurrency, dropping the read-after-write, Cypher error feedback, schema guidance.
+The analyzer stores issues in a knowledge graph, a database that represents records and their relationships. It answers questions by generating Cypher, Neo4j's query language.
 
-**1 rejected and reverted** — comment filtering raised cost without hitting its token target.
+The graph stores issue state as `OPEN` or `CLOSED`. GitHub's website and application programming interface (API) usually show those words in lowercase. The prompt described `state` only as a string, so the model had to guess the stored form.
 
-**3 skipped** — the embedding work needed an external resource contract that did not exist,
-and NEO declined to invent one to have something to report.
+It often guessed wrong:
 
-The rejected one is worth a moment. Comment filtering was a reasonable idea, it was fully
-implemented, it was scored at three attempts — and it made the system more expensive without
-moving the metric it was supposed to move. So NEO reverted it and wrote down why. Throwing
-away finished work on the evidence is the part of the loop that makes the rest of it mean
-anything.
-
-Ingestion went from 698 Neo4j queries to 255, and from 122 sessions to 4. The database work
-was real, and it holds up.
-
-![Database work per ingestion](assets/database-work.svg)
-
-It is worth being precise about what that bought, because the obvious inference is wrong. It
-did **not** make the system feel faster. Ingestion wall clock moved only 3.7%, and answer
-latency did not move at all — 4,178 ms before, 4,385 ms after, which is noise. The reason is
-visible the moment you look at where the time goes:
-
-![Where the 203 seconds of ingestion actually went](assets/where-ingestion-time-goes.svg)
-
-Neo4j was never the bottleneck. Cutting 63% of the database work removed about two and a
-half seconds from a 203-second job, because the LLM calls account for 90% of it. What the
-change actually bought is resource cost and scaling headroom — 122 sessions collapsed to 4 —
-which pays off at ten thousand issues, not at sixty. NEO reported it as a database result
-rather than a speed result, which is what it is.
-
----
-
-## The one thing that actually moved accuracy
-
-Here is the change that produced essentially the entire quality gain:
-
+```cypher
+MATCH (i:Issue)
+WHERE i.state = 'open'
+RETURN count(i)
 ```
+
+The query was valid, but lowercase `open` matched nothing. The database returned zero rows, and the agent converted that empty result into a confident claim that no open issues existed.
+
+The first change replaced a permissive instruction:
+
+```diff
 - If a query returns no results, say so honestly.
 + If a query returns no results, treat that as a signal to check the query before
 + concluding that the data is absent. In particular, verify enum casing and property
 + names; never turn a suspicious empty result into a confident zero.
 ```
 
-Three lines of prompt.
+An enum is a field limited to a known set of values. This hint pushed the model to check enum casing before trusting an empty result.
 
-The graph stores issue state as `OPEN` and `CLOSED`. GitHub's own UI and REST API use
-lowercase. The agent, never told which, guessed:
+That small prompt change produced essentially the entire deterministic accuracy gain. Batching, indexes, concurrency, and the removed readback improved efficiency, but they added no accuracy.
 
-```cypher
-MATCH (i:Issue) WHERE i.state = 'open'    -- 0 rows -> "there are no open issues"
-```
+## Turning a promising score into a repeatable result
 
-A confident zero produced by a broken query. The worst failure an analytics agent can have,
-because it looks exactly like an answer.
+The first campaign ended with a 100% score. Instead of stopping there, our agent reran the same frozen code on the same questions and got **97.5%**.
 
-Every other retained hypothesis — batching, indexes, concurrency, the read-after-write
-removal — contributed **zero** accuracy improvement. They made the system faster and leaner.
-That is worth having, and it is a different result.
+The code had not changed. The model output had.
 
----
+This showed that a single run could not support the headline on its own. We replaced it with a three-run comparison that preserved the full deterministic gain.
 
-## Step 4: NEO checked its own work
+The saved artifacts made the distinction clear. Two runs with the same source fingerprint scored 80% and 100% on the model-judged summary metric. That exposed the metric as noisy, so we kept it out of the causal claim.
 
-This is where a normal optimisation report ends. NEO kept going and asked four questions it
-could not answer from inside its own loop.
+The final claim focuses on the deterministic result because it showed no spread after the fix across three runs. This made the published result narrower, stronger, and easier to reproduce.
 
-### Are the recorded numbers real?
+## Recovering a baseline that no longer existed
 
-Every figure was recomputed from the saved reports. All matched — along with the checksums,
-the frozen-split manifest, the source fingerprints, and both document digests.
+A before-and-after comparison needs a working "before". This project did not have one. The repository had no version history, and only the optimized code remained on disk. The fingerprint in an old report made it possible to recover the exact original implementation.
 
-### Does the headline reproduce?
+Our agent recovered a clean copy of the pre-campaign source. It then removed the eight retained changes one at a time and compared the result against the fingerprint stored in the original baseline report.
 
-**No.** Re-running the identical frozen code on the identical questions scored **97.5%, not
-the reported 100%**.
+It matched exactly on the first attempt: `71c696b48a9da953`, across 18 files. A SHA-256 digest either matches or it does not, so the rebuilt version is provably the code the original numbers came from. It then compiled, passed all 21 of its own unit tests, ingested a corpus with every integrity check passing, and reproduced the original serial-write signature: one database session per issue, and no batched transaction.
 
-The 100% was the top of a distribution, not a property of the code — the exact failure mode
-single-run benchmarking produces. Worse, the baseline it had been compared against was
-*that* version's worst draw. Both ends of the comparison had been flattered.
+This is what the fingerprint discipline bought. A digest recorded in every report turned an unrecoverable baseline into a recoverable one, and let every later comparison name the exact code on both sides.
 
-The same artifacts contained an even cleaner demonstration, entirely by accident. Two runs
-in the archive share a **byte-identical source fingerprint** and scored **80% and 100%** on
-the model-judged summarisation metric. Same code. Twenty points apart. Any claim built on
-that metric was noise, and NEO retracted it.
+## A second benchmark made the evidence stronger
 
-### Was the original code even recoverable?
+To test whether the result transferred beyond the original benchmark, our agent built another one from scratch.
 
-It was not on disk. The project had no git history at all — which is why the repository has
-one now.
+It wrote the corpus builder, the question generator, and the answer-key verifier. It screened 386 candidate `sympy/sympy` instances from SWE-bench, linked each merged pull request to the issue it closed, and fetched that issue from GitHub. This produced a new corpus, new questions, and new answer keys that neither system version had seen.
 
-NEO found a clean pre-campaign upstream clone, then peeled all eight changes back off the
-optimised code one at a time. It hit the original **byte-exactly on the first attempt**,
-confirmed against the source fingerprint the benchmark had recorded runs earlier:
-`71c696b48a9da953`, 18 files.
+The first candidate was `django/django`, the largest repository in SWE-bench. We rejected it after checking the source because Django tracks bugs in Trac and has GitHub Issues disabled. There were no suitable GitHub issues to analyze.
 
-That fingerprint discipline from Step 2 turned a lost baseline into a solved problem.
+The unfamiliar data also exposed two assumptions inherited from the first benchmark:
 
-### Does the improvement generalise?
+1. One generated question could forbid its own correct answer when every issue in a split was closed.
+2. Integrity checks counted issue authors and reactions but omitted those attached to comments.
 
-To answer that, NEO built a **second benchmark from scratch**.
+Both were corrected in the second harness. Testing on unfamiliar data improved the measurement system as well as confirming the product result.
 
-It pulled `sympy/sympy` instances from SWE-bench — 386 of them — resolved each to the GitHub
-issue its merged pull request closed, and fetched those issues live from GitHub. New corpus,
-new questions, new oracles, none of it seen by any version of the system.
+On the sealed holdout, exactly two questions separated the baseline from the improved version: the open-issue count and the closed-issue count. Every other question scored the same. The independent benchmark confirmed that one schema defect explained the accuracy difference.
 
-One detail worth recording: NEO's first choice was `django/django`, the largest repo in
-SWE-bench. It rejected it on inspection, because **django has GitHub Issues disabled** — the
-project tracks bugs in Trac, so its SWE-bench problem statements have no GitHub issue behind
-them to fetch at all.
+## Replacing a useful hint with the root fix
 
-Then it ran both versions, three times each.
+The three-line instruction was a useful defense. It was not the root fix because the prompt still failed to state the legal values.
 
-| | baseline | optimised |
-|---|---:|---:|
-| Deterministic accuracy | 94.29% (92.38–95.24) | **100.00%** (no spread) |
-| Overall | 94.72% | **100.00%** |
-| Solved every attempt | 37 / 40 | **40 / 40** |
-| Neo4j queries | 698 | **255** |
+The final change documented the allowed values in the schema itself:
 
-On the sealed holdout — 40 further issues, scored once — **exactly two questions separated
-the two versions.** Every other question scored identically. The entire accuracy difference,
-on data neither version had seen, was one defect.
-
-### And it found two bugs in its own benchmark
-
-Pointing the harness at unfamiliar data immediately exposed two faults invisible from inside
-the original corpus:
-
-1. **A question that was impossible to answer correctly.** The generator guards number
-   questions with near-miss values the answer must *not* contain. SWE-bench contains only
-   issues resolved by a merged PR, so every issue was closed — making "how many are closed"
-   equal to the total, and the guard forbade the correct answer. It would have silently cost
-   both versions a point while looking like a genuine failure.
-2. **Integrity checks that assumed the first dataset's quirks.** Expected user and reaction
-   counts were computed from issue authors and issue reactions alone. Exact for a scraped
-   corpus where comment authors are null; wrong for live GitHub data.
-
-Both were fixed in the second harness. Neither could have been found without a second
-dataset.
-
----
-
-## The proper fix
-
-The verification produced one more result. NEO's three-line prompt change was a **hint**, not
-a fix — it nudged the model toward uppercase, and worked about 96% of the time. The schema
-block still never said what the legal values were.
-
-So NEO said them, in the style the same block already used for another field:
-
-```
+```diff
 - state (STRING), authorLogin (STRING)
 + state (STRING, one of: OPEN, CLOSED), authorLogin (STRING)
 ```
 
-Measured with a targeted probe that asks only the two questions exposing the defect and
-records the Cypher the model actually wrote:
+A targeted probe asked only the two questions that exposed the defect. It also recorded the Cypher generated on each attempt.
 
-| | correct | used the stored casing | confident wrong zeros |
+| Version | Correct answers | Used stored casing | Confident wrong zeros |
 |---|---:|---:|---:|
-| baseline | 8 / 40 | 3 / 20 | 32 |
-| after the hint | 77 / 80 | 77 / 80 | 3 |
-| **after documenting the enum** | **80 / 80** | **80 / 80** | **0** |
+| Baseline | 8 / 40 | 3 / 20 | 32 |
+| Prompt hint | 77 / 80 | 77 / 80 | 3 |
+| **Documented enum** | **80 / 80** | **80 / 80** | **0** |
 
-Every single miss, in every version tested, was a lowercase query.
+Every miss across all three versions used lowercase in the query. Once the schema named the allowed values, that failure disappeared in all 80 targeted trials.
 
----
+## Sixty-three percent less database work, and where that actually pays off
 
-## Step 5: The cost campaign that returned nothing
+The database improvements were substantial. Neo4j queries fell from 698 to 255 per ingestion, while sessions fell from 122 to 4.
 
-With quality settled, NEO went after cost. The system spends about $1.19 per benchmark run
-on `gpt-4o` — 59.8% on the QA agent, 28.6% on structured extraction during ingestion, 11.6%
-on the summarisation tool.
+![Database work per ingestion](assets/database-work.svg)
 
-Three attempts. Three rejections.
+Those savings did not make the analyzer feel much faster. Ingestion time improved by only 3.7%. Answer latency did not improve: it moved from 4,178ms to 4,385ms, which was treated as noise.
 
-| candidate | deterministic, 3 runs | verdict |
-|---|---|---|
-| QA agent → `gpt-4o-mini` | 95.87%, **5.71 pp spread** | **REJECT** |
-| relationship-direction prompt hint | ceiling of 98.10% even if perfect | **CANCELLED** |
-| QA agent → `gpt-4.1-mini` | 76.19% | **REJECT** |
+The timing data explains why.
+
+![Where the 203 seconds of ingestion actually went](assets/where-ingestion-time-goes.svg)
+
+Model calls consumed about 90% of ingestion time. Neo4j was only a small part of the total. Removing nearly two-thirds of the database work saved about 2.5 seconds from a 203-second job.
+
+The database work still matters. Four sessions use fewer resources than 122, and batching creates more room to scale. But this was a resource-efficiency result, not a speed result.
+
+## Testing cheaper models without trading away quality
+
+Once quality stabilized, we tested the largest measurable cost lever: the model that turns user questions into database queries.
+
+The system cost about $1.19 per benchmark run using `gpt-4o`. Of that measured cost, 59.8% came from the question-answering agent, 28.6% from extraction during ingestion, and 11.6% from comment summaries.
+
+| Candidate | Deterministic accuracy | Decision |
+|---|---:|---|
+| `gpt-4o` | **100.00%** | Keep |
+| `gpt-4o-mini` | 95.87%, with a 5.71-point spread | Reject |
+| `gpt-4.1-mini` | 76.19% | Reject |
 
 ![Can a cheaper model answer the questions?](assets/cheaper-models.svg)
 
-The saving was real — **−72% on the QA stage** — and unpurchasable at that quality cost.
+The cheaper model cut question-answering cost by about 72%. We kept `gpt-4o` because the alternatives did not preserve the required accuracy.
 
-The interesting part is *how* the cheap models failed, because they failed differently.
-`gpt-4o-mini` reversed relationship traversals — writing `(User)-[:AUTHORED_BY]->(Issue)`
-when the schema says the arrow points the other way — ten times across 319 queries, each one
-returning zero rows and producing another confident wrong answer. `gpt-4.1-mini` failed
-somewhere else entirely: eight of its ten lost tasks were exact-set retrieval, the "list
-every issue that…" questions. It could count fine. It could not enumerate.
+The two models also failed differently. `gpt-4o-mini` sometimes reversed the direction of graph relationships. It queried as if a user pointed to an issue when the schema defined the arrow in the other direction. Those valid but backward queries returned nothing and created more confident-zero answers.
 
-`gpt-4o` reversed a traversal once in 316 queries.
+`gpt-4.1-mini` struggled with exact enumeration. It could often count matching issues, but it failed questions that required listing every match.
 
-The middle row deserves a note, because it is the one NEO killed before building it. A
-relationship-direction hint looked promising, and NEO computed its ceiling before writing a
-line: assuming a *perfect* fix where every reversed-traversal failure became a pass, the
-cheap model would reach 98.10% — still short of the bar, still unstable. And on `gpt-4o` it
-could not demonstrate anything at all, because that version already sits at 100.00% with
-zero spread. Nothing to improve, nothing to measure. Cancelled.
+The agent also considered adding a relationship-direction hint. Before spending time and model calls, it calculated the best possible outcome. Even a perfect repair would have reached only 98.10%, below the target, so the experiment stopped early.
 
-One gap is left open and labelled as such: **extraction cost cannot be optimised safely
-yet.** No benchmark question reads the extracted nodes, so a cheaper extraction model would
-show "cost down, score unchanged" whether or not the extraction degraded. That is the
-dominant cost in production, and it is unmeasurable until something grades extraction
-quality. NEO reported the gap rather than taking the free-looking win.
+One cost gap remains open. Extraction is the dominant production cost, but no benchmark question grades the extracted nodes. A cheaper extraction model could damage the graph while the current score remained unchanged. Until extraction quality is measured, that optimization cannot be evaluated safely.
 
----
+## What this experiment can and cannot claim
 
-## Why NEO stopped
+The evidence supports a narrow, useful conclusion. On a second repository, the documented enum removed a repeated deterministic failure. The final system also used far fewer database queries and sessions.
 
-It stopped on quality when the deterministic score hit 100.00% with zero spread across three
-runs and there was no headroom left to measure. It stopped on cost when two independent
-cheaper models landed 4 and 24 points below the bar with distinct failure signatures — two
-data points pointing the same direction is enough.
+The evidence does not show that the analyzer will score 100% everywhere. Both benchmarks cover one repository each, and three runs cannot settle a noisy model-judged metric. The SWE-bench corpus also favors closed issues because it starts from merged pull requests.
 
-It did not stop because it ran out of ideas. It stopped because the remaining ideas could not
-be evaluated with the instruments available, and it said so.
+The cost figures come from the benchmark's local price table, not an OpenAI invoice. The fixed schema version reused the graph built by the previous champion. This was valid because only the answering prompt changed, not ingestion.
 
----
+These limits narrow the claim. Its core still holds. The deterministic difference repeated on an independent corpus, matched a known mechanism, and disappeared when the schema supplied the missing information.
 
-## What we learned
+## What this approach demonstrates
 
-**One run is not a measurement.** The original comparison used a single run per version and
-reported a jump to 100%. Re-running identical code scored 97.5%. Averaging three runs put the
-real figure at +5.7 points — smaller than claimed, and far better supported.
+**An empty result is not always an empty world.** A valid query can still ask the wrong question. Treat suspicious zeros as a reason to inspect the query and schema.
 
-**Know which of your metrics carries signal.** The deterministic questions had *zero* spread
-across three runs. The model-judged score swung 20 points on byte-identical code. Only one of
-those can support a claim.
+**Repeatability matters more than a perfect first score.** Multiple runs turned an encouraging result into a defensible measurement.
 
-**A benchmark you built yourself needs a second dataset before you trust it.** Pointing the
-harness at unfamiliar data exposed two harness bugs in the first hour.
+**Separate stable metrics from noisy ones.** Exact questions showed a repeatable gain. A model judge moved 20 points on identical code, so we stopped using that movement as evidence.
 
-**Fingerprint everything.** A SHA-256 of the source in every report is cheap, and it turned
-"the baseline is lost forever" into a solvable problem months later.
+**Test a benchmark on unfamiliar data.** The second corpus confirmed the product fix and found two defects in the test harness itself.
 
-**Report the negative results.** Three cost optimisations failed. A prompt hypothesis was
-cancelled before implementation. A headline number was retracted. All of it is in the
-repository, because a report that survives its own audit is worth more than one that claims
-a perfect score.
+**Optimize for evidence, not activity.** The loop reverted a weak change, deferred unmeasurable work, and rejected cheaper models that lost quality. Those decisions protected the result that mattered.
 
----
+## Reproduce the result
 
-## Reproduce it
-
-The repository ships both benchmarks and every scored run.
+The repository includes both benchmark harnesses and every scored report.
 
 ```bash
-cd github_issue && bun install
+cd github_issue
+bun install
+cd ..
 
-# free — no API spend
-bun bench/verify-all.ts                  # benchmark 1 gate
-bun verification_bench/verify-all.ts     # benchmark 2 gate
+# Free verification gates
+bun bench/verify-all.ts
+bun verification_bench/verify-all.ts
 
-# scored (~$1.10-$1.20 of gpt-4o per run)
-SUT_DIR=../github_issue bun verification_bench/run.ts --split dev --job my-run --attempts 3
+# Scored run, about $1.10 to $1.20 using the benchmark price table
+SUT_DIR=../github_issue bun verification_bench/run.ts \
+  --split dev --job my-run --attempts 3
 ```
 
-Every commit that changes the system is pinned to the fingerprint the benchmark recorded
-when it scored that state:
+Each scored system version is pinned to its recorded source fingerprint.
+
+Verify a checked-out version before scoring it:
 
 ```bash
 git checkout <commit>
-bun verification_bench/verify-sut-switch.ts   # recomputes and compares
+bun verification_bench/verify-sut-switch.ts
 ```
 
-Score an earlier version without disturbing the working tree:
+You can also compare an earlier version without changing the main working tree:
 
 ```bash
 git worktree add .worktrees/baseline f5b3184
@@ -388,20 +273,15 @@ SUT_DIR=../.worktrees/baseline/github_issue \
   bun verification_bench/run.ts --split dev --job base --attempts 3
 ```
 
-One author, one history, every number traceable to the bytes that produced it.
+The detailed audit is in [`VERIFICATION.md`](VERIFICATION.md). The original campaign report is in [`RESULTS.md`](RESULTS.md), and the experiment-by-experiment record is in [`ledger.md`](ledger.md).
 
----
+## What the optimization delivered
 
-## Try NEO
+The analyzer now knows how many issues are closed because its schema tells it what `CLOSED` looks like. That sentence is backed by an independent benchmark, three repeated runs, 80 targeted trials, and a fingerprinted source version.
 
-The analyzer, for the record, now knows how many issues are closed. It knows it every time,
-on data it has never seen, and there is a fingerprinted commit and three scored runs behind
-that sentence.
+NEO performed the profiling, benchmark construction, optimization loop, baseline recovery, independent verification, and cost campaign. It delivered a more accurate and efficient analyzer, along with the evidence needed to trust it.
 
-NEO did the profiling, the benchmark construction, the optimisation loop, the independent
-re-verification, and the cost campaign — including all the parts where the answer was no.
-
-**[NEO — Your Autonomous AI Engineering Agent](https://heyneo.com)**
+**[NEO: Your Autonomous AI Engineering Agent](https://heyneo.com)**
 
 [![VS Code Extension](https://img.shields.io/badge/VS%20Code-Get%20the%20Extension-007ACC?style=for-the-badge&logo=visualstudiocode&logoColor=white)](https://marketplace.visualstudio.com/items?itemName=NeoResearchInc.heyneo)
 [![Cursor Extension](https://img.shields.io/badge/Cursor-Get%20the%20Extension-1F1F1F?style=for-the-badge&logo=cursor&logoColor=white)](https://marketplace.cursorapi.com/items/?itemName=NeoResearchInc.heyneo)

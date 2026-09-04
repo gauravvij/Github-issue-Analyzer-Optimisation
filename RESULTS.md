@@ -160,9 +160,9 @@ The fixed SUT model remained `openai/gpt-4o` for all scored SUT runs. No model, 
 
 The following document bindings use a normalized projection to avoid circularity: UTF-8 text with CRLF converted to LF, then the digest value is masked only when it is the value of `stored SHA-256`, `inventory_sha256`, `normalized projection SHA-256`, or another explicitly labeled inventory/document-binding digest field. All other report, trace, source, and frozen-data content remains in the projection. The resulting normalized projection SHA-256 values are recorded in `artifact-audit-inventory.json`; recomputing them does not depend on the self-referential binding values.
 
-- `ledger.md` normalized projection SHA-256: `4b0504ab68e5c558b231533e039f43848693bb4fcc46e8279c490fa9291592b2`
-- `RESULTS.md` normalized projection SHA-256: `f2f7edea7058dfaef8d64b2761f10612f373d1666600c9c0eb318d1937120156`
-- Canonical inventory SHA-256 with the self-referential inventory digest field omitted: `6658b3ac196fa459527b6f53f873530ac15d38d28184dbb512c662d1de7c94ab`
+- `ledger.md` normalized projection SHA-256: `01cbae0674b56bec6d4c8d293e92673408d8ef2985bf594c345630728e8b003c`
+- `RESULTS.md` normalized projection SHA-256: `de00b92b58e559ec184d7f29cec5a5f6511c87812e1de432d9716b4b2c49a437`
+- Canonical inventory SHA-256 with the self-referential inventory digest field omitted: `b11e6a056e6da7d77b09ceeba9fec9a472b56848f74cd32bce252eb15e7ccccc`.
 
 ## Primary artifact paths
 
