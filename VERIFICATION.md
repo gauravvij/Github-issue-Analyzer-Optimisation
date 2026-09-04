@@ -1,6 +1,6 @@
 # Verification of `RESULTS.md`, and a second benchmark
 
-**Status:** Phases 0–3 complete; Phase 4 (scored comparison) in progress.
+**Status:** complete. Commit `f195ffb` is HEAD.
 **Scope:** `bench/` was never modified — it is the referee. The three trees compared below
 are commits on `github_issue/`, not separate folders:
 
@@ -8,33 +8,48 @@ are commits on `github_issue/`, not separate folders:
 |---|---|---|
 | baseline | `f5b3184` | `71c696b48a9da953` |
 | champion | `ee48387` | `9eeb557db3e87c2d` |
-| champion_fixed | `9620715` (HEAD) | `73acfdc375576226` |
+| champion_fixed | `f195ffb` (HEAD) | `73acfdc375576226` |
 
 Score a historical one with `git worktree add .worktrees/baseline f5b3184` and point
 `SUT_DIR` at `.worktrees/baseline/github_issue`. See [`README.md`](README.md).
 
 ---
 
-## 1. Headline
+## 1. Verdict
 
-`RESULTS.md` is **numerically and cryptographically accurate** — every hard figure traces
-to a JSON field, and every checksum, fingerprint and digest reproduces exactly. Its
-**interpretation does not survive re-measurement**.
+**The improvement is real, it reproduces on an independent benchmark, and the numbers
+recorded during the campaign are genuine.** Every hard figure in `RESULTS.md` traces to a
+saved report; every checksum, source fingerprint and document digest reproduces exactly.
+Nothing was fabricated.
 
-Re-running the champion — byte-identical frozen source, same frozen split, same
-`--attempts 3`, at the configuration `RESULTS.md` says it ships with — scores **97.5%
-overall, not 100%**, and fails a canary:
+What re-measurement changed is the **precision** of the claim, not its direction:
 
-| Metric | `h9-confirm` (reported) | `repro-champion` (re-run today) |
+| | claimed (single runs) | measured (3 runs per arm, unseen corpus) |
+|---|---:|---:|
+| Deterministic accuracy gain | +5.71 pp | **+5.71 pp** — confirmed exactly |
+| Overall score gain | +7.50 pp | **+5.28 pp** |
+| Semantic gain | +20.00 pp | **not a signal** — see §2 |
+| Neo4j query reduction | −57.2% | **−63.5%** — better than claimed |
+
+Two corrections matter. First, the reported **100% was a single lucky run**: re-running the
+identical frozen source on the identical questions scores **97.5%**, and the baseline it was
+compared against was likewise its own worst draw. Averaging three runs per arm fixes both
+ends. Second, the accuracy gain is **one defect**, not eight compounding optimisations —
+seven of the eight retained changes moved efficiency and nothing else.
+
+The single-run reproduction that started this, for the record:
+
+| Metric | `h9-confirm` (reported) | `repro-champion` (re-run) |
 |---|---:|---:|
 | Deterministic | 100.0% | **98.10%** |
 | Semantic | 100.0% | **93.33%** |
 | Overall | 100.0% | **97.50%** |
 | Solved every attempt | 40/40 | **37/40** |
-| Canary | pass | **FAIL** |
+| Canary | pass | **FAIL** (agent variance, not a graph fault — see §2) |
 | SUT fingerprint | `9eeb557db3e87c2d` | `9eeb557db3e87c2d` (identical) |
 
-The reported 100% was the top of a distribution, not a property of the code.
+The headline figures for the shipped system, against the reconstructed baseline on a corpus
+neither had seen, are in §7.
 
 ---
 
@@ -94,7 +109,7 @@ The reported 100% was the top of a distribution, not a property of the code.
   analysis-persistence half scales with whatever the model extracts that run
   (`solution_nodes` 37→38, `workaround_nodes` 23→25, `category_nodes` 118→121). The headline
   "610 → 261, −57.2%" therefore mixes a real structural reduction with a model-dependent term.
-- **H2 missed its own acceptance bar.** `plan2.md` §8 sets H2's target at **≥75%** fewer
+- **H2 missed its own acceptance bar.** `plan2.md` §8 set H2's target at **≥75%** fewer
   Neo4j queries. Achieved: 57.2%. `RESULTS.md` calls it "materially reduced" and never notes
   the miss.
 - **H5's claimed yield gain does not hold in the shipped system.** `plan2.md` §8 required
@@ -450,6 +465,10 @@ fixed       fixed-dev-1  -   fixed-dev-2  -   fixed-dev-3  -
 12 scored runs plus targeted probes, **≈$12.50** of OpenAI spend. `bench/` was never
 modified. The three compared trees are commits on `github_issue/`; the new harness is
 `verification_bench/`.
+
+`plan.md` and `plan2.md` — the campaign's brief and its operating rules, cited throughout
+this document — were removed from the working tree once the campaign closed. They remain
+in history: `git show f5b3184:plan2.md`.
 
 ### Limitations, stated plainly
 
