@@ -2,6 +2,8 @@
 
 *Our autonomous engineering agent eliminated a silent accuracy defect, cut database work by 63%, and independently verified the result.*
 
+The system we optimized was Astropods' open-source [GitHub Issue Analyzer](https://github.com/astropods/agents/tree/main/github-issue-analyzer). It ingests repository issues into a knowledge graph and answers questions about them.
+
 A GitHub issue analyzer was asked how many issues were closed. It queried its database, found no matching rows, and answered: **"There are currently no closed issues."**
 
 The correct answer was **54 out of 60**.
