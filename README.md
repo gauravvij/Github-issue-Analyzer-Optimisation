@@ -280,6 +280,42 @@ Prerequisites: `bun`, Docker (the harness manages a `neo4j:5` container on ports
 cd github_issue && bun install
 ```
 
+### Talk to it locally — no deployment needed
+
+The shipped agent ends in `serve(agent)` and expects the Astropods messaging service to
+supply a chat UI, so `bun run start` alone won't give you a prompt. `ask.ts` builds the
+*same* agent in-process — same instructions, model and tools — against the benchmark graph:
+
+```bash
+bun verification_bench/smoke.ts --split dev          # load 60 issues (free, no OpenAI spend)
+bun verification_bench/ask.ts "How many issues are closed?"
+bun verification_bench/ask.ts --repl                 # stay in a prompt
+```
+
+It prints the fingerprint of the tree it loaded and the Cypher the agent actually wrote, so
+you can watch it think. Point it at any commit to compare versions:
+
+```bash
+git worktree add .worktrees/baseline f5b3184
+SUT_DIR=../.worktrees/baseline/github_issue \
+  bun verification_bench/ask.ts "How many issues are closed?"
+```
+
+That last one is the defect this project fixed, and it is probabilistic — run it a few
+times. Truth is 54 closed of 60:
+
+```
+baseline  MATCH (i:Issue {state: 'closed'}) ...   ->  "There are currently no closed issues."
+baseline  MATCH (i:Issue {state: 'CLOSED'}) ...   ->  "There are 54 issues that are closed."
+HEAD      MATCH (i:Issue {state: "OPEN"})   ...   ->  correct, every time
+```
+
+### Deploying it for real
+
+The full system — scheduled ingestion, persistent Neo4j, chat UI at `localhost:3100` — runs
+on Astropods: `ast configure` then `ast dev`, with Docker, a GitHub token and an OpenAI key.
+See [`github_issue/README.md`](github_issue/README.md).
+
 ### Free checks — run these before trusting any score
 
 ```bash
