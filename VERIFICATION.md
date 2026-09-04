@@ -536,3 +536,22 @@ Mean deterministic accuracy is **95.873015873%**, range **93.333333%–99.047619
 ### H13 — CANCELLED
 
 H13 was cancelled without changing the guidance line and without running `verification_bench/probe-relationship-direction.ts`; that probe file remains preserved. The theoretical ceiling was **98.10%** if the known relationship-direction failure were removed, but residual non-direction failures remained. Instability was unchanged, and there was **no validation headroom** to justify the probe or confirmation runs. No H13 score or confirmation evidence is claimed.
+
+### W1 fallback — `openai/gpt-4.1-mini` QA-only confirmation
+
+The fallback used candidate fingerprint **`13a76c09e785458a`** (19 files) and the existing graph `verification_bench/jobs/w1-graph-41`, whose graph provenance reports the matching SUT hash `13a76c09e785458a`. Exactly two sequential fallback jobs were run; `w1-41mini-3` was not run and has no report or trace.
+
+| Job | Report | Trace | Deterministic | Overall | Solved every attempt | QA cost |
+|---|---|---|---:|---:|---:|---:|
+| `w1-41mini-1` | `verification_bench/jobs/w1-41mini-1/report.json` | `verification_bench/jobs/w1-41mini-1/traces/github-issue-analyzer-2026-09-04T11-46-08-215Z-1497928.jsonl` | 77.142857% | 80.0% | 30/40 | `$0.2326247` |
+| `w1-41mini-2` | `verification_bench/jobs/w1-41mini-2/report.json` | `verification_bench/jobs/w1-41mini-2/traces/github-issue-analyzer-2026-09-04T12-14-55-951Z-1502235.jsonl` | 75.238095% | 78.333333% | 29/40 | `$0.2361402` |
+
+Both reports are valid. Both used QA-only, `attempts=3`, `latencyMs=120`, the `w1-graph-41` provenance, canary pass, tool use `1.0`, agent errors `0`, and all integrity checks passing; each reports 121 GitHub requests in the preserved graph metadata. The two-run deterministic mean is **76.190476%**, with range **75.238095%–77.142857%** and spread **1.904762 percentage points**. QA spend was `$0.2326` for the first fallback run versus `$0.8422` for the gpt-4o reference (**-72.4%**); the two measured fallback QA runs totalled `$0.4687649` (average `$0.23438245`). Judge charges were excluded from the SUT QA cost comparison.
+
+The failure signature is distinct from gpt-4o-mini's reversed-relationship-traversal signature. Ten task instances were lost across the two confirmation reports: **8/10 were issue-set exact-enumeration questions** — `label_members` ×3, `mentions_term` ×3, and `author_issues` ×2 — plus `most_comments` and `most_reactions`. Counting questions were not failures. The gpt-4o-mini candidate instead showed a distinct reversed `User-[:AUTHORED_BY]->Issue` traversal pattern, often followed by a confident zero.
+
+**Stopping arithmetic:** run 2 scored **75.238095%**, not above the required 95% trigger, so the prescribed `w1-41mini-3` run was skipped. Independently, even two perfect remaining runs after the 77.14% first run could produce at most `(77.14 + 100 + 100) / 3 = 92.38%`, below the **97.14%** conditional threshold. Therefore n=2 is the economical stopping point and the verdict cannot change.
+
+**gpt-4.1-mini decision: REJECT.** Its n=2 deterministic confirmation mean was far below 97.14%, despite real 56%–72% QA savings; the QA agent cannot move to a cheaper model without unacceptable quality loss. The campaign has therefore tested the QA cost lever and stops here: gpt-4o-mini is **REJECT** (95.87% mean, 5.71 pp spread), H13 is **CANCELLED** (98.10% theoretical ceiling, with no gpt-4o headroom), and gpt-4.1-mini is **REJECT** (77.14% first run and n=2 confirmation). The savings are real, but quality is not acceptable. W2 extraction-side cost remains unmeasurable: it is 28.6% of spend and the dominant production cost, but no benchmark question reads extracted nodes, so extraction quality must be graded before that lever can be evaluated.
+
+No W2, W3, holdout, H13 probe, w1-41mini-3, or `bench/` scoring was run for this close-out.

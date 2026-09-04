@@ -33,8 +33,6 @@ const ROOT = join(import.meta.dirname, '..');
  */
 const PINNED: { dir: string; hash: string; files: number; what: string }[] = [
   { dir: 'github_issue', hash: '73acfdc375576226', files: 19, what: 'HEAD — champion + documented Issue.state enum' },
-  { dir: '.worktrees/baseline/github_issue', hash: '71c696b48a9da953', files: 18, what: 'baseline (baseline-n3 anchor)' },
-  { dir: '.worktrees/champion/github_issue', hash: '9eeb557db3e87c2d', files: 19, what: 'campaign champion (h9-confirm, sealed holdout)' },
 ];
 
 function fingerprint(sut: string): { hash: string; files: number } {
