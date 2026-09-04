@@ -388,6 +388,116 @@ async function insertComments(
 }
 
 // ---------------------------------------------------------------------------
+// Batched issue ingestion (H2)
+// ---------------------------------------------------------------------------
+
+/**
+ * Persist a complete issue batch in one managed write transaction.  The
+ * subqueries keep each optional collection independent, while UNWIND makes
+ * the operation one parameterized Cypher statement instead of the former
+ * per-issue/per-relation round trips.
+ */
+const BATCH_ISSUE_STATEMENTS = [
+  `UNWIND $issues AS item
+   MERGE (i:Issue {issueId: item.issueId})
+   SET i.number = toInteger(item.number), i.title = item.title,
+       i.bodyText = item.bodyText, i.createdAt = item.createdAt,
+       i.updatedAt = item.updatedAt, i.closedAt = item.closedAt,
+       i.state = item.state, i.authorLogin = item.authorLogin`,
+  `UNWIND $issues AS item
+   UNWIND item.users AS user
+   MERGE (u:User {login: user.login})
+   SET u.name = user.name, u.company = user.company`,
+  `UNWIND $issues AS item
+   WITH item WHERE item.authorLogin IS NOT NULL
+   MATCH (i:Issue {issueId: item.issueId}), (u:User {login: item.authorLogin})
+   MERGE (i)-[:AUTHORED_BY]->(u)`,
+  `UNWIND $issues AS item
+   UNWIND item.labels AS label
+   MERGE (l:Label {name: label.name})
+   SET l.description = label.description, l.color = label.color
+   WITH item, l
+   MATCH (i:Issue {issueId: item.issueId})
+   MERGE (i)-[:HAS_LABEL]->(l)`,
+  `UNWIND $issues AS item
+   UNWIND item.issueReactions AS reaction
+   MERGE (r:Reaction {content: reaction.content, issueId: item.issueId, userLogin: reaction.userLogin})
+   ON CREATE SET r.commentId = null
+   WITH item, r
+   MATCH (i:Issue {issueId: item.issueId})
+   MERGE (i)-[:HAS_REACTION]->(r)`,
+  `UNWIND $issues AS item
+   UNWIND item.comments AS c
+   MERGE (comment:Comment {commentId: c.id})
+   SET comment.bodyText = c.bodyText, comment.createdAt = c.createdAt,
+       comment.authorLogin = c.authorLogin
+   WITH item, comment
+   MATCH (i:Issue {issueId: item.issueId})
+   MERGE (i)-[:HAS_COMMENT]->(comment)`,
+  `UNWIND $issues AS item
+   UNWIND item.comments AS c
+   WITH c WHERE c.authorLogin IS NOT NULL
+   MATCH (comment:Comment {commentId: c.id}), (u:User {login: c.authorLogin})
+   MERGE (comment)-[:AUTHORED_BY]->(u)`,
+  `UNWIND $issues AS item
+   UNWIND item.comments AS c
+   UNWIND c.reactions AS reaction
+   MERGE (r:Reaction {content: reaction.content, issueId: item.issueId, userLogin: reaction.userLogin})
+   ON CREATE SET r.commentId = c.id
+   WITH c, r
+   MATCH (comment:Comment {commentId: c.id})
+   MERGE (comment)-[:HAS_REACTION]->(r)`,
+] as const;
+
+function toBatchIssue(item: IssueData): Record<string, unknown> {
+  const { issue, comments } = item;
+  const users = [issue.author, ...comments.map((comment) => comment.author)]
+    .filter((user): user is GitHubUser => !!user?.login)
+    .map((user) => ({ login: user.login, name: user.name ?? null, company: user.company ?? null }));
+
+  return {
+    issueId: issue.id,
+    number: issue.number,
+    title: issue.title,
+    bodyText: issue.bodyText,
+    createdAt: issue.createdAt,
+    updatedAt: issue.updatedAt,
+    closedAt: issue.closedAt,
+    state: issue.state,
+    authorLogin: issue.author?.login ?? null,
+    users,
+    labels: issue.labels?.nodes ?? [],
+    issueReactions: (issue.reactions?.nodes ?? [])
+      .filter((reaction) => reaction.user?.login)
+      .map((reaction) => ({ content: reaction.content, userLogin: reaction.user!.login })),
+    comments: comments.map((comment) => ({
+      id: comment.id,
+      bodyText: comment.bodyText,
+      createdAt: comment.createdAt,
+      authorLogin: comment.author?.login ?? null,
+      reactions: (comment.reactions?.nodes ?? [])
+        .filter((reaction) => reaction.user?.login)
+        .map((reaction) => ({ content: reaction.content, userLogin: reaction.user!.login })),
+    })),
+  };
+}
+
+async function ingestIssueBatch(issuesData: IssueData[]): Promise<void> {
+  if (issuesData.length === 0) return;
+  const session = getDriver().session();
+  const params = { issues: issuesData.map(toBatchIssue) };
+  try {
+    await session.executeWrite(async (tx) => {
+      for (const statement of BATCH_ISSUE_STATEMENTS) {
+        await tx.run(statement, params);
+      }
+    });
+  } finally {
+    await session.close();
+  }
+}
+
+// ---------------------------------------------------------------------------
 // Public API
 // ---------------------------------------------------------------------------
 
@@ -476,17 +586,33 @@ export async function ingestMultipleIssues(issuesData: IssueData[]): Promise<{
 
   console.log(`\n=== Ingesting ${issuesData.length} issues into Neo4j ===`);
 
-  for (let i = 0; i < issuesData.length; i++) {
-    const { issue, comments } = issuesData[i];
-    try {
-      console.log(`[${i + 1}/${issuesData.length}] Issue #${issue.number}...`);
-      const result = await ingestIssueData(issue, comments);
-      results.push(result);
-    } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : String(err);
-      console.error(`  Failed issue #${issue.number}: ${msg}`);
-      errors.push({ issueNumber: issue.number, error: msg });
+  try {
+    await ingestIssueBatch(issuesData);
+    for (const { issue, comments } of issuesData) {
+      results.push({
+        success: true,
+        issueId: issue.id,
+        commentCount: comments.length,
+        metadata: {
+          labels: issue.labels?.nodes?.length ?? 0,
+          issueReactions: issue.reactions?.nodes?.length ?? 0,
+          commentReactions: comments.reduce(
+            (sum, comment) => sum + (comment.reactions?.nodes?.length ?? 0),
+            0,
+          ),
+          uniqueUsers: new Set(
+            [
+              issue.author?.login,
+              ...comments.filter((comment) => comment.author?.login).map((comment) => comment.author!.login),
+            ].filter(Boolean),
+          ).size,
+        },
+      });
     }
+  } catch (err: unknown) {
+    const msg = err instanceof Error ? err.message : String(err);
+    console.error(`  Batched ingestion failed: ${msg}`);
+    for (const { issue } of issuesData) errors.push({ issueNumber: issue.number, error: msg });
   }
 
   console.log(`\nIngestion complete: ${results.length} ok, ${errors.length} failed`);
