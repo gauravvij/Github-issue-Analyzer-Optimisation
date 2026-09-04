@@ -8,7 +8,6 @@
  */
 
 import { type AnalysisData, ingestAnalysisResults } from './analysis';
-import { fetchMultipleIssueDetails } from './database';
 import { type IssueState, getAllIssueNumbers, getIssuesData } from './github';
 import {
   getIssueUpdatedAt,
@@ -159,43 +158,59 @@ async function runPipelineInner(
       updatedAtMap.set(issue.number, issue.updatedAt);
     }
 
-    const dbData = await withSpan(
-      'pipeline.readback',
-      { 'pipeline.issue_count': ingestedNumbers.length },
-      () => fetchMultipleIssueDetails(ingestedNumbers),
-    );
+    const ingestedIssueIds = new Set(ingested.results.map((result) => result.issueId));
     const analysisResults: AnalysisData[] = [];
 
-    for (const detail of dbData.results) {
+    // Reuse the already fetched GitHub payload. The ingestion step has just
+    // persisted this same data, so a Neo4j read-after-write would add one
+    // query per issue without changing the analysis input.
+    for (const fetchedIssue of fetched.results) {
+      if (!ingestedIssueIds.has(fetchedIssue.issue.id)) continue;
+
       try {
         // In incremental mode, skip analysis if the issue's updatedAt hasn't changed
         if (incremental) {
-          const previousUpdatedAt = await getIssueUpdatedAt(detail.issue.number);
-          const currentUpdatedAt = updatedAtMap.get(detail.issue.number);
+          const previousUpdatedAt = await getIssueUpdatedAt(fetchedIssue.issue.number);
+          const currentUpdatedAt = updatedAtMap.get(fetchedIssue.issue.number);
           if (previousUpdatedAt && currentUpdatedAt && previousUpdatedAt === currentUpdatedAt) {
-            console.log(`  Skipping issue #${detail.issue.number} (unchanged)`);
+            console.log(`  Skipping issue #${fetchedIssue.issue.number} (unchanged)`);
             skippedCount++;
             continue;
           }
         }
 
-        const transformed = transformIssueDataForAnalysis(detail);
-        console.log(`  Analyzing issue #${detail.issue.number}: ${detail.issue.title}`);
+        const transformed = transformIssueDataForAnalysis({
+          issue: {
+            issueId: fetchedIssue.issue.id,
+            number: fetchedIssue.issue.number,
+            title: fetchedIssue.issue.title,
+            bodyText: fetchedIssue.issue.bodyText,
+          },
+          labels: (fetchedIssue.issue.labels?.nodes ?? [])
+            .map((label) => label.name)
+            .filter((name): name is string => name !== null),
+          comments: fetchedIssue.comments.map((comment) => ({
+            commentId: comment.id,
+            authorLogin: comment.author?.login,
+            bodyText: comment.bodyText,
+          })),
+        });
+        console.log(`  Analyzing issue #${fetchedIssue.issue.number}: ${fetchedIssue.issue.title}`);
         const result = await withSpan(
           'pipeline.analyzeIssue',
-          { 'pipeline.issue_number': detail.issue.number },
+          { 'pipeline.issue_number': fetchedIssue.issue.number },
           () => analyzeIssueWithOpenAI(transformed),
         );
         analysisResults.push({
-          issueNumber: detail.issue.number,
-          title: detail.issue.title,
+          issueNumber: fetchedIssue.issue.number,
+          title: fetchedIssue.issue.title,
           analysis: result.analysis,
         });
         analysisCount++;
       } catch (err: unknown) {
         const msg = err instanceof Error ? err.message : String(err);
-        console.error(`  Analysis failed for #${detail.issue.number}: ${msg}`);
-        errors.push(`analysis #${detail.issue.number}: ${msg}`);
+        console.error(`  Analysis failed for #${fetchedIssue.issue.number}: ${msg}`);
+        errors.push(`analysis #${fetchedIssue.issue.number}: ${msg}`);
       }
     }
 
