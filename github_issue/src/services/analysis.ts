@@ -60,16 +60,33 @@ async function clearExistingAnalysis(session: Session, issueNumber: number): Pro
     { n: issueNumber },
   );
 
-  // Clean up orphaned competitors/categories
+  // Remove only entities that were linked to this issue and became orphaned.
+  // The previous query scanned every Competitor and Category in the graph.
   await session.run(
     `MATCH (i:Issue {number: $n})
-     OPTIONAL MATCH (i)-[r1:MENTIONS_COMPETITOR]->(comp:Competitor) DELETE r1
-     WITH i
-     OPTIONAL MATCH (i)-[r2:BELONGS_TO_CATEGORY]->(cat:Category) DELETE r2
-     WITH i
-     MATCH (comp:Competitor) WHERE NOT (comp)<-[:MENTIONS_COMPETITOR]-() DELETE comp
-     WITH i
-     MATCH (cat:Category) WHERE NOT (cat)<-[:BELONGS_TO_CATEGORY]-() DELETE cat`,
+     CALL {
+       WITH i
+       OPTIONAL MATCH (i)-[r:MENTIONS_COMPETITOR]->(comp:Competitor)
+       DELETE r
+       WITH collect(comp) AS detached
+       UNWIND detached AS candidate
+       WITH candidate
+       WHERE candidate IS NOT NULL AND NOT (candidate)<-[:MENTIONS_COMPETITOR]-()
+       DETACH DELETE candidate
+       RETURN count(*) AS competitors_deleted
+     }
+     CALL {
+       WITH i
+       OPTIONAL MATCH (i)-[r:BELONGS_TO_CATEGORY]->(cat:Category)
+       DELETE r
+       WITH collect(cat) AS detached
+       UNWIND detached AS candidate
+       WITH candidate
+       WHERE candidate IS NOT NULL AND NOT (candidate)<-[:BELONGS_TO_CATEGORY]-()
+       DETACH DELETE candidate
+       RETURN count(*) AS categories_deleted
+     }
+     RETURN i`,
     { n: issueNumber },
   );
 }
