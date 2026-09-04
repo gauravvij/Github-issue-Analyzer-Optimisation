@@ -322,24 +322,45 @@ export async function getIssuesData(
   repo: string,
   issueNumbers: number[],
 ): Promise<{ results: IssueData[]; errors: { issueNumber: number; error: string }[] }> {
-  const results: IssueData[] = [];
-  const errors: { issueNumber: number; error: string }[] = [];
+  // Fetch complete issues concurrently, while keeping output order stable for
+  // callers. The worker pool is deliberately bounded so a large repository
+  // cannot create an unbounded burst of GraphQL requests.
+  const configuredConcurrency = Number.parseInt(process.env.GITHUB_FETCH_CONCURRENCY ?? '1', 10);
+  const concurrency = Math.max(
+    1,
+    Math.min(issueNumbers.length || 1, Number.isFinite(configuredConcurrency) ? configuredConcurrency : 4),
+  );
+  const resultsByIndex: (IssueData | undefined)[] = new Array(issueNumbers.length);
+  const errorsByIndex: ({ issueNumber: number; error: string } | undefined)[] = new Array(
+    issueNumbers.length,
+  );
+  let nextIndex = 0;
 
-  console.log(`Fetching ${issueNumbers.length} issues from ${owner}/${repo}...`);
+  console.log(`Fetching ${issueNumbers.length} issues from ${owner}/${repo} (concurrency ${concurrency})...`);
 
-  for (let i = 0; i < issueNumbers.length; i++) {
-    const num = issueNumbers[i];
-    try {
-      console.log(`[${i + 1}/${issueNumbers.length}] Issue #${num}...`);
-      const data = await fetchCompleteIssue(owner, repo, num);
-      results.push(data);
-    } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : String(err);
-      console.error(`  Failed #${num}: ${msg}`);
-      errors.push({ issueNumber: num, error: msg });
+  async function worker(): Promise<void> {
+    while (true) {
+      const index = nextIndex++;
+      if (index >= issueNumbers.length) return;
+
+      const num = issueNumbers[index];
+      try {
+        console.log(`[${index + 1}/${issueNumbers.length}] Issue #${num}...`);
+        resultsByIndex[index] = await fetchCompleteIssue(owner, repo, num);
+      } catch (err: unknown) {
+        const msg = err instanceof Error ? err.message : String(err);
+        console.error(`  Failed #${num}: ${msg}`);
+        errorsByIndex[index] = { issueNumber: num, error: msg };
+      }
     }
   }
 
+  await Promise.all(Array.from({ length: concurrency }, () => worker()));
+
+  const results = resultsByIndex.filter((result): result is IssueData => result !== undefined);
+  const errors = errorsByIndex.filter(
+    (error): error is { issueNumber: number; error: string } => error !== undefined,
+  );
   console.log(`Fetch complete: ${results.length} ok, ${errors.length} failed`);
   return { results, errors };
 }
