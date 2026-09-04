@@ -15,6 +15,7 @@ import {
   getLastSyncTimestamp,
   ingestMultipleIssues,
   setLastSyncTimestamp,
+  setupDatabaseSchema,
 } from './neo4j';
 import { analyzeIssueWithOpenAI, transformIssueDataForAnalysis } from './openai';
 import { withSpan } from './tracing';
@@ -72,6 +73,9 @@ async function runPipelineInner(
   const start = Date.now();
   const runTimestamp = new Date().toISOString();
   const errors: string[] = [];
+
+  // Ensure MERGE lookups use the same idempotent schema on every sync.
+  await setupDatabaseSchema();
 
   // Read lastSync to determine if this is incremental
   let since: string | null = null;

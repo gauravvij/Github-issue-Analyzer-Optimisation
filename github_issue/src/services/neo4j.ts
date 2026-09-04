@@ -224,6 +224,40 @@ async function insertReactions(
 }
 
 // ---------------------------------------------------------------------------
+// Schema initialization
+// ---------------------------------------------------------------------------
+
+/**
+ * Create the uniqueness constraints and lookup indexes used by ingestion.
+ * Every statement is idempotent so startup and incremental syncs are safe.
+ */
+export async function setupDatabaseSchema(): Promise<void> {
+  const session = getDriver().session();
+  const statements = [
+    'CREATE CONSTRAINT issue_id_unique IF NOT EXISTS FOR (i:Issue) REQUIRE i.issueId IS UNIQUE',
+    'CREATE CONSTRAINT issue_number_unique IF NOT EXISTS FOR (i:Issue) REQUIRE i.number IS UNIQUE',
+    'CREATE CONSTRAINT comment_id_unique IF NOT EXISTS FOR (c:Comment) REQUIRE c.commentId IS UNIQUE',
+    'CREATE CONSTRAINT user_login_unique IF NOT EXISTS FOR (u:User) REQUIRE u.login IS UNIQUE',
+    'CREATE CONSTRAINT label_name_unique IF NOT EXISTS FOR (l:Label) REQUIRE l.name IS UNIQUE',
+    'CREATE CONSTRAINT category_name_unique IF NOT EXISTS FOR (c:Category) REQUIRE c.name IS UNIQUE',
+    'CREATE CONSTRAINT competitor_name_unique IF NOT EXISTS FOR (c:Competitor) REQUIRE c.name IS UNIQUE',
+    'CREATE CONSTRAINT solution_text_unique IF NOT EXISTS FOR (s:Solution) REQUIRE s.solutionText IS UNIQUE',
+    'CREATE CONSTRAINT workaround_text_unique IF NOT EXISTS FOR (w:Workaround) REQUIRE w.workaroundText IS UNIQUE',
+    'CREATE CONSTRAINT keyword_name_unique IF NOT EXISTS FOR (k:Keyword) REQUIRE k.name IS UNIQUE',
+    'CREATE INDEX issue_state_lookup IF NOT EXISTS FOR (i:Issue) ON (i.state)',
+    'CREATE INDEX issue_updated_at_lookup IF NOT EXISTS FOR (i:Issue) ON (i.updatedAt)',
+  ];
+
+  try {
+    for (const statement of statements) {
+      await session.run(statement);
+    }
+  } finally {
+    await session.close();
+  }
+}
+
+// ---------------------------------------------------------------------------
 // Issue ingestion
 // ---------------------------------------------------------------------------
 
@@ -458,3 +492,11 @@ export async function ingestMultipleIssues(issuesData: IssueData[]): Promise<{
   console.log(`\nIngestion complete: ${results.length} ok, ${errors.length} failed`);
   return { results, errors };
 }
+/**
+ * Neo4j write operations — ingests GitHub issue data into the knowledge graph.
+ *
+ * Graph schema:
+ *   Nodes:  Issue, Comment, User, Label, Reaction
+ *   Rels:   AUTHORED_BY, HAS_LABEL, HAS_COMMENT, HAS_REACTION
+ */
+
