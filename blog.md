@@ -1,14 +1,24 @@
-# How NEO Improved a GitHub Issue Analyzer from 94% to 100%
+# "There are currently no closed issues."
 
-An AI agent optimised a production codebase, shipped the result — and then built a second
-benchmark from scratch to check whether its own numbers were real.
+**There were 54. Out of 60.**
 
-They mostly were. But the headline was a lucky run, and NEO said so.
+That sentence came out of a working GitHub issue analyzer — an agent that pulls issues into
+a Neo4j knowledge graph and answers questions about them. Asked how many issues were closed,
+it wrote a database query, got nothing back, and reported the emptiness as a fact.
 
-This is a full account of an autonomous engineering run: what NEO changed, how it measured
-itself, what survived independent re-testing, and the three cost optimisations it tried and
-rejected. Every number below is reproducible from the repository, and every claim NEO could
-not support is marked as unsupported.
+Nothing about it looked broken. No error, no timeout, no stack trace. It called its tools
+correctly, formatted the answer nicely, and was wrong about four times out of five.
+
+That is the failure mode that should frighten anyone shipping an analytics agent. A crash
+gets noticed in minutes. A confident zero gets quoted in a meeting.
+
+NEO found it, traced it to one line of a prompt, and fixed it. Then it did the less usual
+thing: it went back and tried to prove its own fix didn't matter.
+
+This is the full account — what NEO changed, how it measured itself, what survived
+re-testing on a benchmark built after the fact, and the three cost optimisations it tried
+and threw away. Every number here is reproducible from the repository. Where NEO could not
+support a claim, it says so — including about its own headline.
 
 ---
 
@@ -30,8 +40,9 @@ Measured on **100 real `sympy/sympy` GitHub issues selected by SWE-bench** — a
 system had never been tuned against — averaged over three independent runs per version,
 three attempts per question. 360 graded attempts per arm.
 
-The system under test is a GitHub issue analyzer: it ingests issues into a Neo4j knowledge
-graph and answers questions about them using an LLM agent with Cypher query tools.
+Six percentage points does not sound like much until you look at what those points were.
+They were not rounding. They were an entire class of question the system got wrong almost
+every time, in a way no error handler would ever catch.
 
 ![Deterministic accuracy on a corpus it had never seen](assets/accuracy-on-unseen-data.svg)
 
@@ -104,8 +115,14 @@ fetch concurrency, dropping the read-after-write, Cypher error feedback, schema 
 
 **1 rejected and reverted** — comment filtering raised cost without hitting its token target.
 
-**3 skipped** — no valid resource contract existed for the embedding work, and NEO declined
-to invent one.
+**3 skipped** — the embedding work needed an external resource contract that did not exist,
+and NEO declined to invent one to have something to report.
+
+The rejected one is worth a moment. Comment filtering was a reasonable idea, it was fully
+implemented, it was scored at three attempts — and it made the system more expensive without
+moving the metric it was supposed to move. So NEO reverted it and wrote down why. Throwing
+away finished work on the evidence is the part of the loop that makes the rest of it mean
+anything.
 
 Ingestion went from 698 Neo4j queries to 255, and from 122 sessions to 4. The database work
 was real, and it holds up.
@@ -371,14 +388,18 @@ SUT_DIR=../.worktrees/baseline/github_issue \
   bun verification_bench/run.ts --split dev --job base --attempts 3
 ```
 
-Seventeen commits, one author, every number traceable to the bytes that produced it.
+One author, one history, every number traceable to the bytes that produced it.
 
 ---
 
 ## Try NEO
 
+The analyzer, for the record, now knows how many issues are closed. It knows it every time,
+on data it has never seen, and there is a fingerprinted commit and three scored runs behind
+that sentence.
+
 NEO did the profiling, the benchmark construction, the optimisation loop, the independent
-re-verification, and the cost campaign — including the parts where the answer was no.
+re-verification, and the cost campaign — including all the parts where the answer was no.
 
 **[NEO — Your Autonomous AI Engineering Agent](https://heyneo.com)**
 
