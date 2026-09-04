@@ -1,0 +1,3815 @@
+{
+  "meta": {
+    "source": "SWE-bench/SWE-bench:test -> github.com/sympy/sympy (live GraphQL)",
+    "builtAt": "2026-09-04T07:00:00.022Z",
+    "seed": 20260904,
+    "owner": "sympy",
+    "repo": "sympy",
+    "split": "holdout",
+    "count": 40,
+    "swebench": {
+      "dataset": "SWE-bench/SWE-bench",
+      "split": "test",
+      "pairs": [
+        {
+          "pr": 11919,
+          "issue": 11841
+        },
+        {
+          "pr": 12144,
+          "issue": 11847
+        },
+        {
+          "pr": 12286,
+          "issue": 11847
+        },
+        {
+          "pr": 12481,
+          "issue": 12479
+        },
+        {
+          "pr": 12529,
+          "issue": 8875
+        },
+        {
+          "pr": 13279,
+          "issue": 13278
+        },
+        {
+          "pr": 13429,
+          "issue": 13081
+        },
+        {
+          "pr": 13471,
+          "issue": 13470
+        },
+        {
+          "pr": 13551,
+          "issue": 13546
+        },
+        {
+          "pr": 13761,
+          "issue": 13474
+        },
+        {
+          "pr": 14082,
+          "issue": 8246
+        },
+        {
+          "pr": 14308,
+          "issue": 12675
+        },
+        {
+          "pr": 14317,
+          "issue": 14316
+        },
+        {
+          "pr": 14333,
+          "issue": 14332
+        },
+        {
+          "pr": 14575,
+          "issue": 14529
+        },
+        {
+          "pr": 15222,
+          "issue": 15138
+        },
+        {
+          "pr": 15308,
+          "issue": 15303
+        },
+        {
+          "pr": 15349,
+          "issue": 15193
+        },
+        {
+          "pr": 15596,
+          "issue": 15564
+        },
+        {
+          "pr": 15678,
+          "issue": 15584
+        },
+        {
+          "pr": 16056,
+          "issue": 15934
+        },
+        {
+          "pr": 16106,
+          "issue": 12089
+        },
+        {
+          "pr": 16781,
+          "issue": 11634
+        },
+        {
+          "pr": 16864,
+          "issue": 16873
+        },
+        {
+          "pr": 17239,
+          "issue": 17238
+        },
+        {
+          "pr": 18477,
+          "issue": 7847
+        },
+        {
+          "pr": 18744,
+          "issue": 18743
+        },
+        {
+          "pr": 18835,
+          "issue": 18832
+        },
+        {
+          "pr": 19346,
+          "issue": 19329
+        },
+        {
+          "pr": 19601,
+          "issue": 19557
+        },
+        {
+          "pr": 19954,
+          "issue": 19927
+        },
+        {
+          "pr": 20134,
+          "issue": 19641
+        },
+        {
+          "pr": 20590,
+          "issue": 20567
+        },
+        {
+          "pr": 20691,
+          "issue": 19162
+        },
+        {
+          "pr": 21259,
+          "issue": 21201
+        },
+        {
+          "pr": 22080,
+          "issue": 17737
+        },
+        {
+          "pr": 22402,
+          "issue": 22185
+        },
+        {
+          "pr": 22914,
+          "issue": 22908
+        },
+        {
+          "pr": 23191,
+          "issue": 23058
+        },
+        {
+          "pr": 23413,
+          "issue": 23410
+        },
+        {
+          "pr": 24443,
+          "issue": 24442
+        }
+      ]
+    }
+  },
+  "issues": [
+    {
+      "id": "MDU6SXNzdWUzOTkxMzQ1Nw==",
+      "number": 7847,
+      "title": "Allow to set min_fixed and max_fixed for Float in the printers",
+      "bodyText": "The mpmath printer has min_fixed and max_fixed settings, which should be exposed to the printers. Right now, only the strip_zeros option is exposed.\nWe should also unify the Float printer for the various printers. For example, the LaTeX printer doesn't have the same behavior as the string printer.",
+      "createdAt": "2014-08-10T18:27:29Z",
+      "updatedAt": "2020-01-29T10:10:23Z",
+      "closedAt": "2020-01-29T10:10:23Z",
+      "state": "CLOSED",
+      "author": {
+        "login": "asmeurer",
+        "name": "Aaron Meurer",
+        "company": null
+      },
+      "labels": {
+        "nodes": [
+          {
+            "name": "Easy to Fix",
+            "description": "This is a good issue for new contributors. Feel free to work on this if no one else has already.",
+            "color": "009800"
+          },
+          {
+            "name": "printing",
+            "description": null,
+            "color": "0000FF"
+          }
+        ]
+      },
+      "reactions": {
+        "nodes": [],
+        "totalCount": 0
+      },
+      "totalComments": 19,
+      "comments": [
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDUxNzIyODA3",
+          "bodyText": "Related: http://stackoverflow.com/q/25222681/161801",
+          "createdAt": "2014-08-10T18:27:46Z",
+          "author": {
+            "login": "asmeurer"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDUyODk0MTU5",
+          "bodyText": "To fix issue #7847 I have done the following changes to the code in sympy/sympy/printing/str.py\nWill this work?\nclass StrPrinter(Printer):\n    printmethod = \"_sympystr\"\n    _default_settings = {\n        \"order\": None,\n        \"full_prec\": \"auto\",\n        \"min\": None,\n        \"max\": None,\n    }\ndef _print_Float(self, expr):\n        prec = expr._prec\n        low = self._settings[\"min\"]\n        high = self._settings[\"max\"]\n        if prec < 5:\n            dps = 0\n        else:\n            dps = prec_to_dps(expr._prec) \n        if self._settings[\"full_prec\"] is True:\n            strip = False\n        elif self._settings[\"full_prec\"] is False:\n            strip = True\n        elif self._settings[\"full_prec\"] == \"auto\":\n            strip = self._print_level > 1\n        if low is None:\n            low = min(-(dps//3), -5)\n        if high is None:\n            high = dps\n        rv = mlib.to_str(expr._mpf_, dps, strip_zeros=strip, min_fixed=low, max_fixed=high)\n        if rv.startswith('-.0'):\n            rv = '-0.' + rv[3:]\n        elif rv.startswith('.0'):\n            rv = '0.' + rv[2:]\n        return rv",
+          "createdAt": "2014-08-21T08:50:49Z",
+          "author": {
+            "login": "MridulS"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDUyODk1MDk2",
+          "bodyText": "@MridulS You should send a pull request for your changes.",
+          "createdAt": "2014-08-21T09:01:09Z",
+          "author": {
+            "login": "hargup"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDUyODk1NTc2",
+          "bodyText": "@hargup I just wanted to confirm whether this will work or not.",
+          "createdAt": "2014-08-21T09:06:25Z",
+          "author": {
+            "login": "MridulS"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDUyODk2NTYz",
+          "bodyText": "I just wanted to confirm whether this will work or not\n\nWe can see that at the Pull Request, there we can see the results of the travis build. Also the reviewers will be able to directly pull your changes on the local into their local system. If you have made the changes sending the pull request should not be much work.",
+          "createdAt": "2014-08-21T09:16:45Z",
+          "author": {
+            "login": "hargup"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDczMzQwMDEy",
+          "bodyText": "@MridulS  Hello the bug has been fixed?\nIf not, would like to know more information to resolve this bug. You need help to implement anything else?",
+          "createdAt": "2015-02-07T00:45:33Z",
+          "author": {
+            "login": "lohmanndouglas"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDczMzQwNzg1",
+          "bodyText": "@lohmanndouglas You could add @MridulS's github fork of sympy as a remote and pull down his branch with his fix in #7847. Then play with it and see if it works.",
+          "createdAt": "2015-02-07T00:57:08Z",
+          "author": {
+            "login": "moorepants"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDczNzUzODE2",
+          "bodyText": "@moorepants unfortunately i have deleted that branch. @lohmanndouglas you can still see the changes I tried at 6183874",
+          "createdAt": "2015-02-10T18:25:29Z",
+          "author": {
+            "login": "MridulS"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDMxNjM2MTEyNQ==",
+          "bodyText": "Is this issue fixed? I would like to take this on.",
+          "createdAt": "2017-07-19T11:50:44Z",
+          "author": {
+            "login": "Yathartha22"
+          },
+          "reactions": {
+            "nodes": [
+              {
+                "content": "THUMBS_UP",
+                "user": {
+                  "login": "lzkelley"
+                }
+              }
+            ],
+            "totalCount": 1
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDM1Nzk5NTQ3MA==",
+          "bodyText": "@Yathartha22 I think this is still open, if you're still interested --- though it's been a while...\nThe SO question that (partially) prompted this has over 1000 views now.",
+          "createdAt": "2018-01-16T15:24:24Z",
+          "author": {
+            "login": "lzkelley"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDM1ODE5NzgxOA==",
+          "bodyText": "Sure I will take this up.",
+          "createdAt": "2018-01-17T05:01:47Z",
+          "author": {
+            "login": "Yathartha22"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDQzODIwMDc5Nw==",
+          "bodyText": "Is this issue fixed? If not I'd like to work on it.",
+          "createdAt": "2018-11-13T09:40:58Z",
+          "author": {
+            "login": "m-agboola"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDQzODQwMzAxNA==",
+          "bodyText": "I don't think so. I don't see any cross-referenced pull requests listed here.",
+          "createdAt": "2018-11-13T19:24:07Z",
+          "author": {
+            "login": "asmeurer"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDU3ODUzOTEzOQ==",
+          "bodyText": "@asmeurer according to this https://stackoverflow.com/questions/25222681/scientific-exponential-notation-with-sympy-in-an-ipython-notebook I tried exposing the min and max fixed from mpmath to StrPrinter but currently we have to set the exponent values as min and max. For example, to print in a fixed-point format for numbers between [0.01, 100], we can do it by passing additional min, max in StrPrinter object. The demonstration is below:\n\nAs you can see, the exponent check is like if exponent is in (-2, 2) then it will print fixed-point format else floating-point format.",
+          "createdAt": "2020-01-26T20:21:29Z",
+          "author": {
+            "login": "mijo2"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDU3ODg1NDkxNQ==",
+          "bodyText": "@mijo2 why is 0.04 still printing as 4.0e-2?  And is there a separate parameter for the 'sig-figs' (i.e. 55.0 vs 55 or 55.?",
+          "createdAt": "2020-01-27T17:18:10Z",
+          "author": {
+            "login": "lzkelley"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDU3OTMzOTg3Nw==",
+          "bodyText": "@lzkelley 0.04 is printed as 4e-2 because when we mention min as -2 and max as 2, then all the numbers between 0.1 and 100 where 0.1 inclusive and 100 exclusive, are printed in fixed-point floating format. That is why 0.04 is printed as 4e-2. These min and max parameters are straight from mpmath's to_str method that we are using in StrPrinter",
+          "createdAt": "2020-01-28T16:37:00Z",
+          "author": {
+            "login": "mijo2"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDU3OTM2NDQzOA==",
+          "bodyText": "Okay, the asymmetry is a little weird to me, but sure.\nSo is it possible to have max and min set in init_printing() via Printer.set_global_settings() or something like that?",
+          "createdAt": "2020-01-28T17:29:09Z",
+          "author": {
+            "login": "lzkelley"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDU3OTQwNzEwMA==",
+          "bodyText": "@lzkelley let me try it out and get back to you regarding this.",
+          "createdAt": "2020-01-28T19:11:03Z",
+          "author": {
+            "login": "mijo2"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDU3OTY2Nzk2Mw==",
+          "bodyText": "@lzkelley So, when I made the changes and exposed the min and max options for string and latex printers, it became possible to set max and min via Printer.set_global_settings().\nExample:\n>>> Printer.set_global_settings(min=-2, max=4)\n>>> obj = StrPrinter()\n>>> obj._print(Float('100'))\n'100.000000000000'\n>>> obj._print(Float('10000'))\n'1.00000000000000e+4'",
+          "createdAt": "2020-01-29T09:24:50Z",
+          "author": {
+            "login": "mijo2"
+          },
+          "reactions": {
+            "nodes": [
+              {
+                "content": "HOORAY",
+                "user": {
+                  "login": "lzkelley"
+                }
+              }
+            ],
+            "totalCount": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "MDU6SXNzdWU0NTgxNjU5Mw==",
+      "number": 8246,
+      "title": "integrate(x / (x**2 + y**2), y) gives incorrectly 0 when x and y are real",
+      "bodyText": "I need to integrate(x / (x2 + y2), y). First I try it in Mathematica: Integrate[x1 / (x1^2 + y1^2), y1] would give ArcTan[y1/x1]. Further assuming the variables are real would give the same answer, i.e., Integrate[x2 / (x2^2 + y2^2), y2, Assumptions -> {Element[x2, Reals], Element[y2, Reals]}] would give ArcTan[y2/x2].\nThen I do it in sympy (I'm using Anaconda 2.1 which comes with python 2.7.8 and sympy 0.7.5):\n$ python\nPython 2.7.8 |Anaconda 2.1.0 (x86_64)| (default, Aug 21 2014, 15:21:46)\n[GCC 4.2.1 (Apple Inc. build 5577)] on darwin\nType \"help\", \"copyright\", \"credits\" or \"license\" for more information.\nAnaconda is brought to you by Continuum Analytics.\nPlease check out: http://continuum.io/thanks and https://binstar.org\n>>> import sympy\n>>> sympy.__version__\n'0.7.5'\n>>> x1, y1 = sympy.symbols('x1 y1')\n>>> sympy.integrate(x1 / (x1**2 + y1**2), y1)\n-I*log(-I*x1 + y1)/2 + I*log(I*x1 + y1)/2\n\nI haven't tried to simplify this to see if it's the same as ArcTan(y1/x1), but the main problem is when I further assume the variables are real, it gives 0, which is apparently a wrong answer:\n>>> x2, y2 = sympy.symbols('x2 y2', real = True)\n>>> sympy.integrate(x2 / (x2**2 + y2**2), y2)\n0",
+      "createdAt": "2014-10-15T00:20:43Z",
+      "updatedAt": "2018-02-05T17:43:38Z",
+      "closedAt": "2018-02-05T17:43:38Z",
+      "state": "CLOSED",
+      "author": {
+        "login": "wenjundeng",
+        "name": "Wenjun Deng",
+        "company": "Trexquant Investment LP"
+      },
+      "labels": {
+        "nodes": []
+      },
+      "reactions": {
+        "nodes": [],
+        "totalCount": 0
+      },
+      "totalComments": 1,
+      "comments": [
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDU5MTYzMjIz",
+          "bodyText": "I agree this is a wrong result.",
+          "createdAt": "2014-10-15T06:28:59Z",
+          "author": {
+            "login": "pelegm"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "MDU6SXNzdWU1NTMwOTc1Ng==",
+      "number": 8875,
+      "title": "Totient of any non-integer number",
+      "bodyText": "According to the Totient function definition on wikipedia, the totient of non-integer numbers is not there. But in sympy:\n>>> totient(2.3)\ntotient(2.3)\n\nthe value is returned, instead of an error.",
+      "createdAt": "2015-01-23T17:40:43Z",
+      "updatedAt": "2017-08-10T23:24:34Z",
+      "closedAt": "2017-08-10T23:24:34Z",
+      "state": "CLOSED",
+      "author": {
+        "login": "gxyd",
+        "name": "Gaurav Dhingra",
+        "company": null
+      },
+      "labels": {
+        "nodes": []
+      },
+      "reactions": {
+        "nodes": [],
+        "totalCount": 0
+      },
+      "totalComments": 8,
+      "comments": [
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDcxMjMzNDE2",
+          "bodyText": "From the wikipedia article you cited:\nIn number theory http://en.wikipedia.org/wiki/Number_theory, Euler's\ntotient or phi function, φ(n), is an arithmetic function\nhttp://en.wikipedia.org/wiki/Arithmetic_function that counts the totatives\nhttp://en.wikipedia.org/wiki/Totative of n, that is, the positive\nintegers less than or equal to n that are relatively prime\nhttp://en.wikipedia.org/wiki/Relatively_prime to n. Thus, if n\nis a positive\ninteger http://en.wikipedia.org/wiki/Positive_integer, then φ(n) is the\nnumber of integers k in the range 1 ≤ k ≤ n for which the greatest\ncommon divisor gcd http://en.wikipedia.org/wiki/Greatest_common_divisor(\nn, k) = 1.[1]\nhttp://en.wikipedia.org/wiki/Euler%27s_totient_function#cite_note-1[2]\nhttp://en.wikipedia.org/wiki/Euler%27s_totient_function#cite_note-2 The\ntotient function is a multiplicative function\nhttp://en.wikipedia.org/wiki/Multiplicative_function, meaning that if two\nnumbers m and n are relatively prime (with respect to each other), then\nφ(mn) = φ(m)φ(n).[3]\nhttp://en.wikipedia.org/wiki/Euler%27s_totient_function#cite_note-3[4]\nhttp://en.wikipedia.org/wiki/Euler%27s_totient_function#cite_note-4\nIt looks like the issue is the \"relatively prime\" requirement, since it is\nonly defined for integers ( http://en.wikipedia.org/wiki/Coprime_integers\n). Certainly, getting a list of integers less than or equal to n doesn't\nrequire n to be a real number.\nThe requirement to get the number of integers k in the range 1 ≤ k ≤ n\ndoesn't require n to be an integer. I don't know if calculating the\ngreatest common divisor is defined for non-integers.  I'm unclear about the\nefficacy or applicability of the totient function being a multiplicative\nfunction.\nDavid\nOn Fri, Jan 23, 2015 at 12:40 PM, Gaurav Dhingra notifications@github.com\nwrote:\n\nAccording to the Totient function definition on wikipedia\nhttp://en.wikipedia.org/wiki/Euler%27s_totient_function, the totient of\nnon-integer numbers is not there. But in sympy:\ntotient(2.3)\ntotient(2.3)\nthe value is returned, instead of an error.\n—\nReply to this email directly or view it on GitHub\n#8875.",
+          "createdAt": "2015-01-23T17:50:18Z",
+          "author": {
+            "login": "whitten"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDcxMjM0ODc4",
+          "bodyText": "I don't get you completely, but The wolframalpha also raise an error, http://www.wolframalpha.com/input/?i=totient%282.3%29",
+          "createdAt": "2015-01-23T17:59:06Z",
+          "author": {
+            "login": "gxyd"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDcxMjU2NDI3",
+          "bodyText": "In number theory, Euler's totient or phi function, φ(n), is an arithmetic function that counts the totatives of n,\nand In number theory, a totative of a given positive integer n is an integer k\nAnd in sympy/ntheory/factor_.py toitent class is also defined this way\nclass totient(Function):\n\"\"\"\nCalculate the Euler totient function phi(n)\n>>> from sympy.ntheory import totient\n>>> totient(1)\n1\n>>> totient(25)\n20\n\nSee Also\n========\n\ndivisor_count\n\"\"\"\n@classmethod\ndef eval(cls, n):\n    n = sympify(n)\n    if n.is_Integer:\n        if n < 1:\n            raise ValueError(\"n must be a positive integer\")\n        factors = factorint(n)\n        t = 1\n        for p, k in factors.items():\n            t *= (p - 1) * p**(k - 1)\n        return t\n\nit checks if n is a integer\nSo i think that gxyd is right and this should fix it:-\nelse:\nraise ValueError(\"n must be a positive integer\")",
+          "createdAt": "2015-01-23T20:04:16Z",
+          "author": {
+            "login": "darkcoderrises"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDcxMzAyMzM1",
+          "bodyText": "@smichr  plz. take a look at this issue, i think earlier you were discussing about the totient function's output but i think the input to the function should only be a positive integer.",
+          "createdAt": "2015-01-24T06:15:59Z",
+          "author": {
+            "login": "gxyd"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDcxMzEwODQ4",
+          "bodyText": "@darkcoderrises i think adding the code you are suggesting i.e.(else: raise ValueError(\"n must be positive\") would not work, since this totient function should still be returned unevaluated for an instance of Symbol. Ex.\n\n\n\nx = Symbol('x')\ntotient(x)\ntotient(x)              # should be returned as it is\ntotient(oo)    # should raise an error",
+          "createdAt": "2015-01-24T10:56:05Z",
+          "author": {
+            "login": "gxyd"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDcxMzE3NjM5",
+          "bodyText": "@gxyd Ya sorry for that we can do something like elif n is number(real and complex)",
+          "createdAt": "2015-01-24T13:54:29Z",
+          "author": {
+            "login": "darkcoderrises"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDcxMzUxMTE0",
+          "bodyText": "@smichr  please have a look at the reference i have given for this issue( #8875 ) .",
+          "createdAt": "2015-01-25T04:18:13Z",
+          "author": {
+            "login": "gxyd"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDcyMzQyNTA2",
+          "bodyText": "I have added test cases for this as well.\nPlease review it.\n#8923",
+          "createdAt": "2015-01-31T23:29:41Z",
+          "author": {
+            "login": "aka001"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "MDU6SXNzdWUxNzc5MDk5NTU=",
+      "number": 11634,
+      "title": "dotprint doesn't use the correct order for x**2",
+      "bodyText": "The dot diagram in the tutorial is wrong (http://docs.sympy.org/dev/tutorial/manipulation.html). It shows\n          Pow\n          /  \\\nInteger(2)    Symbol('x')\n\nbut it should show\n           Pow\n           /  \\\nSymbol('x')    Integer(2)\n\nsince it represents x**2, not 2**x.\nI can't figure out how to make dot give the vertices in the right order. Whatever the fix is, we should fix this in the dot printer as well as the tutorial.",
+      "createdAt": "2016-09-19T22:01:01Z",
+      "updatedAt": "2019-05-08T15:12:26Z",
+      "closedAt": "2019-05-08T15:12:26Z",
+      "state": "CLOSED",
+      "author": {
+        "login": "asmeurer",
+        "name": "Aaron Meurer",
+        "company": null
+      },
+      "labels": {
+        "nodes": [
+          {
+            "name": "Easy to Fix",
+            "description": "This is a good issue for new contributors. Feel free to work on this if no one else has already.",
+            "color": "009800"
+          },
+          {
+            "name": "Documentation",
+            "description": null,
+            "color": "c7def8"
+          },
+          {
+            "name": "printing",
+            "description": null,
+            "color": "0000FF"
+          }
+        ]
+      },
+      "reactions": {
+        "nodes": [],
+        "totalCount": 0
+      },
+      "totalComments": 20,
+      "comments": [
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDI0ODE0ODI4NA==",
+          "bodyText": "In the meantime, we should at least change the example to match it (use 2**x).",
+          "createdAt": "2016-09-19T22:33:42Z",
+          "author": {
+            "login": "asmeurer"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDI0ODE5NDk1OQ==",
+          "bodyText": "@asmeurer should I change all the occurances of x2 to 2x in manipulation.rst because they seem to be linked to the same example?",
+          "createdAt": "2016-09-20T03:55:23Z",
+          "author": {
+            "login": "jainulv"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDI0ODE5NTAyOQ==",
+          "bodyText": "Yes",
+          "createdAt": "2016-09-20T03:55:56Z",
+          "author": {
+            "login": "asmeurer"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDI0ODE5NTE2NA==",
+          "bodyText": "Okay working on it",
+          "createdAt": "2016-09-20T03:57:01Z",
+          "author": {
+            "login": "jainulv"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDI0ODMzOTY2Mg==",
+          "bodyText": "Fixed in #11635",
+          "createdAt": "2016-09-20T15:36:56Z",
+          "author": {
+            "login": "bjodah"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDI0ODM3ODAwMw==",
+          "bodyText": "This only works around the issue. The dotprint function is still wrong.",
+          "createdAt": "2016-09-20T17:49:08Z",
+          "author": {
+            "login": "asmeurer"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDI1MDA0OTU0Ng==",
+          "bodyText": "on the website(http://docs.sympy.org/dev/tutorial/manipulation.html),\ncan't we just change the picture of false dot diagram to the attached one, and change 2x to x2 accordingly.\nand let it be on doc/src/tutorial/manipulation.rst , whatever it is.",
+          "createdAt": "2016-09-28T01:41:12Z",
+          "author": {
+            "login": "tanayag"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDI1MDA1MDYwNA==",
+          "bodyText": "@tanayag I already fixed the tutorial. The only part to focus on making it work correctly.",
+          "createdAt": "2016-09-28T01:49:15Z",
+          "author": {
+            "login": "jainulv"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDI2MzAxMzc5OQ==",
+          "bodyText": "@asmeurer Is this still an issue? I looked at fixing this but I didn't seem to see the problem.\nRunning the example from the docs:\n>>> from sympy import *\n>>> x, y, z = symbols('x y z')\n>>> expr = x**2 + x*y\n>>> srepr(expr)\n>>> \"Add(Pow(Symbol('x'), Integer(2)), Mul(Symbol('x'), Symbol('y')))\"\n\nThis seems to be the correct behavior, but I may be wrong? If so, I would be happy to try to fix it.",
+          "createdAt": "2016-11-25T19:25:59Z",
+          "author": {
+            "login": "dsrees"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDI2MzAzNzAyMQ==",
+          "bodyText": "The issue is with dotprint(x**2 + x*y). The tutorial example was changed to an example that doesn't have the issue. It isn't related to srepr.",
+          "createdAt": "2016-11-26T01:14:01Z",
+          "author": {
+            "login": "asmeurer"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDI2NzQzNTc2NA==",
+          "bodyText": "Hi @asmeurer I just tried printing the dotprint for (2**x) and (x**2) but I see the difference in the printing. Please advise me on this. Thank you.\n>>> dotprint(2**x)\n\\begin{equation*}digraph{\n\n# Graph style\n\"ordering\"=\"out\"\n\"rankdir\"=\"TD\"\n\n#########\n# Nodes #\n#########\n\n\"Pow(Integer(2), Symbol(x))_()\" [\"color\"=\"black\", \"label\"=\"Pow\", \"shape\"=\"ellipse\"];\n\"Integer(2)_(0,)\" [\"color\"=\"black\", \"label\"=\"2\", \"shape\"=\"ellipse\"];\n\"Symbol(x)_(1,)\" [\"color\"=\"black\", \"label\"=\"x\", \"shape\"=\"ellipse\"];\n\n#########\n# Edges #\n#########\n\n\"Pow(Integer(2), Symbol(x))_()\" -> \"Integer(2)_(0,)\";\n\"Pow(Integer(2), Symbol(x))_()\" -> \"Symbol(x)_(1,)\";\n}\\end{equation*}\n\\begin{equation*}digraph{# Graph style\"ordering\"=\"out\"\"rankdir\"=\"TD\"########## Nodes ##########\"Pow(Integer(2), Symbol(x))_()\" [\"color\"=\"black\", \"label\"=\"Pow\", \"shape\"=\"ellipse\"];\"Integer(2)_(0,)\" [\"color\"=\"black\", \"label\"=\"2\", \"shape\"=\"ellipse\"];\"Symbol(x)_(1,)\" [\"color\"=\"black\", \"label\"=\"x\", \"shape\"=\"ellipse\"];########## Edges ##########\"Pow(Integer(2), Symbol(x))_()\" -> \"Integer(2)_(0,)\";\"Pow(Integer(2), Symbol(x))_()\" -> \"Symbol(x)_(1,)\";}\\end{equation*}\n\n>>> dotprint(x**2)\n\\begin{equation*}digraph{\n\n# Graph style\n\"ordering\"=\"out\"\n\"rankdir\"=\"TD\"\n\n#########\n# Nodes #\n#########\n\n\"Pow(Symbol(x), Integer(2))_()\" [\"color\"=\"black\", \"label\"=\"Pow\", \"shape\"=\"ellipse\"];\n\"Symbol(x)_(0,)\" [\"color\"=\"black\", \"label\"=\"x\", \"shape\"=\"ellipse\"];\n\"Integer(2)_(1,)\" [\"color\"=\"black\", \"label\"=\"2\", \"shape\"=\"ellipse\"];\n\n#########\n# Edges #\n#########\n\n\"Pow(Symbol(x), Integer(2))_()\" -> \"Symbol(x)_(0,)\";\n\"Pow(Symbol(x), Integer(2))_()\" -> \"Integer(2)_(1,)\";\n}\\end{equation*}",
+          "createdAt": "2016-12-15T20:30:52Z",
+          "author": {
+            "login": "rmagesh148"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDI2NzQ0MzU0Mg==",
+          "bodyText": "Do they give different graphs when you render them with graphviz?",
+          "createdAt": "2016-12-15T21:04:33Z",
+          "author": {
+            "login": "asmeurer"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDI2NzQ1NDc1Mg==",
+          "bodyText": "Yes. I used webgraphviz to render the output of dotprint(x**2) and dotprint(2**x) I was able to see two different graphs",
+          "createdAt": "2016-12-15T21:51:10Z",
+          "author": {
+            "login": "rmagesh148"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDI3MTA3MDMyMA==",
+          "bodyText": "@asmeurer I too tried with graphviz it gave two different graphs and the two seemed correct, I guess the dotprint use the apt order of (x**2). Correct me if I am wrong..",
+          "createdAt": "2017-01-07T08:16:17Z",
+          "author": {
+            "login": "Yathartha22"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDI3MTEwMTQ0MQ==",
+          "bodyText": "Perhaps something is wrong with the Sphinx extension. Some more debugging is needed.",
+          "createdAt": "2017-01-07T18:37:55Z",
+          "author": {
+            "login": "asmeurer"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDI3MTgxODgzMQ==",
+          "bodyText": "@asmeurer should it give different dotdiagrams for dotprint(x+2) and dotprint(2+x)?",
+          "createdAt": "2017-01-11T09:23:18Z",
+          "author": {
+            "login": "nilinswap"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDI3MTk3MjU3OA==",
+          "bodyText": "SymPy sorts the arguments of Add and Mul, so 2 + x and x + 2 both create the same expression. It's important to test this with noncommutative operators like Pow.",
+          "createdAt": "2017-01-11T19:41:07Z",
+          "author": {
+            "login": "asmeurer"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDI3NzQ0MTE4Nw==",
+          "bodyText": "@asmeurer I would like to fix this issue. i used dotprint for 2x and x2 and it gave two different graph and both seemed correct  . i am not able to see where the bug is . i am new to sympy. which file should i look into...?",
+          "createdAt": "2017-02-04T12:14:29Z",
+          "author": {
+            "login": "shubham3174"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDM0ODc3NDgyMA==",
+          "bodyText": "@asmeurer when I placed line 47:\n\"Integer(2)_(1, 1)\" [\"color\"=\"black\", \"label\"=\"Integer(2)\", \"shape\"=\"ellipse\"];\nbelow line 49:\n\"Symbol(x)_(1, 0)\" [\"color\"=\"black\", \"label\"=\"Symbol('x')\", \"shape\"=\"ellipse\"];\nthen the graph generated has 2 on the right side of Symbol(x).",
+          "createdAt": "2017-12-03T14:22:24Z",
+          "author": {
+            "login": "vishalg2235"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDQ3MDU1Mjk4Mg==",
+          "bodyText": "@asmeurer  I'd like to contribute to fix the issue raised, please provide guidelines.\nAlso, addition is commutative, but still when we traverse through a tree, we go from left to right. Although mathematically it makes no difference, but technically shouldn't Mul and Pow branches be interchanged in the documentation?(Mul being shifted to right and Pow to left).",
+          "createdAt": "2019-03-07T14:45:15Z",
+          "author": {
+            "login": "AbishekSeshan"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "MDU6SXNzdWUxODg4NjU0NDk=",
+      "number": 11841,
+      "title": "Function('gamma') pretty prints as Γ",
+      "bodyText": "In [13]: from sympy import *\n\nIn [14]: t = symbols('t')\n\nIn [15]: init_printing()\n\nIn [16]: gamma = symbols('gamma', cls=Function)(t)\n\nIn [17]: gamma\nOut[17]: Γ(t)\n\nThis should not create the Gamma Function.",
+      "createdAt": "2016-11-11T22:31:38Z",
+      "updatedAt": "2016-12-13T17:12:19Z",
+      "closedAt": "2016-12-13T17:12:19Z",
+      "state": "CLOSED",
+      "author": {
+        "login": "moorepants",
+        "name": "Jason K. Moore",
+        "company": "red Love"
+      },
+      "labels": {
+        "nodes": []
+      },
+      "reactions": {
+        "nodes": [],
+        "totalCount": 0
+      },
+      "totalComments": 7,
+      "comments": [
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDI2MDEyMjg2OA==",
+          "bodyText": "I would like to work on this, @moorepants could you explain how to start.",
+          "createdAt": "2016-11-12T13:43:06Z",
+          "author": {
+            "login": "Abdullahjavednesar"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDI2MDc5NzE4OQ==",
+          "bodyText": "The issue is the printing I guess.\nThis is also somewhat related to #6938.",
+          "createdAt": "2016-11-15T22:56:26Z",
+          "author": {
+            "login": "asmeurer"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDI2MDc5NzU1MQ==",
+          "bodyText": "I updated the issue title. The function itself is distinct from gamma. The problem is that the printer is hardcoded to print gamma as Γ instead of γ. It should distinguish UndefinedFunctions and only apply the simple Symbol printing rules to them.",
+          "createdAt": "2016-11-15T22:58:02Z",
+          "author": {
+            "login": "asmeurer"
+          },
+          "reactions": {
+            "nodes": [
+              {
+                "content": "THUMBS_UP",
+                "user": {
+                  "login": "moorepants"
+                }
+              }
+            ],
+            "totalCount": 1
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDI2MDg3MDk0Mg==",
+          "bodyText": "Fine, then I'm working on it.",
+          "createdAt": "2016-11-16T07:09:53Z",
+          "author": {
+            "login": "Abdullahjavednesar"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDI2MTY5ODQyMA==",
+          "bodyText": "@asmeurer here, if we are defining gamma as a symbol it should print γ rather than Γ. This is the bug I guess, if I've got it right.",
+          "createdAt": "2016-11-19T07:11:41Z",
+          "author": {
+            "login": "Abdullahjavednesar"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDI2NTE2NjE5OQ==",
+          "bodyText": "I've been working on this issue but unable to locate where to make changes in the sympy code. @asmeurer\nplease help.",
+          "createdAt": "2016-12-06T14:41:00Z",
+          "author": {
+            "login": "Abdullahjavednesar"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDI2NTI1NDkwMA==",
+          "bodyText": "The change should be made in sympy/printing/pretty/pretty.py.",
+          "createdAt": "2016-12-06T19:53:51Z",
+          "author": {
+            "login": "asmeurer"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "MDU6SXNzdWUxODg5ODAxMTk=",
+      "number": 11847,
+      "title": "Dummy fails when is re-evaluated in S and srepr",
+      "bodyText": "Hi all!\nWell, i found this little problem, Dummy is a nice function but in the way is implemented exist this:\n>>> alpha = Dummy(\"alpha\")\n>>> i = Integral(1/sqrt(1 - sin(alpha)**2), (alpha, 0, pi/2))\n>>> N(i)\n0.e+2\n>>> i = S(srepr(i))\n>>> N(i)\nIntegral(1/sqrt(-sin(_alpha)**2 + 1), (_alpha, 0, pi/2))\n\nBasically, if you works with Dummy, and you get the expression with srepr or similar, when you eval it every Dummy will be interpreted as a new Dummy, so it fails, in the example you can see we can't eval the second expression because the 2 Dummy expression are interpreted as differents, other ex:\n>>> m=Dummy(\"m\")\n>>> a=Matrix([m, m])\n>>> a[0]==a[1]\nTrue\n>>> b=S(srepr(a))\n>>> b[0]==b[1]\nFalse\n\nSo thinking a solution can be use a hash or similar function, like:\n>>> m=Dummy(\"m\")\n>>> srepr(m)\n\"Dummy('m', hash=987654321)\"\n>>> m=Dummy(\"m\")\n>>> srepr(m)\n\"Dummy('m', hash=754619474)\"\n\nAlways will exist the hash collision, but at least to cover all possible can be sympy check the existents Dummy expressions and check the hash never by equal to other, the probability of the hash collision, to be equal, in the same context, with the same name, and in the same expression, i think is very low.\nMaybe instead use a hash can be a random expression, with chars like 8waerfn23jb89a, that can help to avoid hash collision.\nThx. Cya.",
+      "createdAt": "2016-11-13T16:45:34Z",
+      "updatedAt": "2017-06-29T22:38:25Z",
+      "closedAt": "2017-06-29T22:38:25Z",
+      "state": "CLOSED",
+      "author": {
+        "login": "latot",
+        "name": null,
+        "company": null
+      },
+      "labels": {
+        "nodes": []
+      },
+      "reactions": {
+        "nodes": [],
+        "totalCount": 0
+      },
+      "totalComments": 14,
+      "comments": [
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDI2MDI2NTk3OA==",
+          "bodyText": "I can confirm this.  Quoting printing/repr.py\n\nsrepr returns a string so that the relation eval(srepr(expr))=expr holds in an appropriate environment.\n\nHere's my minimal example:\n>>> d = Dummy('d')\n>>> A = Add(d, d, evaluate=False)\n\n>>> srepr(A)                    # can see what the problem will be\n\"Add(Dummy('d'), Dummy('d'))\"\n\n>>> B = S(srepr(A))\n>>> B\n_d + _d\n\n>>> A.doit()\n2*_d\n\n>>> B.doit()     # cannot, has two different Dummys\n_d + _d\n\nNote that Dummy does seem to maintain its identity across pickling:\n>>> import cPickle\n>>> d1 = Dummy()\n>>> s1 = cPickle.dumps(d1)\n>>> d2 = cPickle.loads(s1)\n>>> d1 == d2\nTrue\n>>> d1 is d2\nFalse",
+          "createdAt": "2016-11-14T07:29:57Z",
+          "author": {
+            "login": "cbm755"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDI2MDQzNTg5NA==",
+          "bodyText": "You have to set it to have the same dummy_index attribute. Right now there isn't a way to do that, but a (private) keyword argument could be added.  Not sure I agree that srepr should maintain this, though.",
+          "createdAt": "2016-11-14T19:27:49Z",
+          "author": {
+            "login": "asmeurer"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDI2MDQ0MzIyNA==",
+          "bodyText": "mm, not support this i think is a vary bad idea, because this means all expressions with Dummy, used internally or externally will break all data export.......... (like the examples posted here)\nAnd not all expressions can not have a Dummy, is used a lot in subs, and similars, and other common expression are integrals without elementary functions... (ex, all elliptic functions), we will be unable to represent it in the right way............\nIn my perspective i can see 2 ways, one, error when we send a dummy to srepr, second fix dummy in srepr, i actually have a fix for this, but i don't know if you will like it....",
+          "createdAt": "2016-11-14T19:52:51Z",
+          "author": {
+            "login": "latot"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDI2MDQ3NzI0MA==",
+          "bodyText": "Well the fix is easy. Allow Dummy('x', _dummy_index=10) to override the dummy_index that is set from the class variable, and make srepr print that.\nBut the whole point of dummy is that they shouldn't be equal to other instances of the same name. So the question is, should objects created with srepr be considered new or not?\nAlso, if you do recreate an object in a new session, bets are off, because the same dummy_index could represent a completely different Dummy created somewhere else. This would only apply if you serialize and deserialize an expression in the same session. But I think srepr's primary use-case is for separate sessions (or any serialization really. Why would you serialize something if you're in the same session? Just reuse it).",
+          "createdAt": "2016-11-14T22:01:27Z",
+          "author": {
+            "login": "asmeurer"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDI2MDQ4NDI1OA==",
+          "bodyText": "@asmeurer I think the point is that a single object could contain the same Dummy more than once (think of a variable of integration or my silly evaluate=False example).\nPre-serialization this is fine.\nBut upon S(srepr(x)), they become two distinct objects.  Bad news for the integral, whose meaning has just completely changed.",
+          "createdAt": "2016-11-14T22:29:06Z",
+          "author": {
+            "login": "cbm755"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDI2MDQ4NDk0MQ==",
+          "bodyText": "(There is a related concern about two distinct objects depending on the same Dummy, and serialized separately.  I agree that's a much greyer area).",
+          "createdAt": "2016-11-14T22:31:53Z",
+          "author": {
+            "login": "cbm755"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDI2MDUwMDQwOQ==",
+          "bodyText": "Ah, I see. So in that case, I do think this is a good idea, but caveated that dummy objects are only guaranteed to be the same in a single srepr'd expression, not across expressions.",
+          "createdAt": "2016-11-14T23:42:00Z",
+          "author": {
+            "login": "asmeurer"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDI2MDUwMTg4OQ==",
+          "bodyText": "Hi, can you give me an example of across expressions plis?",
+          "createdAt": "2016-11-14T23:50:05Z",
+          "author": {
+            "login": "latot"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDI2MDUwNjc1OA==",
+          "bodyText": "@latot, see my example above but consider:\nA2 = 3*A\n\nNow A2 and A are two expressions which contain the same Dummy (the Dummy is shared \"across expressions\".\nNow do B = S(srepr(A)) and B2 = S(srepr(A2)): we want each of those to \"DTRT\".  But perhaps we do not guarantee that both B and B2 contain the same Dummy (the Dummy might not be shared across B and B2).",
+          "createdAt": "2016-11-15T00:17:06Z",
+          "author": {
+            "login": "cbm755"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDI2MDUwNzA4OQ==",
+          "bodyText": "mm, i think both dummy should be equals, only for one reason, if don't are equals will break the user env...... (ex, if is trying to export it)",
+          "createdAt": "2016-11-15T00:19:14Z",
+          "author": {
+            "login": "latot"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDI2MDUwNzc4Ng==",
+          "bodyText": "Maybe, I'm not sure.  But let's fight one bug at a time: the most serious is the use of Dummy multiple times within one expression.  Let's fix that.  Then see where we stand.\nBaby steps right?  No need to fix everything, all-at-once, all-in-one PR.  That's almost the same as never fixing anything.",
+          "createdAt": "2016-11-15T00:23:09Z",
+          "author": {
+            "login": "cbm755"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDI2MDUxMTc3Nw==",
+          "bodyText": "mm, my fix cover that, but is for other reason, basically if we use the easy way, like explained above, we will have this:\n>>> a = Dummy()\n>>> a = srepr(a) %%save the value\n%% New env\n>>> b = Dummy()\n>>> c = S(a)\n>>> b == c\nTrue\n\nBasically a hash collision, so to avoid it i try safer way....\n(in this case is a little pr :-)",
+          "createdAt": "2016-11-15T00:45:20Z",
+          "author": {
+            "login": "latot"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDI2MDUxNjUyNQ==",
+          "bodyText": "My suggested fix would fix that too. The downside would be potentially two dummys that should be unequal being equal.",
+          "createdAt": "2016-11-15T01:12:20Z",
+          "author": {
+            "login": "asmeurer"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDI3ODEwMzk4NQ==",
+          "bodyText": "I hit this again today with an integral transform.  Specifically the inverse_laplace_transform introduces a Dummy('c') (which lives in both the upper and lower limits of integration).  But try eval(srepr(...)) and now there are two Dummy c's.\n>>> f = Function('f')\n>>> x, s = symbols('x, s')\n>>> ilt = inverse_laplace_transform(f(s), s, x).rewrite('Integral')\n>>> ilt\n\nc + ∞⋅ⅈ             \n   ⌠                \n   ⎮          s⋅x   \n   ⎮    f(s)⋅ℯ    ds\n   ⌡                \nc - ∞⋅ⅈ             \n\n>>> ilt.free_symbols                  # yes, this is correct\n\nset([c, x])\n\n>>> ilt2 = eval(srepr(ilt))\n>>> ilt2                              # visually looks good, but ....\n\nc + ∞⋅ⅈ             \n   ⌠                \n   ⎮          s⋅x   \n   ⎮    f(s)⋅ℯ    ds\n   ⌡                \nc - ∞⋅ⅈ             \n\n>>> ilt2.free_symbols                 # ... oh snap, two c's!\n\nset([c, c, x])",
+          "createdAt": "2017-02-07T18:55:55Z",
+          "author": {
+            "login": "cbm755"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "MDU6SXNzdWUyMDI4NDE0Mzg=",
+      "number": 12089,
+      "title": "mathml printer for IndexedBase required",
+      "bodyText": "Writing an Indexed object to MathML fails with a TypeError exception: TypeError: 'Indexed' object is not iterable:\nIn [340]: sympy.__version__\nOut[340]: '1.0.1.dev'\n\nIn [341]: from sympy.abc import (a, b)\n\nIn [342]: sympy.printing.mathml(sympy.IndexedBase(a)[b])\n---------------------------------------------------------------------------\nTypeError                                 Traceback (most recent call last)\n<ipython-input-342-b32e493b70d3> in <module>()\n----> 1 sympy.printing.mathml(sympy.IndexedBase(a)[b])\n\n/dev/shm/gerrit/venv/stable-3.5/lib/python3.5/site-packages/sympy/printing/mathml.py in mathml(expr, **settings)\n    442 def mathml(expr, **settings):\n    443     \"\"\"Returns the MathML representation of expr\"\"\"\n--> 444     return MathMLPrinter(settings).doprint(expr)\n    445 \n    446 \n\n/dev/shm/gerrit/venv/stable-3.5/lib/python3.5/site-packages/sympy/printing/mathml.py in doprint(self, expr)\n     36         Prints the expression as MathML.\n     37         \"\"\"\n---> 38         mathML = Printer._print(self, expr)\n     39         unistr = mathML.toxml()\n     40         xmlbstr = unistr.encode('ascii', 'xmlcharrefreplace')\n\n/dev/shm/gerrit/venv/stable-3.5/lib/python3.5/site-packages/sympy/printing/printer.py in _print(self, expr, *args, **kwargs)\n    255                 printmethod = '_print_' + cls.__name__\n    256                 if hasattr(self, printmethod):\n--> 257                     return getattr(self, printmethod)(expr, *args, **kwargs)\n    258             # Unknown object, fall back to the emptyPrinter.\n    259             return self.emptyPrinter(expr)\n\n/dev/shm/gerrit/venv/stable-3.5/lib/python3.5/site-packages/sympy/printing/mathml.py in _print_Basic(self, e)\n    356     def _print_Basic(self, e):\n    357         x = self.dom.createElement(self.mathml_tag(e))\n--> 358         for arg in e:\n    359             x.appendChild(self._print(arg))\n    360         return x\n\nTypeError: 'Indexed' object is not iterable\n\nIt also fails for more complex expressions where at least one element is Indexed.",
+      "createdAt": "2017-01-24T14:56:04Z",
+      "updatedAt": "2019-03-08T13:07:37Z",
+      "closedAt": "2019-03-08T13:07:37Z",
+      "state": "CLOSED",
+      "author": {
+        "login": "gerritholl",
+        "name": "Gerrit Holl",
+        "company": "Deutscher Wetterdienst"
+      },
+      "labels": {
+        "nodes": [
+          {
+            "name": "Easy to Fix",
+            "description": "This is a good issue for new contributors. Feel free to work on this if no one else has already.",
+            "color": "009800"
+          },
+          {
+            "name": "printing",
+            "description": null,
+            "color": "0000FF"
+          },
+          {
+            "name": "printing.mathml",
+            "description": "",
+            "color": "cce8ff"
+          }
+        ]
+      },
+      "reactions": {
+        "nodes": [],
+        "totalCount": 0
+      },
+      "totalComments": 5,
+      "comments": [
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDQ2MzE0MDg1Mw==",
+          "bodyText": "Now it returns\n'<indexed><indexedbase><ci>a</ci></indexedbase><ci>b</ci></indexed>'\n\nfor content printer and\n'<mrow><mi>indexed</mi><mfenced><mrow><mi>indexedbase</mi><mfenced><mi>a</mi></mfenced></mrow><mi>b</mi></mfenced></mrow>'\n\nfor presentation printer.\nProbably not correct as it seems like it falls back to the printer for Basic.\nHence, a method _print_IndexedBase is required. Could be good to look at the LaTeX version to see how subscripts etc are handled.",
+          "createdAt": "2019-02-13T10:14:45Z",
+          "author": {
+            "login": "oscargus"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDQ2Njc0MDgyNQ==",
+          "bodyText": "Hi, can I take up this issue if it still needs fixing?",
+          "createdAt": "2019-02-24T07:09:39Z",
+          "author": {
+            "login": "pragyanmehrotra"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDQ2Njc1NTEzMg==",
+          "bodyText": "@pragyanmehrotra It is still needed so please go ahead!",
+          "createdAt": "2019-02-24T09:41:38Z",
+          "author": {
+            "login": "oscargus"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDQ2Njc1ODAyMQ==",
+          "bodyText": "@oscargus Sure I'll start working on it right ahead! However, Idk what exactly needs to be done so if you could point out how the output should look like and do I have to implement a new function or edit a current function it'd be a great help, Thanks.",
+          "createdAt": "2019-02-24T10:07:11Z",
+          "author": {
+            "login": "pragyanmehrotra"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDQ2Njc3NjAyNA==",
+          "bodyText": "from sympy import IndexedBase\na, b = symbols('a b')\nIndexedBase(a)[b]\n\nwhich renders as\n\nMeaning that the presentation MathML output should be something like\n<msub><mi>a<mi><mi>b<mi></msub>\nHave a look at #16036 for some good resources.\nBasically you need to do something like:\nm = self.dom.createElement('msub')\nm.appendChild(self._print(Whatever holds a))\nm.appendChild(self._print(Whatever holds b))\n\nin a function called _print_IndexedBase.",
+          "createdAt": "2019-02-24T13:29:46Z",
+          "author": {
+            "login": "oscargus"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "MDU6SXNzdWUyMTg4MDM1Njc=",
+      "number": 12479,
+      "title": "`Permutation` constructor fails with non-disjoint cycles",
+      "bodyText": "Calling Permutation([[0,1],[0,1]]) raises a ValueError instead of constructing the identity permutation.  If the cycles passed in are non-disjoint, they should be applied in left-to-right order and the resulting permutation should be returned.\nThis should be easy to compute.  I don't see a reason why non-disjoint cycles should be forbidden.",
+      "createdAt": "2017-04-02T23:46:55Z",
+      "updatedAt": "2017-04-03T19:30:38Z",
+      "closedAt": "2017-04-03T19:30:38Z",
+      "state": "CLOSED",
+      "author": {
+        "login": "siefkenj",
+        "name": "Jason Siefken",
+        "company": null
+      },
+      "labels": {
+        "nodes": []
+      },
+      "reactions": {
+        "nodes": [],
+        "totalCount": 0
+      },
+      "totalComments": 0,
+      "comments": []
+    },
+    {
+      "id": "MDU6SXNzdWUyMzE0NzE4MTI=",
+      "number": 12675,
+      "title": "vectors break pretty printing",
+      "bodyText": "In [1]: from sympy.vector import *\n\nIn [2]: e = CoordSysCartesian('e')\n\nIn [3]: (x/y)**t*e.j\nOut[3]:\n⎛   t⎞ e_j\n⎜⎛x⎞ e_j ⎟\n⎜⎜─⎟ ⎟\n⎝⎝y⎠ ⎠\nAlso, when it does print correctly, the baseline is wrong (it should be centered).",
+      "createdAt": "2017-05-25T21:59:14Z",
+      "updatedAt": "2018-06-05T23:51:25Z",
+      "closedAt": "2018-06-05T23:51:25Z",
+      "state": "CLOSED",
+      "author": {
+        "login": "asmeurer",
+        "name": "Aaron Meurer",
+        "company": null
+      },
+      "labels": {
+        "nodes": [
+          {
+            "name": "printing",
+            "description": null,
+            "color": "0000FF"
+          },
+          {
+            "name": "vector",
+            "description": null,
+            "color": "0000ff"
+          }
+        ]
+      },
+      "reactions": {
+        "nodes": [],
+        "totalCount": 0
+      },
+      "totalComments": 1,
+      "comments": [
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDMwNzU4MjU3Mg==",
+          "bodyText": "Hi @asmeurer . I would like to work on this issue . Could you help me with the same ?",
+          "createdAt": "2017-06-10T18:33:37Z",
+          "author": {
+            "login": "techytoes"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "MDU6SXNzdWUyNDc0ODcwNzE=",
+      "number": 13081,
+      "title": "Some comparisons between rational and irrational numbers are incorrect",
+      "bodyText": "If you choose just the right rational number, you can end up in a situation where it is neither less than pi, nor equal to it, nor is pi less than it. This is with sympy 1.1.1, using Python 3.6.0 from Anaconda on Ubuntu 16.04.\n>>> import sympy\n>>> sympy.__version__\n'1.1.1'\n>>> r = sympy.Rational('905502432259640373/288230376151711744')\n>>> r < sympy.pi\nFalse\n>>> r == sympy.pi\nFalse\n>>> sympy.pi < r\nFalse\n\nOf course, that same number is greater than pi, even though pi is not less than it.\n>>> r > sympy.pi\nTrue\n\nI believe this is a result of using evalf() to do comparisons between rationals and reals... As we can see, this particular fraction happens to be exactly equal to pi if we use the default evalf precision of 15, but not if we use more.\n>>> r == sympy.pi.evalf(15)\nTrue\n>>> r == sympy.pi.evalf(16)\nFalse\n\nHopefully this isn't a duplicate issue; I did a bit of searching for related ones, and found the likes of #12583 and #12534. I think this is different than #12583 because I'm only concerned about comparisons where one of the numbers is rational. That should always be decidable - or am I misunderstanding something about math?",
+      "createdAt": "2017-08-02T18:51:53Z",
+      "updatedAt": "2017-10-23T10:54:54Z",
+      "closedAt": "2017-10-23T10:54:54Z",
+      "state": "CLOSED",
+      "author": {
+        "login": "billzorn",
+        "name": "Bill",
+        "company": "UW"
+      },
+      "labels": {
+        "nodes": []
+      },
+      "reactions": {
+        "nodes": [],
+        "totalCount": 0
+      },
+      "totalComments": 7,
+      "comments": [
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDMxOTg2NzU3NA==",
+          "bodyText": "Some experimentation shows that the behavior can be improved by computing the difference and then looking at the sign with .is_positive and .is_negative. However, that can break as well, you just need a bigger fraction:\n>>> r = sympy.Rational('472202503979844695356573871761845338575143343779448489867569357017941709222155070092152068445390137810467671349/150306725297525326584926758194517569752043683130132471725266622178061377607334940381676735896625196994043838464')\n>>> r < sympy.pi\nTrue\n>>> r > sympy.pi\nTrue\n>>> x = r - sympy.pi\n>>> repr(x.is_positive)\n'None'\n>>> repr(x.is_negative)\n'None'",
+          "createdAt": "2017-08-03T04:55:02Z",
+          "author": {
+            "login": "billzorn"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDMyMDMzMzAxOQ==",
+          "bodyText": "This is the same as that issue. See the discussion there and at #12537.",
+          "createdAt": "2017-08-04T19:23:35Z",
+          "author": {
+            "login": "asmeurer"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDMyMDM2MDIyNQ==",
+          "bodyText": "Ah, awesome.\nIs there a workaround to force evalf() to use enough precision that the digits it gives me are correct? I don't mind if it uses a lot of memory, or loops forever, or tells me it can't determine the answer. I just want to avoid the case where I get an answer that's wrong.\nSomething like the behavior of Hans Boehm's constructive reals would be ideal.",
+          "createdAt": "2017-08-04T21:46:05Z",
+          "author": {
+            "login": "billzorn"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDMyMDM2MjEyOA==",
+          "bodyText": "evalf already does this. It's just the way it's being used in the comparisons is wrong. But if you do (a - b).evalf() the sign of the result should tell if you if a < b or a > b (or you'll get something like -0.e-124 if it can't determine, which I believe you can check with `is_comparable).",
+          "createdAt": "2017-08-04T21:57:19Z",
+          "author": {
+            "login": "asmeurer"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDMyMDM2Mjg0NA==",
+          "bodyText": "To clarify, evalf internally increases the precision to try to give you as many digits as you asked for correctly (the default is 15 digits). For comparisions, you can just use evalf(2), which is what the core does.\nAn example of where it can fail\n>>> (sin(1)**2 + cos(1)**2 - 1).evalf()\n-0.e-124\n>>> (sin(1)**2 + cos(1)**2 - 1).evalf().is_comparable\nFalse\n\nBecause sin(1)**2 + cos(1)**2 and 1 are actually equal, it will never be able to compute enough digits of each to get something that it knows is greater than or less than 0 (you can also construct more diabolic examples where expressions aren't equal, but evalf won't try enough digits to determine that).",
+          "createdAt": "2017-08-04T22:01:56Z",
+          "author": {
+            "login": "asmeurer"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDMyMDM2NTQzNw==",
+          "bodyText": "Perfect.\nSo it seems like I can do the following to compare (rational or irrational reals) a and b:\n\ncheck if a == b; if so, we're done\nsubtract, and keep calling evalf(2) with increasing arguments to maxn, until the result .is_comparable\nif we find a comparable result, then return the appropriate ordering\notherwise give up at some point and claim the results are incomparable\n\nHmm, is there any benefit in actually checking a == b? Or will the subtraction always give exactly zero in that case?\nAlternatively, is there any danger that a == b will be True even though the a and b aren't exactly equal?",
+          "createdAt": "2017-08-04T22:18:39Z",
+          "author": {
+            "login": "billzorn"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDMyMTM3NzM4NA==",
+          "bodyText": "For floats in the present code, yes (see #11707).  Once that is fixed no.",
+          "createdAt": "2017-08-09T20:49:56Z",
+          "author": {
+            "login": "asmeurer"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "MDU6SXNzdWUyNTYzMTI2MjY=",
+      "number": 13278,
+      "title": "TypeErrors encountered when doing subs with Matrices",
+      "bodyText": ">>> Mul(zeros(2), y, evaluate=False).subs(y, 0)\n0  # instead of zeros(2)\n>>> (x + y).subs({x: zeros(2), y: zeros(2)})\nTraceback (most recent call last):\n...\nTypeError: cannot add <class 'sympy.matrices.immutable.ImmutableDenseMatrix'> and <class 'sympy.core.numbers.Zero'>\n\nAs reported at StackOverflow",
+      "createdAt": "2017-09-08T16:52:36Z",
+      "updatedAt": "2017-09-09T02:51:51Z",
+      "closedAt": "2017-09-09T02:51:51Z",
+      "state": "CLOSED",
+      "author": {
+        "login": "smichr",
+        "name": "Christopher Smith",
+        "company": null
+      },
+      "labels": {
+        "nodes": []
+      },
+      "reactions": {
+        "nodes": [],
+        "totalCount": 0
+      },
+      "totalComments": 0,
+      "comments": []
+    },
+    {
+      "id": "MDU6SXNzdWUyNjYzMDUxMTk=",
+      "number": 13470,
+      "title": "Python 2->3 pickle fails with float-containing expressions",
+      "bodyText": "Dumping a pickled sympy expression containing a float in Python 2, then loading it in Python 3 generates an error.\nHere is a minimum working example, verified with sympy git commit 3546ac7 (master at time of writing), Python 2.7 and Python 3.6:\npython2 -c 'import pickle; import sympy; x = sympy.symbols(\"x\"); print pickle.dumps(x + 1.0, 2)' | python3 -c 'import pickle; import sys; print(pickle.loads(sys.stdin.buffer.read()))'\nand the result:\nTraceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n  File \"/Users/alex/git/VU/sympy/sympy/core/numbers.py\", line 1045, in __new__\n    num[1] = long(num[1], 16)\nValueError: invalid literal for int() with base 16: '1L'",
+      "createdAt": "2017-10-17T22:51:58Z",
+      "updatedAt": "2017-10-18T22:28:49Z",
+      "closedAt": "2017-10-18T22:28:49Z",
+      "state": "CLOSED",
+      "author": {
+        "login": "alubbock",
+        "name": "Alex Lubbock",
+        "company": null
+      },
+      "labels": {
+        "nodes": []
+      },
+      "reactions": {
+        "nodes": [],
+        "totalCount": 0
+      },
+      "totalComments": 0,
+      "comments": []
+    },
+    {
+      "id": "MDU6SXNzdWUyNjYzMzk4ODM=",
+      "number": 13474,
+      "title": "Cannot simplify x + csch(sinc(1))",
+      "bodyText": ">>> from sympy import *\n>>> x = Symbol('x')\n>>> print(simplify(x + csch(sinc(1))))\n...\nFile \"C:\\Users\\E\\Desktop\\sympy-master\\sympy\\simplify\\fu.py\", line 433, in f\nrv = fmap[rv.func](S.Pi/2 - rv.args[0])\nKeyError: sinc\n\n(I should have said: cannot apply the simplification function, since I'm not expecting any simplification to  actually take place).",
+      "createdAt": "2017-10-18T02:25:41Z",
+      "updatedAt": "2018-01-16T15:11:03Z",
+      "closedAt": "2018-01-16T15:11:03Z",
+      "state": "CLOSED",
+      "author": {
+        "login": "ethankward",
+        "name": "Ethan Ward",
+        "company": null
+      },
+      "labels": {
+        "nodes": []
+      },
+      "reactions": {
+        "nodes": [],
+        "totalCount": 0
+      },
+      "totalComments": 0,
+      "comments": []
+    },
+    {
+      "id": "MDU6SXNzdWUyNjkyNzA5MTI=",
+      "number": 13546,
+      "title": "Product(n + 1 / 2**k, [k, 0, n-1]) is incorrect",
+      "bodyText": ">>> from sympy import *\n>>> from sympy.abc import n,k\n>>> p = Product(n + 1 / 2**k, [k, 0, n-1]).doit()\n>>> print(simplify(p))\n2**(n*(-n + 1)/2) + n**n\n>>> print(p.subs(n,2))\n9/2\n\nThis is incorrect- for example, the product for n=2 is (2 + 2^0) * (2 + 2^(-1)) = 15/2. The correct expression involves the q-Pochhammer symbol.",
+      "createdAt": "2017-10-28T00:48:25Z",
+      "updatedAt": "2017-10-31T21:22:43Z",
+      "closedAt": "2017-10-31T21:22:43Z",
+      "state": "CLOSED",
+      "author": {
+        "login": "ethankward",
+        "name": "Ethan Ward",
+        "company": null
+      },
+      "labels": {
+        "nodes": []
+      },
+      "reactions": {
+        "nodes": [],
+        "totalCount": 0
+      },
+      "totalComments": 1,
+      "comments": [
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDM0MDI0NDA0Mg==",
+          "bodyText": "The responsible line seems to be line 286 in concrete/products.\nThis line seems to be assuming that the product of a sum is the same as the sum of the products of its summands.\nThis leads to nonsense like this (directly mentioned in the comment above this line!)\n>>> from sympy.abc import n, k\n>>> p = Product(k**(S(2)/3) + 1, [k, 0, n-1]).doit()\n>>> print(simplify(p))\n1",
+          "createdAt": "2017-10-29T07:52:24Z",
+          "author": {
+            "login": "ethankward"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "MDU6SXNzdWUyOTk4ODUxNDM=",
+      "number": 14316,
+      "title": "LaTeX printer does not use the same order of monomials as pretty and str ",
+      "bodyText": "When printing a Poly, the str and pretty printers use the logical order of monomials, from highest to lowest degrees. But latex printer does not.\n>>> var('a b c x')\n>>> p = Poly([a, 1, b, 2, c, 3], x)\n>>> p\nPoly(a*x**5 + x**4 + b*x**3 + 2*x**2 + c*x + 3, x, domain='ZZ[a,b,c]')\n>>> pretty(p)\n\"Poly(a*x**5 + x**4 + b*x**3 + 2*x**2 + c*x + 3, x, domain='ZZ[a,b,c]')\"\n>>> latex(p)\n'\\\\operatorname{Poly}{\\\\left( a x^{5} + b x^{3} + c x + x^{4} + 2 x^{2} + 3, x, domain=\\\\mathbb{Z}\\\\left[a, b, c\\\\right] \\\\right)}'",
+      "createdAt": "2018-02-23T23:45:48Z",
+      "updatedAt": "2018-02-25T22:40:53Z",
+      "closedAt": "2018-02-25T22:40:53Z",
+      "state": "CLOSED",
+      "author": {
+        "login": "normalhuman",
+        "name": "Normal Human",
+        "company": null
+      },
+      "labels": {
+        "nodes": [
+          {
+            "name": "printing",
+            "description": null,
+            "color": "0000FF"
+          }
+        ]
+      },
+      "reactions": {
+        "nodes": [],
+        "totalCount": 0
+      },
+      "totalComments": 0,
+      "comments": []
+    },
+    {
+      "id": "MDU6SXNzdWUzMDAwMjA3NjE=",
+      "number": 14332,
+      "title": "Modular inverse for negative modulo and sign resolve",
+      "bodyText": "SymPy assigns mod_inverse(a,m) the same sign as a.\nMathematically, mod m has range [0,m) for m>0 , (m,0] for m<0.\nThe former sign assignment is used in C/C++/Java built-in modulo operator as -2%5 returns -2.\nThe latter sign assignment is used in Python's built-in modulo operator as -2%5 returns 3.\n>> mod_inverse(2,5)\n3\n\n>> mod_inverse(-2,5)\n-3\nSymPy does not find modular inverses for negative modulo (because of the m>1 check).\n>> mod_inverse(2,-5)\n>> mod_inverse(-2,-5)\n\nMoreover, as checked from WA (uses the same sign as m rule)\nmod_inverse(-2,+5) = 2\nmod_inverse(+2,-5) = -2\nmod_inverse(-2,-5) = -3",
+      "createdAt": "2018-02-25T12:05:31Z",
+      "updatedAt": "2018-02-27T07:57:34Z",
+      "closedAt": "2018-02-27T07:57:34Z",
+      "state": "CLOSED",
+      "author": {
+        "login": "sidhantnagpal",
+        "name": "Sidhant Nagpal",
+        "company": null
+      },
+      "labels": {
+        "nodes": []
+      },
+      "reactions": {
+        "nodes": [],
+        "totalCount": 0
+      },
+      "totalComments": 0,
+      "comments": []
+    },
+    {
+      "id": "MDU6SXNzdWUzMDYyNTk0Nzc=",
+      "number": 14529,
+      "title": "Incorrect binomial documentation",
+      "bodyText": "The documentation for binomial states:\n\nFor the sake of convenience for negative 'k' this function will return zero no matter what valued is the other argument.\n\nThis is the usual definition of the binomial coefficient, but the implementation does not follow this. To be exact, binomial(k, k) returns 1, even for negative k. See these lines of binomial. For example:\n>>> binomial(-1, -1)\n1\n>>> binomial(0, 0)\n1\n>>> binomial(1, 1)\n1\n>>> k = symbols(\"k\", integer=True, negative=True)\n>>> binomial(k, k)\n1\nIt shouldn't be hard to fix this either way (changing the documentation or the conditionals in binomial). Is there a preference as to which one should change?",
+      "createdAt": "2018-03-18T17:17:16Z",
+      "updatedAt": "2018-03-29T11:48:05Z",
+      "closedAt": "2018-03-29T11:48:05Z",
+      "state": "CLOSED",
+      "author": {
+        "login": "rdbliss",
+        "name": "Robert Dougherty-Bliss",
+        "company": null
+      },
+      "labels": {
+        "nodes": []
+      },
+      "reactions": {
+        "nodes": [],
+        "totalCount": 0
+      },
+      "totalComments": 2,
+      "comments": [
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDM3NDAyOTU0NA==",
+          "bodyText": "The treatment of binomial was recently changed in #14019, it seems the docstring is out of date.",
+          "createdAt": "2018-03-18T18:34:13Z",
+          "author": {
+            "login": "normalhuman"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDM3NDAzODcxNQ==",
+          "bodyText": "If I understand the discussion in #14019, binomial now uses Wolfram's gamma-limit rewrite, with some logic to handle edge-cases in the limit. In that case, shouldn't binomial(n, k) evaluate to 0 for negative integer k?\nIn either event, I do not think that #14019 modified the behavior for when n and k are equal. Both before and after its merging, binomial(k, k) would evaluate to 1.",
+          "createdAt": "2018-03-18T19:48:45Z",
+          "author": {
+            "login": "rdbliss"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "MDU6SXNzdWUzNTM3MjY3MzA=",
+      "number": 15138,
+      "title": "Subs hashing problem?",
+      "bodyText": ">>> Subs(x+y,(a,),(4,)).subs(a,z)\nSubs(x + y, (a,), (4,))  <---|\n>>> Subs(x+y,(a,),(a,))      |\nSubs(x + y, (a,), (a,))      |\n>>> _.subs(a,z)              |\nSubs(x + y, (a,), (4,))  <---|  expected this to be Subs(x + y, (a,), (z,))",
+      "createdAt": "2018-08-24T10:18:23Z",
+      "updatedAt": "2018-09-15T17:36:14Z",
+      "closedAt": "2018-09-15T17:36:14Z",
+      "state": "CLOSED",
+      "author": {
+        "login": "smichr",
+        "name": "Christopher Smith",
+        "company": null
+      },
+      "labels": {
+        "nodes": []
+      },
+      "reactions": {
+        "nodes": [],
+        "totalCount": 0
+      },
+      "totalComments": 0,
+      "comments": []
+    },
+    {
+      "id": "MDU6SXNzdWUzNTc0Mjg3NjM=",
+      "number": 15193,
+      "title": "Incorrect result with Quaterniont.to_rotation_matrix()",
+      "bodyText": "sympy/sympy/algebras/quaternion.py\n    \n    \n         Line 489\n      in\n      ab14b02\n    \n  \n  \n    \n\n        \n          \n           def to_rotation_matrix(self, v=None): \n        \n    \n  \n\n\nThere appears to be an error in the Quaternion.to_rotation_matrix() output.  The simplest example I created to illustrate the problem is as follows:\n>>import sympy\n>>print('Sympy version: ', sympy.__version__)\nSympy version: 1.2\n\n>> from sympy import *\n>> x = symbols('x')\n>> q = Quaternion(cos(x/2), sin(x/2), 0, 0)\n>> trigsimp(q.to_rotation_matrix())\nMatrix([\n[1,      0,      0],\n[0, cos(x), sin(x)],\n[0, sin(x), cos(x)]])\n\nOne of the sin(x) functions should be negative.  What was the reference of the original equations?",
+      "createdAt": "2018-09-05T22:35:44Z",
+      "updatedAt": "2018-10-07T10:54:51Z",
+      "closedAt": "2018-10-07T10:54:51Z",
+      "state": "CLOSED",
+      "author": {
+        "login": "hamid-m",
+        "name": "Hamid",
+        "company": null
+      },
+      "labels": {
+        "nodes": []
+      },
+      "reactions": {
+        "nodes": [],
+        "totalCount": 0
+      },
+      "totalComments": 1,
+      "comments": [
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDQyNDM2MzkyMA==",
+          "bodyText": "@hamid-m @smichr I'd like to try my hands at this issue.",
+          "createdAt": "2018-09-25T14:23:17Z",
+          "author": {
+            "login": "2torus"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "MDU6SXNzdWUzNjQ2MzM0MDQ=",
+      "number": 15303,
+      "title": "LaTeX printing for Matrix Expression",
+      "bodyText": ">>> A = MatrixSymbol(\"A\", n, n)\n>>> latex(trace(A**2))\n'Trace(A**2)'\nThe bad part is not only is Trace not recognized, but whatever printer is being used doesn't fallback to the LaTeX printer for the inner expression (it should be A^2).",
+      "createdAt": "2018-09-27T20:05:19Z",
+      "updatedAt": "2018-10-26T18:48:08Z",
+      "closedAt": "2018-10-26T18:46:53Z",
+      "state": "CLOSED",
+      "author": {
+        "login": "asmeurer",
+        "name": "Aaron Meurer",
+        "company": null
+      },
+      "labels": {
+        "nodes": [
+          {
+            "name": "Easy to Fix",
+            "description": "This is a good issue for new contributors. Feel free to work on this if no one else has already.",
+            "color": "009800"
+          },
+          {
+            "name": "printing",
+            "description": null,
+            "color": "0000FF"
+          }
+        ]
+      },
+      "reactions": {
+        "nodes": [],
+        "totalCount": 0
+      },
+      "totalComments": 6,
+      "comments": [
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDQyNTI1NzIxNA==",
+          "bodyText": "What is the correct way to print the trace? AFAIK there isn't one built in to Latex. One option is \\mathrm{Tr}. Or \\operatorname{Tr}.",
+          "createdAt": "2018-09-27T22:02:06Z",
+          "author": {
+            "login": "ethankward"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDQyNTQ3NjQ2NA==",
+          "bodyText": "What's the difference between the two. It looks like we use both in different parts of the latex printer.",
+          "createdAt": "2018-09-28T15:38:46Z",
+          "author": {
+            "login": "asmeurer"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDQyNTQ5MDY0Ng==",
+          "bodyText": "\\operatorname puts a thin space after the operator.",
+          "createdAt": "2018-09-28T16:25:16Z",
+          "author": {
+            "login": "ethankward"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDQyNTQ5NjI0OQ==",
+          "bodyText": "\\operatorname is intended for printing without parentheses (like Tr M).",
+          "createdAt": "2018-09-28T16:44:49Z",
+          "author": {
+            "login": "jksuom"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDQzMzQ2MzMyMg==",
+          "bodyText": "Hi! I want to work on this issue. You mean instead of printing 'Trace(A**2)', it should print 'Trace(A^2)' right?",
+          "createdAt": "2018-10-26T16:18:49Z",
+          "author": {
+            "login": "ruchit2801"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDQzMzUwNzU4NQ==",
+          "bodyText": "@ruchit2801 this was already fixed at #15308. Be sure to look for pull request cross references on issues to see if they are already being worked on (notice the link above to \"@ethankward referenced a pull request that will close this issue 28 days ago Add LaTeX printing for matrix symbol trace #15308\").",
+          "createdAt": "2018-10-26T18:47:49Z",
+          "author": {
+            "login": "asmeurer"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "MDU6SXNzdWUzODU1NTgzMzk=",
+      "number": 15564,
+      "title": "The behavior of degree(f, x) on rational functions",
+      "bodyText": "I wanted to know if SymPy can compute degrees of rational functions, so I tried\n>>> degree((x-2)/(x**2+1), x)\n1\n\nPerhaps the degree of a rational function is not implemented, but if so, should this fail instead?",
+      "createdAt": "2018-11-29T03:50:04Z",
+      "updatedAt": "2018-12-06T10:40:50Z",
+      "closedAt": "2018-12-06T10:40:50Z",
+      "state": "CLOSED",
+      "author": {
+        "login": "normalhuman",
+        "name": "Normal Human",
+        "company": null
+      },
+      "labels": {
+        "nodes": []
+      },
+      "reactions": {
+        "nodes": [],
+        "totalCount": 0
+      },
+      "totalComments": 1,
+      "comments": [
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDQ0Mjc1MzA0NA==",
+          "bodyText": "I think that it could fail in the same way as Poly does when the generator is given:\n>>> Poly((x-2)/(x**2+1), x)\nTraceback (most recent call last):\n  File \"<stdin>\", line 1, in <module>\n  File \"sympy/polys/polytools.py\", line 129, in __new__\n    return cls._from_expr(rep, opt)\n  File \"sympy/polys/polytools.py\", line 239, in _from_expr\n    rep, opt = _dict_from_expr(rep, opt)\n  File \"sympy/polys/polyutils.py\", line 366, in _dict_from_expr\n    rep, gens = _dict_from_expr_if_gens(expr, opt)\n  File \"sympy/polys/polyutils.py\", line 305, in _dict_from_expr_if_gens\n    (poly,), gens = _parallel_dict_from_expr_if_gens((expr,), opt)\n  File \"sympy/polys/polyutils.py\", line 215, in _parallel_dict_from_expr_if_gens\n    \"the set of generators.\" % factor)\nsympy.polys.polyerrors.PolynomialError: 1/(x**2 + 1) contains an element of the set of generators.\n\n(gen could be added here if it is given.)",
+          "createdAt": "2018-11-29T08:48:37Z",
+          "author": {
+            "login": "jksuom"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "MDU6SXNzdWUzODc0ODEwMDg=",
+      "number": 15584,
+      "title": "Some issues with idiff",
+      "bodyText": "idiff doesn't support Eq, and it also doesn't support f(x) instead of y. Both should be easy to correct.\n>>> idiff(Eq(y*exp(y), x*exp(x)), y, x)\nTraceback (most recent call last):\n  File \"<stdin>\", line 1, in <module>\n  File \"./sympy/geometry/util.py\", line 582, in idiff\n    yp = solve(eq.diff(x), dydx)[0].subs(derivs)\nIndexError: list index out of range\n>>> idiff(f(x)*exp(f(x)) - x*exp(x), f(x), x)\nTraceback (most recent call last):\n  File \"<stdin>\", line 1, in <module>\n  File \"./sympy/geometry/util.py\", line 574, in idiff\n    raise ValueError(\"expecting x-dependent symbol(s) but got: %s\" % y)\nValueError: expecting x-dependent symbol(s) but got: f(x)\n>>> idiff(y*exp(y)- x*exp(x), y, x)\n(x + 1)*exp(x - y)/(y + 1)",
+      "createdAt": "2018-12-04T21:10:28Z",
+      "updatedAt": "2018-12-30T19:47:23Z",
+      "closedAt": null,
+      "state": "OPEN",
+      "author": {
+        "login": "asmeurer",
+        "name": "Aaron Meurer",
+        "company": null
+      },
+      "labels": {
+        "nodes": [
+          {
+            "name": "Needs Decision",
+            "description": "This needs discussion to resolve an undecided issue before further work can be done.",
+            "color": "f7c6c7"
+          }
+        ]
+      },
+      "reactions": {
+        "nodes": [],
+        "totalCount": 0
+      },
+      "totalComments": 5,
+      "comments": [
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDQ0NDUxNzI0Mw==",
+          "bodyText": "Hi i am a beginner and i would like to work on this issue.",
+          "createdAt": "2018-12-05T15:06:16Z",
+          "author": {
+            "login": "krishna-akula"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDQ0NTkwMDg3OA==",
+          "bodyText": "@krishna-akula are you still working on this?... I'd like to work on it too",
+          "createdAt": "2018-12-10T17:29:50Z",
+          "author": {
+            "login": "m-agboola"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDQ0OTEzNjM5Nw==",
+          "bodyText": "See comments on #15678. I can see adding f(x) support but not Eq for reasons given there. See #5030",
+          "createdAt": "2018-12-20T21:10:33Z",
+          "author": {
+            "login": "smichr"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDQ0OTEzODM5Ng==",
+          "bodyText": "But idiff is in the class of functions that assumes the expression = 0 (see the docstring). So I think it makes sense to accept an Eq.",
+          "createdAt": "2018-12-20T21:18:17Z",
+          "author": {
+            "login": "asmeurer"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDQ1MDUyMTgzNg==",
+          "bodyText": "Eq support was not added, but I still think it should be.",
+          "createdAt": "2018-12-29T21:38:46Z",
+          "author": {
+            "login": "asmeurer"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "MDU6SXNzdWU0MDcxOTEyNjM=",
+      "number": 15934,
+      "title": "LaTeX priniting: \\mathrm vs. \\text",
+      "bodyText": "It turns out that both \\mathrm and \\text is used for printing \"text\" in the LaTeX printing routines. It seems like there should be one that is standard and that it should be possible to change that by configuration.\n\\text\n\nPro adapts the font to the used math-font, not necessarily a Roman font\nCon Relies on the amsmath (or some other ams* package\n\n\\mathrm\n\nPro works in default LaTeX without importing any packages\nCon always gives a Roman (Serif) font, even if the current math font is not Roman\n\nSome quick grep:ing tells us that there are 123 instances of \\mathrm and 46 instances of \\text in the .py-files.\nIdeally, this should be configurable, but even then we need to decide on a standard. Personally, I will set it to \\text the second it is implemented, but the package dependency may be confusing for newer users. (It seems like both options works in e.g. iPython but I have not explicitly tested, just not noted any issue.)\nProbably the easiest way to implement it is to add a helper function print_text or something so people do not have to test at every single instance.",
+      "createdAt": "2019-02-06T11:28:51Z",
+      "updatedAt": "2022-04-01T23:20:51Z",
+      "closedAt": null,
+      "state": "OPEN",
+      "author": {
+        "login": "oscargus",
+        "name": "Oscar Gustafsson",
+        "company": "Linköping University/Spare time"
+      },
+      "labels": {
+        "nodes": [
+          {
+            "name": "printing",
+            "description": null,
+            "color": "0000FF"
+          },
+          {
+            "name": "printing.latex",
+            "description": "",
+            "color": "cce8ff"
+          }
+        ]
+      },
+      "reactions": {
+        "nodes": [
+          {
+            "content": "THUMBS_UP",
+            "user": {
+              "login": "snowztail"
+            }
+          },
+          {
+            "content": "THUMBS_UP",
+            "user": {
+              "login": "mdalimran-abir"
+            }
+          }
+        ],
+        "totalCount": 2
+      },
+      "totalComments": 15,
+      "comments": [
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDQ2MDk5MzM0Ng==",
+          "bodyText": "I should probably add that many of these instances are probably from documentation, so the effort to implement it will not be to manually change 169 instances.",
+          "createdAt": "2019-02-06T11:39:17Z",
+          "author": {
+            "login": "oscargus"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDQ2MDk5ODYwNg==",
+          "bodyText": "I think that \\text and \\mathrm are intended for different kinds of use. \\mathrm is used for symbols like 'sin' that contain typically only a few letters. \\text is used for non-mathematical comments like 'otherwise', and the font is the current font used outside math.",
+          "createdAt": "2019-02-06T11:59:45Z",
+          "author": {
+            "login": "jksuom"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDQ2MTAwNjE4NQ==",
+          "bodyText": "There is also \\operatorname which seems to be the best of two worlds. When it comes to operator names. This is used 183 times. So maybe it is less of a issue than I initially thought.\nThe main problem with \\mathrm as I see it is if you are using your equations in a presentation with Beamer and the template is using a san-serif font. In this case all math will also be using a sans font, including sin etc, except for stuff put in \\mathrm (one can of course redefine that font as well, but that doesn't seem like the right thing to do.\nLooking a bit more into it, the current usage of \\mathrm consists of primarily these classes:\n\nTo make a d in e.g. dt for an integral or differential non-italic (can be argued what the best way is) (primarily in documentation, but maybe whatever the correct way is should be used in the code?)\nFor \"for\" (should be text, in documentation, \\text is used in printing)\nFor some specific functions (in documentation), should most of the time be operatorname instead\nFor some constants in core, like NaN and True. I think this is not correct as there is not point in having NaN in Roman in an otherwise non-Roman equation\n\nSo should be quite manageable.",
+          "createdAt": "2019-02-06T12:28:48Z",
+          "author": {
+            "login": "oscargus"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDQ2MTAwODk2NA==",
+          "bodyText": "It is my understanding that \\operatorname will also use a math font (\\mathrm, I think) but will also add automatic space around the name in question, so \"\\operatorname{sin}x\" will print \"sin\", a (thin) space and \"x\".",
+          "createdAt": "2019-02-06T12:39:38Z",
+          "author": {
+            "login": "jksuom"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDQ2MTA2MDIyMQ==",
+          "bodyText": "You may be correct. I'll try to confirm my (old) experience with Beamer etc and see what I get out of that.",
+          "createdAt": "2019-02-06T15:17:11Z",
+          "author": {
+            "login": "oscargus"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDQ2MTE0NDg4Ng==",
+          "bodyText": "I believe our LaTeX printer already assumes amsmath is used in several places. I don't use LaTeX much, but are there instances where amsmath can't be used?",
+          "createdAt": "2019-02-06T19:00:20Z",
+          "author": {
+            "login": "asmeurer"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDQ2MTE4NTE5MA==",
+          "bodyText": "I remembered correctly. This is an output from beamer with the different options:\n\nThis shows quite clearly why \\mathrm isn't a good idea (and why \\operatorname is better for operators, as it uses the same spacing). The other spacing one can somehow ignore though, as of course it is possible to get it to be identical, but it requires figuring out what it is.",
+          "createdAt": "2019-02-06T20:59:32Z",
+          "author": {
+            "login": "oscargus"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDQ2MTE4NjEyNA==",
+          "bodyText": "Regarding amsmath: I do not know of any such case. I am thinking more from the perspective that many people have a hard time getting started with LaTeX and packages and so on. But I think that \\operatorname and \\text is still the way to go. Unless there are some symbols that for sure should be written in a Roman font.",
+          "createdAt": "2019-02-06T21:02:25Z",
+          "author": {
+            "login": "oscargus"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDQ2MTE5Mjc3Ng==",
+          "bodyText": "In latex.py, \\mathrm is used in the printers for bool, NoneType, Trace, BaseScalarField, and Differential (which has some unreachable code btw). For Trace we should obviously be using \\operatorname, but for the others I'm not so sure. \\text is currently used only in the Piecewise printer.",
+          "createdAt": "2019-02-06T21:22:50Z",
+          "author": {
+            "login": "asmeurer"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDQ2MTE5NTc2NA==",
+          "bodyText": "Regarding amsmath I realized that \\dddot and \\ddddot are from amsmath, so #15982 added a bit more amsmath dependencies... (They were already used in the physics.vector printer earlier though.)",
+          "createdAt": "2019-02-06T21:32:10Z",
+          "author": {
+            "login": "oscargus"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDQ2MTIxMjM1OA==",
+          "bodyText": "Even matrix requires amsmath, according to this. I've never heard anyone complain about it. amsmath comes with LaTeX and is fully supported by MathJax, so I don't think there is an issue there.\nThe main compatibility issues for LaTeX are that it should be supported by MathJax (but virtually everything is), and it should be supported by matplotlib's mathtext if possible.",
+          "createdAt": "2019-02-06T22:24:44Z",
+          "author": {
+            "login": "asmeurer"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "IC_kwDOAAnGFs426L5L",
+          "bodyText": "There was some more discussion about this at #22088.\nTo summarize: \\mathrm forces the font to be Roman. This unfortunately means two things in LaTeX: upright and serif. So if all you want is upright text for an operator, it will be wrong in a sans-serif environment like Beamer. \\text on the other hand just makes the font match the surrounding text. This is not good if you mix serif and sans-serif text and math, but that's an odd corner case that doesn't look good anyway. A more important reason this is bad is if the surrounding text is italics, which happens in Theorem environments. There are also other potential options like \\textup. We should also consider that different places that use \\text have different requirements. For instance, text in a Piecewise probably should be using \\text, but text in an operator name should not always match the surrounding text. I don't know if there is a better option that we can use in the printer. If there isn't, we should factor out the uses of \\text in the printer so advanced users can easily change what is used.",
+          "createdAt": "2021-09-16T20:29:28Z",
+          "author": {
+            "login": "asmeurer"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "IC_kwDOAAnGFs5AwQBj",
+          "bodyText": "Having spent considerable time this evening in the cold embrace of TeX SE threads, I think the best option may be:\n\nUse \\operatorname when appropriate. This seems to be much less problematic than the other options, although it only makes sense for operators. I think this would have been the right choice for #22088. The extraneous space after ‘Range’ is caused by \\left (see #23286), not \\operatorname, and to my eyes the extra space before ‘Range’ is advantageous. For example – although 3 Range is nonsense –\n\n\\documentclass{article}\n\\usepackage{amsmath}\n\\begin{document}\n\\[3\\operatorname{Range}(3, 2)\\]\n\\[3\\text{Range}(3, 2)\\]\n\\[3\\operatorname{Range}\\left(3, 2\\right)\\]\n\\[3\\text{Range}\\left(3, 2\\right)\\]\n\\end{document}\nproduces:\n\n\nUse \\text for embedded text, for some definition of that word. This probably includes the words in Piecewise.\nUse \\mathrm for everything else. This isn’t nice in sans-serif environments, but \\text is approximately equally bad in italic environments. I’m not sure which of these is most common, but post-processing \\mathrm to \\mathsf is easier than trying to do that for half of the \\texts.",
+          "createdAt": "2022-04-01T22:40:26Z",
+          "author": {
+            "login": "TomFryers"
+          },
+          "reactions": {
+            "nodes": [
+              {
+                "content": "THUMBS_UP",
+                "user": {
+                  "login": "asmeurer"
+                }
+              }
+            ],
+            "totalCount": 1
+          }
+        },
+        {
+          "id": "IC_kwDOAAnGFs5AwUVG",
+          "bodyText": "That all sounds good to me. I would add that we can add options to the printer, so that a user could pass a flag to latex() to produce output that is more appropriate for a sans-serif environment. Probably this whole discussion should be summarized in the documentation somewhere. If we can't have something that looks good everywhere, flags are the best option, with the default being whatever looks best in the standard LaTeX environment used by most people, and also in MathJax in a Jupyter notebook, which is by far the most important use-case.",
+          "createdAt": "2022-04-01T23:20:04Z",
+          "author": {
+            "login": "asmeurer"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "IC_kwDOAAnGFs5AwUZj",
+          "bodyText": "The extraneous space after ‘Range’ is caused by \\left\n\nThe examples in #15934 (comment) don't have parentheses.",
+          "createdAt": "2022-04-01T23:20:51Z",
+          "author": {
+            "login": "asmeurer"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "MDU6SXNzdWU0NDczMjE5OTg=",
+      "number": 16873,
+      "title": "imageset changes name of dummy variable (but need not do so)",
+      "bodyText": "Since we can inspect the lambda's arguments and get their names, it is not necessary to create a dummy argument for something like the following:\n>>> imageset(lambda y: x+y, S.Integers)\nImageSet(Lambda(_x, _x + x), Integers)",
+      "createdAt": "2019-05-22T20:12:56Z",
+      "updatedAt": "2019-05-23T17:51:51Z",
+      "closedAt": "2019-05-23T17:51:51Z",
+      "state": "CLOSED",
+      "author": {
+        "login": "smichr",
+        "name": "Christopher Smith",
+        "company": null
+      },
+      "labels": {
+        "nodes": [
+          {
+            "name": "sets",
+            "description": null,
+            "color": "0000FF"
+          }
+        ]
+      },
+      "reactions": {
+        "nodes": [],
+        "totalCount": 0
+      },
+      "totalComments": 0,
+      "comments": []
+    },
+    {
+      "id": "MDU6SXNzdWU0NzA3NzYzNzY=",
+      "number": 17238,
+      "title": "Relational printing",
+      "bodyText": "from sympy import *\n\nfrom sympy.printing.ccode import ccode\nfrom sympy.printing.cxxcode import cxxcode\nfrom sympy.printing.fcode import fcode\nfrom sympy.printing.glsl import glsl_code\nfrom sympy.printing.jscode import jscode\nfrom sympy.printing.julia import julia_code\nfrom sympy.printing.mathematica import mathematica_code\nfrom sympy.printing.octave import octave_code\nfrom sympy.printing.pycode import pycode\nfrom sympy.printing.rcode import rcode\nfrom sympy.printing.rust import rust_code\n\nx = Symbol('x')\n\nprint(ccode(Eq(x, 1)))\nprint(cxxcode(Eq(x, 1)))\nprint(glsl_code(Eq(x, 1)))\nprint(fcode(Eq(x, 1)))\nprint(jscode(Eq(x, 1)))\nprint(julia_code(Eq(x, 1)))\nprint(mathematica_code(Eq(x, 1)))\nprint(octave_code(Eq(x, 1)))\nprint(pycode(Eq(x, 1)))\nprint(rcode(Eq(x, 1)))\nprint(rust_code(Eq(x, 1)))\nResult\nx == 1\nx == 1\nEq(x, 1)\n      x == 1\nEq(x, 1)\nEq(x, 1)\nEq(x, 1)\nEq(x, 1)\n(x == 1)\nx == 1\nEq(x, 1)\n\nglsl, javascript, julia, mathematica, octave, rust code printers are probably printing equality in a wrong way.\nThey are false-positively looking up for StrPrinter._print_Relational\nC or Fortran printers are overriding _print_Relational, so they are the only things working.",
+      "createdAt": "2019-07-21T12:30:18Z",
+      "updatedAt": "2019-07-21T20:10:59Z",
+      "closedAt": "2019-07-21T20:10:59Z",
+      "state": "CLOSED",
+      "author": {
+        "login": "sylee957",
+        "name": "S.Y. Lee ",
+        "company": null
+      },
+      "labels": {
+        "nodes": [
+          {
+            "name": "printing",
+            "description": null,
+            "color": "0000FF"
+          }
+        ]
+      },
+      "reactions": {
+        "nodes": [],
+        "totalCount": 0
+      },
+      "totalComments": 0,
+      "comments": []
+    },
+    {
+      "id": "MDU6SXNzdWU1MDc3OTg4OTI=",
+      "number": 17737,
+      "title": "Mod function lambdify bug",
+      "bodyText": "Description:\nWhen lambdifying any function of structure like expr * Mod(a, b) sympy moves the multiplier into the first argument of Mod, like Mod(expr * a, b), WHEN we specify modules=[]\nThis is an example from Sympy online shell\n>>> from sympy import Mod, lambdify, symbols\n>>> x, y = symbols('x y')\n>>> expr = -Mod(x, y)\n>>> f = lambdify([x, y], expr)\n>>> f(3, 7)\n-3\n>>> inspect.getsource(f)\ndef _lambdifygenerated(x, y):\n    return (-mod(x, y))\n\n\n>>> g = lambdify([x, y], expr, modules=[])\n>>> g(3, 7)\n4\n>>> inspect.getsource(g)\ndef _lambdifygenerated(x, y):\n    return (-x % y)",
+      "createdAt": "2019-10-16T11:46:56Z",
+      "updatedAt": "2021-09-13T12:29:49Z",
+      "closedAt": "2021-09-13T12:29:49Z",
+      "state": "CLOSED",
+      "author": {
+        "login": "MaryBagratunyan",
+        "name": "Meri Bagratunyan",
+        "company": null
+      },
+      "labels": {
+        "nodes": [
+          {
+            "name": "Easy to Fix",
+            "description": "This is a good issue for new contributors. Feel free to work on this if no one else has already.",
+            "color": "009800"
+          },
+          {
+            "name": "printing",
+            "description": null,
+            "color": "0000FF"
+          }
+        ]
+      },
+      "reactions": {
+        "nodes": [],
+        "totalCount": 0
+      },
+      "totalComments": 19,
+      "comments": [
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDU0MjgyMTY5Ng==",
+          "bodyText": "Looks like the printer has the precedence order wrong for - and %",
+          "createdAt": "2019-10-16T18:01:34Z",
+          "author": {
+            "login": "asmeurer"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDU0MjgyMjQ4MA==",
+          "bodyText": "A more direct reproduction\n>>> pycode(-Mod(x, y))\n'-x % y'",
+          "createdAt": "2019-10-16T18:03:28Z",
+          "author": {
+            "login": "asmeurer"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDU0NzQ2MDk3OA==",
+          "bodyText": "hi @asmeurer i  should i please take this up !!\nplease do reply ..\nthanks:-)",
+          "createdAt": "2019-10-29T14:54:05Z",
+          "author": {
+            "login": "mridullpandey"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDU2NzEyOTIwMA==",
+          "bodyText": "Hello anyone working on this?? I would like to help.",
+          "createdAt": "2019-12-18T17:21:10Z",
+          "author": {
+            "login": "shubhamabhang77"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDU2ODc2MDc3Ng==",
+          "bodyText": "I want to contribute on this issue. Is this issue still open?",
+          "createdAt": "2019-12-24T14:46:23Z",
+          "author": {
+            "login": "Saanidhyavats"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDU3MDc5OTk3NQ==",
+          "bodyText": "Is this issue still open? I would like to contribute.",
+          "createdAt": "2020-01-04T16:42:09Z",
+          "author": {
+            "login": "aanjaneykumarverma"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDU4MTU2MDgyNQ==",
+          "bodyText": "Can i work on this one...or someone's already working on it?",
+          "createdAt": "2020-02-03T18:51:25Z",
+          "author": {
+            "login": "Jonty16117"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDU5Mjk2NjExOA==",
+          "bodyText": "It seems to me that all that should be done is just add the key 'Mod' with its value smaller than that of 'Mul' to the map objects PRECEDENCE and PRECEDENCE_VALUES in sympy/sympy/printer/precedence.py. Being new in Sympy, though, I might be missing some viewpoints. Do any tutor agree with this idea? And if so, how much should the value be (maybe 45 or 49, given that of 'Add' is 40 and that of 'Mul' is 50?)",
+          "createdAt": "2020-02-29T17:00:43Z",
+          "author": {
+            "login": "kom-bu"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDU5MzAzMDU4OQ==",
+          "bodyText": "Oops! I found this doesn't work in cases like -Mod(x, y), because the precedence of Mul object drops to 40 if the coefficient is negative. What is this rule for? I'm thinking of just doing away with this rule.",
+          "createdAt": "2020-03-01T02:11:12Z",
+          "author": {
+            "login": "kom-bu"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDU5NjIwNjQyMA==",
+          "bodyText": "@kom-bu I was doing this change of PRECEDENCE for MOD (to be a little bit less), but it eventually caused failings on many tests (cause some of the printing uses Mod(x,y) and some x % y and so the PRECEDENCE changes with each printing method). I have added a predefined PRECEDENCE for each printing method to fix this, and maybe it resolves #18788 too.",
+          "createdAt": "2020-03-08T13:34:32Z",
+          "author": {
+            "login": "danil179"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDYyODQxNjY3Ng==",
+          "bodyText": "i want to work in this issue,,,or someone is working on this issue or not?",
+          "createdAt": "2020-05-14T06:26:47Z",
+          "author": {
+            "login": "itsamittomar"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDYyODU1NTQ3MQ==",
+          "bodyText": "@itsamittomar I have a PR for this issue, but I'm not sure what is the status of this PR right now.",
+          "createdAt": "2020-05-14T10:53:28Z",
+          "author": {
+            "login": "danil179"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDYyODU1OTM3Mg==",
+          "bodyText": "@danil179 so can I  solve this issue",
+          "createdAt": "2020-05-14T11:02:02Z",
+          "author": {
+            "login": "itsamittomar"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDczNTQzNjAzOA==",
+          "bodyText": "I suppose, the issue is not Mod itself.\nI found this line:\nif modules is None:\n    ... # adding standard modules to list\n\nAs we can see, there is no check if modules is an empty list -- we only check if it's None.\nI came up with a solution: we could check if modules is None or if len(modules) == 0.\nI think I'll write it right now and link the PR to this issue.",
+          "createdAt": "2020-11-29T18:33:44Z",
+          "author": {
+            "login": "NChechulin"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDczNjU5NjAwMg==",
+          "bodyText": "Is someone working on this issue? I would like to work on this.",
+          "createdAt": "2020-12-01T14:44:25Z",
+          "author": {
+            "login": "hardikkat24"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDczNjYyNzI1OA==",
+          "bodyText": "@hardikkat24, I sent a PR a couple of days ago. It is still not approved nor rejected. I think, that we should wait for feedback on that.",
+          "createdAt": "2020-12-01T15:30:33Z",
+          "author": {
+            "login": "NChechulin"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDc4NzM5NTg5NA==",
+          "bodyText": "I want to work on #17737 issue. May be the precedence causes the error . Allow me to work on this issue.",
+          "createdAt": "2021-02-28T05:08:47Z",
+          "author": {
+            "login": "aradhana72"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDc4NzQzNTQzMw==",
+          "bodyText": "There is a PR #20507 that seems to fix this but has merge conflicts. I'm not sure if it fixes the precedence issue with pycode though.",
+          "createdAt": "2021-02-28T11:14:10Z",
+          "author": {
+            "login": "oscarbenjamin"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "IC_kwDOAAnGFs42cv_6",
+          "bodyText": "I resolved the merge conflicts from #20507 and added a small additional check that the values are not only the same, but also correct. This is now #22032.\nThe pycode issue is still not correct though.",
+          "createdAt": "2021-09-06T09:43:34Z",
+          "author": {
+            "login": "oscargus"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "MDU6SXNzdWU1NzMwMDE2NTk=",
+      "number": 18743,
+      "title": "TypeError printing I*MatrixSymbol",
+      "bodyText": "From https://stackoverflow.com/questions/60435146/imaginary-matrices-in-sympy-using-matrixsymbol\n>>> MatrixSymbol('M', 2, 2)\nM\n>>> print(I*M)\nTraceback (most recent call last):\n  File \"<stdin>\", line 1, in <module>\n  File \"./sympy/core/basic.py\", line 413, in __str__\n    return sstr(self, order=None)\n  File \"./sympy/printing/str.py\", line 899, in sstr\n    s = p.doprint(expr)\n  File \"./sympy/printing/printer.py\", line 251, in doprint\n    return self._str(self._print(expr))\n  File \"./sympy/printing/printer.py\", line 289, in _print\n    return getattr(self, printmethod)(expr, **kwargs)\n  File \"./sympy/printing/str.py\", line 335, in _print_MatMul\n    if c.is_number and c < 0:\n  File \"./sympy/core/expr.py\", line 407, in __lt__\n    return self._cmp(other, \"<\", StrictLessThan)\n  File \"./sympy/core/expr.py\", line 348, in _cmp\n    raise TypeError(\"Invalid comparison of non-real %s\" % me)\nTypeError: Invalid comparison of non-real I",
+      "createdAt": "2020-02-28T21:00:01Z",
+      "updatedAt": "2020-03-04T22:26:54Z",
+      "closedAt": "2020-03-04T22:26:54Z",
+      "state": "CLOSED",
+      "author": {
+        "login": "asmeurer",
+        "name": "Aaron Meurer",
+        "company": null
+      },
+      "labels": {
+        "nodes": [
+          {
+            "name": "printing",
+            "description": null,
+            "color": "0000FF"
+          }
+        ]
+      },
+      "reactions": {
+        "nodes": [],
+        "totalCount": 0
+      },
+      "totalComments": 0,
+      "comments": []
+    },
+    {
+      "id": "MDU6SXNzdWU1Nzk0ODk3NzE=",
+      "number": 18832,
+      "title": "uniq modifies list argument",
+      "bodyText": "When you iterate over a dictionary or set and try to modify it while doing so you get an error from Python:\n>>> multiset('THISTLE')\n{'T': 2, 'H': 1, 'I': 1, 'S': 1, 'L': 1, 'E': 1}\n>>> for i in _:\n...   _.pop(i)\n...\n2\nTraceback (most recent call last):\n  File \"<stdin>\", line 1, in <module>\nRuntimeError: dictionary changed size during iteration\nIt would be good to do the same thing from within uniq because the output will silently be wrong if you modify a passed list:\n>>> f=list('THISTLE')\n>>> for i in uniq(f):\n...   f.remove(i)\n...   i\n...\n'T'\n'I'\n'L'\nI think this would entail recording the size at the start and then checking the size and raising a similar RuntimeError if the size changes.",
+      "createdAt": "2020-03-11T19:19:12Z",
+      "updatedAt": "2020-03-13T15:43:45Z",
+      "closedAt": "2020-03-13T15:43:45Z",
+      "state": "CLOSED",
+      "author": {
+        "login": "smichr",
+        "name": "Christopher Smith",
+        "company": null
+      },
+      "labels": {
+        "nodes": [
+          {
+            "name": "utilities",
+            "description": "",
+            "color": "0000FF"
+          }
+        ]
+      },
+      "reactions": {
+        "nodes": [],
+        "totalCount": 0
+      },
+      "totalComments": 3,
+      "comments": [
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDU5Nzg0MzgwNA==",
+          "bodyText": "I'm not sure there is a need to handle this case. Users should know not to mutate something while iterating over it.",
+          "createdAt": "2020-03-11T20:12:14Z",
+          "author": {
+            "login": "oscarbenjamin"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDU5Nzg2Nzc1MQ==",
+          "bodyText": "With regards to the above discussion, I believe it would indeed be helpful if modifying a passed list to uniq raises an error while iterating over it, because it does not immediately follow that uniq(f) would get updated if f gets updated, as the user might think something like uniq stores a copy of f, computes the list of unique elements in it, and returns that list. The user may not know, that yield is being used internally instead of return.\nI have a doubt regarding the implementation of uniq:\nhttps://github.com/sympy/sympy/blob/5bfe93281866f0841b36a429f4090c04a0e81d21/sympy/utilities/iterables.py#L2109-L2124\nHere, if the first argument, seq in uniq does not have a __getitem__ method, and a TypeError is raised somehow, then we call the uniq function again on seq with the updated result, won't that yield ALL of the elements of seq again, even those which have already been yielded?\nSo mainly what I wanted to point out was, that if we're assuming that the given seq is iterable (which we must, since we pass it on to the enumerate function), by definition, seq must have either __getitem__ or __iter__, both of which can be used to iterate over the remaining elements if the TypeError is raised.\nAlso, I'm unable to understand the role of result in all of this, kindly explain.\nSo should I work on the error handling bit in this function?",
+          "createdAt": "2020-03-11T20:39:53Z",
+          "author": {
+            "login": "sava-1729"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDU5NzkzNDA2OA==",
+          "bodyText": "role of result in all of this\n\nThe easy case is if all elements are hashable. In this case we can see if they are in seen. In case that fails, however, we can store the element in a list and then see if the element is there.",
+          "createdAt": "2020-03-11T23:42:42Z",
+          "author": {
+            "login": "smichr"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "MDU6SXNzdWU2MDQwOTQ5NTM=",
+      "number": 19162,
+      "title": "MatrixSymbol inversion fails.",
+      "bodyText": "The code:\nX = sp.Matrix(sp.MatrixSymbol('X', 2, 2))\nX.inv()\ngenerates the error:\nTypeError: 'Zero' object is not subscriptable",
+      "createdAt": "2020-04-21T15:52:12Z",
+      "updatedAt": "2021-09-01T01:23:40Z",
+      "closedAt": "2021-09-01T01:23:40Z",
+      "state": "CLOSED",
+      "author": {
+        "login": "jmgc",
+        "name": null,
+        "company": "Universitat de Barcelona"
+      },
+      "labels": {
+        "nodes": [
+          {
+            "name": "matrices.expressions",
+            "description": null,
+            "color": "0000ff"
+          }
+        ]
+      },
+      "reactions": {
+        "nodes": [],
+        "totalCount": 0
+      },
+      "totalComments": 13,
+      "comments": [
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDYyMDU4OTQwNw==",
+          "bodyText": "Fixed in PR #19217\nYou can do this now:\nA = MatrixSymbol('A', 2, 2)\nA = A.as_explicit()\nA.inv()",
+          "createdAt": "2020-04-28T12:57:16Z",
+          "author": {
+            "login": "vanillafrosty"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDYyMDYzMTU1OQ==",
+          "bodyText": "I think that #19217 is not really fixing the problem.\nThe actual problem is not really to do with inverse but somehow passing matrix elements to equals:\nIn [30]: M = MatrixSymbol('M', 2, 2)                                                                 \n\nIn [31]: d = M.as_explicit().det()                                                                   \n\nIn [32]: d                                                                                           \nOut[32]: M₀₀⋅M₁₁ - M₀₁⋅M₁₀\n\nIn [33]: d.equals(0)                                                                                 \n---------------------------------------------------------------------------\nTypeError \n...\nTypeError: 'Zero' object is not subscriptable\nSomehow internally d ends up having M substituted for 1 or 0.\nOh, that's because .equals tries randomly substituting for free symbols:\nIn [37]: M[0, 0].free_symbols                                                                        \nOut[37]: {M}\n\nIn [38]: Ms, = M[0, 0].free_symbols                                                                  \n\nIn [39]: M[0, 0].subs(Ms, 1)                                                                         \nOut[39]: (1)[0, 0]\nI guess there should be more checking in the MatrixElement constructor:\nIn [42]: from sympy.matrices.expressions.matexpr import MatrixElement                                \n\nIn [43]: MatrixElement(1, 0, 0)                                                                      \nOut[43]: (1)[0, 0]\n\nIn [44]: MatrixElement(M, 0, 0)                                                                      \nOut[44]: M₀₀",
+          "createdAt": "2020-04-28T14:09:49Z",
+          "author": {
+            "login": "oscarbenjamin"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDYyMDY4MDc2NQ==",
+          "bodyText": "I see. Originally my thought was to route the inv() method on ImmutableDenseMatrix instances back to the inverse method of the MatrixExpr class (when faced with inverting an ImmutableDenseMatrix formed from a symbolic matrix). My reasoning is that when you construct a symbolic matrix and immediately take the inverse, the .inv() method goes to that of the MatrixExpr class.\nI.e.\nA = Matrix('A', 2, 2)\nA.inv()\nBut @oscarbenjamin you're saying it's better to fix MatrixElement instead of simply monkey patching class methods? I would agree. Let me take another look",
+          "createdAt": "2020-04-28T15:32:59Z",
+          "author": {
+            "login": "vanillafrosty"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDYyMTU5Nzg4Nw==",
+          "bodyText": "Looks like .equals is calling .is_constant which is doing the substitution of the symbols @oscarbenjamin mentioned. I don't think it makes sense to substitute the symbols out in a MatrixElement for 0 or 1 and then use the instance for comparisons. So to me the best solution is to catch the TypeError thrown after the substitution when the code tries to call .equals again. We should still allow the substitution initially because the method is not only going to be used on symbolic instances.\nSee my latest commit. I'm catching the error thrown by line 691 in sympy/core/expr.py:\nif b is not None and b is not S.NaN and b.equals(a) is False:\nLuckily, regardless of whether this line throws an exception, the code reassigns b and we don't worry about it anymore. Hopefully it's as simple as that.",
+          "createdAt": "2020-04-30T03:57:02Z",
+          "author": {
+            "login": "vanillafrosty"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDYyOTk3ODM0MQ==",
+          "bodyText": "I think I'm running into this same issue, but I'm not entirely sure. Could you verify?\nJust from playing around with various configurations, it seems to be the matrix inversion that poisons the well. Test case:\nfrom sympy import *\n\n# Moore-Penrose pseudo-inverse\ndef pinv(matrix):\n    return (matrix.T * matrix) ** -1 * matrix.T\n\nn = 5\nX = MatrixSymbol(\"X\", n, 1)\nY = MatrixSymbol(\"Y\", n, 1)\npoints = BlockMatrix([ones(n, 1), X, Y])\n\npseudo = pinv(points)\npseudo[2, 2]\n\nThis yields an \"Index out of range: a[1]\" error with a long traceback.\npoints.as_explicit() is\n\nwhich looks correct. pseudo is:\n\nand pseudo.shape is (3, 5) which, again, both look fine. It's just that I can't access any actual cell of the result.\nIf you leave off the multiplication by matrix.T in the pseudo-inverse, you get a Zero-related error message.",
+          "createdAt": "2020-05-18T06:41:34Z",
+          "author": {
+            "login": "GarthSnyder"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDY4NzYzODMyNw==",
+          "bodyText": "The error still persists on master. Open for fixes.",
+          "createdAt": "2020-09-05T17:19:39Z",
+          "author": {
+            "login": "czgdp1807"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDcyMTQ2MTk0NQ==",
+          "bodyText": "Facing same problem, though from a different 2x2 expression using sympy v1.6.2.  Problem persisted in v1.6.0, 1.5.0, but was not present when using v1.4.0.  The original example show by @jmgc runs fine in v1.4.0\n\nWould be great to have this get attention.",
+          "createdAt": "2020-11-04T01:29:50Z",
+          "author": {
+            "login": "onavhamid"
+          },
+          "reactions": {
+            "nodes": [
+              {
+                "content": "THUMBS_UP",
+                "user": {
+                  "login": "vitorsrg"
+                }
+              }
+            ],
+            "totalCount": 1
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDcyMzQ4MTc2Mg==",
+          "bodyText": "I think that the fix should be something like:\ndiff --git a/sympy/core/expr.py b/sympy/core/expr.py\nindex 13c5c4a15e..e82373df7a 100644\n--- a/sympy/core/expr.py\n+++ b/sympy/core/expr.py\n@@ -652,7 +652,7 @@ def check_denominator_zeros(expression):\n                 if a is S.NaN:\n                     # evaluation may succeed when substitution fails\n                     a = expr._random(None, 0, 0, 0, 0)\n-            except ZeroDivisionError:\n+            except (ZeroDivisionError, TypeError):\n                 a = None\n             if a is not None and a is not S.NaN:\n                 try:\ndiff --git a/sympy/matrices/expressions/matexpr.py b/sympy/matrices/expressions/matexpr.py\nindex 51db3c3395..fb35561b12 100644\n--- a/sympy/matrices/expressions/matexpr.py\n+++ b/sympy/matrices/expressions/matexpr.py\n@@ -705,7 +705,10 @@ def __new__(cls, name, n, m):\n                 return name[n, m]\n         if isinstance(name, str):\n             name = Symbol(name)\n-        name = _sympify(name)\n+        else:\n+            name = _sympify(name)\n+            if not isinstance(name, MatrixExpr):\n+                raise TypeError(\"First argument of MatrixElement should be a matrix\")\n         obj = Expr.__new__(cls, name, n, m)\n         return obj",
+          "createdAt": "2020-11-07T18:58:01Z",
+          "author": {
+            "login": "oscarbenjamin"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDc1MTk2NjgyNQ==",
+          "bodyText": "The bug still persists on master. Open for work.",
+          "createdAt": "2020-12-29T06:38:54Z",
+          "author": {
+            "login": "czgdp1807"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDc1MTk3NTUyNA==",
+          "bodyText": "I'll work on it.",
+          "createdAt": "2020-12-29T07:12:06Z",
+          "author": {
+            "login": "sidhu1012"
+          },
+          "reactions": {
+            "nodes": [
+              {
+                "content": "HOORAY",
+                "user": {
+                  "login": "onavhamid"
+                }
+              }
+            ],
+            "totalCount": 1
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDg0MzUxMDI4MQ==",
+          "bodyText": "Persists in 1.7.1",
+          "createdAt": "2021-05-18T19:52:55Z",
+          "author": {
+            "login": "ri4a"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDg0MzU1MzgyNQ==",
+          "bodyText": "I think that the fix is in #20691 from @sidhu1012. The problem is it causes some other test to fail but I think maybe that other test can just be made XFAIL because it's more important to fix this.",
+          "createdAt": "2021-05-18T20:51:11Z",
+          "author": {
+            "login": "oscarbenjamin"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDg0Mzc2MzIwMA==",
+          "bodyText": "I'll make that test XFail",
+          "createdAt": "2021-05-19T05:43:08Z",
+          "author": {
+            "login": "sidhu1012"
+          },
+          "reactions": {
+            "nodes": [
+              {
+                "content": "HOORAY",
+                "user": {
+                  "login": "onavhamid"
+                }
+              }
+            ],
+            "totalCount": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "MDU6SXNzdWU2MTkwNzA3MDg=",
+      "number": 19329,
+      "title": "srepr not printing dict and set properly",
+      "bodyText": "srepr prints the element in list and tuple correctly.\n>>> from sympy import srepr\n>>> from sympy.abc import x,y\n>>> srepr([x,y])\n[Symbol('x'), Symbol('y')]\n>>> srepr((x,y))\n(Symbol('x'), Symbol('y'))\nHowever, srepr prints the elements in dict and set wrong.\n>>> srepr({x, y})\n{x, y}\n>>> srepr({x: y})\n{x: y}\nIs this behavior intended? If it isn't, fixing it will be an easy job.",
+      "createdAt": "2020-05-15T15:45:58Z",
+      "updatedAt": "2020-05-19T22:45:31Z",
+      "closedAt": "2020-05-19T22:45:31Z",
+      "state": "CLOSED",
+      "author": {
+        "login": "mcpl-sympy",
+        "name": null,
+        "company": "Seoul National University"
+      },
+      "labels": {
+        "nodes": [
+          {
+            "name": "printing",
+            "description": null,
+            "color": "0000FF"
+          }
+        ]
+      },
+      "reactions": {
+        "nodes": [],
+        "totalCount": 0
+      },
+      "totalComments": 0,
+      "comments": []
+    },
+    {
+      "id": "MDU6SXNzdWU2Mzg1ODkwOTM=",
+      "number": 19557,
+      "title": "sympy 1.6.1 ?",
+      "bodyText": "Hi, is there any plan on releasing 1.6.1, just like we had 1.5.1 shortly after 1.5? We're unfortunately stuck with 1.5.1, but the patches we've submitted have already been merged into SymPy master, and we're looking forward to jump to 1.6. Thanks!",
+      "createdAt": "2020-06-15T06:43:12Z",
+      "updatedAt": "2020-06-20T14:20:18Z",
+      "closedAt": "2020-06-20T14:20:18Z",
+      "state": "CLOSED",
+      "author": {
+        "login": "FabioLuporini",
+        "name": "Fabio Luporini",
+        "company": "Devito Codes"
+      },
+      "labels": {
+        "nodes": []
+      },
+      "reactions": {
+        "nodes": [],
+        "totalCount": 0
+      },
+      "totalComments": 9,
+      "comments": [
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDY0NDA0MTI1Mg==",
+          "bodyText": "Which patches are you referring to?",
+          "createdAt": "2020-06-15T10:20:05Z",
+          "author": {
+            "login": "oscarbenjamin"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDY0NDA4OTg4Nw==",
+          "bodyText": "Strictly speaking, the only one we actually need is #19431 . #19533 is the other one (though this one is more of a \"I'd really like to have it, but I can survive without for the time being)\nthe bug fixed in #19431 really kills our code",
+          "createdAt": "2020-06-15T12:07:07Z",
+          "author": {
+            "login": "FabioLuporini"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDY0NDA5NDA5Mg==",
+          "bodyText": "Note: edited my previous reply (wrong PR numbers before, now it should be fine)",
+          "createdAt": "2020-06-15T12:11:32Z",
+          "author": {
+            "login": "FabioLuporini"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDY0NDEwNDkxMg==",
+          "bodyText": "The normal plan is we would only make a bugfix release (i.e. 1.6.1) if regressions were identified in 1.6 (relative to 1.5.1). Also 1.6.1 would be based off the 1.6 branch rather than master so any fixes need to be cherry-picked to that branch. It's important to say when opening an issue that represents a regression that it is a regression so that any fix could be included in a bugfix release.\nUntil now the only regression I knew of was #19532.",
+          "createdAt": "2020-06-15T12:30:37Z",
+          "author": {
+            "login": "oscarbenjamin"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDY0NDExMjU1MA==",
+          "bodyText": "#19431 was a regression AFAICT? apologies if it wasn't made clear in the PR description. Looping in @mloubout (who wrote the actual patch)",
+          "createdAt": "2020-06-15T12:45:08Z",
+          "author": {
+            "login": "FabioLuporini"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDY0NDEyMTkzNw==",
+          "bodyText": "Yes this was a regression, I apologize if I haven't tagged it correctly, I tried to follow the guidelines but was the first time I PRed into sympy so I may have missed some parts.\nAs @FabioLuporini this is somethign that forces us to be fixed at 1.5.1 as this is an issue that make 1.6 unusable for us due to the presence of the Dummy object after collection.",
+          "createdAt": "2020-06-15T13:04:12Z",
+          "author": {
+            "login": "mloubout"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDY0NDI4ODkwOA==",
+          "bodyText": "No need to apologise. It's just best to explicitly say if something is a regression and since what version.\nWe can do a 1.6.1 release but I think we need a fix for #19532 first.",
+          "createdAt": "2020-06-15T18:12:19Z",
+          "author": {
+            "login": "oscarbenjamin"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDY0Njk4MTI1MQ==",
+          "bodyText": "I've start preparing for the release (#19598). The issue tracking the release is #19599",
+          "createdAt": "2020-06-20T11:17:23Z",
+          "author": {
+            "login": "oscarbenjamin"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDY0Njk4MjIwOQ==",
+          "bodyText": "#19601 applies #19431 to the 1.6 branch for release in 1.6.1 and will close this issue.",
+          "createdAt": "2020-06-20T11:23:36Z",
+          "author": {
+            "login": "oscarbenjamin"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "MDU6SXNzdWU2NDU0ODExODQ=",
+      "number": 19641,
+      "title": "Lambdify does not work with Integral",
+      "bodyText": "In [36]: lambdify(z, Integral(1, (x, 0, z)))(1)                                                                                                \n---------------------------------------------------------------------------\nNameError                                 Traceback (most recent call last)\n<ipython-input-36-276a7bc694f7> in <module>\n----> 1 lambdify(z, Integral(1, (x, 0, z)))(1)\n\n<lambdifygenerated-3> in _lambdifygenerated(z)\n      2     return (  # Not supported in Python with SciPy:\n      3   # Integral\n----> 4 Integral(1, (x, 0, z)))\n\nNameError: name 'Integral' is not defined\n\nThis could use numerical integration routines from scipy, mpmath etc.",
+      "createdAt": "2020-06-25T11:20:25Z",
+      "updatedAt": "2020-09-25T18:45:12Z",
+      "closedAt": "2020-09-25T18:45:12Z",
+      "state": "CLOSED",
+      "author": {
+        "login": "oscarbenjamin",
+        "name": "Oscar Benjamin",
+        "company": null
+      },
+      "labels": {
+        "nodes": [
+          {
+            "name": "utilities.lambdify",
+            "description": null,
+            "color": "0000FF"
+          }
+        ]
+      },
+      "reactions": {
+        "nodes": [],
+        "totalCount": 0
+      },
+      "totalComments": 4,
+      "comments": [
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDY5Njk2MzcyOA==",
+          "bodyText": "Does scipy support vectorization over parameters for integrals, or it only expects scalar arguments?",
+          "createdAt": "2020-09-22T20:32:56Z",
+          "author": {
+            "login": "sylee957"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDY5NzMzNTY4Mw==",
+          "bodyText": "scipy.integrals.quad and scipy.integrals.nquad will always return a single float as the actual result of integration (so I think they will also only accept an integrand function that has scalar arguments even though multiple scalar arguments are supported by nquad). But I'm not sure whether there's a function in scipy that handles vectorizing in a more optimal way than just using numpy.vectorize. This seems to be asked in https://stackoverflow.com/questions/57350391/scipy-integrate-quad-quadrature-nquad-cannot-integrate-vector-parameterized (More discussion in the pull #20134).",
+          "createdAt": "2020-09-23T12:37:03Z",
+          "author": {
+            "login": "ehren"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDY5NzQ5MTYwNA==",
+          "bodyText": "It looks like we would have to document clearly about how some sympy functions can be vectorized or not with scipy lambdify. I find it confusing that some functions can be evaluated to grid and some functions cannot, and this have important application for developing plotting module.",
+          "createdAt": "2020-09-23T14:56:25Z",
+          "author": {
+            "login": "sylee957"
+          },
+          "reactions": {
+            "nodes": [
+              {
+                "content": "THUMBS_UP",
+                "user": {
+                  "login": "ehren"
+                }
+              }
+            ],
+            "totalCount": 1
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDY5NzUwODY1Mw==",
+          "bodyText": "I think it is reasonable to build in numpy.vectorize() into our lambdify printers for numpy/scipy functions that aren't vectorized by default. This would allow things to just work and is probably fine for the majority of use cases.",
+          "createdAt": "2020-09-23T15:07:02Z",
+          "author": {
+            "login": "moorepants"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "MDU6SXNzdWU2NzU2NDQxNzg=",
+      "number": 19927,
+      "title": "sylow_subgroup() IndexError ",
+      "bodyText": "I use sympy 1.6.1, with numpy 1.18.5, scipy 1.4.1, under Python '3.8.5 (default, Aug  5 2020, 09:44:06) [MSC v.1916 64 bit (AMD64)]'.\nThe code that I run as the following gives IndexError for sylow_subgroup():\nfrom sympy.combinatorics import DihedralGroup, PermutationGroup, Permutation\nG = DihedralGroup(18)\nS2 = G.sylow_subgroup(p=2)\nTraceback (most recent call last):\nFile \"\", line 7, in \nFile \"D:\\anaconda38\\envs\\default\\lib\\site-packages\\sympy\\combinatorics\\perm_groups.py\", line 4370, in sylow_subgroup\nblocks = self.minimal_blocks()\nFile \"D:\\anaconda38\\envs\\default\\lib\\site-packages\\sympy\\combinatorics\\perm_groups.py\", line 2207, in minimal_blocks\ndel num_blocks[i], blocks[i]\nIndexError: list assignment index out of range\nThe same error shows up as well when I set:\nG = DihedralGroup(2*25)\nS2 = G.sylow_subgroup(p=2)",
+      "createdAt": "2020-08-09T06:09:46Z",
+      "updatedAt": "2020-08-12T08:54:42Z",
+      "closedAt": "2020-08-12T08:54:42Z",
+      "state": "CLOSED",
+      "author": {
+        "login": "patrickxli",
+        "name": "Patrick X. Li",
+        "company": null
+      },
+      "labels": {
+        "nodes": [
+          {
+            "name": "combinatorics",
+            "description": null,
+            "color": "0000FF"
+          }
+        ]
+      },
+      "reactions": {
+        "nodes": [],
+        "totalCount": 0
+      },
+      "totalComments": 0,
+      "comments": []
+    },
+    {
+      "id": "MDU6SXNzdWU3NjEwMzM3NzE=",
+      "number": 20567,
+      "title": "Symbol instances have __dict__ since 1.7?",
+      "bodyText": "In version 1.6.2 Symbol instances had no __dict__ attribute\n>>> sympy.Symbol('s').__dict__\n---------------------------------------------------------------------------\nAttributeError                            Traceback (most recent call last)\n<ipython-input-3-e2060d5eec73> in <module>\n----> 1 sympy.Symbol('s').__dict__\n\nAttributeError: 'Symbol' object has no attribute '__dict__'\n>>> sympy.Symbol('s').__slots__\n('name',)\nThis changes in 1.7 where sympy.Symbol('s').__dict__ now exists (and returns an empty dict)\nI may misinterpret this, but given the purpose of __slots__, I assume this is a bug, introduced because some parent class accidentally stopped defining __slots__.",
+      "createdAt": "2020-12-10T08:44:03Z",
+      "updatedAt": "2020-12-12T20:17:07Z",
+      "closedAt": "2020-12-12T20:14:16Z",
+      "state": "CLOSED",
+      "author": {
+        "login": "mlangiu",
+        "name": null,
+        "company": null
+      },
+      "labels": {
+        "nodes": [
+          {
+            "name": "core",
+            "description": null,
+            "color": "0000FF"
+          },
+          {
+            "name": "regression",
+            "description": "",
+            "color": "e845cc"
+          }
+        ]
+      },
+      "reactions": {
+        "nodes": [],
+        "totalCount": 0
+      },
+      "totalComments": 8,
+      "comments": [
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDc0MjQ2OTI3NA==",
+          "bodyText": "I've bisected the change to 5644df1 from #19425",
+          "createdAt": "2020-12-10T11:42:18Z",
+          "author": {
+            "login": "oscarbenjamin"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDc0MjQ3NjMxNg==",
+          "bodyText": "It seems that Basic now inherits DefaultPrinting which I guess doesn't have slots. I'm not sure if it's a good idea to add __slots__ to that class as it would then affect all subclasses.\n@eric-wieser",
+          "createdAt": "2020-12-10T11:57:36Z",
+          "author": {
+            "login": "oscarbenjamin"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDc0MjQ3NjYyNg==",
+          "bodyText": "I'm not sure if this should count as a regression but it's certainly not an intended change.",
+          "createdAt": "2020-12-10T11:58:16Z",
+          "author": {
+            "login": "oscarbenjamin"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDc0MjQ3OTA5OA==",
+          "bodyText": "Maybe we should just get rid of __slots__. The benchmark results from #19425 don't show any regression from not using __slots__.",
+          "createdAt": "2020-12-10T12:03:33Z",
+          "author": {
+            "login": "oscarbenjamin"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDc0MjQ5MDE2OA==",
+          "bodyText": "Adding __slots__ won't affect subclasses - if a subclass does not specify __slots__, then the default is to add a __dict__ anyway.\nI think adding it should be fine.",
+          "createdAt": "2020-12-10T12:26:23Z",
+          "author": {
+            "login": "eric-wieser"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDc0MjQ5MzQ0MA==",
+          "bodyText": "Using slots can break multiple inheritance but only if the slots are non-empty I guess. Maybe this means that any mixin should always declare empty slots or it won't work properly with subclasses that have slots...\nI see that EvalfMixin has __slots__ = ().",
+          "createdAt": "2020-12-10T12:33:32Z",
+          "author": {
+            "login": "oscarbenjamin"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDc0MjQ5ODY5Ng==",
+          "bodyText": "I guess we should add empty slots to DefaultPrinting then. Probably the intention of using slots with Basic classes is to enforce immutability so this could be considered a regression in that sense so it should go into 1.7.1 I think.",
+          "createdAt": "2020-12-10T12:45:01Z",
+          "author": {
+            "login": "oscarbenjamin"
+          },
+          "reactions": {
+            "nodes": [
+              {
+                "content": "THUMBS_UP",
+                "user": {
+                  "login": "eric-wieser"
+                }
+              }
+            ],
+            "totalCount": 1
+          }
+        },
+        {
+          "id": "MDEyOklzc3VlQ29tbWVudDc0MzgxODY2NQ==",
+          "bodyText": "I've added __slots__ = () to DefaultPrinting. This is fixed on both master and the 1.7 branch so the fix will be in 1.7.1.",
+          "createdAt": "2020-12-12T20:17:07Z",
+          "author": {
+            "login": "oscarbenjamin"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "MDU6SXNzdWU4NDQyMjA4OTc=",
+      "number": 21201,
+      "title": "Improve as_relational for Range",
+      "bodyText": "Ranges don't have a rule in that file but they are complicated unless their steps are both the same and the modulus of the starting values relative to the step is the same. Note that the following is wrong (but is outside the scope of this PR):\n>>> Range(3,11,2).as_relational(x)\n(x >= 3) & (x <= 9) & Eq(x, floor(x))\nIt should be\n(x >= 3) & (x <= 9) & Eq(x, floor(x)) & Eq(Mod(x, 2), 1)\nOriginally posted by @smichr in #21156 (comment)",
+      "createdAt": "2021-03-30T08:25:33Z",
+      "updatedAt": "2021-04-10T19:44:31Z",
+      "closedAt": "2021-04-10T19:44:31Z",
+      "state": "CLOSED",
+      "author": {
+        "login": "MaqOwais",
+        "name": "Muhammed Abdul Quadir Owais",
+        "company": null
+      },
+      "labels": {
+        "nodes": []
+      },
+      "reactions": {
+        "nodes": [],
+        "totalCount": 0
+      },
+      "totalComments": 0,
+      "comments": []
+    },
+    {
+      "id": "I_kwDOAAnGFs48SkcM",
+      "number": 22185,
+      "title": "can `arg` denest?",
+      "bodyText": ">>> arg(arg(x))\narg(arg(x))  <-- should it just be arg(x)?\n>>> arg(x).is_real\nTrue",
+      "createdAt": "2021-09-29T22:25:33Z",
+      "updatedAt": "2021-11-01T23:25:34Z",
+      "closedAt": "2021-11-01T23:25:34Z",
+      "state": "CLOSED",
+      "author": {
+        "login": "smichr",
+        "name": "Christopher Smith",
+        "company": null
+      },
+      "labels": {
+        "nodes": [
+          {
+            "name": "functions",
+            "description": null,
+            "color": "0000FF"
+          }
+        ]
+      },
+      "reactions": {
+        "nodes": [],
+        "totalCount": 0
+      },
+      "totalComments": 6,
+      "comments": [
+        {
+          "id": "IC_kwDOAAnGFs43eBNW",
+          "bodyText": "It can't denest:\nIn [4]: arg(I)\nOut[4]: \nπ\n─\n2\n\nIn [5]: arg(arg(I))\nOut[5]: 0\nAlso it's different for positive and negative inputs:\nIn [8]: arg(arg(I))\nOut[8]: 0\n\nIn [9]: arg(arg(-I))\nOut[9]: π",
+          "createdAt": "2021-09-29T23:20:15Z",
+          "author": {
+            "login": "oscarbenjamin"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "IC_kwDOAAnGFs43eFDT",
+          "bodyText": "Can the maximum level before stability be 2?\n>>> arg(arg(arg(x)))\narg(arg(arg(x)))",
+          "createdAt": "2021-09-30T00:00:08Z",
+          "author": {
+            "login": "smichr"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "IC_kwDOAAnGFs43eHOd",
+          "bodyText": "In [8]: arg(arg(I))\nOut[8]: 0\n\nIn [9]: arg(arg(-I))\nOut[9]: π\n\nIn [10]: arg(arg(arg(I)))\nOut[10]: nan\n\nIn [11]: arg(arg(arg(-I)))\nOut[11]: 0",
+          "createdAt": "2021-09-30T00:18:57Z",
+          "author": {
+            "login": "oscarbenjamin"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "IC_kwDOAAnGFs43eHZw",
+          "bodyText": "I suppose that once we have 4 args we're guaranteed a nan but that doesn't seem like an especially useful simplification:\nIn [13]: arg(arg(arg(arg(-I))))\nOut[13]: nan",
+          "createdAt": "2021-09-30T00:20:40Z",
+          "author": {
+            "login": "oscarbenjamin"
+          },
+          "reactions": {
+            "nodes": [
+              {
+                "content": "LAUGH",
+                "user": {
+                  "login": "smichr"
+                }
+              }
+            ],
+            "totalCount": 1
+          }
+        },
+        {
+          "id": "IC_kwDOAAnGFs43fCxm",
+          "bodyText": "ok - a low-priority limit of 4",
+          "createdAt": "2021-09-30T07:00:56Z",
+          "author": {
+            "login": "smichr"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "IC_kwDOAAnGFs44-WTe",
+          "bodyText": "arg of a number with a negative imaginary part is negative\narg of a number with positive imaginary part is positive\narg of a negative is positive\narg of a positive is 0\narg of 0 is nan",
+          "createdAt": "2021-11-01T02:11:57Z",
+          "author": {
+            "login": "smichr"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "I_kwDOAAnGFs5CUbkT",
+      "number": 22908,
+      "title": "PythonCodePrinter doesn't support Min and Max",
+      "bodyText": "We can't generate python code for the sympy function Min and Max.\nFor example:\nfrom sympy import symbols, Min, pycode\na, b = symbols(\"a b\")\nc = Min(a,b)\nprint(pycode(c))\n\nthe output is:\n  # Not supported in Python:\n  # Min\nMin(a, b)\n\nSimilar to issue #16669, we should add following methods to PythonCodePrinter:\ndef _print_Min(self, expr):\n    return \"min({})\".format(\", \".join(self._print(arg) for arg in expr.args))\n\n\ndef _print_Max(self, expr):\n    return \"max({})\".format(\", \".join(self._print(arg) for arg in expr.args))",
+      "createdAt": "2022-01-24T13:29:15Z",
+      "updatedAt": "2022-02-01T13:16:35Z",
+      "closedAt": "2022-02-01T13:16:35Z",
+      "state": "CLOSED",
+      "author": {
+        "login": "yonizim",
+        "name": null,
+        "company": null
+      },
+      "labels": {
+        "nodes": [
+          {
+            "name": "printing",
+            "description": null,
+            "color": "0000FF"
+          },
+          {
+            "name": "codegen",
+            "description": null,
+            "color": "0000ff"
+          }
+        ]
+      },
+      "reactions": {
+        "nodes": [],
+        "totalCount": 0
+      },
+      "totalComments": 5,
+      "comments": [
+        {
+          "id": "IC_kwDOAAnGFs481uA7",
+          "bodyText": "This can also be done by simply adding min and max to _known_functions:\n_known_functions = {\n    'Abs': 'abs',\n    'Min': 'min',\n}\nleading to\n>>> from sympy import Min\n>>> from sympy.abc import x, y\n>>> from sympy.printing.pycode import PythonCodePrinter\n>>> PythonCodePrinter().doprint(Min(x,y))\n'min(x, y)'",
+          "createdAt": "2022-01-25T01:24:03Z",
+          "author": {
+            "login": "ThePauliPrinciple"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "IC_kwDOAAnGFs482wD3",
+          "bodyText": "@ThePauliPrinciple Shall I open a Pull request then with these changes that you mentioned here?",
+          "createdAt": "2022-01-25T09:33:37Z",
+          "author": {
+            "login": "AdvaitPote"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "IC_kwDOAAnGFs48253N",
+          "bodyText": "@ThePauliPrinciple Shall I open a Pull request then with these changes that you mentioned here?\n\nI'm not sure whether the OP (@yonizim ) intended to create a PR or only wanted to mention the issue, but if not, feel free to do so.",
+          "createdAt": "2022-01-25T10:16:30Z",
+          "author": {
+            "login": "ThePauliPrinciple"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "IC_kwDOAAnGFs4826PI",
+          "bodyText": "Go ahead @AdvaitPote . Thanks for the fast response.",
+          "createdAt": "2022-01-25T10:18:00Z",
+          "author": {
+            "login": "yonizim"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "IC_kwDOAAnGFs4826vN",
+          "bodyText": "Sure @yonizim @ThePauliPrinciple !",
+          "createdAt": "2022-01-25T10:20:04Z",
+          "author": {
+            "login": "AdvaitPote"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "I_kwDOAAnGFs5DVih1",
+      "number": 23058,
+      "title": "display bug while using pretty_print with sympy.vector object in the terminal",
+      "bodyText": "The following code jumbles some of the outputs in the terminal, essentially by inserting the unit vector in the middle -\nfrom sympy import *\nfrom sympy.vector import CoordSys3D, Del\n\ninit_printing()\n\ndelop = Del()\nCC_ = CoordSys3D(\"C\")\nx,    y,    z    = CC_.x, CC_.y, CC_.z\nxhat, yhat, zhat = CC_.i, CC_.j, CC_.k\n\nt = symbols(\"t\")\nten = symbols(\"10\", positive=True)\neps, mu = 4*pi*ten**(-11), ten**(-5)\n\nBx = 2 * ten**(-4) * cos(ten**5 * t) * sin(ten**(-3) * y)\nvecB = Bx * xhat\nvecE = (1/eps) * Integral(delop.cross(vecB/mu).doit(), t)\n\npprint(vecB)\nprint()\npprint(vecE)\nprint()\npprint(vecE.doit())\nOutput:\n⎛     ⎛y_C⎞    ⎛  5  ⎞⎞    \n⎜2⋅sin⎜───⎟ i_C⋅cos⎝10 ⋅t⎠⎟\n⎜     ⎜  3⎟           ⎟    \n⎜     ⎝10 ⎠           ⎟    \n⎜─────────────────────⎟    \n⎜           4         ⎟    \n⎝         10          ⎠    \n\n⎛     ⌠                           ⎞    \n⎜     ⎮       ⎛y_C⎞    ⎛  5  ⎞    ⎟ k_C\n⎜     ⎮ -2⋅cos⎜───⎟⋅cos⎝10 ⋅t⎠    ⎟    \n⎜     ⎮       ⎜  3⎟               ⎟    \n⎜  11 ⎮       ⎝10 ⎠               ⎟    \n⎜10  ⋅⎮ ─────────────────────── dt⎟    \n⎜     ⎮             2             ⎟    \n⎜     ⎮           10              ⎟    \n⎜     ⌡                           ⎟    \n⎜─────────────────────────────────⎟    \n⎝               4⋅π               ⎠    \n\n⎛   4    ⎛  5  ⎞    ⎛y_C⎞ ⎞    \n⎜-10 ⋅sin⎝10 ⋅t⎠⋅cos⎜───⎟ k_C ⎟\n⎜                   ⎜  3⎟ ⎟    \n⎜                   ⎝10 ⎠ ⎟    \n⎜─────────────────────────⎟    \n⎝           2⋅π           ⎠    ```",
+      "createdAt": "2022-02-10T09:40:17Z",
+      "updatedAt": "2022-03-13T14:47:40Z",
+      "closedAt": "2022-03-13T14:47:40Z",
+      "state": "CLOSED",
+      "author": {
+        "login": "rajeev2010",
+        "name": "Rajeev Singh",
+        "company": null
+      },
+      "labels": {
+        "nodes": [
+          {
+            "name": "vector",
+            "description": null,
+            "color": "0000ff"
+          },
+          {
+            "name": "printing.pretty",
+            "description": "",
+            "color": "c5def5"
+          }
+        ]
+      },
+      "reactions": {
+        "nodes": [],
+        "totalCount": 0
+      },
+      "totalComments": 9,
+      "comments": [
+        {
+          "id": "IC_kwDOAAnGFs49u5Ps",
+          "bodyText": "You can control print order as described here.",
+          "createdAt": "2022-02-11T01:29:36Z",
+          "author": {
+            "login": "smichr"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "IC_kwDOAAnGFs49vBVc",
+          "bodyText": "The default order should not break the multiline bracket of pretty print. Please see the output in constant width mode or paste it in a text editor. The second output is fine while the right bracket is broken in the other two.",
+          "createdAt": "2022-02-11T02:04:35Z",
+          "author": {
+            "login": "rajeev2010"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "IC_kwDOAAnGFs49yJKZ",
+          "bodyText": "I can verify that this seems to be an issue specific to pretty print. The Latex renderer outputs what you want. This should be fixable. Here is an image of the output for your vectors from the latex rendered in Jupyter.\n\nAdmittedly the small outer parenthesis are not stylistically great, but the ordering is what you expect.",
+          "createdAt": "2022-02-11T19:42:50Z",
+          "author": {
+            "login": "gutow"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "IC_kwDOAAnGFs49z14m",
+          "bodyText": "The LaTeX printer ought to be using \\left and \\right for parentheses.",
+          "createdAt": "2022-02-12T05:23:20Z",
+          "author": {
+            "login": "asmeurer"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "IC_kwDOAAnGFs4-7KbY",
+          "bodyText": "@asmeurer I'd like to make the required change in the LaTeX printer. Should I do it in the PR I have already opened, or should I make a new PR for this \\left( and \\right) change?",
+          "createdAt": "2022-03-01T17:46:27Z",
+          "author": {
+            "login": "wermos"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "IC_kwDOAAnGFs4-7YRY",
+          "bodyText": "@wermos I suggest making a separate pull request as this issue is about pretty print spacing on the command line output.",
+          "createdAt": "2022-03-01T18:54:52Z",
+          "author": {
+            "login": "gutow"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "IC_kwDOAAnGFs4-93Yb",
+          "bodyText": "@gutow Thanks, I have created a separate branch for it, and will make a new PR soon.",
+          "createdAt": "2022-03-02T06:59:24Z",
+          "author": {
+            "login": "wermos"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "IC_kwDOAAnGFs4_KYxA",
+          "bodyText": "Another related issue - pretty_print is showing the unit vector several times while using UnevaluatedExpr (normal print is fine).\nfrom sympy import *\nfrom sympy.vector import CoordSys3D, Del\n\ninit_printing()\n\ndelop = Del()\nCC_ = CoordSys3D(\"C\")\nx,    y,    z    = CC_.x, CC_.y, CC_.z\nxhat, yhat, zhat = CC_.i, CC_.j, CC_.k\n\nt = symbols(\"t\")\n#ten = symbols(\"10\", positive=True)\nten = UnevaluatedExpr(10)\neps, mu = 4*pi*ten**(-11), ten**(-5)\n\nBx = 2 * ten**(-4) * cos(ten**5 * t) * sin(ten**(-3) * y)\nvecB = Bx * xhat\n\nprint(vecB)\nprint()\npprint(vecB)\nOutput:\n(2*10**(-4)*cos(t*10**5)*sin(C.y*10**(-3)))*C.i\n\n⎛    -4    ⎛    5⎞    ⎛      -3⎞⎞             \n⎝2⋅10  ⋅cos⎝t⋅10 ⎠ i_C⋅sin⎝y_C⋅10  ⎠ i_C⎠ i_C",
+          "createdAt": "2022-03-05T05:00:28Z",
+          "author": {
+            "login": "rajeev2010"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "IC_kwDOAAnGFs4_K0l9",
+          "bodyText": "I have fixed the bug as well as added a new test case for this.\nThe bug is not due to the use of UnevaluatedExpr. It is actually due to the fact that there is no Right Parenthesis Extension character in the Unicode version of the given vector expression.\nThe person who originally wrote the _print_BasisDependent code assumed that there would only be one pair of parentheses in a vector expression, so the code keeps failing on these expressions, which have nested parentheses.",
+          "createdAt": "2022-03-05T17:29:20Z",
+          "author": {
+            "login": "wermos"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "I_kwDOAAnGFs5IUo_G",
+      "number": 23410,
+      "title": "bug with HNF removing rows",
+      "bodyText": "I expect\nnp.flip (hermite_normal_form (Matrix (np.flip (np.array ([[5, 8, 12], [0, 0, 1]]))).T).T))\nto give\n[[5,  8, 0], [0,  0, 1]]\nbut instead I get\n[[5,  8, 0]]\nIt seems to be falsely identifying my matrix as rank-deficient and removing the row when I try to achieve a row-style HNF using flips and transposes.",
+      "createdAt": "2022-04-23T17:38:17Z",
+      "updatedAt": "2022-04-24T08:38:33Z",
+      "closedAt": "2022-04-24T08:38:33Z",
+      "state": "CLOSED",
+      "author": {
+        "login": "cmloegcmluin",
+        "name": "Douglas Blumeyer",
+        "company": null
+      },
+      "labels": {
+        "nodes": []
+      },
+      "reactions": {
+        "nodes": [
+          {
+            "content": "EYES",
+            "user": {
+              "login": "FloraCanou"
+            }
+          }
+        ],
+        "totalCount": 1
+      },
+      "totalComments": 7,
+      "comments": [
+        {
+          "id": "IC_kwDOAAnGFs5CA-WQ",
+          "bodyText": "Seems to depend on where the 1 is when it comes to do the hnf:\n>>> hermite_normal_form(Matrix([  # row2\n... [0, 12],\n... [1,  8],\n... [0,  5]]))\nMatrix([\n[0, 12],\n[1,  0],\n[0,  5]])\n>>> hermite_normal_form(Matrix([  # row3\n... [0, 12],\n... [0,  8],\n... [1,  5]]))\nMatrix([\n[12, 0],\n[ 8, 0],\n[ 0, 1]])\n>>> hermite_normal_form(Matrix([  # row1\n... [1, 12],\n... [0,  8],\n... [0,  5]]))\nMatrix([\n[12],\n[ 8],\n[ 5]])",
+          "createdAt": "2022-04-23T18:01:10Z",
+          "author": {
+            "login": "smichr"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "IC_kwDOAAnGFs5CA-vF",
+          "bodyText": "Thanks. I believe this may be related to the also recently opened bug #23260.\nIn Wolfram Language, I can just do Last[HermiteDecomposition[{{5,8,12},{0,0,1}}]] and get {{5,8,0},{0,0,1}} as expected. The above may be a workaround but it's not pretty.",
+          "createdAt": "2022-04-23T18:10:15Z",
+          "author": {
+            "login": "cmloegcmluin"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "IC_kwDOAAnGFs5CBZh7",
+          "bodyText": "After checking things over, the code we have looks to me like a correct implementation of Alg 2.4.5 from [Cohen93], but I now think that Alg 2.4.5 may have an error.\nSpecifically, it looks like an error in its halting condition.\nFirst, recall that we're using a column-style HNF, so I'm going to talk about the matrix\n[1  12]\n[0   8]\n[0   5]\n\nAlg 2.4.5 works row by row, starting from the bottom row and working upward. In each row it considers, it tries to make a pivot entry, working from right to left.\nIn the case of a \"tall\" matrix like this one (m x n with n < m), the algorithm tries to offer an early halting condition, so that in some cases we needn't consider every last row.\nAnd I think you can offer such a condition, but the one in Alg 2.4.5 seems to be wrong.\nI think a correct condition would be: \"we've already found n pivots,\" whereas what the algorithm offers is: \"we've already looked at n rows.\"\nIn the case of the matrix above, we're quitting after failing to find a pivot for column 1 in the row [0   8].",
+          "createdAt": "2022-04-23T23:06:56Z",
+          "author": {
+            "login": "skieffer"
+          },
+          "reactions": {
+            "nodes": [
+              {
+                "content": "THUMBS_UP",
+                "user": {
+                  "login": "smichr"
+                }
+              }
+            ],
+            "totalCount": 1
+          }
+        },
+        {
+          "id": "IC_kwDOAAnGFs5CBZ3u",
+          "bodyText": "Hah! I was just looking at that :-) But not being sure of what to do (and having matrix-canonicalization on my mind) I thought of doing this:\ndef hnf(m):\n    r, p = zip(*sorted(zip(m.tolist(), range(m.rows))))\n    h = hermite_normal_form(Matrix(r)).tolist()\n    return Matrix([h[i] for i in p])\n\n>>> m=Matrix([\n[1, 12],\n[0,  8],\n[0,  5]])\n\n>>> hnf(m)\nMatrix([\n[0, 1],\n[8, 0],\n[5, 0]])",
+          "createdAt": "2022-04-23T23:21:06Z",
+          "author": {
+            "login": "smichr"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "IC_kwDOAAnGFs5CBaWY",
+          "bodyText": "@smichr: Interesting! I wonder if, up to column permutations, something like this would always produce correct results?",
+          "createdAt": "2022-04-23T23:42:19Z",
+          "author": {
+            "login": "skieffer"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "IC_kwDOAAnGFs5CBabW",
+          "bodyText": "This issue also reminded me: One of the things #23271 is doing (which didn't come up yet in discussion) is supplying a boolean truncate=True option, which says whether we're going to chop off rows/columns of zeros.\nWhatever is decided on the \"mode\" switch question, I do think the truncation option is an important one.",
+          "createdAt": "2022-04-23T23:46:01Z",
+          "author": {
+            "login": "skieffer"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        },
+        {
+          "id": "IC_kwDOAAnGFs5CBdP2",
+          "bodyText": "would always produce correct results?\n\nSwapping rows doesn't change the nature of the matrix or how it behaves when multiplying another -- that is the only principle guiding my suggestion. (And the fact that hnf was quitting too early.)",
+          "createdAt": "2022-04-24T01:10:25Z",
+          "author": {
+            "login": "smichr"
+          },
+          "reactions": {
+            "nodes": [],
+            "totalCount": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "I_kwDOAAnGFs5aRniP",
+      "number": 24442,
+      "title": "`_check_homomorphism` is broken on PermutationGroups",
+      "bodyText": "In [1]: from sympy.combinatorics import *\n   ...: from sympy.combinatorics.homomorphisms import homomorphism\n   ...: D3 = DihedralGroup(3)\n   ...: T = homomorphism(D3, D3, D3.generators, D3.generators)\n\nValueError: The given images do not define a homomorphism\nThe issue is in the internal _image() function, where it handles the case of a PermutationGroup:\n\n  \n    \n      sympy/sympy/combinatorics/homomorphisms.py\n    \n    \n        Lines 336 to 337\n      in\n      809c53c\n    \n  \n  \n    \n\n        \n          \n           if isinstance(domain, PermutationGroup) and r[i] in gens: \n        \n\n        \n          \n               s = domain.generators[gens.index(r[i])] \n        \n    \n  \n\n\nWhen r[i] is an inverted generator, the in gens test fails.\nI think the whole thing can be greatly simplified.",
+      "createdAt": "2022-12-30T14:41:03Z",
+      "updatedAt": "2023-01-06T05:51:10Z",
+      "closedAt": "2023-01-06T05:51:10Z",
+      "state": "CLOSED",
+      "author": {
+        "login": "skieffer",
+        "name": "Steve Kieffer",
+        "company": null
+      },
+      "labels": {
+        "nodes": [
+          {
+            "name": "Bug",
+            "description": "",
+            "color": "ededed"
+          },
+          {
+            "name": "combinatorics",
+            "description": null,
+            "color": "0000FF"
+          }
+        ]
+      },
+      "reactions": {
+        "nodes": [],
+        "totalCount": 0
+      },
+      "totalComments": 0,
+      "comments": []
+    }
+  ]
+}
