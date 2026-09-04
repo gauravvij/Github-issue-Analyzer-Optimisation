@@ -33,6 +33,8 @@ three attempts per question. 360 graded attempts per arm.
 The system under test is a GitHub issue analyzer: it ingests issues into a Neo4j knowledge
 graph and answers questions about them using an LLM agent with Cypher query tools.
 
+![Deterministic accuracy on a corpus it had never seen](assets/accuracy-on-unseen-data.svg)
+
 ---
 
 ## What "autonomous" meant in this experiment
@@ -107,6 +109,21 @@ to invent one.
 
 Ingestion went from 698 Neo4j queries to 255, and from 122 sessions to 4. The database work
 was real, and it holds up.
+
+![Database work per ingestion](assets/database-work.svg)
+
+It is worth being precise about what that bought, because the obvious inference is wrong. It
+did **not** make the system feel faster. Ingestion wall clock moved only 3.7%, and answer
+latency did not move at all — 4,178 ms before, 4,385 ms after, which is noise. The reason is
+visible the moment you look at where the time goes:
+
+![Where the 203 seconds of ingestion actually went](assets/where-ingestion-time-goes.svg)
+
+Neo4j was never the bottleneck. Cutting 63% of the database work removed about two and a
+half seconds from a 203-second job, because the LLM calls account for 90% of it. What the
+change actually bought is resource cost and scaling headroom — 122 sessions collapsed to 4 —
+which pays off at ten thousand issues, not at sixty. NEO reported it as a database result
+rather than a speed result, which is what it is.
 
 ---
 
@@ -259,6 +276,8 @@ Three attempts. Three rejections.
 | QA agent → `gpt-4o-mini` | 95.87%, **5.71 pp spread** | **REJECT** |
 | relationship-direction prompt hint | ceiling of 98.10% even if perfect | **CANCELLED** |
 | QA agent → `gpt-4.1-mini` | 76.19% | **REJECT** |
+
+![Can a cheaper model answer the questions?](assets/cheaper-models.svg)
 
 The saving was real — **−72% on the QA stage** — and unpurchasable at that quality cost.
 
