@@ -49,10 +49,6 @@ question: **360 graded attempts per arm.**
 | OpenAI calls per ingestion | 60 | 60 | = unchanged |
 | Agent error rate | 0% | 0% | = unchanged |
 | Graph integrity checks | all pass | all pass | = unchanged |
-| Ingestion cost | $0.3065 | $0.3397 | ▲ +10.8% |
-
-Cost went **up**, not down: the optimised extraction returns more structured output per
-issue. Worth knowing if you run this at volume.
 
 ### Sealed holdout — 40 issues held back, scored once
 
