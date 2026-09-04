@@ -1,0 +1,1296 @@
+{
+  "job": "holdout-final",
+  "split": "holdout",
+  "startedAt": "2026-09-03T15:44:33.341Z",
+  "valid": true,
+  "invalidReason": null,
+  "config": {
+    "split": "holdout",
+    "job": "holdout-final",
+    "stage": "all",
+    "attempts": 1,
+    "latencyMs": 120,
+    "qaConcurrency": 3,
+    "keepGraph": false,
+    "noTypecheck": false,
+    "model": "openai/gpt-4o",
+    "judgeModel": "gpt-4o",
+    "corpusIssues": 40,
+    "tasks": 20
+  },
+  "sut": {
+    "hash": "9eeb557db3e87c2d",
+    "files": 19
+  },
+  "preflight": [
+    {
+      "name": "sut_present",
+      "pass": true,
+      "detail": "/home/azureuser/githubIssue/github_issue"
+    },
+    {
+      "name": "sut_deps_installed",
+      "pass": true,
+      "detail": "node_modules present"
+    },
+    {
+      "name": "corpus_present",
+      "pass": true,
+      "detail": "/home/azureuser/githubIssue/bench/corpus/holdout.json"
+    },
+    {
+      "name": "tasks_present",
+      "pass": true,
+      "detail": "/home/azureuser/githubIssue/bench/tasks/holdout.jsonl"
+    },
+    {
+      "name": "splits_frozen",
+      "pass": true,
+      "detail": "40 issues, 20 tasks, corpus built 2026-09-03T07:14:34.349Z"
+    },
+    {
+      "name": "canaries_present",
+      "pass": true,
+      "detail": "2 canary task(s)"
+    },
+    {
+      "name": "splits_unmodified",
+      "pass": true,
+      "detail": "checksums match"
+    },
+    {
+      "name": "seam_github_api_url",
+      "pass": true,
+      "detail": "github.ts honours GITHUB_API_URL"
+    },
+    {
+      "name": "seam_agent_config",
+      "pass": true,
+      "detail": "agent/config.ts present"
+    },
+    {
+      "name": "openai_key_set",
+      "pass": true,
+      "detail": "set"
+    },
+    {
+      "name": "openai_key_live",
+      "pass": true,
+      "detail": "model=gpt-4o-mini-2024-07-18 usage=9"
+    },
+    {
+      "name": "meter_sees_openai",
+      "pass": true,
+      "detail": "1 request(s) intercepted"
+    },
+    {
+      "name": "meter_reads_usage",
+      "pass": true,
+      "detail": "prompt=8 completion=1 model=gpt-4o-mini-2024-07-18"
+    },
+    {
+      "name": "meter_can_price_models",
+      "pass": true,
+      "detail": "all models priced"
+    },
+    {
+      "name": "docker_running",
+      "pass": true,
+      "detail": "29.1.3"
+    },
+    {
+      "name": "neo4j_image",
+      "pass": true,
+      "detail": "neo4j:5 present"
+    },
+    {
+      "name": "ports_free",
+      "pass": true,
+      "detail": "7690/7475 available"
+    },
+    {
+      "name": "sut_typechecks",
+      "pass": true,
+      "detail": "clean"
+    }
+  ],
+  "ingest": {
+    "durationMs": 96142,
+    "pipeline": {
+      "issuesFetched": 40,
+      "issuesIngested": 40,
+      "issuesAnalyzed": 40,
+      "issuesSkipped": 0,
+      "errors": [],
+      "durationMs": 96137,
+      "incremental": false
+    },
+    "github": {
+      "requests": 81,
+      "listingRequests": 1,
+      "issueRequests": 80,
+      "maxConcurrent": 4,
+      "busyMs": 2588
+    },
+    "neo4j": {
+      "queries": 190,
+      "sessions": 4,
+      "transactions": 1,
+      "samples": [
+        "CREATE CONSTRAINT issue_id_unique IF NOT EXISTS FOR (i:Issue",
+        "CREATE CONSTRAINT issue_number_unique IF NOT EXISTS FOR (i:I",
+        "CREATE CONSTRAINT comment_id_unique IF NOT EXISTS FOR (c:Com",
+        "CREATE CONSTRAINT user_login_unique IF NOT EXISTS FOR (u:Use",
+        "CREATE CONSTRAINT label_name_unique IF NOT EXISTS FOR (l:Lab",
+        "CREATE CONSTRAINT category_name_unique IF NOT EXISTS FOR (c:",
+        "CREATE CONSTRAINT competitor_name_unique IF NOT EXISTS FOR (",
+        "CREATE CONSTRAINT solution_text_unique IF NOT EXISTS FOR (s:",
+        "CREATE CONSTRAINT workaround_text_unique IF NOT EXISTS FOR (",
+        "CREATE CONSTRAINT keyword_name_unique IF NOT EXISTS FOR (k:K",
+        "CREATE INDEX issue_state_lookup IF NOT EXISTS FOR (i:Issue) ",
+        "CREATE INDEX issue_updated_at_lookup IF NOT EXISTS FOR (i:Is",
+        "UNWIND $issues AS item MERGE (i:Issue {issueId: item.issueId",
+        "UNWIND $issues AS item UNWIND item.users AS user MERGE (u:Us",
+        "UNWIND $issues AS item WITH item WHERE item.authorLogin IS N",
+        "UNWIND $issues AS item UNWIND item.labels AS label MERGE (l:",
+        "UNWIND $issues AS item UNWIND item.issueReactions AS reactio",
+        "UNWIND $issues AS item UNWIND item.comments AS c MERGE (comm",
+        "UNWIND $issues AS item UNWIND item.comments AS c WITH c WHER",
+        "UNWIND $issues AS item UNWIND item.comments AS c UNWIND c.re",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (w:Workaround {workaroundText: $text}) SET w.embedding",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MERGE (w:Workaround {workaroundText: $text}) SET w.embedding",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MERGE (w:Workaround {workaroundText: $text}) SET w.embedding",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (w:Workaround {workaroundText: $text}) SET w.embedding",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MERGE (w:Workaround {workaroundText: $text}) SET w.embedding",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MERGE (w:Workaround {workaroundText: $text}) SET w.embedding",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (w:Workaround {workaroundText: $text}) SET w.embedding",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MERGE (w:Workaround {workaroundText: $text}) SET w.embedding",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (w:Workaround {workaroundText: $text}) SET w.embedding",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MERGE (w:Workaround {workaroundText: $text}) SET w.embedding",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MERGE (w:Workaround {workaroundText: $text}) SET w.embedding",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MERGE (w:Workaround {workaroundText: $text}) SET w.embedding",
+        "MERGE (w:Workaround {workaroundText: $text}) SET w.embedding",
+        "MERGE (w:Workaround {workaroundText: $text}) SET w.embedding",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (w:Workaround {workaroundText: $text}) SET w.embedding",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (w:Workaround {workaroundText: $text}) SET w.embedding",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (w:Workaround {workaroundText: $text}) SET w.embedding",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MATCH (i:Issue {number: $n}) UNWIND $competitors AS comp MER",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MERGE (w:Workaround {workaroundText: $text}) SET w.embedding",
+        "MERGE (w:Workaround {workaroundText: $text}) SET w.embedding",
+        "MATCH (i:Issue {number: $n}) UNWIND $competitors AS comp MER",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MATCH (i:Issue {number: $n}) UNWIND $competitors AS comp MER",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (w:Workaround {workaroundText: $text}) SET w.embedding",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (w:Workaround {workaroundText: $text}) SET w.embedding",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MERGE (w:Workaround {workaroundText: $text}) SET w.embedding",
+        "MATCH (i:Issue {number: $n}) UNWIND $competitors AS comp MER",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MERGE (m:Meta {key: 'lastSync'}) SET m.value = $ts"
+      ]
+    },
+    "openai": {
+      "requests": 40,
+      "byModel": {
+        "gpt-4o-2024-08-06": {
+          "requests": 40,
+          "promptTokens": 70865,
+          "completionTokens": 4821,
+          "unmetered": 0
+        }
+      },
+      "byEndpoint": {
+        "/chat/completions": 40
+      },
+      "byHost": {
+        "api.openai.com": 40
+      },
+      "unpricedModels": [],
+      "costUsd": 0.2253725
+    }
+  },
+  "graphProvenance": {
+    "sutHash": "9eeb557db3e87c2d",
+    "split": "holdout",
+    "job": "holdout-final",
+    "at": "2026-09-03T15:46:12.874Z"
+  },
+  "integrity": [
+    {
+      "name": "issue_count",
+      "pass": true,
+      "expected": "40",
+      "actual": "40",
+      "info": false
+    },
+    {
+      "name": "comment_count",
+      "pass": true,
+      "expected": "174",
+      "actual": "174",
+      "info": false
+    },
+    {
+      "name": "user_count",
+      "pass": true,
+      "expected": "36",
+      "actual": "36",
+      "info": false
+    },
+    {
+      "name": "label_count",
+      "pass": true,
+      "expected": "9",
+      "actual": "9",
+      "info": false
+    },
+    {
+      "name": "reaction_count",
+      "pass": true,
+      "expected": "32",
+      "actual": "32",
+      "info": false
+    },
+    {
+      "name": "no_duplicate_issue_number",
+      "pass": true,
+      "expected": "0",
+      "actual": "0",
+      "info": false
+    },
+    {
+      "name": "no_duplicate_issue_id",
+      "pass": true,
+      "expected": "0",
+      "actual": "0",
+      "info": false
+    },
+    {
+      "name": "no_duplicate_comment_id",
+      "pass": true,
+      "expected": "0",
+      "actual": "0",
+      "info": false
+    },
+    {
+      "name": "no_duplicate_user_login",
+      "pass": true,
+      "expected": "0",
+      "actual": "0",
+      "info": false
+    },
+    {
+      "name": "no_duplicate_label_name",
+      "pass": true,
+      "expected": "0",
+      "actual": "0",
+      "info": false
+    },
+    {
+      "name": "issue_author_edges",
+      "pass": true,
+      "expected": "40",
+      "actual": "40",
+      "info": false
+    },
+    {
+      "name": "issue_comment_edges",
+      "pass": true,
+      "expected": "174",
+      "actual": "174",
+      "info": false
+    },
+    {
+      "name": "issue_label_edges",
+      "pass": true,
+      "expected": "27",
+      "actual": "27",
+      "info": false
+    },
+    {
+      "name": "no_orphan_comments",
+      "pass": true,
+      "expected": "0",
+      "actual": "0",
+      "info": false
+    },
+    {
+      "name": "issue_numbers_match",
+      "pass": true,
+      "expected": "40 exact numbers",
+      "actual": "40 present"
+    },
+    {
+      "name": "per_issue_comment_counts",
+      "pass": true,
+      "expected": "every issue has its corpus comment count",
+      "actual": "all match"
+    },
+    {
+      "name": "constraints_defined",
+      "pass": true,
+      "expected": "(informational)",
+      "actual": "10",
+      "info": true
+    },
+    {
+      "name": "indexes_defined",
+      "pass": true,
+      "expected": "(informational)",
+      "actual": "12",
+      "info": true
+    },
+    {
+      "name": "solution_nodes",
+      "pass": true,
+      "expected": "(informational)",
+      "actual": "24",
+      "info": true
+    },
+    {
+      "name": "workaround_nodes",
+      "pass": true,
+      "expected": "(informational)",
+      "actual": "22",
+      "info": true
+    },
+    {
+      "name": "category_nodes",
+      "pass": true,
+      "expected": "(informational)",
+      "actual": "92",
+      "info": true
+    },
+    {
+      "name": "competitor_nodes",
+      "pass": true,
+      "expected": "(informational)",
+      "actual": "6",
+      "info": true
+    },
+    {
+      "name": "keyword_nodes",
+      "pass": true,
+      "expected": "(informational)",
+      "actual": "168",
+      "info": true
+    },
+    {
+      "name": "issues_with_category",
+      "pass": true,
+      "expected": "(informational)",
+      "actual": "39",
+      "info": true
+    },
+    {
+      "name": "vector_indexes",
+      "pass": true,
+      "expected": "(informational)",
+      "actual": "0",
+      "info": true
+    },
+    {
+      "name": "nodes_with_embedding",
+      "pass": true,
+      "expected": "(informational)",
+      "actual": "0",
+      "info": true
+    }
+  ],
+  "qa": {
+    "tasks": [
+      {
+        "id": "holdout-001",
+        "template": "total_issues",
+        "kind": "structural",
+        "canary": true,
+        "question": "How many issues are in the knowledge graph in total?",
+        "oracle": "40",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 40",
+            "answer": "There are a total of 40 issues in the knowledge graph.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) RETURN count(i) AS totalIssues"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1806,
+              "output": 45
+            },
+            "ms": 4379
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "holdout-002",
+        "template": "total_comments",
+        "kind": "structural",
+        "canary": true,
+        "question": "How many comments are stored across all issues in total?",
+        "oracle": "174",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 174",
+            "answer": "There are a total of 174 comments stored across all issues.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (c:Comment) RETURN COUNT(c) AS totalComments"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1806,
+              "output": 45
+            },
+            "ms": 2907
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "holdout-003",
+        "template": "open_count",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many issues are currently open?",
+        "oracle": "18",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 18",
+            "answer": "There are currently 18 open issues.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {state: 'OPEN'}) RETURN count(i) AS open_issues_count"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1807,
+              "output": 47
+            },
+            "ms": 4028
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "holdout-004",
+        "template": "closed_count",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many issues are closed?",
+        "oracle": "22",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 22",
+            "answer": "There are 22 closed issues.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {state: 'CLOSED'}) RETURN count(i) AS closedIssuesCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1804,
+              "output": 46
+            },
+            "ms": 2683
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "holdout-005",
+        "template": "distinct_labels",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many distinct labels exist in the knowledge graph?",
+        "oracle": "9",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 9",
+            "answer": "There are 9 distinct labels in the knowledge graph.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (l:Label) RETURN COUNT(DISTINCT l.name) AS labelCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1808,
+              "output": 47
+            },
+            "ms": 2844
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "holdout-006",
+        "template": "distinct_authors",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many distinct users have authored issues in the knowledge graph?",
+        "oracle": "36",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 36",
+            "answer": "There are 36 distinct users who have authored issues in the knowledge graph.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User) RETURN COUNT(DISTINCT u.login) AS userCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1823,
+              "output": 62
+            },
+            "ms": 3363
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "holdout-007",
+        "template": "most_comments",
+        "kind": "structural",
+        "canary": false,
+        "question": "Which issue has the most comments? Give its issue number.",
+        "oracle": "#3792 (26 comments)",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "cited 3792",
+            "answer": "The issue with the most comments is [#3792](https://github.com/issues/3792), with 26 comments.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment)\nRETURN i.number AS issueNumber, COUNT(c) AS commentCount\nORDER BY commentCount DESC\nLIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1840,
+              "output": 84
+            },
+            "ms": 3609
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "holdout-008",
+        "template": "most_reactions",
+        "kind": "structural",
+        "canary": false,
+        "question": "Which issue has received the most reactions? Give its issue number.",
+        "oracle": "#1992 (9 reactions)",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "cited 1992",
+            "answer": "The issue that has received the most reactions is [#1992](https://github.com/issue/1992).",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_REACTION]->(r:Reaction)\nRETURN i.number AS issueNumber, COUNT(r) AS reactionCount\nORDER BY reactionCount DESC\nLIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1843,
+              "output": 83
+            },
+            "ms": 4132
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "holdout-009",
+        "template": "top_author",
+        "kind": "structural",
+        "canary": false,
+        "question": "Which user has authored the most issues, and how many did they author?",
+        "oracle": "albertvillanova (5)",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "The user who has authored the most issues is **albertvillanova**, with a total of 5 issues.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (u:User)<-[:AUTHORED_BY]-(i:Issue) \nRETURN u.login AS user, COUNT(i) AS issue_count \nORDER BY issue_count DESC \nLIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1852,
+              "output": 86
+            },
+            "ms": 3173
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "holdout-010",
+        "template": "recent_5",
+        "kind": "structural",
+        "canary": false,
+        "question": "List the 5 most recently created issues. Give their issue numbers.",
+        "oracle": "#7580, #7548, #7390, #7097, #6917",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "cited 6917,7097,7390,7548,7580",
+            "answer": "Here are the 5 most recently created issues:\n\n1. [Issue #7580](#)\n2. [Issue #7548](#)\n3. [Issue #7390](#)\n4. [Issue #7097](#)\n5. [Issue #6917](#)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) RETURN i.number ORDER BY i.createdAt DESC LIMIT 5"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1842,
+              "output": 97
+            },
+            "ms": 3616
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "holdout-011",
+        "template": "label_count",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many issues carry the label \"bug\"?",
+        "oracle": "10",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 10",
+            "answer": "There are 10 issues labeled as \"bug\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"bug\"}) RETURN count(i) AS bugIssueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1819,
+              "output": 58
+            },
+            "ms": 3038
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "holdout-012",
+        "template": "label_members",
+        "kind": "structural",
+        "canary": false,
+        "question": "List the issue numbers of every issue labelled \"enhancement\".",
+        "oracle": "#2498, #3035, #3540, #4096, #5878, #6139, #6345, #7390",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "cited 2498,3035,3540,4096,5878,6139,6345,7390",
+            "answer": "Here are the issue numbers labeled as \"enhancement\":\n\n- [#2498](https://github.com/your-repo/issues/2498)\n- [#5878](https://github.com/your-repo/issues/5878)\n- [#6139](https://github.com/your-repo/issues/6139)\n- [#3035](https://github.com/your-repo/issues/3035)\n- [#7390](https://github.com/your-repo/issues/7390)\n- [#3540](https://github.com/your-repo/issues/3540)\n- [#4096](https://github.com/your-repo/issues/4096)\n- [#6345](https://github.com/your-repo/issues/6345)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"enhancement\"}) RETURN i.number LIMIT 50"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1866,
+              "output": 210
+            },
+            "ms": 4573
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "holdout-013",
+        "template": "month_count",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many issues were created in 2020-10?",
+        "oracle": "3",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 3",
+            "answer": "In October 2020, a total of 3 issues were created.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.createdAt STARTS WITH '2020-10' RETURN count(i) as issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1821,
+              "output": 60
+            },
+            "ms": 3607
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "holdout-014",
+        "template": "issue_comment_count",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many comments does issue #486 have?",
+        "oracle": "8",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 8",
+            "answer": "Issue [#486](https://github.com) has 8 comments.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment) WHERE i.number = 486 RETURN COUNT(c) AS commentCount LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1820,
+              "output": 65
+            },
+            "ms": 2306
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "holdout-015",
+        "template": "issue_title",
+        "kind": "retrieval",
+        "canary": false,
+        "question": "What is the title of issue #254?",
+        "oracle": "[Feature request] Be able to remove a specific sample of the dataset",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "The title of issue [#254](https://github.com/your-repo/issues/254) is \"[Feature request] Be able to remove a specific sample of the dataset.\"",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 254}) RETURN i.title LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1819,
+              "output": 72
+            },
+            "ms": 2934
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "holdout-016",
+        "template": "issue_author",
+        "kind": "retrieval",
+        "canary": false,
+        "question": "Who opened issue #254?",
+        "oracle": "astariul",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "Issue [#254](https://github.com/astariul) was opened by the user **astariul**.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 254})-[:AUTHORED_BY]->(u:User) RETURN u.login LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1814,
+              "output": 73
+            },
+            "ms": 3209
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "holdout-017",
+        "template": "mentions_term",
+        "kind": "retrieval",
+        "canary": false,
+        "question": "Which issues mention \"memory\" in their title or body? Give their issue numbers.",
+        "oracle": "#280, #728, #2498, #3035",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "cited 280,728,2498,3035",
+            "answer": "The following issues mention \"memory\" in their title or body:\n\n- [Issue #280](https://github.com/user/repo/issues/280)\n- [Issue #728](https://github.com/user/repo/issues/728)\n- [Issue #2498](https://github.com/user/repo/issues/2498)\n- [Issue #3035](https://github.com/user/repo/issues/3035)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) \nWHERE toLower(i.title) CONTAINS 'memory' OR toLower(i.bodyText) CONTAINS 'memory'\nRETURN i.number AS issueNumber LIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1865,
+              "output": 147
+            },
+            "ms": 3756
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "holdout-018",
+        "template": "summarize_issue",
+        "kind": "semantic",
+        "canary": false,
+        "question": "Summarize the discussion on issue #3792. What is the problem and what did people say about it?",
+        "oracle": "Checksums didn't match for dataset source",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue #3792, covering the core problem of checksum mismatches and the discussions around it, without contradicting any reference facts.",
+            "answer": "The discussion on [issue #3792](https://github.com/repo/issues/3792) involves problems with loading datasets using the `datasets` library due to checksum mismatches. Here's a summary:\n\n### Problem:\n1. **Checksum Mismatch**: Users are encountering `NonMatchingChecksumError` when loading datasets like `dbpedia_14`, `xcopa`, `wider_face`, and `fever`. This error suggests mismatches due to changes in files or access methods.\n2. **Google Drive Changes**: Changes in how Google Drive serves files are causing issues with datasets hosted there.\n3. **Other Hosting Issues**: Similar problems occur on platforms like AWS because of URL or file access changes.\n\n### Proposed Solutions and Discussions:\n1. **Temporary Workarounds**: Users can bypass checksum verifications with `ignore_verifications=True` or force redownload with `download_mode=\"force_redownload\"`.\n2. **Install from Master**: It's recommended to install the `datasets` library from the GitHub master branch for recent fixes.\n3. **Upcoming Fixes**: A fix for Google Drive issues is in a pull request (#3787) and will be in the next release.\n4. **Cache Issues**: Clearing local cache is suggested to remove corrupted files.\n5. **Wider Impact**: There is a need for better error tracking and regression testing.\n6. **Dataset Fixes**: Some datasets have been fixed by hosting files on the HuggingFace Hub or updating URLs.\n\n### Additional Comments:\n- Some users face `UnpicklingError` due to differences in Python versions.\n- A suggestion to maintain copies of last known good versions of datasets for automatic rollback.\n- Efforts are underway to remove checksum verifications for a better user experience.\n\nThe issue highlights the complexity of managing dataset integrity across different hosting platforms and emphasizes the importance of robust error handling and user support.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 3792,
+                  "userQuery": "What is the problem and what did people say about it?"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2367,
+              "output": 424
+            },
+            "ms": 12304
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "holdout-019",
+        "template": "summarize_issue",
+        "kind": "semantic",
+        "canary": false,
+        "question": "Summarize the discussion on issue #2498. What is the problem and what did people say about it?",
+        "oracle": "Improve torch formatting performance",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue, focusing on optimizing data conversion performance in the Hugging Face Datasets library, and aligns with the reference facts.",
+            "answer": "### Issue Summary\n\n**Problem:**  \nThe issue focuses on optimizing the process of converting data from Apache Arrow to NumPy arrays in the Hugging Face Datasets library. The existing method for this conversion is noted to be inefficient.\n\n**Discussion Highlights:**\n\n- **Suggested Solution:**  \n  A user recommends using the `to_numpy()` method directly, which benchmarks have shown to be faster.\n\n- **Implementation:**  \n  Discussions cover updating the `NumpyArrowExtractor` and testing the changes for performance improvements. A pull request (PR) was created for implementing this change.\n\n- **Impact:**  \n  Initial tests with the new approach demonstrate performance improvements, notably in data loading times during model training. \n\n- **Technical Challenges:**  \n  Users face difficulties integrating Docker builds due to dependency management issues in `setup.py`.\n\n- **Further Optimizations:**  \n  There is dialogue about additional potential optimizations, such as reducing time spent on casting data types.\n\nThe conversation includes 17 comments reflecting active participation in implementing and testing the proposed changes.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 2498,
+                  "userQuery": "What is the problem and discussion about in this issue?"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2019,
+              "output": 244
+            },
+            "ms": 8515
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "holdout-020",
+        "template": "summarize_issue",
+        "kind": "semantic",
+        "canary": false,
+        "question": "Summarize the discussion on issue #1992. What is the problem and what did people say about it?",
+        "oracle": "`datasets.map` multi processing much slower than single processing ",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue, its core problem, and the discussion around it without contradicting any reference facts.",
+            "answer": "The discussion on [issue #1992](https://github.com/your-repo/issues/1992) focuses on a performance problem with the `datasets` library, specifically related to using multiprocessing with the `map` function. Here's a summary of the discussion:\n\n### Problem Identification\n- Enabling multiprocessing with the `map` function results in slower execution times compared to single processing.\n- This slowdown persists across various library versions and environments.\n\n### Participants' Comments\n1. **Initial Suggestions**:\n   - Participants reference related issues (#1796 and #1949) and suspect the problem might involve I/O operations.\n\n2. **Bug Confirmation**:\n   - While one participant mentions difficulty reproducing the issue, they acknowledge its existence and plan further investigation.\n\n3. **Technical Explanation**:\n   - Performance issues may arise if the function passed to `map` involves inherently parallelized operations like tokenization.\n\n4. **Benchmarking and Reproduction**:\n   - A detailed environment setup and benchmarking script demonstrate the discrepancy in performance between single and multi-processing.\n\n5. **Overhead Explanation**:\n   - The overhead of spawning multiple processes can outweigh benefits for small datasets, especially when data in memory needs to be copied to subprocesses.\n\n6. **Performance Improvement**:\n   - Saving and loading the dataset from disk and increasing the dataset size may help narrow the performance gap.\n\n7. **Continued Issues**:\n   - Multiple users report persistent issues with different versions and configurations, seeking further updates and solutions.\n\nOverall, the discussion covers the performance issues experienced with multiprocessing in the `datasets` library, potential causes, benchmarking insights, and possible workarounds shared by participants.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 1992,
+                  "userQuery": "Summarize the discussion focusing on the problem and participants' comments."
+                }
+              }
+            ],
+            "usage": {
+              "input": 2229,
+              "output": 375
+            },
+            "ms": 15974
+          }
+        ],
+        "passRate": 1
+      }
+    ],
+    "openai": {
+      "requests": 43,
+      "byModel": {
+        "gpt-4o-2024-08-06": {
+          "requests": 43,
+          "promptTokens": 46180,
+          "completionTokens": 3457,
+          "unmetered": 0
+        }
+      },
+      "byEndpoint": {
+        "/responses": 40,
+        "/chat/completions": 3
+      },
+      "byHost": {
+        "api.openai.com": 43
+      },
+      "unpricedModels": [],
+      "unmetered": 0,
+      "usageSource": "wire",
+      "reportedTokens": {
+        "input": 37670,
+        "output": 2370
+      },
+      "costUsd": 0.15002
+    },
+    "neo4j": {
+      "queries": 20,
+      "sessions": 20,
+      "transactions": 0,
+      "samples": [
+        "MATCH (c:Comment) RETURN COUNT(c) AS totalComments",
+        "MATCH (i:Issue {state: 'OPEN'}) RETURN count(i) AS open_issu",
+        "MATCH (i:Issue) RETURN count(i) AS totalIssues",
+        "MATCH (i:Issue {state: 'CLOSED'}) RETURN count(i) AS closedI",
+        "MATCH (l:Label) RETURN COUNT(DISTINCT l.name) AS labelCount",
+        "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User) RETURN COUNT(DISTIN",
+        "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment) RETURN i.number ",
+        "MATCH (i:Issue)-[:HAS_REACTION]->(r:Reaction) RETURN i.numbe",
+        "MATCH (u:User)<-[:AUTHORED_BY]-(i:Issue) RETURN u.login AS u",
+        "MATCH (i:Issue) RETURN i.number ORDER BY i.createdAt DESC LI",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"enhancement\"}",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"bug\"}) RETURN",
+        "MATCH (i:Issue) WHERE i.createdAt STARTS WITH '2020-10' RETU",
+        "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment) WHERE i.number =",
+        "MATCH (i:Issue {number: 254}) RETURN i.title LIMIT 1",
+        "MATCH (i:Issue {number: 254})-[:AUTHORED_BY]->(u:User) RETUR",
+        "MATCH (i:Issue) WHERE toLower(i.title) CONTAINS 'memory' OR ",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT"
+      ]
+    },
+    "judgeCostUsd": 0.0212025
+  },
+  "score": {
+    "overall": 1,
+    "deterministic": 1,
+    "semantic": 1,
+    "byKind": {
+      "structural": 1,
+      "retrieval": 1,
+      "semantic": 1
+    },
+    "solvedAllAttempts": 20,
+    "solvedAnyAttempt": 20,
+    "totalTasks": 20,
+    "canaryPass": true,
+    "toolUseRate": 1,
+    "agentErrorRate": 0
+  },
+  "cost": {
+    "ingestUsd": 0.2253725,
+    "qaUsd": 0.15002,
+    "judgeUsd": 0.0212025,
+    "sutTotalUsd": 0.3753925
+  },
+  "finishedAt": "2026-09-03T15:46:54.081Z",
+  "trace": {
+    "files": [
+      "github-issue-analyzer-2026-09-03T15-44-36-408Z-1164059.jsonl"
+    ],
+    "spans": 561,
+    "byName": {
+      "pipeline.run": {
+        "count": 1,
+        "totalMs": 96139,
+        "maxMs": 96139,
+        "errors": 0
+      },
+      "pipeline.analyzeIssue": {
+        "count": 40,
+        "totalMs": 91343,
+        "maxMs": 5513,
+        "errors": 0
+      },
+      "openai.chat": {
+        "count": 40,
+        "totalMs": 91318,
+        "maxMs": 5513,
+        "errors": 0
+      },
+      "gen_ai.request": {
+        "count": 40,
+        "totalMs": 78248,
+        "maxMs": 8545,
+        "errors": 0
+      },
+      "tool.summarizeComments": {
+        "count": 3,
+        "totalMs": 15417,
+        "maxMs": 6445,
+        "errors": 0
+      },
+      "github.graphql": {
+        "count": 81,
+        "totalMs": 10118,
+        "maxMs": 127,
+        "errors": 0
+      },
+      "github.fetchCompleteIssue": {
+        "count": 40,
+        "totalMs": 10010,
+        "maxMs": 252,
+        "errors": 0
+      },
+      "neo4j.query": {
+        "count": 255,
+        "totalMs": 3113,
+        "maxMs": 101,
+        "errors": 0
+      },
+      "pipeline.fetch": {
+        "count": 1,
+        "totalMs": 2507,
+        "maxMs": 2507,
+        "errors": 0
+      },
+      "pipeline.persistAnalysis": {
+        "count": 1,
+        "totalMs": 1359,
+        "maxMs": 1359,
+        "errors": 0
+      },
+      "analysis.persistIssue": {
+        "count": 40,
+        "totalMs": 1353,
+        "maxMs": 230,
+        "errors": 0
+      },
+      "pipeline.ingest": {
+        "count": 1,
+        "totalMs": 412,
+        "maxMs": 412,
+        "errors": 0
+      },
+      "tool.queryNeo4j": {
+        "count": 17,
+        "totalMs": 369,
+        "maxMs": 45,
+        "errors": 0
+      },
+      "pipeline.discover": {
+        "count": 1,
+        "totalMs": 127,
+        "maxMs": 127,
+        "errors": 0
+      }
+    }
+  }
+}

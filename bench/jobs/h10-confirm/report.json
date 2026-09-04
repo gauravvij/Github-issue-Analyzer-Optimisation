@@ -1,0 +1,3451 @@
+{
+  "job": "h10-confirm",
+  "split": "dev",
+  "startedAt": "2026-09-03T10:15:45.687Z",
+  "valid": true,
+  "invalidReason": null,
+  "config": {
+    "split": "dev",
+    "job": "h10-confirm",
+    "stage": "all",
+    "attempts": 3,
+    "latencyMs": 120,
+    "qaConcurrency": 3,
+    "keepGraph": false,
+    "noTypecheck": false,
+    "model": "openai/gpt-4o",
+    "judgeModel": "gpt-4o",
+    "corpusIssues": 60,
+    "tasks": 40
+  },
+  "sut": {
+    "hash": "5a171342ee9c4e1a",
+    "files": 18
+  },
+  "preflight": [
+    {
+      "name": "sut_present",
+      "pass": true,
+      "detail": "/home/azureuser/githubIssue/github_issue"
+    },
+    {
+      "name": "sut_deps_installed",
+      "pass": true,
+      "detail": "node_modules present"
+    },
+    {
+      "name": "corpus_present",
+      "pass": true,
+      "detail": "/home/azureuser/githubIssue/bench/corpus/dev.json"
+    },
+    {
+      "name": "tasks_present",
+      "pass": true,
+      "detail": "/home/azureuser/githubIssue/bench/tasks/dev.jsonl"
+    },
+    {
+      "name": "splits_frozen",
+      "pass": true,
+      "detail": "60 issues, 40 tasks, corpus built 2026-09-03T07:14:34.349Z"
+    },
+    {
+      "name": "canaries_present",
+      "pass": true,
+      "detail": "2 canary task(s)"
+    },
+    {
+      "name": "splits_unmodified",
+      "pass": true,
+      "detail": "checksums match"
+    },
+    {
+      "name": "seam_github_api_url",
+      "pass": true,
+      "detail": "github.ts honours GITHUB_API_URL"
+    },
+    {
+      "name": "seam_agent_config",
+      "pass": true,
+      "detail": "agent/config.ts present"
+    },
+    {
+      "name": "openai_key_set",
+      "pass": true,
+      "detail": "set"
+    },
+    {
+      "name": "openai_key_live",
+      "pass": true,
+      "detail": "model=gpt-4o-mini-2024-07-18 usage=9"
+    },
+    {
+      "name": "meter_sees_openai",
+      "pass": true,
+      "detail": "1 request(s) intercepted"
+    },
+    {
+      "name": "meter_reads_usage",
+      "pass": true,
+      "detail": "prompt=8 completion=1 model=gpt-4o-mini-2024-07-18"
+    },
+    {
+      "name": "meter_can_price_models",
+      "pass": true,
+      "detail": "all models priced"
+    },
+    {
+      "name": "docker_running",
+      "pass": true,
+      "detail": "29.1.3"
+    },
+    {
+      "name": "neo4j_image",
+      "pass": true,
+      "detail": "neo4j:5 present"
+    },
+    {
+      "name": "ports_free",
+      "pass": true,
+      "detail": "7690/7475 available"
+    },
+    {
+      "name": "sut_typechecks",
+      "pass": true,
+      "detail": "clean"
+    }
+  ],
+  "ingest": {
+    "durationMs": 187272,
+    "pipeline": {
+      "issuesFetched": 60,
+      "issuesIngested": 60,
+      "issuesAnalyzed": 60,
+      "issuesSkipped": 0,
+      "errors": [],
+      "durationMs": 187265,
+      "incremental": false
+    },
+    "github": {
+      "requests": 121,
+      "listingRequests": 1,
+      "issueRequests": 120,
+      "maxConcurrent": 1,
+      "busyMs": 14857
+    },
+    "neo4j": {
+      "queries": 609,
+      "sessions": 122,
+      "transactions": 0,
+      "samples": [
+        "MERGE (i:Issue {issueId: $issueId}) SET i.number = toInteger",
+        "UNWIND $users AS user MERGE (u:User {login: user.login}) SET",
+        "MATCH (i:Issue {issueId: $issueId}), (u:User {login: $login}",
+        "MERGE (i:Issue {issueId: $issueId}) SET i.number = toInteger",
+        "UNWIND $users AS user MERGE (u:User {login: user.login}) SET",
+        "MATCH (i:Issue {issueId: $issueId}), (u:User {login: $login}",
+        "UNWIND $comments AS c MERGE (comment:Comment {commentId: c.i",
+        "MERGE (i:Issue {issueId: $issueId}) SET i.number = toInteger",
+        "UNWIND $users AS user MERGE (u:User {login: user.login}) SET",
+        "MATCH (i:Issue {issueId: $issueId}), (u:User {login: $login}",
+        "UNWIND $labels AS label MERGE (l:Label {name: label.name}) S",
+        "MATCH (i:Issue {issueId: $issueId}) UNWIND $names AS name MA",
+        "UNWIND $comments AS c MERGE (comment:Comment {commentId: c.i",
+        "MERGE (i:Issue {issueId: $issueId}) SET i.number = toInteger",
+        "UNWIND $users AS user MERGE (u:User {login: user.login}) SET",
+        "MATCH (i:Issue {issueId: $issueId}), (u:User {login: $login}",
+        "MERGE (i:Issue {issueId: $issueId}) SET i.number = toInteger",
+        "UNWIND $users AS user MERGE (u:User {login: user.login}) SET",
+        "MATCH (i:Issue {issueId: $issueId}), (u:User {login: $login}",
+        "MERGE (i:Issue {issueId: $issueId}) SET i.number = toInteger",
+        "UNWIND $users AS user MERGE (u:User {login: user.login}) SET",
+        "MATCH (i:Issue {issueId: $issueId}), (u:User {login: $login}",
+        "UNWIND $labels AS label MERGE (l:Label {name: label.name}) S",
+        "MATCH (i:Issue {issueId: $issueId}) UNWIND $names AS name MA",
+        "MERGE (i:Issue {issueId: $issueId}) SET i.number = toInteger",
+        "UNWIND $users AS user MERGE (u:User {login: user.login}) SET",
+        "MATCH (i:Issue {issueId: $issueId}), (u:User {login: $login}",
+        "UNWIND $labels AS label MERGE (l:Label {name: label.name}) S",
+        "MATCH (i:Issue {issueId: $issueId}) UNWIND $names AS name MA",
+        "UNWIND $reactions AS reaction MERGE (r:Reaction {content: re",
+        "MATCH (i:Issue {issueId: $issueId}) MATCH (r:Reaction {issue",
+        "UNWIND $comments AS c MERGE (comment:Comment {commentId: c.i",
+        "MERGE (i:Issue {issueId: $issueId}) SET i.number = toInteger",
+        "UNWIND $users AS user MERGE (u:User {login: user.login}) SET",
+        "MATCH (i:Issue {issueId: $issueId}), (u:User {login: $login}",
+        "MERGE (i:Issue {issueId: $issueId}) SET i.number = toInteger",
+        "UNWIND $users AS user MERGE (u:User {login: user.login}) SET",
+        "MATCH (i:Issue {issueId: $issueId}), (u:User {login: $login}",
+        "UNWIND $labels AS label MERGE (l:Label {name: label.name}) S",
+        "MATCH (i:Issue {issueId: $issueId}) UNWIND $names AS name MA",
+        "MERGE (i:Issue {issueId: $issueId}) SET i.number = toInteger",
+        "UNWIND $users AS user MERGE (u:User {login: user.login}) SET",
+        "MATCH (i:Issue {issueId: $issueId}), (u:User {login: $login}",
+        "UNWIND $comments AS c MERGE (comment:Comment {commentId: c.i",
+        "MERGE (i:Issue {issueId: $issueId}) SET i.number = toInteger",
+        "UNWIND $users AS user MERGE (u:User {login: user.login}) SET",
+        "MATCH (i:Issue {issueId: $issueId}), (u:User {login: $login}",
+        "UNWIND $reactions AS reaction MERGE (r:Reaction {content: re",
+        "MATCH (i:Issue {issueId: $issueId}) MATCH (r:Reaction {issue",
+        "UNWIND $comments AS c MERGE (comment:Comment {commentId: c.i",
+        "MERGE (i:Issue {issueId: $issueId}) SET i.number = toInteger",
+        "UNWIND $users AS user MERGE (u:User {login: user.login}) SET",
+        "MATCH (i:Issue {issueId: $issueId}), (u:User {login: $login}",
+        "UNWIND $comments AS c MERGE (comment:Comment {commentId: c.i",
+        "MERGE (i:Issue {issueId: $issueId}) SET i.number = toInteger",
+        "UNWIND $users AS user MERGE (u:User {login: user.login}) SET",
+        "MATCH (i:Issue {issueId: $issueId}), (u:User {login: $login}",
+        "UNWIND $reactions AS reaction MERGE (r:Reaction {content: re",
+        "MATCH (i:Issue {issueId: $issueId}) MATCH (r:Reaction {issue",
+        "UNWIND $comments AS c MERGE (comment:Comment {commentId: c.i",
+        "MERGE (i:Issue {issueId: $issueId}) SET i.number = toInteger",
+        "UNWIND $users AS user MERGE (u:User {login: user.login}) SET",
+        "MATCH (i:Issue {issueId: $issueId}), (u:User {login: $login}",
+        "UNWIND $labels AS label MERGE (l:Label {name: label.name}) S",
+        "MATCH (i:Issue {issueId: $issueId}) UNWIND $names AS name MA",
+        "UNWIND $comments AS c MERGE (comment:Comment {commentId: c.i",
+        "MERGE (i:Issue {issueId: $issueId}) SET i.number = toInteger",
+        "UNWIND $users AS user MERGE (u:User {login: user.login}) SET",
+        "MATCH (i:Issue {issueId: $issueId}), (u:User {login: $login}",
+        "UNWIND $labels AS label MERGE (l:Label {name: label.name}) S",
+        "MATCH (i:Issue {issueId: $issueId}) UNWIND $names AS name MA",
+        "UNWIND $reactions AS reaction MERGE (r:Reaction {content: re",
+        "MATCH (i:Issue {issueId: $issueId}) MATCH (r:Reaction {issue",
+        "MERGE (i:Issue {issueId: $issueId}) SET i.number = toInteger",
+        "UNWIND $users AS user MERGE (u:User {login: user.login}) SET",
+        "MATCH (i:Issue {issueId: $issueId}), (u:User {login: $login}",
+        "UNWIND $labels AS label MERGE (l:Label {name: label.name}) S",
+        "MATCH (i:Issue {issueId: $issueId}) UNWIND $names AS name MA",
+        "UNWIND $comments AS c MERGE (comment:Comment {commentId: c.i",
+        "MERGE (i:Issue {issueId: $issueId}) SET i.number = toInteger",
+        "UNWIND $users AS user MERGE (u:User {login: user.login}) SET",
+        "MATCH (i:Issue {issueId: $issueId}), (u:User {login: $login}",
+        "UNWIND $labels AS label MERGE (l:Label {name: label.name}) S",
+        "MATCH (i:Issue {issueId: $issueId}) UNWIND $names AS name MA",
+        "MERGE (i:Issue {issueId: $issueId}) SET i.number = toInteger",
+        "UNWIND $users AS user MERGE (u:User {login: user.login}) SET",
+        "MATCH (i:Issue {issueId: $issueId}), (u:User {login: $login}",
+        "UNWIND $labels AS label MERGE (l:Label {name: label.name}) S",
+        "MATCH (i:Issue {issueId: $issueId}) UNWIND $names AS name MA",
+        "MERGE (i:Issue {issueId: $issueId}) SET i.number = toInteger",
+        "UNWIND $users AS user MERGE (u:User {login: user.login}) SET",
+        "MATCH (i:Issue {issueId: $issueId}), (u:User {login: $login}",
+        "UNWIND $labels AS label MERGE (l:Label {name: label.name}) S",
+        "MATCH (i:Issue {issueId: $issueId}) UNWIND $names AS name MA",
+        "UNWIND $reactions AS reaction MERGE (r:Reaction {content: re",
+        "MATCH (i:Issue {issueId: $issueId}) MATCH (r:Reaction {issue",
+        "MERGE (i:Issue {issueId: $issueId}) SET i.number = toInteger",
+        "UNWIND $users AS user MERGE (u:User {login: user.login}) SET",
+        "MATCH (i:Issue {issueId: $issueId}), (u:User {login: $login}",
+        "UNWIND $labels AS label MERGE (l:Label {name: label.name}) S",
+        "MATCH (i:Issue {issueId: $issueId}) UNWIND $names AS name MA",
+        "UNWIND $reactions AS reaction MERGE (r:Reaction {content: re",
+        "MATCH (i:Issue {issueId: $issueId}) MATCH (r:Reaction {issue",
+        "UNWIND $comments AS c MERGE (comment:Comment {commentId: c.i",
+        "MERGE (i:Issue {issueId: $issueId}) SET i.number = toInteger",
+        "UNWIND $users AS user MERGE (u:User {login: user.login}) SET",
+        "MATCH (i:Issue {issueId: $issueId}), (u:User {login: $login}",
+        "UNWIND $labels AS label MERGE (l:Label {name: label.name}) S",
+        "MATCH (i:Issue {issueId: $issueId}) UNWIND $names AS name MA",
+        "UNWIND $comments AS c MERGE (comment:Comment {commentId: c.i",
+        "MERGE (i:Issue {issueId: $issueId}) SET i.number = toInteger",
+        "UNWIND $users AS user MERGE (u:User {login: user.login}) SET",
+        "MATCH (i:Issue {issueId: $issueId}), (u:User {login: $login}",
+        "UNWIND $labels AS label MERGE (l:Label {name: label.name}) S",
+        "MATCH (i:Issue {issueId: $issueId}) UNWIND $names AS name MA",
+        "MERGE (i:Issue {issueId: $issueId}) SET i.number = toInteger",
+        "UNWIND $users AS user MERGE (u:User {login: user.login}) SET",
+        "MATCH (i:Issue {issueId: $issueId}), (u:User {login: $login}",
+        "UNWIND $labels AS label MERGE (l:Label {name: label.name}) S",
+        "MATCH (i:Issue {issueId: $issueId}) UNWIND $names AS name MA",
+        "UNWIND $comments AS c MERGE (comment:Comment {commentId: c.i",
+        "MERGE (i:Issue {issueId: $issueId}) SET i.number = toInteger",
+        "UNWIND $users AS user MERGE (u:User {login: user.login}) SET",
+        "MATCH (i:Issue {issueId: $issueId}), (u:User {login: $login}",
+        "UNWIND $labels AS label MERGE (l:Label {name: label.name}) S",
+        "MATCH (i:Issue {issueId: $issueId}) UNWIND $names AS name MA",
+        "UNWIND $comments AS c MERGE (comment:Comment {commentId: c.i",
+        "MERGE (i:Issue {issueId: $issueId}) SET i.number = toInteger",
+        "UNWIND $users AS user MERGE (u:User {login: user.login}) SET",
+        "MATCH (i:Issue {issueId: $issueId}), (u:User {login: $login}",
+        "UNWIND $labels AS label MERGE (l:Label {name: label.name}) S",
+        "MATCH (i:Issue {issueId: $issueId}) UNWIND $names AS name MA",
+        "UNWIND $comments AS c MERGE (comment:Comment {commentId: c.i",
+        "MERGE (i:Issue {issueId: $issueId}) SET i.number = toInteger",
+        "UNWIND $users AS user MERGE (u:User {login: user.login}) SET",
+        "MATCH (i:Issue {issueId: $issueId}), (u:User {login: $login}",
+        "UNWIND $labels AS label MERGE (l:Label {name: label.name}) S",
+        "MATCH (i:Issue {issueId: $issueId}) UNWIND $names AS name MA",
+        "UNWIND $comments AS c MERGE (comment:Comment {commentId: c.i",
+        "MERGE (i:Issue {issueId: $issueId}) SET i.number = toInteger",
+        "UNWIND $users AS user MERGE (u:User {login: user.login}) SET",
+        "MATCH (i:Issue {issueId: $issueId}), (u:User {login: $login}",
+        "UNWIND $labels AS label MERGE (l:Label {name: label.name}) S",
+        "MATCH (i:Issue {issueId: $issueId}) UNWIND $names AS name MA",
+        "MERGE (i:Issue {issueId: $issueId}) SET i.number = toInteger",
+        "UNWIND $users AS user MERGE (u:User {login: user.login}) SET",
+        "MATCH (i:Issue {issueId: $issueId}), (u:User {login: $login}",
+        "UNWIND $labels AS label MERGE (l:Label {name: label.name}) S",
+        "MATCH (i:Issue {issueId: $issueId}) UNWIND $names AS name MA",
+        "UNWIND $comments AS c MERGE (comment:Comment {commentId: c.i",
+        "MERGE (i:Issue {issueId: $issueId}) SET i.number = toInteger",
+        "UNWIND $users AS user MERGE (u:User {login: user.login}) SET",
+        "MATCH (i:Issue {issueId: $issueId}), (u:User {login: $login}",
+        "MERGE (i:Issue {issueId: $issueId}) SET i.number = toInteger",
+        "UNWIND $users AS user MERGE (u:User {login: user.login}) SET",
+        "MATCH (i:Issue {issueId: $issueId}), (u:User {login: $login}",
+        "UNWIND $labels AS label MERGE (l:Label {name: label.name}) S",
+        "MATCH (i:Issue {issueId: $issueId}) UNWIND $names AS name MA",
+        "UNWIND $comments AS c MERGE (comment:Comment {commentId: c.i",
+        "MERGE (i:Issue {issueId: $issueId}) SET i.number = toInteger",
+        "UNWIND $users AS user MERGE (u:User {login: user.login}) SET",
+        "MATCH (i:Issue {issueId: $issueId}), (u:User {login: $login}",
+        "UNWIND $labels AS label MERGE (l:Label {name: label.name}) S",
+        "MATCH (i:Issue {issueId: $issueId}) UNWIND $names AS name MA",
+        "MERGE (i:Issue {issueId: $issueId}) SET i.number = toInteger",
+        "UNWIND $users AS user MERGE (u:User {login: user.login}) SET",
+        "MATCH (i:Issue {issueId: $issueId}), (u:User {login: $login}",
+        "UNWIND $labels AS label MERGE (l:Label {name: label.name}) S",
+        "MATCH (i:Issue {issueId: $issueId}) UNWIND $names AS name MA",
+        "UNWIND $reactions AS reaction MERGE (r:Reaction {content: re",
+        "MATCH (i:Issue {issueId: $issueId}) MATCH (r:Reaction {issue",
+        "UNWIND $comments AS c MERGE (comment:Comment {commentId: c.i",
+        "MERGE (i:Issue {issueId: $issueId}) SET i.number = toInteger",
+        "UNWIND $users AS user MERGE (u:User {login: user.login}) SET",
+        "MATCH (i:Issue {issueId: $issueId}), (u:User {login: $login}",
+        "UNWIND $labels AS label MERGE (l:Label {name: label.name}) S",
+        "MATCH (i:Issue {issueId: $issueId}) UNWIND $names AS name MA",
+        "UNWIND $reactions AS reaction MERGE (r:Reaction {content: re",
+        "MATCH (i:Issue {issueId: $issueId}) MATCH (r:Reaction {issue",
+        "UNWIND $comments AS c MERGE (comment:Comment {commentId: c.i",
+        "MERGE (i:Issue {issueId: $issueId}) SET i.number = toInteger",
+        "UNWIND $users AS user MERGE (u:User {login: user.login}) SET",
+        "MATCH (i:Issue {issueId: $issueId}), (u:User {login: $login}",
+        "UNWIND $labels AS label MERGE (l:Label {name: label.name}) S",
+        "MATCH (i:Issue {issueId: $issueId}) UNWIND $names AS name MA",
+        "UNWIND $comments AS c MERGE (comment:Comment {commentId: c.i",
+        "MERGE (i:Issue {issueId: $issueId}) SET i.number = toInteger",
+        "UNWIND $users AS user MERGE (u:User {login: user.login}) SET",
+        "MATCH (i:Issue {issueId: $issueId}), (u:User {login: $login}",
+        "UNWIND $comments AS c MERGE (comment:Comment {commentId: c.i",
+        "MERGE (i:Issue {issueId: $issueId}) SET i.number = toInteger",
+        "UNWIND $users AS user MERGE (u:User {login: user.login}) SET",
+        "MATCH (i:Issue {issueId: $issueId}), (u:User {login: $login}",
+        "UNWIND $reactions AS reaction MERGE (r:Reaction {content: re",
+        "MATCH (i:Issue {issueId: $issueId}) MATCH (r:Reaction {issue",
+        "UNWIND $comments AS c MERGE (comment:Comment {commentId: c.i",
+        "MERGE (i:Issue {issueId: $issueId}) SET i.number = toInteger",
+        "UNWIND $users AS user MERGE (u:User {login: user.login}) SET",
+        "MATCH (i:Issue {issueId: $issueId}), (u:User {login: $login}",
+        "UNWIND $labels AS label MERGE (l:Label {name: label.name}) S"
+      ]
+    },
+    "openai": {
+      "requests": 60,
+      "byModel": {
+        "gpt-4o-2024-08-06": {
+          "requests": 60,
+          "promptTokens": 94494,
+          "completionTokens": 6142,
+          "unmetered": 0
+        }
+      },
+      "byEndpoint": {
+        "/chat/completions": 60
+      },
+      "byHost": {
+        "api.openai.com": 60
+      },
+      "unpricedModels": [],
+      "costUsd": 0.297655
+    }
+  },
+  "graphProvenance": {
+    "sutHash": "5a171342ee9c4e1a",
+    "split": "dev",
+    "job": "h10-confirm",
+    "at": "2026-09-03T10:18:56.066Z"
+  },
+  "integrity": [
+    {
+      "name": "issue_count",
+      "pass": true,
+      "expected": "60",
+      "actual": "60",
+      "info": false
+    },
+    {
+      "name": "comment_count",
+      "pass": true,
+      "expected": "228",
+      "actual": "228",
+      "info": false
+    },
+    {
+      "name": "user_count",
+      "pass": true,
+      "expected": "55",
+      "actual": "55",
+      "info": false
+    },
+    {
+      "name": "label_count",
+      "pass": true,
+      "expected": "6",
+      "actual": "6",
+      "info": false
+    },
+    {
+      "name": "reaction_count",
+      "pass": true,
+      "expected": "37",
+      "actual": "37",
+      "info": false
+    },
+    {
+      "name": "no_duplicate_issue_number",
+      "pass": true,
+      "expected": "0",
+      "actual": "0",
+      "info": false
+    },
+    {
+      "name": "no_duplicate_issue_id",
+      "pass": true,
+      "expected": "0",
+      "actual": "0",
+      "info": false
+    },
+    {
+      "name": "no_duplicate_comment_id",
+      "pass": true,
+      "expected": "0",
+      "actual": "0",
+      "info": false
+    },
+    {
+      "name": "no_duplicate_user_login",
+      "pass": true,
+      "expected": "0",
+      "actual": "0",
+      "info": false
+    },
+    {
+      "name": "no_duplicate_label_name",
+      "pass": true,
+      "expected": "0",
+      "actual": "0",
+      "info": false
+    },
+    {
+      "name": "issue_author_edges",
+      "pass": true,
+      "expected": "60",
+      "actual": "60",
+      "info": false
+    },
+    {
+      "name": "issue_comment_edges",
+      "pass": true,
+      "expected": "228",
+      "actual": "228",
+      "info": false
+    },
+    {
+      "name": "issue_label_edges",
+      "pass": true,
+      "expected": "32",
+      "actual": "32",
+      "info": false
+    },
+    {
+      "name": "no_orphan_comments",
+      "pass": true,
+      "expected": "0",
+      "actual": "0",
+      "info": false
+    },
+    {
+      "name": "issue_numbers_match",
+      "pass": true,
+      "expected": "60 exact numbers",
+      "actual": "60 present"
+    },
+    {
+      "name": "per_issue_comment_counts",
+      "pass": true,
+      "expected": "every issue has its corpus comment count",
+      "actual": "all match"
+    },
+    {
+      "name": "constraints_defined",
+      "pass": true,
+      "expected": "(informational)",
+      "actual": "0",
+      "info": true
+    },
+    {
+      "name": "indexes_defined",
+      "pass": true,
+      "expected": "(informational)",
+      "actual": "0",
+      "info": true
+    },
+    {
+      "name": "solution_nodes",
+      "pass": true,
+      "expected": "(informational)",
+      "actual": "35",
+      "info": true
+    },
+    {
+      "name": "workaround_nodes",
+      "pass": true,
+      "expected": "(informational)",
+      "actual": "22",
+      "info": true
+    },
+    {
+      "name": "category_nodes",
+      "pass": true,
+      "expected": "(informational)",
+      "actual": "103",
+      "info": true
+    },
+    {
+      "name": "competitor_nodes",
+      "pass": true,
+      "expected": "(informational)",
+      "actual": "3",
+      "info": true
+    },
+    {
+      "name": "keyword_nodes",
+      "pass": true,
+      "expected": "(informational)",
+      "actual": "204",
+      "info": true
+    },
+    {
+      "name": "issues_with_category",
+      "pass": true,
+      "expected": "(informational)",
+      "actual": "57",
+      "info": true
+    },
+    {
+      "name": "vector_indexes",
+      "pass": true,
+      "expected": "(informational)",
+      "actual": "0",
+      "info": true
+    },
+    {
+      "name": "nodes_with_embedding",
+      "pass": true,
+      "expected": "(informational)",
+      "actual": "0",
+      "info": true
+    }
+  ],
+  "qa": {
+    "tasks": [
+      {
+        "id": "dev-001",
+        "template": "total_issues",
+        "kind": "structural",
+        "canary": true,
+        "question": "How many issues are in the knowledge graph in total?",
+        "oracle": "60",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 60",
+            "answer": "There are a total of 60 issues in the knowledge graph.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) RETURN count(i) AS totalIssues LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1809,
+              "output": 48
+            },
+            "ms": 2839
+          },
+          {
+            "pass": true,
+            "reason": "found 60",
+            "answer": "There are a total of 60 issues in the knowledge graph.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) RETURN count(i) as totalIssues"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1806,
+              "output": 45
+            },
+            "ms": 2899
+          },
+          {
+            "pass": true,
+            "reason": "found 60",
+            "answer": "There are a total of 60 issues in the knowledge graph.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) RETURN count(i) AS issue_count LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1809,
+              "output": 48
+            },
+            "ms": 2687
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "dev-002",
+        "template": "total_comments",
+        "kind": "structural",
+        "canary": true,
+        "question": "How many comments are stored across all issues in total?",
+        "oracle": "228",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 228",
+            "answer": "There are a total of 228 comments stored across all issues.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (c:Comment) RETURN count(c) AS totalComments"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1806,
+              "output": 45
+            },
+            "ms": 3496
+          },
+          {
+            "pass": true,
+            "reason": "found 228",
+            "answer": "There are a total of 228 comments stored across all issues.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (c:Comment) RETURN count(c) AS totalComments"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1806,
+              "output": 45
+            },
+            "ms": 2391
+          },
+          {
+            "pass": true,
+            "reason": "found 228",
+            "answer": "There are a total of 228 comments stored across all issues.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (c:Comment) RETURN count(c) AS totalComments"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1806,
+              "output": 45
+            },
+            "ms": 2368
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "dev-003",
+        "template": "open_count",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many issues are currently open?",
+        "oracle": "30",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 30",
+            "answer": "There are currently 30 open issues.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.state = 'OPEN' RETURN count(i) AS openIssues"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1805,
+              "output": 47
+            },
+            "ms": 2887
+          },
+          {
+            "pass": true,
+            "reason": "found 30",
+            "answer": "There are currently 30 open issues.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {state: 'OPEN'}) RETURN count(i) AS openIssues"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1803,
+              "output": 45
+            },
+            "ms": 3583
+          },
+          {
+            "pass": true,
+            "reason": "found 30",
+            "answer": "There are currently 30 open issues.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (issue:Issue {state: 'OPEN'}) RETURN COUNT(issue) AS openIssueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1805,
+              "output": 46
+            },
+            "ms": 3393
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "dev-004",
+        "template": "closed_count",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many issues are closed?",
+        "oracle": "30",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 30",
+            "answer": "There are 30 closed issues.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {state: 'CLOSED'}) RETURN count(i) AS closedIssueCount LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1807,
+              "output": 49
+            },
+            "ms": 2452
+          },
+          {
+            "pass": true,
+            "reason": "found 30",
+            "answer": "There are 30 closed issues.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.state = 'CLOSED' RETURN count(i) AS closedIssues"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1804,
+              "output": 47
+            },
+            "ms": 3210
+          },
+          {
+            "pass": true,
+            "reason": "found 30",
+            "answer": "There are 30 closed issues.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {state: 'CLOSED'}) RETURN COUNT(i) AS closedIssuesCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1804,
+              "output": 46
+            },
+            "ms": 3927
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "dev-005",
+        "template": "distinct_labels",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many distinct labels exist in the knowledge graph?",
+        "oracle": "6",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 6",
+            "answer": "There are 6 distinct labels in the knowledge graph.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (l:Label) RETURN count(DISTINCT l.name) AS distinctLabelCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1810,
+              "output": 48
+            },
+            "ms": 2520
+          },
+          {
+            "pass": true,
+            "reason": "found 6",
+            "answer": "There are 6 distinct labels in the knowledge graph.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (l:Label) RETURN COUNT(DISTINCT l.name) AS distinctLabelCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1810,
+              "output": 48
+            },
+            "ms": 2263
+          },
+          {
+            "pass": true,
+            "reason": "found 6",
+            "answer": "There are 6 distinct labels in the knowledge graph.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (l:Label) RETURN COUNT(DISTINCT l.name) AS labelCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1808,
+              "output": 47
+            },
+            "ms": 2331
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "dev-006",
+        "template": "distinct_authors",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many distinct users have authored issues in the knowledge graph?",
+        "oracle": "55",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 55",
+            "answer": "There are 55 distinct users who have authored issues in the knowledge graph.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User) RETURN COUNT(DISTINCT u.login) AS distinctUserCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1825,
+              "output": 63
+            },
+            "ms": 2500
+          },
+          {
+            "pass": true,
+            "reason": "found 55",
+            "answer": "There are 55 distinct users who have authored issues in the knowledge graph.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User) RETURN COUNT(DISTINCT u.login) AS distinctUserCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1825,
+              "output": 63
+            },
+            "ms": 2693
+          },
+          {
+            "pass": true,
+            "reason": "found 55",
+            "answer": "There are 55 distinct users who have authored issues in the knowledge graph.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User) RETURN COUNT(DISTINCT u.login) AS distinctUserCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1825,
+              "output": 63
+            },
+            "ms": 2595
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "dev-007",
+        "template": "zero_comment_count",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many issues have no comments at all?",
+        "oracle": "20",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 20",
+            "answer": "There are 20 issues with no comments at all.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE NOT (i)-[:HAS_COMMENT]->(:Comment) RETURN COUNT(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1814,
+              "output": 55
+            },
+            "ms": 3212
+          },
+          {
+            "pass": true,
+            "reason": "found 20",
+            "answer": "There are 20 issues that have no comments at all.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE NOT (i)-[:HAS_COMMENT]->() RETURN count(i) as noCommentCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1814,
+              "output": 55
+            },
+            "ms": 3362
+          },
+          {
+            "pass": true,
+            "reason": "found 20",
+            "answer": "There are 20 issues that have no comments at all.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE NOT (i)-[:HAS_COMMENT]->(:Comment) RETURN COUNT(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1814,
+              "output": 56
+            },
+            "ms": 2772
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "dev-008",
+        "template": "most_comments",
+        "kind": "structural",
+        "canary": false,
+        "question": "Which issue has the most comments? Give its issue number.",
+        "oracle": "#6903 (18 comments)",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "cited 6903",
+            "answer": "The issue with the most comments is [#6903](https://github.com/org/repo/issues/6903).",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment) RETURN i.number AS issueNumber, COUNT(c) AS commentCount ORDER BY commentCount DESC LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1837,
+              "output": 79
+            },
+            "ms": 2948
+          },
+          {
+            "pass": true,
+            "reason": "cited 6903",
+            "answer": "The issue with the most comments is [#6903](https://github.com/org/repo/issues/6903).",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment) RETURN i.number AS issueNumber, COUNT(c) AS commentCount ORDER BY commentCount DESC LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1837,
+              "output": 79
+            },
+            "ms": 2366
+          },
+          {
+            "pass": true,
+            "reason": "cited 6903",
+            "answer": "The issue with the most comments is [#6903](https://github.com/issue/6903), with 18 comments.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment)\nRETURN i.number AS issueNumber, COUNT(c) AS commentCount\nORDER BY commentCount DESC\nLIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1840,
+              "output": 85
+            },
+            "ms": 2797
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "dev-009",
+        "template": "most_reactions",
+        "kind": "structural",
+        "canary": false,
+        "question": "Which issue has received the most reactions? Give its issue number.",
+        "oracle": "#5613 (10 reactions)",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "cited 5613",
+            "answer": "The issue with the most reactions is [#5613](https://github.com/your/repo/issues/5613).",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_REACTION]->(r:Reaction)\nRETURN i.number, COUNT(r) AS reaction_count\nORDER BY reaction_count DESC\nLIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1840,
+              "output": 81
+            },
+            "ms": 3836
+          },
+          {
+            "pass": true,
+            "reason": "cited 5613",
+            "answer": "The issue with the most reactions is [#5613](https://github.com/user/repo/issues/5613).",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_REACTION]->(r:Reaction)\nRETURN i.number AS issueNumber, COUNT(r) AS reactionCount\nORDER BY reactionCount DESC\nLIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1843,
+              "output": 83
+            },
+            "ms": 2993
+          },
+          {
+            "pass": true,
+            "reason": "cited 5613",
+            "answer": "The issue with the most reactions is issue [#5613](https://github.com/repo/issues/5613).",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_REACTION]->(r:Reaction)\nRETURN i.number AS issueNumber, COUNT(r) AS reactionCount\nORDER BY reactionCount DESC\nLIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1843,
+              "output": 83
+            },
+            "ms": 2811
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "dev-010",
+        "template": "recent_5",
+        "kind": "structural",
+        "canary": false,
+        "question": "List the 5 most recently created issues. Give their issue numbers.",
+        "oracle": "#7561, #7516, #7456, #7447, #7443",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "cited 7443,7447,7456,7516,7561",
+            "answer": "Here are the 5 most recently created issues with their issue numbers:\n\n1. [#7561](https://github.com/owner/repo/issues/7561)\n2. [#7516](https://github.com/owner/repo/issues/7516)\n3. [#7456](https://github.com/owner/repo/issues/7456)\n4. [#7447](https://github.com/owner/repo/issues/7447)\n5. [#7443](https://github.com/owner/repo/issues/7443)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) RETURN i.number ORDER BY i.createdAt DESC LIMIT 5"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1842,
+              "output": 151
+            },
+            "ms": 6177
+          },
+          {
+            "pass": true,
+            "reason": "cited 7443,7447,7456,7516,7561",
+            "answer": "Here are the 5 most recently created issues:\n\n1. [Issue #7561](https://github.com/org/repo/issues/7561)\n2. [Issue #7516](https://github.com/org/repo/issues/7516)\n3. [Issue #7456](https://github.com/org/repo/issues/7456)\n4. [Issue #7447](https://github.com/org/repo/issues/7447)\n5. [Issue #7443](https://github.com/org/repo/issues/7443)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) RETURN i.number ORDER BY i.createdAt DESC LIMIT 5"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1842,
+              "output": 147
+            },
+            "ms": 2682
+          },
+          {
+            "pass": true,
+            "reason": "cited 7443,7447,7456,7516,7561",
+            "answer": "Here are the 5 most recently created issues with their issue numbers:\n\n1. [Issue #7561](https://github.com/repository/issues/7561)\n2. [Issue #7516](https://github.com/repository/issues/7516)\n3. [Issue #7456](https://github.com/repository/issues/7456)\n4. [Issue #7447](https://github.com/repository/issues/7447)\n5. [Issue #7443](https://github.com/repository/issues/7443)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) RETURN i.number ORDER BY i.createdAt DESC LIMIT 5"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1842,
+              "output": 146
+            },
+            "ms": 3092
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "dev-011",
+        "template": "label_count",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many issues carry the label \"enhancement\"?",
+        "oracle": "11",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 11",
+            "answer": "There are 11 issues labeled as \"enhancement.\"",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"enhancement\"}) RETURN count(i) as enhancementIssueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1823,
+              "output": 60
+            },
+            "ms": 2944
+          },
+          {
+            "pass": true,
+            "reason": "found 11",
+            "answer": "There are 11 issues with the label \"enhancement\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"enhancement\"}) RETURN COUNT(i) AS enhancementCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1821,
+              "output": 60
+            },
+            "ms": 2681
+          },
+          {
+            "pass": true,
+            "reason": "found 11",
+            "answer": "There are 11 issues labeled as \"enhancement\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"enhancement\"}) RETURN COUNT(i) AS enhancementCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1821,
+              "output": 59
+            },
+            "ms": 2922
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "dev-012",
+        "template": "label_count",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many issues carry the label \"bug\"?",
+        "oracle": "10",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 10",
+            "answer": "There are 10 issues labeled as \"bug\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: 'bug'}) RETURN COUNT(i) AS bugIssuesCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1818,
+              "output": 57
+            },
+            "ms": 3199
+          },
+          {
+            "pass": true,
+            "reason": "found 10",
+            "answer": "There are 10 issues labeled as \"bug\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"bug\"}) RETURN COUNT(i) AS bugIssuesCount LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1822,
+              "output": 61
+            },
+            "ms": 2802
+          },
+          {
+            "pass": true,
+            "reason": "found 10",
+            "answer": "There are 10 issues labeled as \"bug.\"",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"bug\"}) RETURN count(i) AS bugIssueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1819,
+              "output": 58
+            },
+            "ms": 2672
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "dev-013",
+        "template": "label_count",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many issues carry the label \"dataset request\"?",
+        "oracle": "5",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 5",
+            "answer": "There are 5 issues labeled as \"dataset request.\"",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"dataset request\"}) RETURN count(i) AS datasetRequestCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1822,
+              "output": 60
+            },
+            "ms": 3130
+          },
+          {
+            "pass": true,
+            "reason": "found 5",
+            "answer": "There are 5 issues labeled as \"dataset request.\"",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"dataset request\"}) RETURN COUNT(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1820,
+              "output": 59
+            },
+            "ms": 5238
+          },
+          {
+            "pass": true,
+            "reason": "found 5",
+            "answer": "There are 5 issues labeled as \"dataset request.\"",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"dataset request\"}) RETURN COUNT(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1820,
+              "output": 59
+            },
+            "ms": 4021
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "dev-014",
+        "template": "label_members",
+        "kind": "structural",
+        "canary": false,
+        "question": "List the issue numbers of every issue labelled \"dataset request\".",
+        "oracle": "#765, #1772, #2760, #4565, #6912",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "cited 765,1772,2760,4565,6912",
+            "answer": "Here are the issue numbers labeled \"dataset request\":\n\n- [#6912](https://github.com/org/repo/issues/6912)\n- [#4565](https://github.com/org/repo/issues/4565)\n- [#2760](https://github.com/org/repo/issues/2760)\n- [#1772](https://github.com/org/repo/issues/1772)\n- [#765](https://github.com/org/repo/issues/765)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"dataset request\"}) RETURN i.number LIMIT 50"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1847,
+              "output": 145
+            },
+            "ms": 3035
+          },
+          {
+            "pass": true,
+            "reason": "cited 765,1772,2760,4565,6912",
+            "answer": "Here are the issue numbers labeled \"dataset request\":\n\n- [#6912](https://github.com/org/repo/issues/6912)\n- [#4565](https://github.com/org/repo/issues/4565)\n- [#2760](https://github.com/org/repo/issues/2760)\n- [#1772](https://github.com/org/repo/issues/1772)\n- [#765](https://github.com/org/repo/issues/765)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"dataset request\"}) RETURN i.number LIMIT 100"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1847,
+              "output": 145
+            },
+            "ms": 3171
+          },
+          {
+            "pass": true,
+            "reason": "cited 765,1772,2760,4565,6912",
+            "answer": "Here are the issue numbers labeled \"dataset request\":\n\n- [#6912](https://github.com/your-repo/issues/6912)\n- [#4565](https://github.com/your-repo/issues/4565)\n- [#2760](https://github.com/your-repo/issues/2760)\n- [#1772](https://github.com/your-repo/issues/1772)\n- [#765](https://github.com/your-repo/issues/765)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"dataset request\"}) RETURN i.number LIMIT 25"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1847,
+              "output": 150
+            },
+            "ms": 4852
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "dev-015",
+        "template": "label_members",
+        "kind": "structural",
+        "canary": false,
+        "question": "List the issue numbers of every issue labelled \"dataset bug\".",
+        "oracle": "#537, #3504, #4062",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "cited 537,3504,4062",
+            "answer": "The issues labeled \"dataset bug\" are:\n\n- [#4062](https://github.com/issues/4062)\n- [#3504](https://github.com/issues/3504)\n- [#537](https://github.com/issues/537)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"dataset bug\"}) RETURN i.number LIMIT 25"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1835,
+              "output": 99
+            },
+            "ms": 2680
+          },
+          {
+            "pass": true,
+            "reason": "cited 537,3504,4062",
+            "answer": "The issue numbers with the label \"dataset bug\" are:\n\n- [#4062](https://github.com/issues/4062)\n- [#3504](https://github.com/issues/3504)\n- [#537](https://github.com/issues/537)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (issue:Issue)-[:HAS_LABEL]->(label:Label {name: \"dataset bug\"}) RETURN issue.number LIMIT 100"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1835,
+              "output": 102
+            },
+            "ms": 2989
+          },
+          {
+            "pass": true,
+            "reason": "cited 537,3504,4062",
+            "answer": "Here are the issue numbers labeled \"dataset bug\":\n\n- [#4062](https://github.com/org/repo/issues/4062)\n- [#3504](https://github.com/org/repo/issues/3504)\n- [#537](https://github.com/org/repo/issues/537)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"dataset bug\"}) RETURN i.number LIMIT 100"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1835,
+              "output": 109
+            },
+            "ms": 6217
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "dev-016",
+        "template": "label_members",
+        "kind": "structural",
+        "canary": false,
+        "question": "List the issue numbers of every issue labelled \"documentation\".",
+        "oracle": "#2012, #5324",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "cited 2012,5324",
+            "answer": "Here are the issue numbers for issues labeled \"documentation\":\n\n- [Issue #5324](https://github.com/org/repo/issues/5324)\n- [Issue #2012](https://github.com/org/repo/issues/2012)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"documentation\"}) RETURN i.number LIMIT 100"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1827,
+              "output": 95
+            },
+            "ms": 3619
+          },
+          {
+            "pass": true,
+            "reason": "cited 2012,5324",
+            "answer": "The issue numbers labeled \"documentation\" are:\n\n- [#5324](https://github.com/org/repo/issues/5324)\n- [#2012](https://github.com/org/repo/issues/2012)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"documentation\"}) RETURN i.number LIMIT 100"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1827,
+              "output": 91
+            },
+            "ms": 3611
+          },
+          {
+            "pass": true,
+            "reason": "cited 2012,5324",
+            "answer": "Here are the issue numbers labeled \"documentation\":\n\n- [Issue #5324](https://github.com/your-repo/issues/5324)\n- [Issue #2012](https://github.com/your-repo/issues/2012)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"documentation\"}) RETURN i.number LIMIT 100"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1827,
+              "output": 95
+            },
+            "ms": 3194
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "dev-017",
+        "template": "month_count",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many issues were created in 2020-10?",
+        "oracle": "4",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 4",
+            "answer": "In October 2020, a total of 4 issues were created.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.createdAt STARTS WITH '2020-10' RETURN COUNT(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1821,
+              "output": 60
+            },
+            "ms": 2464
+          },
+          {
+            "pass": true,
+            "reason": "found 4",
+            "answer": "In October 2020, there were 4 issues created.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.createdAt STARTS WITH '2020-10' RETURN COUNT(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1821,
+              "output": 58
+            },
+            "ms": 2580
+          },
+          {
+            "pass": true,
+            "reason": "found 4",
+            "answer": "In October 2020, 4 issues were created.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.createdAt STARTS WITH '2020-10' RETURN count(i) AS issueCount LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1824,
+              "output": 60
+            },
+            "ms": 4074
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "dev-018",
+        "template": "month_count",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many issues were created in 2023-05?",
+        "oracle": "4",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 4",
+            "answer": "There were 4 issues created in May 2023.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.createdAt STARTS WITH '2023-05' RETURN count(i) AS numberOfIssues"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1823,
+              "output": 58
+            },
+            "ms": 2862
+          },
+          {
+            "pass": true,
+            "reason": "found 4",
+            "answer": "In May 2023, a total of 4 issues were created.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.createdAt STARTS WITH '2023-05' RETURN COUNT(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1821,
+              "output": 60
+            },
+            "ms": 3410
+          },
+          {
+            "pass": true,
+            "reason": "found 4",
+            "answer": "In May 2023, a total of 4 issues were created.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.createdAt STARTS WITH '2023-05' RETURN count(i) AS count"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1819,
+              "output": 59
+            },
+            "ms": 2779
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "dev-019",
+        "template": "month_count",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many issues were created in 2020-08?",
+        "oracle": "3",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 3",
+            "answer": "In August 2020, 3 issues were created.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.createdAt STARTS WITH '2020-08' RETURN count(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1821,
+              "output": 57
+            },
+            "ms": 3220
+          },
+          {
+            "pass": true,
+            "reason": "found 3",
+            "answer": "In August 2020, a total of 3 issues were created.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.createdAt STARTS WITH '2020-08' RETURN COUNT(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1821,
+              "output": 60
+            },
+            "ms": 2584
+          },
+          {
+            "pass": true,
+            "reason": "found 3",
+            "answer": "There were 3 issues created in August 2020.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.createdAt STARTS WITH '2020-08' RETURN count(i) AS issueCount LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1824,
+              "output": 60
+            },
+            "ms": 2286
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "dev-020",
+        "template": "author_issues",
+        "kind": "structural",
+        "canary": false,
+        "question": "Which issues were opened by the user \"lhoestq\"? Give their issue numbers.",
+        "oracle": "#727, #1803, #6847",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "cited 727,1803,6847",
+            "answer": "The issues opened by the user \"lhoestq\" are:\n\n- [#6847](https://github.com/org/repo/issues/6847)\n- [#1803](https://github.com/org/repo/issues/1803)\n- [#727](https://github.com/org/repo/issues/727)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User {login: \"lhoestq\"}) RETURN i.number LIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1848,
+              "output": 115
+            },
+            "ms": 3388
+          },
+          {
+            "pass": true,
+            "reason": "cited 727,1803,6847",
+            "answer": "The issues opened by the user \"lhoestq\" are:\n\n- [#6847](https://github.com/issues/6847)\n- [#1803](https://github.com/issues/1803)\n- [#727](https://github.com/issues/727)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User {login: 'lhoestq'}) RETURN i.number LIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1847,
+              "output": 105
+            },
+            "ms": 3346
+          },
+          {
+            "pass": true,
+            "reason": "cited 727,1803,6847",
+            "answer": "The issues opened by the user \"lhoestq\" are:\n\n- [#6847](https://github.com/org/repo/issues/6847)\n- [#1803](https://github.com/org/repo/issues/1803)\n- [#727](https://github.com/org/repo/issues/727)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (u:User {login: \"lhoestq\"})-[:AUTHORED_BY]-(i:Issue)\nRETURN i.number LIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1850,
+              "output": 117
+            },
+            "ms": 3156
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "dev-021",
+        "template": "author_issues",
+        "kind": "structural",
+        "canary": false,
+        "question": "Which issues were opened by the user \"albertvillanova\"? Give their issue numbers.",
+        "oracle": "#2485, #3055, #4790",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "cited 2485,3055,4790",
+            "answer": "The issues opened by the user \"albertvillanova\" are:\n\n- [#4790](https://github.com/your-repo/issues/4790)\n- [#3055](https://github.com/your-repo/issues/3055)\n- [#2485](https://github.com/your-repo/issues/2485)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User {login: 'albertvillanova'}) RETURN i.number LIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1851,
+              "output": 121
+            },
+            "ms": 3477
+          },
+          {
+            "pass": true,
+            "reason": "cited 2485,3055,4790",
+            "answer": "The issues opened by the user \"albertvillanova\" are:\n\n- [Issue #4790](https://github.com/albertvillanova/repository/issues/4790)\n- [Issue #3055](https://github.com/albertvillanova/repository/issues/3055)\n- [Issue #2485](https://github.com/albertvillanova/repository/issues/2485)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (u:User {login: \"albertvillanova\"})-[:AUTHORED_BY]-(i:Issue) RETURN i.number LIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1853,
+              "output": 132
+            },
+            "ms": 3730
+          },
+          {
+            "pass": true,
+            "reason": "cited 2485,3055,4790",
+            "answer": "The user \"albertvillanova\" opened the following issues:\n\n- [Issue #4790](https://github.com/user/repo/issues/4790)\n- [Issue #3055](https://github.com/user/repo/issues/3055)\n- [Issue #2485](https://github.com/user/repo/issues/2485)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (u:User {login: \"albertvillanova\"})-[:AUTHORED_BY]-(i:Issue) RETURN i.number LIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1853,
+              "output": 122
+            },
+            "ms": 3077
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "dev-022",
+        "template": "author_issues",
+        "kind": "structural",
+        "canary": false,
+        "question": "Which issues were opened by the user \"jarednielsen\"? Give their issue numbers.",
+        "oracle": "#490, #524",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "cited 490,524",
+            "answer": "The issues opened by the user \"jarednielsen\" are:\n\n- [Issue #524](https://github.com/path/to/repo/issues/524)\n- [Issue #490](https://github.com/path/to/repo/issues/490)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User {login: \"jarednielsen\"}) RETURN i.number LIMIT 20"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1844,
+              "output": 101
+            },
+            "ms": 3889
+          },
+          {
+            "pass": true,
+            "reason": "cited 490,524",
+            "answer": "The issues opened by the user \"jarednielsen\" are:\n\n- [#524](https://github.com/your-repo/your-project/issues/524)\n- [#490](https://github.com/your-repo/your-project/issues/490)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User {login: \"jarednielsen\"}) RETURN i.number LIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1844,
+              "output": 105
+            },
+            "ms": 2589
+          },
+          {
+            "pass": true,
+            "reason": "cited 490,524",
+            "answer": "The issues opened by the user \"jarednielsen\" are:\n\n- [Issue #524](https://github.com/your-repo/issues/524)\n- [Issue #490](https://github.com/your-repo/issues/490)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (u:User {login: \"jarednielsen\"})-[:AUTHORED_BY]-(i:Issue) RETURN i.number LIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1845,
+              "output": 102
+            },
+            "ms": 4008
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "dev-023",
+        "template": "issue_comment_count",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many comments does issue #537 have?",
+        "oracle": "9",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 9",
+            "answer": "Issue [#537](https://github.com) has 9 comments.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment) WHERE i.number = 537 RETURN COUNT(c) AS numberOfComments LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1822,
+              "output": 66
+            },
+            "ms": 3676
+          },
+          {
+            "pass": true,
+            "reason": "found 9",
+            "answer": "Issue [#537](https://github.com/issues/537) has 9 comments.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 537})-[:HAS_COMMENT]->(c:Comment) RETURN count(c) AS commentCount LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1820,
+              "output": 68
+            },
+            "ms": 3383
+          },
+          {
+            "pass": true,
+            "reason": "found 9",
+            "answer": "Issue [#537](https://github.com/org/repo/issues/537) has 9 comments.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment) WHERE i.number = 537 RETURN COUNT(c) AS commentCount LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1820,
+              "output": 71
+            },
+            "ms": 4480
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "dev-024",
+        "template": "issue_comment_count",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many comments does issue #1776 have?",
+        "oracle": "6",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 6",
+            "answer": "Issue [#1776](https://github.com/issues/1776) has 6 comments.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 1776})-[:HAS_COMMENT]->(c:Comment) RETURN count(c) AS commentCount LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1823,
+              "output": 71
+            },
+            "ms": 3084
+          },
+          {
+            "pass": true,
+            "reason": "found 6",
+            "answer": "Issue [#1776](https://github.com/owner/repo/issues/1776) has 6 comments.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 1776})-[:HAS_COMMENT]->(c:Comment)\nRETURN count(c) AS comment_count LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1824,
+              "output": 76
+            },
+            "ms": 3762
+          },
+          {
+            "pass": true,
+            "reason": "found 6",
+            "answer": "Issue [#1776](https://github.com) has 6 comments.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 1776})-[:HAS_COMMENT]->(c:Comment) RETURN COUNT(c) AS commentCount LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1823,
+              "output": 67
+            },
+            "ms": 2419
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "dev-025",
+        "template": "issue_comment_count",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many comments does issue #1803 have?",
+        "oracle": "8",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 8",
+            "answer": "Issue [#1803](https://github.com/issues/1803) has 8 comments.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 1803})-[:HAS_COMMENT]->(c:Comment) RETURN count(c) AS commentCount LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1823,
+              "output": 71
+            },
+            "ms": 3846
+          },
+          {
+            "pass": true,
+            "reason": "found 8",
+            "answer": "Issue [#1803](https://github.com/your-repo/issues/1803) has 8 comments.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 1803})-[:HAS_COMMENT]->(c:Comment) RETURN count(c) AS commentCount LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1823,
+              "output": 75
+            },
+            "ms": 3531
+          },
+          {
+            "pass": true,
+            "reason": "found 8",
+            "answer": "Issue [#1803](https://github.com/org/repo/issues/1803) has 8 comments.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment) WHERE i.number = 1803 RETURN COUNT(c) AS commentCount LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1823,
+              "output": 74
+            },
+            "ms": 3101
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "dev-026",
+        "template": "issue_title",
+        "kind": "retrieval",
+        "canary": false,
+        "question": "What is the title of issue #490?",
+        "oracle": "Loading preprocessed Wikipedia dataset requires apache_beam",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "The title of issue [#490](https://github.com/your-repo/issues/490) is \"Loading preprocessed Wikipedia dataset requires apache_beam\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 490}) RETURN i.title LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1814,
+              "output": 68
+            },
+            "ms": 15522
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "The title of issue [#490](https://github.com/your-repo/issues/490) is \"Loading preprocessed Wikipedia dataset requires apache_beam\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 490}) RETURN i.title LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1814,
+              "output": 68
+            },
+            "ms": 3333
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "The title of issue [#490](https://github.com) is \"Loading preprocessed Wikipedia dataset requires apache_beam.\"",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 490}) RETURN i.title LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1814,
+              "output": 61
+            },
+            "ms": 3089
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "dev-027",
+        "template": "issue_author",
+        "kind": "retrieval",
+        "canary": false,
+        "question": "Who opened issue #490?",
+        "oracle": "jarednielsen",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "Issue [#490](https://github.com/user/repo/issues/490) was opened by **jarednielsen**.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User) WHERE i.number = 490 RETURN u.login LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1815,
+              "output": 74
+            },
+            "ms": 2783
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "Issue [#490](https://github.com/user/repo/issues/490) was opened by the user **jarednielsen**.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 490})-[:AUTHORED_BY]->(u:User) RETURN u.login AS author LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1816,
+              "output": 78
+            },
+            "ms": 2852
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "Issue [#490](https://github.com/user/repo/issues/490) was opened by the user **jarednielsen**.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 490})-[:AUTHORED_BY]->(u:User) RETURN u.login AS author LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1816,
+              "output": 78
+            },
+            "ms": 3076
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "dev-028",
+        "template": "issue_title",
+        "kind": "retrieval",
+        "canary": false,
+        "question": "What is the title of issue #524?",
+        "oracle": "Some docs are missing parameter names",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "The title of issue [#524](https://github.com/org/repo/issues/524) is \"Some docs are missing parameter names.\"",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 524}) RETURN i.title LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1811,
+              "output": 64
+            },
+            "ms": 3020
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "The title of issue [#524](https://github.com/owner/repo/issues/524) is \"Some docs are missing parameter names.\"",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 524}) RETURN i.title LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1811,
+              "output": 65
+            },
+            "ms": 2897
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "The title of issue [#524](https://github.com/your-repo/issues/524) is \"Some docs are missing parameter names.\"",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 524}) RETURN i.title LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1811,
+              "output": 65
+            },
+            "ms": 2706
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "dev-029",
+        "template": "issue_author",
+        "kind": "retrieval",
+        "canary": false,
+        "question": "Who opened issue #524?",
+        "oracle": "jarednielsen",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "Issue [#524](https://github.com/user/repository/issues/524) was opened by the user **jarednielsen**.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 524})-[:AUTHORED_BY]->(u:User) RETURN u.login LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1815,
+              "output": 76
+            },
+            "ms": 2726
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "Issue [#524](https://github.com/issues/524) was opened by the user **jarednielsen**.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 524})-[:AUTHORED_BY]->(u:User) RETURN u.login LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1815,
+              "output": 73
+            },
+            "ms": 7536
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "Issue [#524](https://github.com/jarednielsen/repo/issues/524) was opened by the user **jarednielsen**.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 524})-[:AUTHORED_BY]->(u:User) RETURN u.login LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1815,
+              "output": 79
+            },
+            "ms": 3785
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "dev-030",
+        "template": "issue_title",
+        "kind": "retrieval",
+        "canary": false,
+        "question": "What is the title of issue #537?",
+        "oracle": "[Dataset] RACE dataset Checksums error",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "The title of issue [#537](https://github.com/repo/issues/537) is \"[Dataset] RACE dataset Checksums error.\"",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 537}) RETURN i.title LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1814,
+              "output": 65
+            },
+            "ms": 3725
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "The title of issue [#537](https://github.com) is \"[Dataset] RACE dataset Checksums error.\"",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 537}) RETURN i.title LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1814,
+              "output": 60
+            },
+            "ms": 3055
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "The title of issue [#537](https://github.com/user/repo/issues/537) is \"[Dataset] RACE dataset Checksums error\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 537}) RETURN i.title LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1814,
+              "output": 66
+            },
+            "ms": 2722
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "dev-031",
+        "template": "issue_author",
+        "kind": "retrieval",
+        "canary": false,
+        "question": "Who opened issue #537?",
+        "oracle": "abarbosa94",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "Issue [#537](https://github.com/your-repository/issues/537) was opened by the user **abarbosa94**.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 537})-[:AUTHORED_BY]->(u:User) RETURN u.login LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1815,
+              "output": 77
+            },
+            "ms": 3251
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "Issue [#537](https://github.com/owner/repo/issues/537) was opened by the user `abarbosa94`.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 537})-[:AUTHORED_BY]->(u:User) RETURN u.login LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1815,
+              "output": 76
+            },
+            "ms": 2905
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "Issue [#537](https://github.com/issue/537) was opened by the user **abarbosa94**.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 537})-[:AUTHORED_BY]->(u:User) RETURN u.login LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1815,
+              "output": 74
+            },
+            "ms": 3083
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "dev-032",
+        "template": "issue_author",
+        "kind": "retrieval",
+        "canary": false,
+        "question": "Who opened issue #727?",
+        "oracle": "lhoestq",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "Issue [#727](https://github.com/issues/727) was opened by the user **lhoestq**.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 727})-[:AUTHORED_BY]->(u:User) RETURN u.login LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1814,
+              "output": 72
+            },
+            "ms": 3329
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "Issue [#727](https://github.com/issues/727) was opened by the user `lhoestq`.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 727})-[:AUTHORED_BY]->(u:User) RETURN u.login LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1814,
+              "output": 71
+            },
+            "ms": 3071
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "Issue [#727](https://github.com/org/repo/issues/727) was opened by the user **lhoestq**.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 727})-[:AUTHORED_BY]->(u:User) RETURN u.login AS author LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1815,
+              "output": 77
+            },
+            "ms": 2647
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "dev-033",
+        "template": "mentions_term",
+        "kind": "retrieval",
+        "canary": false,
+        "question": "Which issues mention \"parquet\" in their title or body? Give their issue numbers.",
+        "oracle": "#4310, #6903",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "cited 4310,6903",
+            "answer": "The issues that mention \"parquet\" in their title or body are:\n\n- [Issue #4310](https://github.com/your-repo/issues/4310)\n- [Issue #6903](https://github.com/your-repo/issues/6903)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.title CONTAINS \"parquet\" OR i.bodyText CONTAINS \"parquet\" RETURN i.number LIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1847,
+              "output": 107
+            },
+            "ms": 2944
+          },
+          {
+            "pass": true,
+            "reason": "cited 4310,6903",
+            "answer": "The issues that mention \"parquet\" in their title or body are:\n\n- [Issue #4310](https://github.com/your-repo/issues/4310)\n- [Issue #6903](https://github.com/your-repo/issues/6903)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (issue:Issue) \nWHERE toLower(issue.title) CONTAINS \"parquet\" OR toLower(issue.bodyText) CONTAINS \"parquet\"\nRETURN issue.number LIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1856,
+              "output": 116
+            },
+            "ms": 3391
+          },
+          {
+            "pass": true,
+            "reason": "cited 4310,6903",
+            "answer": "The issues that mention \"parquet\" in their title or body are:\n\n- [Issue #4310](https://github.com/your-repo/issues/4310)\n- [Issue #6903](https://github.com/your-repo/issues/6903)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (issue:Issue) WHERE toLower(issue.title) CONTAINS \"parquet\" OR toLower(issue.bodyText) CONTAINS \"parquet\" RETURN issue.number LIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1853,
+              "output": 113
+            },
+            "ms": 3080
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "dev-034",
+        "template": "mentions_term",
+        "kind": "retrieval",
+        "canary": false,
+        "question": "Which issues mention \"tokenizer\" in their title or body? Give their issue numbers.",
+        "oracle": "#2516, #5847",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "cited 2516,5847",
+            "answer": "The issues that mention \"tokenizer\" in their title or body are:\n\n- [Issue #2516](https://github.com/user/repo/issues/2516)\n- [Issue #5847](https://github.com/user/repo/issues/5847)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.title CONTAINS 'tokenizer' OR i.bodyText CONTAINS 'tokenizer' RETURN i.number LIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1847,
+              "output": 105
+            },
+            "ms": 3160
+          },
+          {
+            "pass": true,
+            "reason": "cited 2516,5847",
+            "answer": "The issues mentioning \"tokenizer\" in their title or body are:\n\n- [Issue #2516](https://github.com/user/repo/issues/2516)\n- [Issue #5847](https://github.com/user/repo/issues/5847)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)\nWHERE toLower(i.title) CONTAINS 'tokenizer' OR toLower(i.bodyText) CONTAINS 'tokenizer'\nRETURN i.number AS issueNumber LIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1858,
+              "output": 115
+            },
+            "ms": 7409
+          },
+          {
+            "pass": true,
+            "reason": "cited 2516,5847",
+            "answer": "The issues that mention \"tokenizer\" in their title or body are:\n\n- [#2516](https://github.com/user/repo/issues/2516)\n- [#5847](https://github.com/user/repo/issues/5847)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.title CONTAINS \"tokenizer\" OR i.bodyText CONTAINS \"tokenizer\" RETURN i.number LIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1847,
+              "output": 103
+            },
+            "ms": 3366
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "dev-035",
+        "template": "mentions_term",
+        "kind": "retrieval",
+        "canary": false,
+        "question": "Which issues mention \"multiprocessing\" in their title or body? Give their issue numbers.",
+        "oracle": "#4310, #5111",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "cited 4310,5111",
+            "answer": "The issues that mention \"multiprocessing\" in their title or body are:\n\n- [#4310](https://github.com/owner/repo/issues/4310)\n- [#5111](https://github.com/owner/repo/issues/5111)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) \nWHERE i.title CONTAINS 'multiprocessing' OR i.bodyText CONTAINS 'multiprocessing'\nRETURN i.number LIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1850,
+              "output": 108
+            },
+            "ms": 4161
+          },
+          {
+            "pass": true,
+            "reason": "cited 4310,5111",
+            "answer": "The issues mentioning \"multiprocessing\" in their title or body are:\n\n- [#4310](https://github.com/issues/4310)\n- [#5111](https://github.com/issues/5111)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.title CONTAINS 'multiprocessing' OR i.bodyText CONTAINS 'multiprocessing' RETURN i.number LIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1847,
+              "output": 96
+            },
+            "ms": 3689
+          },
+          {
+            "pass": true,
+            "reason": "cited 4310,5111",
+            "answer": "The issues that mention \"multiprocessing\" in their title or body are:\n\n- [Issue #4310](https://github.com/your-repository/issues/4310)\n- [Issue #5111](https://github.com/your-repository/issues/5111)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)\nWHERE i.title CONTAINS \"multiprocessing\" OR i.bodyText CONTAINS \"multiprocessing\"\nRETURN i.number LIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1849,
+              "output": 109
+            },
+            "ms": 2788
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "dev-036",
+        "template": "summarize_issue",
+        "kind": "semantic",
+        "canary": false,
+        "question": "Summarize the discussion on issue #6903. What is the problem and what did people say about it?",
+        "oracle": "Add the option of saving in parquet instead of arrow ",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue #6903, addressing the core problem of saving datasets in Parquet format instead of Arrow, and discusses related challenges and user suggestions. It does not contradict any reference facts.",
+            "answer": "The issue [#6903](https://github.com/your-repo/issues/6903) discusses the challenges users face with saving and loading large datasets using the Hugging Face `datasets` library, particularly focusing on the `to_parquet` and `save_to_disk` functions.\n\n### Problem\n\n1. **Metadata Handling**: The function `Dataset.to_parquet` doesn't save metadata in JSON, requiring custom solutions for metadata handling.\n2. **Loading and Saving Datasets**: Users desire integrated loading and saving options for datasets with Parquet, instead of separate metadata and data handling.\n3. **Memory Usage**: High RAM usage is a concern when saving large datasets, which can lead to out-of-memory issues.\n4. **Sharding and Performance**: There are performance issues with loading large datasets and a need for automatic sharding of Parquet files.\n\n### Discussion Points\n\n- **Alternative Solutions**: Suggestions include using `to_parquet` with `ds.info.write_to_directory()` for dataset info, but users prefer integrated functions.\n- **Memory Management**: Users appreciate that `load_dataset` doesn't fully load datasets into memory but have concerns about memory mapping and RAM usage during saving.\n- **Manual Sharding**: It's suggested to manually shard datasets due to lack of automatic sharding support.\n- **Potential Bugs and Workarounds**: There's mention of potential bugs with RAM spikes despite settings, and tips include lowering `writer_batch_size` in `map()`.\n- **External Factors**: Certain disk caching mechanisms might contribute to memory issues, affecting pod stability in environments like Kubernetes.\n\nOverall, there's a call for more efficient approaches to handling large datasets, focusing on memory efficiency and streamlined metadata processes.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 6903,
+                  "userQuery": "What is the problem and what did people say about it?"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2342,
+              "output": 384
+            },
+            "ms": 13579
+          },
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue #6903, addressing the core problem of saving datasets in Parquet format instead of Arrow, and highlights the key discussion points such as metadata handling, memory usage, and production environment challenges. It does not contradict any reference facts.",
+            "answer": "### Issue Summary for [#6903](https://github.com/your-repo/issues/6903)\n\n#### Problem:\n1. **Metadata Handling**: The `to_parquet` function doesn't save metadata JSON, requiring custom user implementations.\n2. **Loading and Saving Datasets**: Users desire integrated methods for handling datasets using Parquet, avoiding separate metadata and data processes.\n3. **Memory Usage**: High RAM usage when saving datasets to disk, leading to out-of-memory (OOM) errors.\n4. **Sharding and Indexing**: Issues with automatic sharding in `to_parquet` and slow loading/indexing with manual sharding.\n5. **Production Environment Challenges**: Difficulties managing large datasets in environments like Kubernetes due to memory and caching complications.\n\n#### Discussion Highlights:\n- **Metadata Handling**: It's suggested to use `ds.info.write_to_directory()` and `DatasetInfo.from_directory()` for separate metadata handling.\n- **Loading and Saving**: `load_dataset` can write to disk in Arrow format, handling datasets larger than RAM.\n- **Memory Management**: Users advise adjusting `max_shard_size` and `writer_batch_size`, though effectiveness varies.\n- **Manual Sharding**: Workaround includes manual sharding with `datasets.load_dataset`, noted to be initially slow.\n- **Production Issues**: Discussion on memory mapping and caching, with external resources provided for extended solutions.\n\nOverall, users call for enhanced functionality and documentation for managing large datasets efficiently, especially in production contexts.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 6903,
+                  "userQuery": "What is the problem and what did people say about it?"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2284,
+              "output": 344
+            },
+            "ms": 11807
+          },
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue #6903, focusing on the core problem of saving datasets in Parquet format while retaining metadata, and discusses the related suggestions and challenges. It does not contradict any reference facts.",
+            "answer": "The discussion on [issue #6903](https://github.com/huggingface/datasets/issues/6903) focuses on handling large datasets using the `Dataset.to_parquet` function in the Hugging Face Datasets library. Here are the key points from the conversation:\n\n### Problem\n- **Saving Metadata**: The main issue is saving datasets in Parquet format while retaining metadata, as `to_parquet` does not do this by default.\n\n### Discussions & Suggestions\n- **Metadata Handling**: Users suggested using `ds.info.write_to_directory()` to save metadata separately, and `DatasetInfo.from_directory()` to reload it.\n- **Function Integration**: There was a suggestion to integrate these capabilities into existing functions (`load_dataset` and `save_dataset`) with Parquet options for streamlined usage.\n- **Memory Management**: A point was raised about downloading large datasets directly to disk without loading them completely into memory. It was clarified that `load_dataset` writes data to disk in Arrow format and uses memory mapping for datasets larger than RAM.\n- **Sharding**: The lack of automatic sharding in `to_parquet` was a concern. A workaround for manual sharding was provided.\n- **User Experience**: A user reported issues with processing large datasets and high RAM usage with `save_to_disk`, even when using `max_shard_size`. Lowering `writer_batch_size` was suggested to alleviate this.\n- **Practical Tips**: Manual data sharding to disk and using `datasets.load_dataset` was a slower but effective method for managing memory usage. Additionally, potential problems with disk types that cache memory-mapped files in RAM were noted.\n\nThe issue highlights difficulties in handling large datasets efficiently, particularly in terms of memory management and data sharding, for production environments.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 6903,
+                  "userQuery": "discussion details"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2144,
+              "output": 390
+            },
+            "ms": 8442
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "dev-037",
+        "template": "summarize_issue",
+        "kind": "semantic",
+        "canary": false,
+        "question": "Summarize the discussion on issue #6130. What is the problem and what did people say about it?",
+        "oracle": "default config name doesn't work when config kwargs are specified.",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue #6130, covering the core problem, user expectations, current behavior, reported error, suggested solution, and documentation enhancement. It aligns with the reference facts and does not contradict any details.",
+            "answer": "Here's a summary of the discussion on [issue #6130](https://github.com/huggingface/datasets/issues/6130):\n\n### Problem\nThe main issue involves the `load_dataset` function in the Hugging Face `datasets` library. Users experienced unintended behavior when trying to override specific parameters like `data_dir`, as it disables the default configuration instead of simply modifying certain fields.\n\n### Key Points\n\n1. **Default Config Behavior**\n   - Users expect that overriding parameters like `data_dir` should keep the default configuration intact, not disable it.\n\n2. **Current Behavior**\n   - Users must explicitly specify the configuration name when overriding parameters, which is inconvenient.\n\n3. **Reported Error**\n   - An `AttributeError` occurs when the `BuilderConfig` object doesn't recognize overridden attributes.\n\n4. **Suggested Solution**\n   - Set the `BUILDER_CONFIG_CLASS` attribute in the builder class to correctly instantiate the builder config when additional parameters are passed. This ensures the default config is recognized.\n\n5. **Documentation Enhancement**\n   - It was suggested to improve documentation on attributes like `BUILDER_CONFIG_CLASS`, which are vital for working with multi-config datasets.\n\nThe discussion concludes with a plan to enhance the documentation and address the identified issues through a pull request.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 6130,
+                  "userQuery": "Summarize the discussion, identify the main problem and key points mentioned."
+                }
+              }
+            ],
+            "usage": {
+              "input": 2161,
+              "output": 298
+            },
+            "ms": 8993
+          },
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue, its problem, and the key discussion points without contradicting the reference facts.",
+            "answer": "The discussion on [issue #6130](https://github.com/org/repo/issues/6130) centers around a problem with overriding default configurations in a dataset loading function. Here are the key points:\n\n### Problem\n- When additional parameters like `data_dir` are passed, it unintentionally disables the default configuration.\n- Users want to override specific parameters without having to specify the default configuration.\n\n### Key Discussion Points\n- **Current Behavior:** Passing parameters instantiates a new `BuilderConfig`, which aligns with some users' expectations but disrupts others who rely on default configurations.\n- **Examples and Suggestions:** Users discussed examples where the implementation fails and suggested improvements, including setting a class attribute `BUILDER_CONFIG_CLASS` to specify which config class to use.\n- **Documentation Improvement:** It was suggested to enhance documentation with details about common attributes of `DatasetBuilder`, as these are currently missing.\n\nA participant agreed to submit a pull request to address the documentation gap, concluding the discussion.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 6130,
+                  "userQuery": "What is the problem and what did people say about it?"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2056,
+              "output": 235
+            },
+            "ms": 6683
+          },
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue, its problem, and the discussion points without contradicting the reference facts.",
+            "answer": "### Issue #6130 Discussion Summary\n\n**Problem:**\nThe issue involves difficulties with overriding default configurations in datasets using the `load_dataset` function. Specifically, when users pass additional parameters (e.g., `data_dir`), it unintentionally disables the default configuration. This is problematic for users extending `FolderBasedBuilder` to a multi-config version.\n\n**Key Points from the Discussion:**\n\n- **Default Configuration Conflict:** Users expect passing parameters to create a new `BuilderConfig`, but it clashes when default configurations aren't explicitly specified. Examples show that the function fails without specifying the default config name.\n\n- **Proposed Solution:** A suggestion was made to use the `BUILDER_CONFIG_CLASS` attribute in the builder class. This attribute specifies which builder config class to instantiate when additional config parameters are provided. Though effective, it's noted that this attribute isn't commonly mentioned in the `DatasetBuilder` documentation, especially for multi-config datasets.\n\n- **Documentation Improvement:** Participants agreed on the necessity of updating the documentation to cover common attributes of `DatasetBuilder`. A participant plans to open a pull request to address these documentation gaps.\n\nWith these insights, the issue discussion emphasizes both a technical fix and the importance of improved documentation for users.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 6130,
+                  "userQuery": "What is the problem and what did people say about it?"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2057,
+              "output": 282
+            },
+            "ms": 7329
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "dev-038",
+        "template": "summarize_issue",
+        "kind": "semantic",
+        "canary": false,
+        "question": "Summarize the discussion on issue #5111. What is the problem and what did people say about it?",
+        "oracle": "map and filter not working properly in multiprocessing with the new release 2.6.0",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue #5111, focusing on the problem with `map` and `filter` functions in the `datasets` library, and discusses the key points such as reproduction challenges, distinct issues, PyArrow version relation, and resolution. It aligns with the reference facts and does not contradict any information.",
+            "answer": "The discussion on [issue #5111](https://github.com/your-repo/issues/5111) focuses on a bug related to the `datasets` library, involving `map` and `filter` functions. Here's a summary of the problem and the key points discussed:\n\n### Problem:\n- **Incorrect Sample Selection**: Users experienced incorrect sample selection when indexing datasets, although the number of samples was correct. This bug was observed across different platforms like Colab and macOS, with various Python and library versions.\n\n### Key Discussion Points:\n1. **Reproduction Challenges**:\n   - Some users couldn't reproduce the issue on their setups, hinting that it might be linked to specific Python or PyArrow versions.\n\n2. **Two Distinct Issues**:\n   - One issue with multiprocessing in `map` and `filter` functions was reported by @loubnabnl.\n   - Another issue with `filter` without multiprocessing was identified by @PartiallyTyped and moved to a separate issue (#5112).\n\n3. **PyArrow Version**:\n   - The problem was linked to the version of PyArrow. Upgrading to version 9.0.0 helped reproduce the issue, confirming its relation to the library version.\n\n4. **Resolution**:\n   - A patch release addressed the problem, and users confirmed the issue was resolved post-patch.\n\nOverall, the discussion highlights challenges in reproducing and diagnosing issues tied to specific library versions and configurations.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 5111,
+                  "userQuery": "What is the problem and what did people say about it?"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2141,
+              "output": 331
+            },
+            "ms": 9738
+          },
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue, its core problem, and the resolution, without contradicting any reference facts.",
+            "answer": "### Issue Summary\n\n**Title:** [map and filter not working properly in multiprocessing with the new release 2.6.0](https://github.com/REPO/issues/5111)  \n**State:** Closed\n\n### Problem Description\n\n- There was a bug in version 2.6.0 of the `datasets` library where using `map` with multiprocessing resulted in unexpected behavior when subsequently filtering data.\n- The problem was reproducible with a specific code example, which highlighted the discrepancy in dataset elements when different `num_proc` values were used in `map`.\n\n### Comments Summary\n\n- **Key Workflows:** Users discussed using the `datasets` library in Python, particularly focusing on `map` and `filter` functions with multiprocessing.\n- **Workaround:** Upgrading PyArrow to version 9.0.0 helped in reproducing the issue, suggesting that PyArrow's version was a factor.\n- **Proposed Solution:** A patch release was created to address the bug, involving a fix related to PyArrow.\n- **Tone:** The conversation was cooperative, with initial frustration giving way to a successful resolution through collaboration.\n\n### Conclusion\n\nThe issue was resolved with a patch release, and the collaborative approach taken by users and developers led to a positive outcome.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 5111}) RETURN i.title, i.bodyText, i.state LIMIT 1"
+                }
+              },
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 5111,
+                  "userQuery": null
+                }
+              }
+            ],
+            "usage": {
+              "input": 2846,
+              "output": 340
+            },
+            "ms": 8985
+          },
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue, its discussion, and resolution without contradicting any reference facts.",
+            "answer": "### Issue Summary\n\n**Problem:**  \nThe issue involves the `datasets` library, specifically problems with the `map` and `filter` functions, related to multiprocessing. Users experienced incorrect sample selection when indexing datasets, despite having the correct number of samples.\n\n### Discussion Highlights\n\n- **Reproduction Attempts:** Users tried to reproduce the issue on various platforms and with different Python versions. The inconsistency across environments hinted at a potential PyArrow version issue.\n  \n- **Discovery:** Upgrading PyArrow to version 9.0.0 on Colab enabled one user to reproduce the issue reliably.\n\n- **Separate Issues:** The discussion identified two related but distinct problems:\n  1. Using `map` and `filter` together with multiprocessing.\n  2. Using `filter` without multiprocessing.\n  \n  The latter led to the creation of a separate issue, [#5112](https://github.com/your-repo/issues/5112).\n\n- **Resolution:** The issue was linked to PyArrow's version. A patch release was deployed, and users confirmed that it resolved the issue.\n\n### Conclusion\n\nThe discussion effectively pinpointed PyArrow as the root cause, leading to a successful resolution through a patch update.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 5111,
+                  "userQuery": "What is the problem and what did people say about it?"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2042,
+              "output": 282
+            },
+            "ms": 8574
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "dev-039",
+        "template": "summarize_issue",
+        "kind": "semantic",
+        "canary": false,
+        "question": "Summarize the discussion on issue #7381. What is the problem and what did people say about it?",
+        "oracle": "Iterating over values of a column in the IterableDataset",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue, its core problem, proposed solution, and key discussion points without contradicting any reference facts.",
+            "answer": "### Discussion Summary for Issue [#7381](https://github.com/yourrepo/issues/7381)\n\n**Problem:**\nThe issue addresses the need for an improvement in the Hugging Face `datasets` library. Users wanted a built-in feature to iterate over a single column in an `IterableDataset`, as many were creating custom solutions for this purpose.\n\n**Proposed Solution:**\nA user suggested using an `IterableColumn` class to allow iteration over a specific column using the `__getitem__()` method on an `IterableDataset`. This implementation was successfully tested in basic scenarios.\n\n**Discussion Points:**\n- **Testing Implementation:** \n  - Suggestions were made to include tests in `test_iterable_dataset.py`.\n  - Challenges arose due to compatibility issues with Python versions and optional dependencies like `tensorflow` and `pyav`.\n  - It was advised to use essential libraries like `pytest` for testing.\n\n- **Chained Indexing Support:**\n  - Although complex, chained indexing was implemented by the user, even though it was initially considered for future enhancement.\n\n- **Community Update:**\n  - There was a request for a maintainer to update related discussion threads on the Hugging Face forum to inform users of the new feature.\n\nThis issue sparked a detailed technical discussion on enhancing user functionality in data handling with Hugging Face `datasets`.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 7381,
+                  "userQuery": "What is the problem and what did people say about it?"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2097,
+              "output": 309
+            },
+            "ms": 7866
+          },
+          {
+            "pass": true,
+            "reason": "The summary accurately reflects the core problem and discussion points of issue #7381 without contradicting any reference facts.",
+            "answer": "### Summary of Issue [#7381](https://github.com/user/repo/issues/7381)\n\n#### Problem\n- The main issue revolves around iterating over a single column in a dataset using custom iterables. Users were seeking a method to perform operations such as `map`, `filter`, and `batch` directly on a dataset column.\n\n#### Key Discussion Points\n- **Proposed Solutions:**\n  - Development of an `IterableColumn` class to streamline operations on specific dataset columns.\n  - Testing new iterations with tools like `pytest`, `pytest-datadir`, and `pytest-xdist` to mitigate optional dependency issues.\n  - Implementation of chained indexing for the new class.\n\n- **Workarounds:**\n  - Users implemented custom iterable wrappers for their datasets.\n  - They tested functionalities in separate scripts to avoid installation issues of optional dependencies in certain Python environments.\n\n- **Emotional Tone:**\n  - The discussion was constructive, with users collaborating effectively to address the issue. While there was some frustration regarding dependency installations, solutions were approached pragmatically.\n\n#### Additional Notes\n- No competitors were mentioned in the discussion.\n- The issue had a total of 11 comments.\n\nThis covers the main points discussed in the issue. If you have any further questions or need more detailed information, feel free to ask!",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 7381,
+                  "userQuery": null
+                }
+              }
+            ],
+            "usage": {
+              "input": 2090,
+              "output": 293
+            },
+            "ms": 9591
+          },
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue #7381, covering the core problem, proposal, implementation details, testing challenges, related issues, and community engagement. It does not contradict any reference facts and aligns with the rubric criteria.",
+            "answer": "### Summary of Issue [#7381](https://github.com/organization/repo/issues/7381)\n\nThe issue discusses a proposal to implement a feature allowing iteration over a single column in an `IterableDataset` from the Hugging Face `datasets` library. Users often create custom solutions for this requirement, highlighting a demand for a built-in feature.\n\n#### Key Points\n\n1. **Feature Proposal**:\n   - Introduction of an `IterableColumn` class to enable column-specific iteration in `IterableDataset`.\n\n2. **Implementation Details**:\n   - A sample implementation was shared for integrating `IterableColumn`, allowing users to utilize syntax like `ds[\"column_name\"]` to iterate.\n\n3. **Testing and Challenges**:\n   - Testing faced hurdles due to dependency and Python version issues. Testing was performed in a separate script with recommendations to use certain libraries to avoid optional dependencies.\n\n4. **Related Issues**:\n   - There was a reference to supporting chained indexing in `IterableColumn`, which had been addressed.\n\n5. **Pull Request and Documentation**:\n   - A PR was opened for review and feedback; discussions about documentation took place.\n\n6. **Community Engagement**:\n   - A request was made to announce the feature in a related forum discussion, which was fulfilled.\n\nOverall, the discussion focuses on enhancing library functionality through community collaboration and problem-solving.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 7381,
+                  "userQuery": "What is the problem and what did people say about it?"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2227,
+              "output": 310
+            },
+            "ms": 8007
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "dev-040",
+        "template": "summarize_issue",
+        "kind": "semantic",
+        "canary": false,
+        "question": "Summarize the discussion on issue #3504. What is the problem and what did people say about it?",
+        "oracle": "Unable to download PUBMED_title_abstracts_2019_baseline.jsonl.zst",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue, its core problem, and the community discussion without contradicting the reference facts.",
+            "answer": "### Issue #3504 Summary\n\n**Problem:**\nThe core issue discussed in [Issue #3504](https://github.com/org/repo/issues/3504) centers around difficulties accessing \"The Pile\" dataset due to server outages and non-functional URLs. Initially hosted on the-eye.eu, the dataset became inaccessible after the server faced issues due to a tornado catastrophe in the US. Attempts to use an alternative host, mystic.the-eye.eu, also resulted in HTTP 404 errors and connection timeouts.\n\n**Community Discussion:**\n- **Alternative Access Solutions:**\n  - One user found a torrent link on Academic Torrents and recommended downloading specific files via a torrent client.\n  - Another workaround involved listing dataset URLs for use with the `load_dataset` function from Hugging Face's library.\n  - A user re-uploaded the dataset to Hugging Face's platform and shared a new URL, suggesting a change in the course material to utilize this new link.\n\nOverall, the issue highlights the community's collaborative efforts in finding alternative solutions to access the dataset despite the initial hosting problems.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 3504,
+                  "userQuery": "What is the problem and what did people say about it?"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2057,
+              "output": 256
+            },
+            "ms": 7740
+          },
+          {
+            "pass": false,
+            "reason": "The answer does not accurately summarize the specific issue discussed in #3504. The core problem in the reference is about the inability to download a specific dataset file due to server issues, not general access to 'The Pile' dataset. The answer also incorrectly emphasizes language modeling and competitor tools, which are not central to the issue. Additionally, the emotional tone is not relevant to the rubric criteria.",
+            "answer": "### Issue #3504 Summary\n\n#### Problem\nThe discussion revolves around accessing and using \"The Pile\" dataset for various tasks like language modeling. Issues include broken URLs, which hinder data accessibility.\n\n#### Key Discussion Points\n\n- **Workflows & Use Cases:**\n  - Access for language modeling and data analysis.\n  - Updating course materials with the correct URLs.\n  - Loading datasets using the `load_dataset` function from Hugging Face, specifically for JSON and Parquet formats.\n\n- **Competitor Tools:**\n  - Mention of Transmission, a torrent client for downloading large datasets.\n\n- **Workarounds:**\n  - Using torrents to download specific files.\n  - Listing URLs to Parquet files and loading them with the `load_dataset` function.\n  - Re-uploading datasets to Hugging Face for stable access.\n\n- **Proposed Solutions:**\n  - Updating materials and notebooks with new, functioning URLs.\n  - Hosting datasets on alternative servers or mirrors.\n  - Ensuring consistent access by re-uploading to platforms like Hugging Face.\n\n#### Emotional Tone\nThe tone is mostly neutral, though some frustration is present due to data accessibility issues. The discussion shows a collaborative effort to find solutions.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 3504,
+                  "userQuery": null
+                }
+              }
+            ],
+            "usage": {
+              "input": 2106,
+              "output": 271
+            },
+            "ms": 8169
+          },
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue #3504, covering the core problem of server access issues and the community's responses, without contradicting any reference facts.",
+            "answer": "### Summary of Issue [#3504](https://github.com/owner/repo/issues/3504)\n\n#### Problem Description:\n1. **Server Issues**: The original hosting server for the Pile dataset, the-eye.eu, was impacted by a tornado, causing access issues.\n2. **Broken URLs**: Users experienced problems with broken URLs and HTTP errors when trying to access the dataset from both original and new servers.\n3. **Dataset Access**: Difficulties were reported in accessing specific files within the dataset, causing errors in scripts.\n\n#### Community Feedback and Solutions:\n1. **Alternative Hosting**: The Pile team mirrored the data on a new server, advising users to update their URLs to mystic.the-eye.eu.\n2. **Torrent Option**: A community member suggested using a torrent for downloading the dataset to save bandwidth.\n3. **Code Adjustments**: Various code snippets and pseudo-code were shared to assist with loading the dataset, such as using parquet files from Hugging Face.\n4. **Re-upload to Hugging Face**: A user re-uploaded the dataset to Hugging Face, providing new access URLs and code examples.\n5. **Pull Requests and Updates**: Community efforts included pull requests to update course materials and correct broken URLs.\n\nOverall, the community collaborated effectively to address the server issues and ensure continued dataset access.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 3504,
+                  "userQuery": "Summarize the discussion, focusing on the problem described and the community feedback."
+                }
+              }
+            ],
+            "usage": {
+              "input": 2160,
+              "output": 315
+            },
+            "ms": 8403
+          }
+        ],
+        "passRate": 0.6666666666666666
+      }
+    ],
+    "openai": {
+      "requests": 255,
+      "byModel": {
+        "gpt-4o-2024-08-06": {
+          "requests": 255,
+          "promptTokens": 253050,
+          "completionTokens": 17232,
+          "unmetered": 0
+        }
+      },
+      "byEndpoint": {
+        "/responses": 240,
+        "/chat/completions": 15
+      },
+      "byHost": {
+        "api.openai.com": 255
+      },
+      "unpricedModels": [],
+      "unmetered": 0,
+      "usageSource": "wire",
+      "reportedTokens": {
+        "input": 224486,
+        "output": 12842
+      },
+      "costUsd": 0.804945
+    },
+    "neo4j": {
+      "queries": 121,
+      "sessions": 121,
+      "transactions": 0,
+      "samples": [
+        "MATCH (i:Issue) RETURN count(i) AS totalIssues LIMIT 1",
+        "MATCH (i:Issue) RETURN count(i) AS issue_count LIMIT 1",
+        "MATCH (i:Issue) RETURN count(i) as totalIssues",
+        "MATCH (c:Comment) RETURN count(c) AS totalComments",
+        "MATCH (c:Comment) RETURN count(c) AS totalComments",
+        "MATCH (c:Comment) RETURN count(c) AS totalComments",
+        "MATCH (i:Issue) WHERE i.state = 'OPEN' RETURN count(i) AS op",
+        "MATCH (i:Issue {state: 'OPEN'}) RETURN count(i) AS openIssue",
+        "MATCH (issue:Issue {state: 'OPEN'}) RETURN COUNT(issue) AS o",
+        "MATCH (i:Issue {state: 'CLOSED'}) RETURN count(i) AS closedI",
+        "MATCH (i:Issue) WHERE i.state = 'CLOSED' RETURN count(i) AS ",
+        "MATCH (i:Issue {state: 'CLOSED'}) RETURN COUNT(i) AS closedI",
+        "MATCH (l:Label) RETURN count(DISTINCT l.name) AS distinctLab",
+        "MATCH (l:Label) RETURN COUNT(DISTINCT l.name) AS distinctLab",
+        "MATCH (l:Label) RETURN COUNT(DISTINCT l.name) AS labelCount",
+        "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User) RETURN COUNT(DISTIN",
+        "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User) RETURN COUNT(DISTIN",
+        "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User) RETURN COUNT(DISTIN",
+        "MATCH (i:Issue) WHERE NOT (i)-[:HAS_COMMENT]->(:Comment) RET",
+        "MATCH (i:Issue) WHERE NOT (i)-[:HAS_COMMENT]->() RETURN coun",
+        "MATCH (i:Issue) WHERE NOT (i)-[:HAS_COMMENT]->(:Comment) RET",
+        "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment) RETURN i.number ",
+        "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment) RETURN i.number ",
+        "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment) RETURN i.number ",
+        "MATCH (i:Issue)-[:HAS_REACTION]->(r:Reaction) RETURN i.numbe",
+        "MATCH (i:Issue)-[:HAS_REACTION]->(r:Reaction) RETURN i.numbe",
+        "MATCH (i:Issue)-[:HAS_REACTION]->(r:Reaction) RETURN i.numbe",
+        "MATCH (i:Issue) RETURN i.number ORDER BY i.createdAt DESC LI",
+        "MATCH (i:Issue) RETURN i.number ORDER BY i.createdAt DESC LI",
+        "MATCH (i:Issue) RETURN i.number ORDER BY i.createdAt DESC LI",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"enhancement\"}",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"enhancement\"}",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"enhancement\"}",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"bug\"}) RETURN",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: 'bug'}) RETURN",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"bug\"}) RETURN",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"dataset reque",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"dataset reque",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"dataset reque",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"dataset reque",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"dataset reque",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"dataset reque",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"dataset bug\"}",
+        "MATCH (issue:Issue)-[:HAS_LABEL]->(label:Label {name: \"datas",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"documentation",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"dataset bug\"}",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"documentation",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"documentation",
+        "MATCH (i:Issue) WHERE i.createdAt STARTS WITH '2020-10' RETU",
+        "MATCH (i:Issue) WHERE i.createdAt STARTS WITH '2020-10' RETU",
+        "MATCH (i:Issue) WHERE i.createdAt STARTS WITH '2023-05' RETU",
+        "MATCH (i:Issue) WHERE i.createdAt STARTS WITH '2023-05' RETU",
+        "MATCH (i:Issue) WHERE i.createdAt STARTS WITH '2020-10' RETU",
+        "MATCH (i:Issue) WHERE i.createdAt STARTS WITH '2023-05' RETU",
+        "MATCH (i:Issue) WHERE i.createdAt STARTS WITH '2020-08' RETU",
+        "MATCH (i:Issue) WHERE i.createdAt STARTS WITH '2020-08' RETU",
+        "MATCH (i:Issue) WHERE i.createdAt STARTS WITH '2020-08' RETU",
+        "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User {login: 'lhoestq'}) ",
+        "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User {login: \"lhoestq\"}) ",
+        "MATCH (u:User {login: \"lhoestq\"})-[:AUTHORED_BY]-(i:Issue) R",
+        "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User {login: 'albertvilla",
+        "MATCH (u:User {login: \"albertvillanova\"})-[:AUTHORED_BY]-(i:",
+        "MATCH (u:User {login: \"albertvillanova\"})-[:AUTHORED_BY]-(i:",
+        "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User {login: \"jarednielse",
+        "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User {login: \"jarednielse",
+        "MATCH (u:User {login: \"jarednielsen\"})-[:AUTHORED_BY]-(i:Iss",
+        "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment) WHERE i.number =",
+        "MATCH (i:Issue {number: 537})-[:HAS_COMMENT]->(c:Comment) RE",
+        "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment) WHERE i.number =",
+        "MATCH (i:Issue {number: 1776})-[:HAS_COMMENT]->(c:Comment) R",
+        "MATCH (i:Issue {number: 1776})-[:HAS_COMMENT]->(c:Comment) R",
+        "MATCH (i:Issue {number: 1776})-[:HAS_COMMENT]->(c:Comment) R",
+        "MATCH (i:Issue {number: 1803})-[:HAS_COMMENT]->(c:Comment) R",
+        "MATCH (i:Issue {number: 1803})-[:HAS_COMMENT]->(c:Comment) R",
+        "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment) WHERE i.number =",
+        "MATCH (i:Issue {number: 490}) RETURN i.title LIMIT 1",
+        "MATCH (i:Issue {number: 490}) RETURN i.title LIMIT 1",
+        "MATCH (i:Issue {number: 490})-[:AUTHORED_BY]->(u:User) RETUR",
+        "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User) WHERE i.number = 49",
+        "MATCH (i:Issue {number: 490}) RETURN i.title LIMIT 1",
+        "MATCH (i:Issue {number: 524}) RETURN i.title LIMIT 1",
+        "MATCH (i:Issue {number: 490})-[:AUTHORED_BY]->(u:User) RETUR",
+        "MATCH (i:Issue {number: 524}) RETURN i.title LIMIT 1",
+        "MATCH (i:Issue {number: 524}) RETURN i.title LIMIT 1",
+        "MATCH (i:Issue {number: 524})-[:AUTHORED_BY]->(u:User) RETUR",
+        "MATCH (i:Issue {number: 524})-[:AUTHORED_BY]->(u:User) RETUR",
+        "MATCH (i:Issue {number: 537}) RETURN i.title LIMIT 1",
+        "MATCH (i:Issue {number: 524})-[:AUTHORED_BY]->(u:User) RETUR",
+        "MATCH (i:Issue {number: 537}) RETURN i.title LIMIT 1",
+        "MATCH (i:Issue {number: 537}) RETURN i.title LIMIT 1",
+        "MATCH (i:Issue {number: 537})-[:AUTHORED_BY]->(u:User) RETUR",
+        "MATCH (i:Issue {number: 537})-[:AUTHORED_BY]->(u:User) RETUR",
+        "MATCH (i:Issue {number: 537})-[:AUTHORED_BY]->(u:User) RETUR",
+        "MATCH (i:Issue {number: 727})-[:AUTHORED_BY]->(u:User) RETUR",
+        "MATCH (i:Issue {number: 727})-[:AUTHORED_BY]->(u:User) RETUR",
+        "MATCH (i:Issue {number: 727})-[:AUTHORED_BY]->(u:User) RETUR",
+        "MATCH (i:Issue) WHERE i.title CONTAINS \"parquet\" OR i.bodyTe",
+        "MATCH (issue:Issue) WHERE toLower(issue.title) CONTAINS \"par",
+        "MATCH (issue:Issue) WHERE toLower(issue.title) CONTAINS \"par",
+        "MATCH (i:Issue) WHERE i.title CONTAINS 'tokenizer' OR i.body",
+        "MATCH (i:Issue) WHERE i.title CONTAINS \"tokenizer\" OR i.body",
+        "MATCH (i:Issue) WHERE i.title CONTAINS 'multiprocessing' OR ",
+        "MATCH (i:Issue) WHERE i.title CONTAINS 'multiprocessing' OR ",
+        "MATCH (i:Issue) WHERE toLower(i.title) CONTAINS 'tokenizer' ",
+        "MATCH (i:Issue) WHERE i.title CONTAINS \"multiprocessing\" OR ",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: 5111}) RETURN i.title, i.bodyText, i",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT"
+      ]
+    },
+    "judgeCostUsd": 0.09747750000000001
+  },
+  "score": {
+    "overall": 0.9916666666666666,
+    "deterministic": 1,
+    "semantic": 0.9333333333333333,
+    "byKind": {
+      "structural": 1,
+      "retrieval": 1,
+      "semantic": 0.9333333333333333
+    },
+    "solvedAllAttempts": 39,
+    "solvedAnyAttempt": 40,
+    "totalTasks": 40,
+    "canaryPass": true,
+    "toolUseRate": 1,
+    "agentErrorRate": 0
+  },
+  "cost": {
+    "ingestUsd": 0.297655,
+    "qaUsd": 0.804945,
+    "judgeUsd": 0.09747750000000001,
+    "sutTotalUsd": 1.1026
+  },
+  "finishedAt": "2026-09-03T10:21:59.568Z",
+  "trace": {
+    "files": [
+      "github-issue-analyzer-2026-09-03T10-15-48-695Z-1080051.jsonl"
+    ],
+    "spans": 1491,
+    "byName": {
+      "gen_ai.request": {
+        "count": 240,
+        "totalMs": 422976,
+        "maxMs": 8148,
+        "errors": 0
+      },
+      "pipeline.run": {
+        "count": 1,
+        "totalMs": 187266,
+        "maxMs": 187266,
+        "errors": 0
+      },
+      "pipeline.analyzeIssue": {
+        "count": 60,
+        "totalMs": 168378,
+        "maxMs": 12341,
+        "errors": 0
+      },
+      "openai.chat": {
+        "count": 60,
+        "totalMs": 168338,
+        "maxMs": 12340,
+        "errors": 0
+      },
+      "tool.summarizeComments": {
+        "count": 15,
+        "totalMs": 58645,
+        "maxMs": 7946,
+        "errors": 0
+      },
+      "github.graphql": {
+        "count": 121,
+        "totalMs": 14983,
+        "maxMs": 128,
+        "errors": 0
+      },
+      "pipeline.fetch": {
+        "count": 1,
+        "totalMs": 14920,
+        "maxMs": 14920,
+        "errors": 0
+      },
+      "github.fetchCompleteIssue": {
+        "count": 60,
+        "totalMs": 14904,
+        "maxMs": 253,
+        "errors": 0
+      },
+      "neo4j.query": {
+        "count": 763,
+        "totalMs": 6549,
+        "maxMs": 86,
+        "errors": 0
+      },
+      "tool.queryNeo4j": {
+        "count": 106,
+        "totalMs": 2736,
+        "maxMs": 86,
+        "errors": 0
+      },
+      "pipeline.ingest": {
+        "count": 1,
+        "totalMs": 2014,
+        "maxMs": 2014,
+        "errors": 0
+      },
+      "pipeline.persistAnalysis": {
+        "count": 1,
+        "totalMs": 1677,
+        "maxMs": 1677,
+        "errors": 0
+      },
+      "analysis.persistIssue": {
+        "count": 60,
+        "totalMs": 1662,
+        "maxMs": 156,
+        "errors": 0
+      },
+      "pipeline.readback": {
+        "count": 1,
+        "totalMs": 129,
+        "maxMs": 129,
+        "errors": 0
+      },
+      "pipeline.discover": {
+        "count": 1,
+        "totalMs": 129,
+        "maxMs": 129,
+        "errors": 0
+      }
+    }
+  }
+}

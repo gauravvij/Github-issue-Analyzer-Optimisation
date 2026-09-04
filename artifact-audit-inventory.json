@@ -1,0 +1,135 @@
+{
+  "inventory_version": 1,
+  "generated_at_utc": "2026-09-03T16:53:59.541245+00:00",
+  "command": "/usr/bin/python3 -c <scoped artifact inventory>",
+  "canonical_representation": {
+    "format": "JSON",
+    "encoding": "UTF-8",
+    "serialization": "json.dumps(value, sort_keys=True, separators=(\",\", \":\"), ensure_ascii=False)",
+    "hashed_value": "entire inventory object with the inventory_sha256 field omitted",
+    "hash": "SHA-256",
+    "inventory_sha256": "6658b3ac196fa459527b6f53f873530ac15d38d28184dbb512c662d1de7c94ab"
+  },
+  "document_bindings": {
+    "normalized_projection": "Read UTF-8 text, normalize CRLF and CR to LF, then for each line containing SHA-256, inventory_sha256, or normalized projection SHA-256 replace every 64-character hexadecimal digest with <DIGEST>; also replace PENDING_LEDGER_BINDING and PENDING_RESULTS_BINDING with <DIGEST>. Hash the resulting UTF-8 bytes with SHA-256.",
+    "masked_fields": ["labeled 64-character hexadecimal digest values", "PENDING_LEDGER_BINDING", "PENDING_RESULTS_BINDING"],
+    "ledger_sha256": "4b0504ab68e5c558b231533e039f43848693bb4fcc46e8279c490fa9291592b2",
+    "results_sha256": "f2f7edea7058dfaef8d64b2761f10612f373d1666600c9c0eb318d1937120156"
+  },
+  "documentation_checks": [
+    {"id":"inventory_linked","phrase":"artifact-audit-inventory.json","passed":true,"evidence":"Standalone inventory exists at /home/azureuser/githubIssue/artifact-audit-inventory.json and is cited by ledger.md and RESULTS.md."},
+    {"id":"campaign_closed","phrase":"campaign is closed, not pending","passed":true,"evidence":"Final ledger closeout explicitly marks the campaign closed under the plan2 stopping rule."},
+    {"id":"generated_artifact_scope","phrase":"generated github_issue/.traces/ and node_modules/.vite/","passed":true,"evidence":"Closeout wording distinguishes generated acceptance artifacts from implementation, benchmark, and frozen-file modifications."},
+    {"id":"provenance_limitation","phrase":"not cryptographically provable","passed":true,"evidence":"Ledger and RESULTS disclose the absent immutable command transcript limitation for exact-once and gate adjacency."},
+    {"id":"sut_validation","phrase":"Corrected post-holdout SUT check passed","passed":true,"evidence":"cd github_issue && bun run typecheck && bun run test:unit exited 0; 4 test files and 27 tests passed."},
+    {"id":"frozen_checksum_validation","phrase":"Corrected frozen-data check passed","passed":true,"evidence":"cd bench && sha256sum -c SPLITS.sha256 exited 0; all 4 manifest entries were OK."},
+    {"id":"artifact_audit","phrase":"Final artifact audit passed","passed":true,"evidence":"Scoped audit found 21 cited paths, 11 valid reports, 10 traces, zero missing/invalid/link failures, and one holdout report plus one holdout trace."},
+    {"id":"repository_metadata","phrase":"NO_GIT_METADATA","passed":true,"evidence":"No /home/azureuser/githubIssue/.git directory exists; no Git clean/dirty claim is made."}
+  ],
+  "scope": {
+    "source_document": "RESULTS.md",
+    "path_extraction": "split RESULTS.md on backtick delimiters; select tokens beginning with bench/jobs/ and ending in report.json or .jsonl",
+    "report_selection": "unique selected tokens ending report.json",
+    "trace_selection": "unique selected tokens ending .jsonl",
+    "validity_rule": "each selected report parses as JSON and has valid=true",
+    "trace_rule": "each selected report trace filename resolves under its report directory traces/; also retain explicitly cited trace tokens",
+    "holdout_cardinality_rule": "bench/jobs/holdout-final contains exactly one report.json and exactly one traces/*.jsonl",
+    "path_scope": "Only paths explicitly cited by RESULTS.md under bench/jobs/ plus the holdout-final directory cardinality check; no recursive unscoped job-directory count is used."
+  },
+  "phrase_list": [
+    "campaign is closed, not pending",
+    "bun run typecheck && bun run test:unit",
+    "sha256sum -c SPLITS.sha256",
+    "21 cited paths",
+    "exactly one holdout report and one holdout trace",
+    "github_issue/.traces/",
+    "node_modules/.vite/",
+    "not cryptographically provable",
+    "NO_GIT_METADATA"
+  ],
+  "selected_paths": {
+    "all": [
+      "bench/jobs/holdout-final/report.json",
+      "bench/jobs/holdout-final/traces/github-issue-analyzer-2026-09-03T15-44-36-408Z-1164059.jsonl",
+      "bench/jobs/h1-confirm/report.json",
+      "bench/jobs/h1-confirm/traces/github-issue-analyzer-2026-09-03T10-58-08-584Z-1096799.jsonl",
+      "bench/jobs/h2-confirm/report.json",
+      "bench/jobs/h2-confirm/traces/github-issue-analyzer-2026-09-03T11-41-09-980Z-1110039.jsonl",
+      "bench/jobs/h3-confirm-2/report.json",
+      "bench/jobs/h3-confirm-2/traces/github-issue-analyzer-2026-09-03T12-38-52-340Z-1120992.jsonl",
+      "bench/jobs/h5-confirm/report.json",
+      "bench/jobs/h5-confirm/traces/github-issue-analyzer-2026-09-03T13-50-56-259Z-1142599.jsonl",
+      "bench/jobs/h6-confirm/report.json",
+      "bench/jobs/h6-confirm/traces/github-issue-analyzer-2026-09-03T14-31-15-973Z-1152207.jsonl",
+      "bench/jobs/h8-confirm/report.json",
+      "bench/jobs/h8-confirm/traces/github-issue-analyzer-2026-09-03T15-07-24-610Z-1158117.jsonl",
+      "bench/jobs/h9-confirm/report.json",
+      "bench/jobs/h9-confirm/traces/github-issue-analyzer-2026-09-03T15-29-00-632Z-1161613.jsonl",
+      "bench/jobs/h10-confirm/report.json",
+      "bench/jobs/h10-confirm/traces/github-issue-analyzer-2026-09-03T10-15-48-695Z-1080051.jsonl",
+      "bench/jobs/h12-confirm/report.json",
+      "bench/jobs/h12-confirm/traces/github-issue-analyzer-2026-09-03T09-55-31-577Z-1074290.jsonl",
+      "bench/jobs/baseline-n3/report.json"
+    ],
+    "reports": [
+      "bench/jobs/baseline-n3/report.json",
+      "bench/jobs/h1-confirm/report.json",
+      "bench/jobs/h10-confirm/report.json",
+      "bench/jobs/h12-confirm/report.json",
+      "bench/jobs/h2-confirm/report.json",
+      "bench/jobs/h3-confirm-2/report.json",
+      "bench/jobs/h5-confirm/report.json",
+      "bench/jobs/h6-confirm/report.json",
+      "bench/jobs/h8-confirm/report.json",
+      "bench/jobs/h9-confirm/report.json",
+      "bench/jobs/holdout-final/report.json"
+    ],
+    "traces": [
+      "bench/jobs/h1-confirm/traces/github-issue-analyzer-2026-09-03T10-58-08-584Z-1096799.jsonl",
+      "bench/jobs/h10-confirm/traces/github-issue-analyzer-2026-09-03T10-15-48-695Z-1080051.jsonl",
+      "bench/jobs/h12-confirm/traces/github-issue-analyzer-2026-09-03T09-55-31-577Z-1074290.jsonl",
+      "bench/jobs/h2-confirm/traces/github-issue-analyzer-2026-09-03T11-41-09-980Z-1110039.jsonl",
+      "bench/jobs/h3-confirm-2/traces/github-issue-analyzer-2026-09-03T12-38-52-340Z-1120992.jsonl",
+      "bench/jobs/h5-confirm/traces/github-issue-analyzer-2026-09-03T13-50-56-259Z-1142599.jsonl",
+      "bench/jobs/h6-confirm/traces/github-issue-analyzer-2026-09-03T14-31-15-973Z-1152207.jsonl",
+      "bench/jobs/h8-confirm/traces/github-issue-analyzer-2026-09-03T15-07-24-610Z-1158117.jsonl",
+      "bench/jobs/h9-confirm/traces/github-issue-analyzer-2026-09-03T15-29-00-632Z-1161613.jsonl",
+      "bench/jobs/holdout-final/traces/github-issue-analyzer-2026-09-03T15-44-36-408Z-1164059.jsonl"
+    ],
+    "holdout_reports": ["bench/jobs/holdout-final/report.json"],
+    "holdout_traces": ["bench/jobs/holdout-final/traces/github-issue-analyzer-2026-09-03T15-44-36-408Z-1164059.jsonl"]
+  },
+  "report_rows": [
+    {"path":"bench/jobs/baseline-n3/report.json","valid":true,"sut_hash":"71c696b48a9da953","linked_trace_files":["github-issue-analyzer-2026-09-03T09-17-07-794Z-1061087.jsonl"],"linked_trace_missing":[]},
+    {"path":"bench/jobs/h1-confirm/report.json","valid":true,"sut_hash":"a68bb7ced73b2374","linked_trace_files":["github-issue-analyzer-2026-09-03T10-58-08-584Z-1096799.jsonl"],"linked_trace_missing":[]},
+    {"path":"bench/jobs/h10-confirm/report.json","valid":true,"sut_hash":"5a171342ee9c4e1a","linked_trace_files":["github-issue-analyzer-2026-09-03T10-15-48-695Z-1080051.jsonl"],"linked_trace_missing":[]},
+    {"path":"bench/jobs/h12-confirm/report.json","valid":true,"sut_hash":"5449f4df144be297","linked_trace_files":["github-issue-analyzer-2026-09-03T09-55-31-577Z-1074290.jsonl"],"linked_trace_missing":[]},
+    {"path":"bench/jobs/h2-confirm/report.json","valid":true,"sut_hash":"ba16c67610ce9181","linked_trace_files":["github-issue-analyzer-2026-09-03T11-41-09-980Z-1110039.jsonl"],"linked_trace_missing":[]},
+    {"path":"bench/jobs/h3-confirm-2/report.json","valid":true,"sut_hash":"8a9efd42759f2fa2","linked_trace_files":["github-issue-analyzer-2026-09-03T12-38-52-340Z-1120992.jsonl"],"linked_trace_missing":[]},
+    {"path":"bench/jobs/h5-confirm/report.json","valid":true,"sut_hash":"007fde4eb448998a","linked_trace_files":["github-issue-analyzer-2026-09-03T13-50-56-259Z-1142599.jsonl"],"linked_trace_missing":[]},
+    {"path":"bench/jobs/h6-confirm/report.json","valid":true,"sut_hash":"238e263a9b19650b","linked_trace_files":["github-issue-analyzer-2026-09-03T14-31-15-973Z-1152207.jsonl"],"linked_trace_missing":[]},
+    {"path":"bench/jobs/h8-confirm/report.json","valid":true,"sut_hash":"f2f20f1072b41bd5","linked_trace_files":["github-issue-analyzer-2026-09-03T15-07-24-610Z-1158117.jsonl"],"linked_trace_missing":[]},
+    {"path":"bench/jobs/h9-confirm/report.json","valid":true,"sut_hash":"9eeb557db3e87c2d","linked_trace_files":["github-issue-analyzer-2026-09-03T15-29-00-632Z-1161613.jsonl"],"linked_trace_missing":[]},
+    {"path":"bench/jobs/holdout-final/report.json","valid":true,"sut_hash":"9eeb557db3e87c2d","linked_trace_files":["github-issue-analyzer-2026-09-03T15-44-36-408Z-1164059.jsonl"],"linked_trace_missing":[]}
+  ],
+  "counts": {
+    "cited_paths": 21,
+    "unique_reports": 11,
+    "unique_traces": 10,
+    "missing_paths": 0,
+    "invalid_reports": 0,
+    "missing_report_linked_traces": 0,
+    "holdout_reports": 1,
+    "holdout_traces": 1
+  },
+  "failures": {"missing_paths": [], "invalid_reports": [], "missing_report_linked_traces": []},
+  "checks": {
+    "cited_paths_exist": true,
+    "all_cited_reports_valid": true,
+    "all_report_linked_traces_exist": true,
+    "exactly_one_holdout_report": true,
+    "exactly_one_holdout_trace": true
+  },
+  "stdout_summary": "cited_paths=21 reports=11 traces=10 missing=0 invalid=0 trace_missing=0 holdout_reports=1 holdout_traces=1\ndocumentation_artifact_audit=PASS",
+  "exit_code": 0
+}
