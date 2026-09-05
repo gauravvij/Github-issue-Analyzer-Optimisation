@@ -354,10 +354,14 @@ function report(armFilter?: string[]) {
 
 // ---------------------------------------------------------------------------
 
-const ri = process.argv.indexOf('--regrade');
-if (ri >= 0) {
-  regrade(process.argv.slice(ri + 1).filter((a) => !a.startsWith('--')));
-} else {
-  const ai = process.argv.indexOf('--arms');
-  report(ai >= 0 ? process.argv[ai + 1].split(',') : undefined);
+// Guarded: analyze.test.ts imports the statistics, and without this the whole
+// report would run as an import side effect.
+if (import.meta.main) {
+  const ri = process.argv.indexOf('--regrade');
+  if (ri >= 0) {
+    regrade(process.argv.slice(ri + 1).filter((a) => !a.startsWith('--')));
+  } else {
+    const ai = process.argv.indexOf('--arms');
+    report(ai >= 0 ? process.argv[ai + 1].split(',') : undefined);
+  }
 }

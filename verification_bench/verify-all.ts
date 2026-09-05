@@ -71,6 +71,11 @@ const steps: Step[] = [
     why: 'the four repairs to the frozen grader, and that nothing else moved',
   },
   {
+    name: 'analyze',
+    cmd: ['bun', 'test', join(HERE, 'analyze.test.ts')],
+    why: "McNemar, Wilson and the paired bootstrap against values you can check by hand",
+  },
+  {
     name: 'sut-pinning',
     cmd: ['bun', join(HERE, 'verify-sut-switch.ts')],
     why: 'SUT_DIR selects two distinct trees, both matching the campaign fingerprints',
