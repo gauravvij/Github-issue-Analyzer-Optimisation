@@ -218,6 +218,17 @@ Full evidence, including every figure that did and did not reproduce, is in
 [`VERIFICATION.md`](VERIFICATION.md). The campaign's own report is
 [`RESULTS.md`](RESULTS.md), and the per-hypothesis changelog is [`ledger.md`](ledger.md).
 
+**That attribution has since been tested rather than inferred.** A four-arm
+ablation over 250 stratified questions on five repos —
+[`RESULTS-V2.md`](RESULTS-V2.md), harness in
+[`verification_bench/BENCH-V2.md`](verification_bench/BENCH-V2.md) — confirms it:
+the baseline with *only* the enum line added fixes 16 of the 17 questions the
+whole champion fixes (+8.00pp, McNemar p = 3.05e-5), and adding the other eight
+changes on top moves one judge-graded question (p = 1.0000). It also found two
+live defects of the same shape still in HEAD — label names have the identical
+casing problem, and multi-hop queries lose their anchor and report a confident
+zero — neither of which 35 single-hop questions on one repo could reach.
+
 ---
 
 ## Repository layout
@@ -225,9 +236,11 @@ Full evidence, including every figure that did and did not reproduce, is in
 ```
 github_issue/        the system — one folder, versioned by the history below
 bench/               benchmark 1 — 100 frozen huggingface/datasets issues
-verification_bench/  benchmark 2 — 100 real sympy/sympy issues via SWE-bench
+verification_bench/  benchmark 2 — 100 real sympy/sympy issues via SWE-bench,
+                     plus benchmark v2: 250 stratified questions on five repos
 RESULTS.md           the optimisation campaign's own report
 VERIFICATION.md      the re-measurement: what held, what did not
+RESULTS-V2.md        the four-arm ablation: which change actually did it
 ledger.md            per-hypothesis changelog
 ```
 
@@ -379,3 +392,4 @@ A narrative walkthrough of the whole run is in [`blog.md`](blog.md).
 [VS Code](https://marketplace.visualstudio.com/items?itemName=NeoResearchInc.heyneo) ·
 [Cursor](https://marketplace.cursorapi.com/items/?itemName=NeoResearchInc.heyneo) ·
 [Neo MCP docs](https://docs.heyneo.com/neo-mcp)
+
