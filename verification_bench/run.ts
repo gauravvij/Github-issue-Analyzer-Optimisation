@@ -22,7 +22,7 @@ import type { Corpus } from '../bench/scripts/build-corpus';
 import type { Task } from '../bench/scripts/build-tasks';
 import { startFakeGitHub } from '../bench/harness/fake-github';
 import { costOf, installOpenAIMeter, meterDriver, priceOf, type OpenAIStats } from '../bench/harness/instrument';
-import { createJudge, gradeDeterministic, type Grade } from '../bench/harness/grade';
+import { createJudge, gradeDeterministicV2 as gradeDeterministic, type Grade } from './grade-v2';
 import { checkIntegrity, resetDatabase, startNeo4j, BOLT_URI, type IntegrityCheck } from './neo4j';
 import { loadEnv, preflight, reportPreflight } from './preflight';
 
@@ -445,7 +445,7 @@ async function main() {
             graded.push({ pass: false, reason: `judge error: ${err instanceof Error ? err.message : err}` });
           }
         } else {
-          graded.push(gradeDeterministic(task.check, r.answer));
+          graded.push(gradeDeterministic(task.check, r.answer, task.question));
         }
       }
       const judgeCostUsd = meter.costUsd();

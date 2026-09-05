@@ -483,4 +483,6 @@ function main() {
   }
 }
 
-main();
+export { countBy, strictMax, titleTerms, issueText, stableTerms, dropSelfForbids, yyyymm };
+
+if (import.meta.main) main();

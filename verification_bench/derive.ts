@@ -62,6 +62,13 @@ const SUT = resolve(BENCH, process.env.SUT_DIR ?? join('..', 'github_issue'));`,
 
 const RUN_PATCHES: Patch[] = [
   {
+    // run.ts alone grades against the repaired grader. bench/ is frozen, so the
+    // two number/empty-set defects it carries are fixed by delegation in
+    // grade-v2.ts; the alias keeps every call site byte-identical to bench/.
+    from: `import { createJudge, gradeDeterministic, type Grade } from './harness/grade';`,
+    to: `import { createJudge, gradeDeterministicV2 as gradeDeterministic, type Grade } from './grade-v2';`,
+  },
+  {
     from: ` *   bun bench/run.ts --split dev --job baseline
  *   bun bench/run.ts --split dev --job h1-confirm --attempts 3
  *   bun bench/run.ts --split dev --job qa-only --stage qa --keep-graph`,
@@ -71,6 +78,12 @@ const RUN_PATCHES: Patch[] = [
  * DERIVED FROM bench/run.ts BY verification_bench/derive.ts — DO NOT EDIT.`,
   },
   { from: ` * Writes bench/jobs/<job>/report.json.`, to: ` * Writes verification_bench/jobs/<job>/report.json.` },
+  {
+    // grade-v2 needs the question to tell a count the answer asserts from a
+    // number it is quoting back out of the question (a date, an issue number).
+    from: `          graded.push(gradeDeterministic(task.check, r.answer));`,
+    to: `          graded.push(gradeDeterministic(task.check, r.answer, task.question));`,
+  },
   ...COMMON,
 ];
 
@@ -98,6 +111,17 @@ const SUT = resolve(BENCH, process.env.SUT_DIR ?? join('..', 'github_issue'));`,
   { from: `await import('./neo4j')`, to: `await import('./neo4j')` },
   { from: `'bench/SPLITS.sha256 missing'`, to: `'verification_bench/SPLITS.sha256 missing'` },
 ];
+
+// build-tasks-v2.ts reuses these oracle helpers rather than keeping a second,
+// silently diverging copy. The `import.meta.main` guard is load-bearing: without
+// it, importing this module would run the generator and overwrite the frozen
+// tasks/*.jsonl the moment anything imported a helper from it.
+const TASKS_EXPORT_PATCH: Patch = {
+  from: `main();`,
+  to: `export { countBy, strictMax, titleTerms, issueText, stableTerms, dropSelfForbids, yyyymm };
+
+if (import.meta.main) main();`,
+};
 
 const TASKS_PATCHES: Patch[] = [
   {
@@ -163,6 +187,7 @@ function buildTasks(corpus: Corpus, split: string, quota: number): Task[] {`,
     .slice(0, 200)
     .map(([word]) => word);`,
   },
+  TASKS_EXPORT_PATCH,
 ];
 
 const NEO4J_PATCHES: Patch[] = [
