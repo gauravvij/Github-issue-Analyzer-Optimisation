@@ -12,7 +12,7 @@ Nothing looked broken. There was no error, timeout, or stack trace. The original
 
 That is a dangerous failure in any analytics agent. A crash gets noticed. A confident zero can end up in a report or a meeting before anyone checks it.
 
-NEO found the hidden cause and fixed it. The campaign also reduced database work by 63%. We then tested the earlier prompt-hint result on a separate corpus and repeated the key measurements.
+NEO found the hidden cause and fixed it. We then tested the earlier prompt-hint result on a separate corpus and repeated the key measurements.
 
 This is what survived the audit:
 
@@ -23,84 +23,11 @@ This is what survived the audit:
 - It cut Neo4j queries by 63% and database sessions by 97%.
 - It tested cheaper answering models and kept the stronger model when the alternatives missed the quality bar.
 
-Three versions of the analyzer are compared throughout, and the tables below name them:
+Three versions of the analyzer are compared throughout, and these are the names used for them:
 
 - **Baseline** — the analyzer before any of this work, commit `f5b3184`. The project had no git history, so this version was reconstructed from the source fingerprint the benchmark had recorded, and it reproduced that fingerprint byte for byte.
 - **Campaign champion** — what the optimisation loop shipped, commit `ee48387`: eight retained changes, including a prompt hint telling the model to treat an empty result as suspicious rather than as an answer. The targeted-probe table calls this the **prompt-hint champion**; it is the same version under a name that describes what it did about the defect.
 - **Final enum version** — the champion plus one line documenting that `Issue.state` is one of `OPEN` or `CLOSED`, commit `f195ffb`. An answering-prompt change only; the ingestion path is untouched, which is why it could be scored on the champion's graph.
-
-## Accuracy improved while database work fell
-
-The original campaign benchmark used frozen `huggingface/datasets` issues. For the audit, we built a separate corpus of 100 real `sympy/sympy` issues selected through SWE-bench, a dataset of real software tasks. The repeated comparison below used its 60-issue development split.
-
-The baseline and campaign champion first encountered this corpus without being tuned on it. After that comparison exposed residual state-casing misses, we added the final enum documentation and validated that version on the same development graph. Each repeated arm ran three times with three attempts across 40 questions, for 360 graded attempts per version.
-
-Accuracy and ingestion efficiency came from different comparisons, so they are reported separately.
-
-| Accuracy metric on the development split | Baseline | Campaign champion | Final enum version |
-|---|---:|---:|---:|
-| Deterministic accuracy, mean of 3 runs | 94.29% | **100.00%** | **100.00%** |
-| Range across runs | 92.38–95.24% | **100.00–100.00%** | **100.00–100.00%** |
-| Questions correct on every attempt, mean | 37.0 / 40 | 39.3 / 40 | **40.0 / 40** |
-
-The semantic score is omitted from the causal result because it moved substantially on identical code. The final enum version happened to score 100% overall in its three runs, but only the deterministic state-query improvement has a mechanism supported by the code change.
-
-| Targeted state-count probe | Baseline | Prompt-hint champion | Final enum version |
-|---|---:|---:|---:|
-| Correct answers | 8 / 40 | 77 / 80 | **80 / 80** |
-| First query used stored casing | 3 / 20 | 77 / 80 | **80 / 80** |
-| Confident wrong-zero answers | 32 | 3 | **0** |
-
-| Full-ingestion metric | Baseline | Campaign champion | Change |
-|---|---:|---:|:---|
-| Neo4j queries, mean of 3 runs | 698.0 | **254.7** | 63.5% fewer |
-| Neo4j sessions | 122 | **4** | 96.7% fewer |
-| Schema constraints / indexes | 0 / 0 | **10 / 12** | Added |
-| GitHub API requests | 121 | 121 | Unchanged |
-
-That accuracy gain looks modest when compressed into 5.71 percentage points. Its shape matters more than its size. The change removed a repeated class of silent errors that normal error monitoring would not catch.
-
-## NEO ran the engineering loop end to end
-
-A human set the objective and reviewed the result. NEO inspected the codebase, profiled the system, built the first benchmark, proposed changes, implemented them, and scored each candidate. It kept changes that met or supported the campaign goals and reverted one that did not. It also sealed a holdout set and ran it once.
-
-After the campaign, NEO built a separate corpus and a derived second harness. The second harness reused external meters and graders from the first, while adding its own corpus builder, question generation, and oracles. NEO also reconstructed the missing baseline and verified the pinned implementations before comparison.
-
-NEO's audit strengthened the result by turning a single-run headline into a repeatable, narrower claim and surfacing the evidence limits that needed to be stated openly.
-
-## Measuring from outside the analyzer
-
-When one system changes both code and measurement, bias can enter the result. We reduced that risk by measuring from outside the analyzer.
-
-The first harness used:
-
-- A local stand-in for GitHub with a frozen 100-issue corpus, removing network changes from the comparison.
-- A real Neo4j database in an isolated Docker container, reset and verified empty before each run.
-- External meters around GitHub, Neo4j, and model calls, so editing the analyzer could not hide work.
-- Forty questions with answers computed from the corpus. Thirty-five used exact numerical or issue-set checks, while five used a fixed model judge.
-- Integrity checks that compared the graph with the source corpus and were proven to fail on deliberately damaged data.
-- A live preflight request that verified the model key and cost meter before a paid run began.
-
-Every report also stored a 16-character SHA-256-derived fingerprint over selected TypeScript, JSON, YAML, package, and lock files. The fingerprint is strong evidence that a scored tree matches the recorded source scope. It is not a full-repository byte-for-byte attestation.
-
-## Eight changes were retained, with different levels of evidence
-
-Before each experiment, NEO recorded which metric had to improve and which metrics could not regress. It tested twelve hypotheses and retained eight implementation changes:
-
-- identity constraints and indexes for the graph;
-- batched Neo4j writes in one managed transaction;
-- issue-scoped orphan cleanup for competitor and category nodes;
-- extraction from issue bodies and comments, with source tracking;
-- bounded concurrent GitHub fetching;
-- removal of a database read immediately after the same data was written;
-- exact database error feedback exposed to the answering agent;
-- clearer graph schema guidance for the answering agent.
-
-The evidence is not equally strong for every item. Constraints, batching, concurrency, and removal of the readback have direct structural or counter measurements. The schema guidance produced the accuracy gain. Issue-scoped cleanup reduced query scope. NEO kept those distinctions visible instead of turning every retained implementation into an unsupported outcome claim.
-
-NEO implemented and measured the extraction change, but its intended yield improvement did not hold in the shipped result. It implemented and unit-tested exact error feedback, while the scored benchmark did not trigger a malformed-query retry. Batched writes reduced queries materially but missed the campaign's original 75% reduction target. NEO recorded those limits rather than presenting eight independently proven outcome gains.
-
-Comment filtering was implemented and tested, but it increased model cost without meeting its token target, so NEO reverted it. Three other ideas were deferred because the campaign contract or missing project resources made them unsuitable to evaluate.
 
 ## One missing schema detail explained the accuracy gap
 
@@ -134,17 +61,38 @@ This hint greatly reduced the error, but three misses remained in 80 targeted tr
 + state (STRING, one of: OPEN, CLOSED), authorLogin (STRING)
 ```
 
+A targeted probe scored each version on state-count questions alone:
+
+| Targeted state-count probe | Baseline | Prompt-hint champion | Final enum version |
+|---|---:|---:|---:|
+| Correct answers | 8 / 40 | 77 / 80 | **80 / 80** |
+| First query used stored casing | 3 / 20 | 77 / 80 | **80 / 80** |
+| Confident wrong-zero answers | 32 | 3 | **0** |
+
 Across the targeted probe, every miss in every version used lowercase in the generated query. With the enum documented, all 80 answers were correct and all 80 queries used stored casing. That is an observed result on this probe, not a guarantee for every future model response or dataset.
 
-## Turning a promising score into a repeatable result
+## NEO ran the engineering loop end to end
 
-The first campaign ended with a 100% overall score. NEO challenged that headline by re-running the same frozen campaign champion on the same questions; the result was **97.5%**.
+A human set the objective and reviewed the result. NEO inspected the codebase, profiled the system, built the first benchmark, proposed changes, implemented them, and scored each candidate. It kept changes that met or supported the campaign goals and reverted one that did not. It also sealed a holdout set and ran it once.
 
-The code had not changed. The model output had.
+After the campaign, NEO built a separate corpus and a derived second harness. The second harness reused external meters and graders from the first, while adding its own corpus builder, question generation, and oracles. NEO also reconstructed the missing baseline and verified the pinned implementations before comparison.
 
-Two runs with the same source fingerprint also scored 80% and 100% on the five model-judged summary tasks. That exposed the semantic metric as noisy. Across three repeated runs, the campaign champion's semantic mean was lower than the baseline's even though neither relevant change touched summarization.
+NEO's audit strengthened the result by turning a single-run headline into a repeatable, narrower claim and surfacing the evidence limits that needed to be stated openly.
 
-We therefore base the accuracy claim on deterministic questions. They showed a 5.71-point gain with no run-to-run spread in the champion or final enum arms. The final enum version's clean semantic and overall scores are reported in the audit, but they are not attributed to the one-line schema change.
+## Measuring from outside the analyzer
+
+When one system changes both code and measurement, bias can enter the result. We reduced that risk by measuring from outside the analyzer.
+
+The first harness used:
+
+- A local stand-in for GitHub with a frozen 100-issue corpus, removing network changes from the comparison.
+- A real Neo4j database in an isolated Docker container, reset and verified empty before each run.
+- External meters around GitHub, Neo4j, and model calls, so editing the analyzer could not hide work.
+- Forty questions with answers computed from the corpus. Thirty-five used exact numerical or issue-set checks, while five used a fixed model judge.
+- Integrity checks that compared the graph with the source corpus and were proven to fail on deliberately damaged data.
+- A live preflight request that verified the model key and cost meter before a paid run began.
+
+Every report also stored a 16-character SHA-256-derived fingerprint over selected TypeScript, JSON, YAML, package, and lock files. The fingerprint is strong evidence that a scored tree matches the recorded source scope. It is not a full-repository byte-for-byte attestation.
 
 ## Recovering a missing baseline
 
@@ -154,32 +102,65 @@ NEO reconstructed the pre-campaign source by reversing the retained changes from
 
 It then compiled, passed all 21 baseline unit tests, passed ingestion integrity checks, and reproduced the original serial-write signature. Together, those checks provide strong evidence that the reconstructed tree represents the measured baseline. The truncated, scoped fingerprint alone does not mathematically prove whole-repository byte identity.
 
-## A separate corpus made the evidence stronger
+## Eight changes were retained, with different levels of evidence
 
-NEO screened 386 candidate `sympy/sympy` SWE-bench instances, linked each merged pull request to the issue it closed, and fetched the issue from GitHub. This produced a separate corpus, questions, and answer keys.
+Before each experiment, NEO recorded which metric had to improve and which metrics could not regress. It tested twelve hypotheses and retained eight implementation changes:
 
-The first candidate was `django/django`, the largest repository in SWE-bench. It was rejected because Django tracks bugs in Trac and has GitHub Issues disabled.
+- identity constraints and indexes for the graph;
+- batched Neo4j writes in one managed transaction;
+- issue-scoped orphan cleanup for competitor and category nodes;
+- extraction from issue bodies and comments, with source tracking;
+- bounded concurrent GitHub fetching;
+- removal of a database read immediately after the same data was written;
+- exact database error feedback exposed to the answering agent;
+- clearer graph schema guidance for the answering agent.
 
-Unfamiliar data exposed two assumptions inherited from the first benchmark:
+The evidence is not equally strong for every item. Constraints, batching, concurrency, and removal of the readback have direct structural or counter measurements. The schema guidance produced the accuracy gain. Issue-scoped cleanup reduced query scope. NEO kept those distinctions visible instead of turning every retained implementation into an unsupported outcome claim.
 
-1. One generated question could forbid its own correct answer when every issue in a split was closed.
-2. Integrity checks counted issue authors and reactions but omitted those attached to comments.
+NEO implemented and measured the extraction change, but its intended yield improvement did not hold in the shipped result. It implemented and unit-tested exact error feedback, while the scored benchmark did not trigger a malformed-query retry. Batched writes reduced queries materially but missed the campaign's original 75% reduction target. NEO recorded those limits rather than presenting eight independently proven outcome gains.
 
-Both were corrected in the second harness.
+Comment filtering was implemented and tested, but it increased model cost without meeting its token target, so NEO reverted it. Three other ideas were deferred because the campaign contract or missing project resources made them unsuitable to evaluate.
 
-On the sealed holdout, exactly two deterministic questions separated the reconstructed baseline from the campaign champion: open-issue count and closed-issue count. Every other deterministic question scored the same. This comparison replicated the mechanism for the prompt-hint champion on a separate corpus.
+## Accuracy improved on a corpus it had not seen
 
-The later enum version was created after inspecting development results and was validated with repeated development runs and the 80-trial targeted probe. It was not run on the sealed holdout, so the holdout should not be cited as direct validation of that final one-line change.
+The original campaign benchmark used frozen `huggingface/datasets` issues. For the audit, we built a separate corpus of 100 real `sympy/sympy` issues selected through SWE-bench, a dataset of real software tasks. The repeated comparison below used its 60-issue development split.
 
-The second harness was derived from the first and reused its external meters and graders. Its separate corpus and independently computed oracles reduce data-specific risk, but it is not an independent evaluation team or wholly independent measurement implementation.
+The baseline and campaign champion first encountered this corpus without being tuned on it. After that comparison exposed residual state-casing misses, we added the final enum documentation and validated that version on the same development graph. Each repeated arm ran three times with three attempts across 40 questions, for 360 graded attempts per version.
+
+| Accuracy metric on the development split | Baseline | Campaign champion | Final enum version |
+|---|---:|---:|---:|
+| Deterministic accuracy, mean of 3 runs | 94.29% | **100.00%** | **100.00%** |
+| Range across runs | 92.38–95.24% | **100.00–100.00%** | **100.00–100.00%** |
+| Questions correct on every attempt, mean | 37.0 / 40 | 39.3 / 40 | **40.0 / 40** |
+
+![Deterministic accuracy on a corpus the analyzer had never seen](assets/accuracy-on-unseen-data.svg)
+
+*The whisker is the baseline's spread across its three runs. The optimized version had none.*
+
+That accuracy gain looks modest when compressed into 5.71 percentage points. Its shape matters more than its size. The change removed a repeated class of silent errors that normal error monitoring would not catch.
+
+The semantic score is omitted from the causal result because it moved substantially on identical code, a finding covered further down. The final enum version happened to score 100% overall in its three runs, but only the deterministic state-query improvement has a mechanism supported by the code change.
 
 ## Sixty-three percent less database work, and where it pays off
 
-Neo4j queries fell from a three-run mean of 698.0 to 254.7 per full ingestion, while sessions fell from 122 to 4.
+These ingestion figures come from a different comparison than the accuracy numbers above: a full ingestion of the same corpus, counted by external meters wrapped around the database.
+
+| Full-ingestion metric | Baseline | Campaign champion | Change |
+|---|---:|---:|:---|
+| Neo4j queries, mean of 3 runs | 698.0 | **254.7** | 63.5% fewer |
+| Neo4j sessions | 122 | **4** | 96.7% fewer |
+| Schema constraints / indexes | 0 / 0 | **10 / 12** | Added |
+| GitHub API requests | 121 | 121 | Unchanged |
 
 ![Database work per ingestion](assets/database-work.svg)
 
-The end-to-end wall-clock gain was smaller: mean ingestion time moved from 172.5 seconds to 166.1 seconds, or about 3.7%. In one paired trace, the raw issue-write stage fell from 3.034 seconds to 0.511 seconds, saving roughly 2.5 seconds. Model calls dominated the full ingestion time, so the database optimization mainly reduced resource use and increased operating headroom.
+The end-to-end wall-clock gain was smaller: mean ingestion time moved from 172.5 seconds to 166.1 seconds, or about 3.7%. Model calls dominated the full ingestion time, so the database optimization mainly reduced resource use and increased operating headroom.
+
+![Where the ingestion time actually went](assets/where-ingestion-time-goes.svg)
+
+*Nine tenths of an ingestion is spent waiting on model calls. That is the ceiling on what any amount of database work can return in wall clock.*
+
+In one paired trace, the raw issue-write stage fell from 3.034 seconds to 0.511 seconds, saving roughly 2.5 seconds.
 
 The query total has a small model-dependent component because persistence work changes with the number of entities extracted. The large structural reduction also reproduced with analysis disabled: 313 to 21 Neo4j statements and 61 to 3 sessions for the same 60 issues.
 
@@ -218,6 +199,35 @@ A relationship-direction hint could not raise the weaker candidate to the requir
 
 Extraction remains the largest measured ingestion-side model cost, but the benchmark does not grade extracted entities. A cheaper extraction model could damage the graph while leaving the headline score unchanged. That optimization needs an extraction-quality benchmark first.
 
+## Turning a promising score into a repeatable result
+
+The first campaign ended with a 100% overall score. NEO challenged that headline by re-running the same frozen campaign champion on the same questions; the result was **97.5%**.
+
+The code had not changed. The model output had.
+
+Two runs with the same source fingerprint also scored 80% and 100% on the five model-judged summary tasks. That exposed the semantic metric as noisy. Across three repeated runs, the campaign champion's semantic mean was lower than the baseline's even though neither relevant change touched summarization.
+
+We therefore base the accuracy claim on deterministic questions, which showed no run-to-run spread in the champion or final enum arms. The final enum version's clean semantic and overall scores are reported in the audit, but they are not attributed to the one-line schema change.
+
+## A separate corpus made the evidence stronger
+
+NEO screened 386 candidate `sympy/sympy` SWE-bench instances, linked each merged pull request to the issue it closed, and fetched the issue from GitHub. This produced a separate corpus, questions, and answer keys.
+
+The first candidate was `django/django`, the largest repository in SWE-bench. It was rejected because Django tracks bugs in Trac and has GitHub Issues disabled.
+
+Unfamiliar data exposed two assumptions inherited from the first benchmark:
+
+1. One generated question could forbid its own correct answer when every issue in a split was closed.
+2. Integrity checks counted issue authors and reactions but omitted those attached to comments.
+
+Both were corrected in the second harness.
+
+On the sealed holdout, exactly two deterministic questions separated the reconstructed baseline from the campaign champion: open-issue count and closed-issue count. Every other deterministic question scored the same. This comparison replicated the mechanism for the prompt-hint champion on a separate corpus.
+
+The later enum version was created after inspecting development results and was validated with repeated development runs and the 80-trial targeted probe. It was not run on the sealed holdout, so the holdout should not be cited as direct validation of that final one-line change.
+
+The second harness was derived from the first and reused its external meters and graders. Its separate corpus and independently computed oracles reduce data-specific risk, but it is not an independent evaluation team or wholly independent measurement implementation.
+
 ## A wider benchmark found two more of the same defect
 
 The result above rests on 35 exact-answer questions about one repository, and two of them
@@ -239,8 +249,8 @@ documentation added, the campaign champion without that line, and both together.
 
 ![Which change earned the accuracy gain](assets/which-change-earned-it.svg)
 
-| | 200 held-out questions |
-|---|---|
+| Version | 200 held-out questions |
+|---|---:|
 | baseline | 86.00% |
 | baseline + the enum line only | 94.00% |
 | the eight retained changes, without the enum line | 94.50% |
@@ -284,8 +294,8 @@ returning nothing became `toLower(l.name) = 'enhancement ✨'` returning 18. On 
 questions where the defects were found — a regression check, not an independent estimate,
 since the fix was written after seeing them — twelve questions were gained and none lost.
 
-| | 200 held-out questions | sealed `pylint` (n=50) |
-|---|---|---|
+| Version | 200 held-out questions | sealed `pylint` (n=50) |
+|---|---:|---:|
 | before the campaign | 86.00% | 88.00% |
 | after the campaign and the enum line | 94.00% | 96.00% |
 | after this fix | **100.00%** | **100.00%** |
@@ -344,7 +354,7 @@ nothing here can say an extracted solution is correct.
 
 **Repeatability matters more than a perfect first score.** Multiple runs turned an encouraging result into a narrower measurement that can be defended.
 
-**Stable and noisy metrics need different treatment.** Exact questions showed a repeatable gain. A model judge moved 20 points on identical code, so that movement is not used as causal evidence.
+**Stable and noisy metrics need different treatment.** Exact questions showed a repeatable gain; the model judge swung 20 points on identical code, so that movement is not used as causal evidence.
 
 **Unfamiliar data tests the benchmark too.** The separate corpus confirmed the state-casing mechanism and found two harness defects.
 
