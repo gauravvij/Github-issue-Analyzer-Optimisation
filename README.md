@@ -8,8 +8,8 @@ that was checked.
 
 > **Every optimisation, benchmark and verification in this repository was carried out
 > autonomously by [NEO](https://heyneo.com) — Your Autonomous AI Engineering Agent.**
-> NEO profiled the codebase, built the benchmark, ran the optimisation loop, and then built
-> a second independent benchmark to check its own results.
+> NEO profiled the codebase, built the benchmark, ran the optimisation loop, and then
+> re-verified the result with a separate corpus and a derived second harness.
 
 [![NEO](https://img.shields.io/badge/Built%20autonomously%20by-NEO-0B0B0B?style=for-the-badge)](https://heyneo.com)
 [![VS Code Extension](https://img.shields.io/badge/VS%20Code-Get%20the%20Extension-007ACC?style=for-the-badge&logo=visualstudiocode&logoColor=white)](https://marketplace.visualstudio.com/items?itemName=NeoResearchInc.heyneo)
@@ -20,14 +20,15 @@ that was checked.
 
 ## What happened here
 
-**Neo profiled this repository, built a benchmark to measure it, improved it through an
-auto-research loop, and then — on its own initiative — built a second, completely
-independent benchmark to test whether its own results were real.**
+**NEO profiled this repository, built a benchmark to measure it, improved it through an
+auto-research loop, and then — on its own initiative — re-verified the result with a separate
+corpus and a derived second harness.**
 
 That last step is the point. An agent that optimises against a benchmark it also designed
-is grading its own homework. So after shipping the optimised system, Neo went back,
-reconstructed the original pre-optimisation code from scratch, built a fresh benchmark out
-of real GitHub issues it had never touched, and re-ran the comparison from zero.
+is grading its own homework. So after shipping the optimised system, NEO went back,
+reconstructed the original pre-optimisation code from the recorded source fingerprint, built
+a separate benchmark from real GitHub issues selected through SWE-bench, and re-ran the
+comparison from zero.
 
 The improvement held. Re-measuring also sharpened it: the original 100% came from a single
 run, and averaging three runs per version settled the gain at a firmer, better-supported
@@ -39,30 +40,25 @@ this repository.
 
 ## Results
 
-Measured on **100 real `sympy/sympy` issues selected by SWE-bench** — a corpus neither
-version had ever been tuned against. Three independent runs per version, three attempts per
-question: **360 graded attempts per arm.**
+Measured on **100 real `sympy/sympy` issues selected through SWE-bench** — 60 development issues and 40 sealed holdout issues. The repeated development comparison uses three runs per arm, three attempts per question, and **360 graded attempts per arm**. The campaign champion was evaluated before the later enum documentation fix; that final answering-prompt change was tested separately.
 
-| | before | after | change |
-|---|---:|---:|:---|
-| **Deterministic accuracy** | 94.29% | **100.00%** | ▲ **+5.71 pp** (+6.06%) |
-| **Overall benchmark score** | 94.72% | **100.00%** | ▲ **+5.28 pp** (+5.57%) |
-| **Questions right on every attempt** | 37 / 40 | **40 / 40** | ▲ **+3** |
-| **Wrong "there are none" answers** | 32 in 40 trials | **0 in 80 trials** | ▼ **eliminated** |
-| **Neo4j queries per ingestion** | 698 | **255** | ▼ **−63.5%** |
-| **Neo4j sessions per ingestion** | 122 | **4** | ▼ **−96.7%** |
-| **Ingestion wall clock** | 172.5 s | **166.1 s** | ▼ −3.7% |
-| **Schema constraints** | 0 | **10** | ▲ added |
-| **Lookup indexes** | 0 | **12** | ▲ added |
-| **Batched write transactions** | 0 | **1** | ▲ added |
-| GitHub API requests | 121 | 121 | = unchanged |
-| OpenAI calls per ingestion | 60 | 60 | = unchanged |
-| Agent error rate | 0% | 0% | = unchanged |
-| Graph integrity checks | all pass | all pass | = unchanged |
+### Baseline vs optimized summary
+
+The optimized column means the campaign champion used for the full-ingestion comparison. The final enum documentation is a later answering-prompt-only change; it was validated with a targeted probe and was not run on the sealed holdout.
+
+| Measure | Baseline | Optimized / campaign champion | Change or scope |
+|---|---:|---:|---|
+| **Neo4j query quantity per full ingestion** | 698.0 | **254.7** | **63.5% fewer**, mean of 3 runs |
+| **Neo4j issue-write stage time** | 3.034 s | **0.511 s** | **~83% lower**, one paired trace; stage-only |
+| **Deterministic accuracy** | 94.29% | **100.00%** | **+5.71 pp**, mean of 3 development runs |
+| **End-to-end ingestion latency** | 172.5 s | **166.1 s** | −3.7%, mean of 3 runs; descriptive, not a speed claim |
+| **Full benchmark LLM cost** | $1.064 | $1.150 | +8.1%, selected n=3 reports; no cost reduction claim |
+
+Query quantity and issue-write time are database measurements. Ingestion latency includes GitHub, Neo4j, and model work. LLM cost uses the benchmark price table and the fixed `gpt-4o` model; cheaper QA models were tested separately and rejected on quality.
 
 ### Sealed holdout — 40 issues held back, scored once
 
-| | before | after |
+| Measure | Reconstructed baseline | Campaign champion |
 |---|---:|---:|
 | Deterministic accuracy | 88.24% | **100.00%** |
 | Overall score | 90.00% | **100.00%** |
@@ -70,34 +66,34 @@ question: **360 graded attempts per arm.**
 | Neo4j queries | 452 | **175** |
 | Neo4j sessions | 82 | **4** |
 
-**Exactly two questions separated the two versions.** Every other question scored
-identically. The entire accuracy difference is one defect.
+Exactly two questions separated the two versions; every other question scored identically. This holdout validates the campaign champion and does not directly validate the later enum-only change.
 
 ### The defect
 
 The graph stores issue state as `OPEN` and `CLOSED`. GitHub's own UI and REST API use
-lowercase. The agent was never told which, so it guessed:
+lowercase. The original answering prompt did not document the legal values, so the model guessed:
 
 ```
-before   MATCH (i:Issue) WHERE i.state = 'open'    ->  0 rows  ->  "there are no open issues"
+before   MATCH (i:Issue) WHERE i.state = 'open'    ->  a zero count  ->  "there are no open issues"
 after    MATCH (i:Issue {state: 'OPEN'})           ->  6 rows  ->  "there are 6 open issues"
 ```
 
 A confident zero produced by a broken query — the worst failure an analytics agent can
 have, because it looks like an answer. Measured over 80 targeted trials:
 
-| | correct | used the stored casing | confident wrong zeros |
+| Version | Correct | Used stored casing | Confident wrong zeros |
 |---|---:|---:|---:|
-| before | 8 / 40 | 3 / 20 | 32 |
-| after | **80 / 80** | **80 / 80** | **0** |
+| Baseline | 8 / 40 | 3 / 20 | 32 |
+| Prompt-hint champion | 77 / 80 | 77 / 80 | 3 |
+| Final enum documentation | **80 / 80** | **80 / 80** | **0** |
 
-**Every single miss, in every version tested, was a lowercase query.**
+**Every miss in the targeted probe was a lowercase query. The final enum documentation removed those misses in the follow-up probe.**
 
 ### In one sentence
 
-> Neo took the analyzer from 94% to 100% on questions it had never seen, cut database work
-> by 63%, and proved it by rebuilding the original code from scratch and re-testing both on
-> a benchmark built after the fact.
+> NEO took the analyzer from 94% to 100% on the repeated development comparison, cut
+> database work by 63%, and re-tested the reconstructed baseline and campaign champion on
+> a separate SWE-bench-selected corpus.
 
 ---
 
@@ -105,7 +101,7 @@ have, because it looks like an answer. Measured over 80 targeted trials:
 
 ### 1. Profile
 
-Neo audited the repository and wrote up where the time and money actually went: GitHub
+NEO audited the repository and wrote up where the time and money actually went: GitHub
 issues fetched strictly one at a time, every issue written to Neo4j with its own session
 and its own statements, no uniqueness constraints or indexes anywhere, a full read-back of
 data that had just been written, and an agent prompt that documented the graph schema
@@ -114,7 +110,7 @@ incompletely.
 ### 2. Build a referee
 
 You cannot optimise what you cannot measure, and you cannot trust a measurement you cannot
-repeat. Neo built `bench/`:
+repeat. NEO built `bench/`:
 
 - a **fake GitHub GraphQL server** serving a frozen 100-issue corpus, so no run depends on
   the network
@@ -130,7 +126,7 @@ repeat. Neo built `bench/`:
 
 ### 3. The auto-research loop
 
-Neo ran twelve hypotheses, each stating in advance the metric it had to move and the metric
+NEO ran twelve hypotheses, each stating in advance the metric it had to move and the metric
 it was not allowed to regress. Every candidate passed a free seven-step gate before any money was
 spent, and anything worth keeping was re-confirmed at three attempts.
 
@@ -144,7 +140,7 @@ A holdout split was sealed at the start and scored exactly once, at the end.
 
 ### 4. Verifying its own work
 
-This is where an ordinary optimisation report stops. Neo kept going, and checked four
+This is where an ordinary optimisation report stops. NEO kept going, and checked four
 things it could not check from inside the loop:
 
 **Are the recorded numbers real?** Every figure was recomputed from the saved reports, and
@@ -156,15 +152,14 @@ questions scored **97.5%, not the reported 100%**. The 100% was the top of a dis
 not a property of the code — exactly the failure mode single-run benchmarking produces.
 
 **Was the original code even recoverable?** It was not on disk — the project had no git
-history at all, which is why this repository now has one. Neo located a clean pre-campaign
-upstream clone, peeled all eight changes back off the optimised code one at a time, and hit
-the original **byte-exactly on the first attempt**, confirmed against the source fingerprint
-the benchmark had recorded months of runs earlier.
+history at all, which is why this repository now has one. NEO located a clean pre-campaign
+upstream clone, peeled all eight changes back off the optimised code one at a time, and
+matched the recorded source fingerprint across the 18 files in scope.
 
-**Does the improvement generalise?** Neo built `verification_bench/` from scratch: real
+**Does the improvement generalise?** NEO built `verification_bench` as a separate harness: real
 `sympy/sympy` issues selected by SWE-bench, resolved to the issue each merged pull request
-closed and fetched live from GitHub. New corpus, new questions, new oracles — and the same
-result, at three runs per version. The gain is real.
+closed and fetched live from GitHub. A separate corpus, new questions, and new oracles reproduced the prompt-hint mechanism;
+the campaign champion reached the same result at three runs per version.
 
 ### 5. Trying to make it cheaper — and reporting that it didn't work
 
@@ -259,8 +254,9 @@ f195ffb  fix  document the Issue.state enum        73acfdc375576226  <- best ver
 ```
 
 ```bash
-git checkout <commit>
-bun verification_bench/verify-sut-switch.ts   # recomputes and compares the fingerprint
+git worktree add .worktrees/baseline f5b3184
+git worktree add .worktrees/champion ee48387
+bun verification_bench/verify-sut-switch.ts   # recomputes and compares the fingerprints
 ```
 
 H6 is absent on purpose: it was tried, measured, rejected and reverted. The remaining
