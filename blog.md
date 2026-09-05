@@ -23,6 +23,12 @@ This is what survived the audit:
 - It cut Neo4j queries by 63% and database sessions by 97%.
 - It tested cheaper answering models and kept the stronger model when the alternatives missed the quality bar.
 
+Three versions of the analyzer are compared throughout, and the tables below name them:
+
+- **Baseline** — the analyzer before any of this work, commit `f5b3184`. The project had no git history, so this version was reconstructed from the source fingerprint the benchmark had recorded, and it reproduced that fingerprint byte for byte.
+- **Campaign champion** — what the optimisation loop shipped, commit `ee48387`: eight retained changes, including a prompt hint telling the model to treat an empty result as suspicious rather than as an answer. The targeted-probe table calls this the **prompt-hint champion**; it is the same version under a name that describes what it did about the defect.
+- **Final enum version** — the champion plus one line documenting that `Issue.state` is one of `OPEN` or `CLOSED`, commit `f195ffb`. An answering-prompt change only; the ingestion path is untouched, which is why it could be scored on the champion's graph.
+
 ## Accuracy improved while database work fell
 
 The original campaign benchmark used frozen `huggingface/datasets` issues. For the audit, we built a separate corpus of 100 real `sympy/sympy` issues selected through SWE-bench, a dataset of real software tasks. The repeated comparison below used its 60-issue development split.
@@ -52,7 +58,7 @@ The semantic score is omitted from the causal result because it moved substantia
 | Schema constraints / indexes | 0 / 0 | **10 / 12** | Added |
 | GitHub API requests | 121 | 121 | Unchanged |
 
-The gain looks modest when compressed into 5.71 percentage points. Its shape matters more than its size. The change removed a repeated class of silent errors that normal error monitoring would not catch.
+That accuracy gain looks modest when compressed into 5.71 percentage points. Its shape matters more than its size. The change removed a repeated class of silent errors that normal error monitoring would not catch.
 
 ## NEO ran the engineering loop end to end
 
@@ -183,7 +189,16 @@ Once quality stabilized, we tested a large measurable cost lever: the model that
 
 The system cost about $1.19 per benchmark run under the benchmark's local price table. Of that measured cost, 59.8% came from the answering agent, 28.6% from extraction during ingestion, and 11.6% from comment summaries.
 
-Those three shares are derived rather than metered separately, so here is the arithmetic. The harness meters two stages, recorded in `verification_bench/jobs/champ-dev/report.json`: ingestion at $0.3397 and question answering at $0.8498, totalling $1.1894. Ingestion is the 28.6% extraction share. The question-answering stage covers 255 model calls, and the `summarizeComments` tool bills inside it rather than alongside it — so the remaining 71.4% has to be split. The run's trace records per-call token counts for the 240 answering-agent calls (225,877 input, 14,654 output); the 15 summarization calls are the residual against the stage's metered totals (31,933 input, 5,870 output). Priced at the table's `gpt-4o` rate of $2.50 and $10.00 per million tokens, that is $0.7112 for the agent and $0.1385 for summaries — 59.8% and 11.6%, and the two add back to the metered $0.8498 exactly.
+Those three shares are derived rather than metered separately. Where the money goes, from `verification_bench/jobs/champ-dev/report.json`:
+
+| Stage | Calls | Input tokens | Output tokens | Cost | Share |
+|---|---:|---:|---:|---:|---:|
+| Ingestion — entity extraction, one call per issue | 60 | 108,041 | 6,955 | $0.3397 | 28.6% |
+| Answering agent — question to Cypher | 240 | 225,877 | 14,654 | $0.7112 | 59.8% |
+| Comment summaries — the `summarizeComments` tool | 15 | 31,933 | 5,870 | $0.1385 | 11.6% |
+| **Total** | **315** | **365,851** | **27,479** | **$1.1894** | **100%** |
+
+Only the two stage totals are metered: ingestion at $0.3397 and question answering at $0.8498. `summarizeComments` bills inside the answering stage rather than alongside it, so the middle two rows are split using the trace's per-call token counts — the agent's own reported usage, with summaries as the residual against the stage total. At the price table's `gpt-4o` rate of $2.50 and $10.00 per million tokens the two add back to $0.8498 exactly.
 
 Comment summarization is therefore a component of the answering stage, not a fourth independent cost centre.
 
@@ -307,8 +322,8 @@ The cost figures use a local price table rather than an invoice. The final enum 
 
 The audit also found validation gaps around the final enum holdout, shared harness components, extraction quality, deployment concurrency, batch-failure behavior, and report provenance. Those gaps should be resolved before making broader evidence claims.
 
-**Four of those limits have since been closed**, and the paragraphs above are left as
-written so the change is visible. The corpora are no longer single-repository — there are
+**Update:** Four of those limits have since been closed, and the paragraphs above are left
+as written so the change is visible. The corpora are no longer single-repository — there are
 six, and they mix linked issues with sampled open ones so the open/closed question is not
 degenerate. The enum change is no longer development-only: it was scored on two sealed
 repositories, `astropy` and `pylint`, neither opened until the question generator was
