@@ -106,6 +106,8 @@ questions whose correct answer really is zero, and the same question asked three
 
 **Which change earned it.** Four versions on the same 200 held-out questions:
 
+![Which change earned the accuracy gain](assets/which-change-earned-it.svg)
+
 | version | accuracy | vs. baseline |
 |---|---:|---|
 | baseline | 86.00% | — |

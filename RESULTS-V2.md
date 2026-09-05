@@ -26,6 +26,8 @@ a probe, but never isolated the cause. The 2×2 does.
 | **C** `C-champion` | `ee48387` → `9eeb557db3e87c2d` | all eight kept changes, **no** enum doc |
 | **D** `D-champion-enum` | HEAD `f195ffb` → `73acfdc375576226` | both |
 
+![Which change earned the accuracy gain](assets/which-change-earned-it.svg)
+
 **200 paired dev questions, majority of three attempts, exact McNemar:**
 
 | contrast | accuracy | diff (95% bootstrap) | gained / lost | p |
@@ -50,6 +52,8 @@ count and session count, and the campaign's −63.5% query reduction is real and
 untouched here — this benchmark does not re-measure it.
 
 ## 2. The result decomposes — which is the whole point
+
+![Which kinds of question actually moved](assets/which-questions-moved.svg)
 
 Per-stratum, 200 dev questions, Wilson 95%:
 
@@ -210,8 +214,8 @@ per run rather than trusting the job name.
 
 ## 9. The two defects it found are fixed
 
-Sections 3 named two failures alive in every arm. Both are now closed by one
-prompt change ([`377b81a`](.)) stating two rules the schema block never did:
+Section 3 named two failures alive in every arm. Both are now closed by a single
+prompt change, commit `377b81a`, stating two rules the schema block never did:
 match free text case-insensitively, and re-anchor on the issue rather than
 chaining onward from a label.
 

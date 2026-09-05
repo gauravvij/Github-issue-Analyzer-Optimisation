@@ -222,6 +222,8 @@ The first thing it settled was which change earned the original result. Four ver
 scored on the same questions: the baseline, the baseline with only the one-line enum
 documentation added, the campaign champion without that line, and both together.
 
+![Which change earned the accuracy gain](assets/which-change-earned-it.svg)
+
 | | 200 held-out questions |
 |---|---|
 | baseline | 86.00% |
