@@ -1,0 +1,3858 @@
+{
+  "job": "D-champion-enum__astropy-holdout",
+  "split": "astropy-holdout",
+  "startedAt": "2026-09-05T11:26:51.416Z",
+  "valid": true,
+  "invalidReason": null,
+  "config": {
+    "split": "astropy-holdout",
+    "job": "D-champion-enum__astropy-holdout",
+    "stage": "qa",
+    "attempts": 3,
+    "latencyMs": 120,
+    "qaConcurrency": 6,
+    "keepGraph": true,
+    "noTypecheck": false,
+    "model": "openai/gpt-4o",
+    "judgeModel": "gpt-4o",
+    "corpusIssues": 60,
+    "tasks": 50
+  },
+  "sut": {
+    "hash": "73acfdc375576226",
+    "files": 19
+  },
+  "preflight": [
+    {
+      "name": "sut_present",
+      "pass": true,
+      "detail": "/home/azureuser/githubIssue/github_issue"
+    },
+    {
+      "name": "sut_deps_installed",
+      "pass": true,
+      "detail": "node_modules present"
+    },
+    {
+      "name": "corpus_present",
+      "pass": true,
+      "detail": "/home/azureuser/githubIssue/verification_bench/corpus/astropy-holdout.json"
+    },
+    {
+      "name": "tasks_present",
+      "pass": true,
+      "detail": "/home/azureuser/githubIssue/verification_bench/tasks/astropy-holdout.jsonl"
+    },
+    {
+      "name": "splits_frozen",
+      "pass": true,
+      "detail": "60 issues, 50 tasks, corpus built 2026-09-05T10:17:37.635Z"
+    },
+    {
+      "name": "canaries_present",
+      "pass": true,
+      "detail": "2 canary task(s)"
+    },
+    {
+      "name": "splits_unmodified",
+      "pass": true,
+      "detail": "checksums match"
+    },
+    {
+      "name": "seam_github_api_url",
+      "pass": true,
+      "detail": "github.ts honours GITHUB_API_URL"
+    },
+    {
+      "name": "seam_agent_config",
+      "pass": true,
+      "detail": "agent/config.ts present"
+    },
+    {
+      "name": "openai_key_set",
+      "pass": true,
+      "detail": "set"
+    },
+    {
+      "name": "openai_key_live",
+      "pass": true,
+      "detail": "model=gpt-4o-mini-2024-07-18 usage=9"
+    },
+    {
+      "name": "meter_sees_openai",
+      "pass": true,
+      "detail": "1 request(s) intercepted"
+    },
+    {
+      "name": "meter_reads_usage",
+      "pass": true,
+      "detail": "prompt=8 completion=1 model=gpt-4o-mini-2024-07-18"
+    },
+    {
+      "name": "meter_can_price_models",
+      "pass": true,
+      "detail": "all models priced"
+    },
+    {
+      "name": "docker_running",
+      "pass": true,
+      "detail": "29.1.3"
+    },
+    {
+      "name": "neo4j_image",
+      "pass": true,
+      "detail": "neo4j:5 present"
+    },
+    {
+      "name": "ports_free",
+      "pass": true,
+      "detail": "7690/7475 available"
+    },
+    {
+      "name": "sut_typechecks",
+      "pass": true,
+      "detail": "clean"
+    }
+  ],
+  "graphProvenance": {
+    "sutHash": "9eeb557db3e87c2d",
+    "split": "astropy-holdout",
+    "job": "C-champion__astropy-holdout",
+    "at": "2026-09-05T11:25:03.890Z"
+  },
+  "integrity": [
+    {
+      "name": "issue_count",
+      "pass": true,
+      "expected": "60",
+      "actual": "60",
+      "info": false
+    },
+    {
+      "name": "comment_count",
+      "pass": true,
+      "expected": "377",
+      "actual": "377",
+      "info": false
+    },
+    {
+      "name": "user_count",
+      "pass": true,
+      "expected": "75",
+      "actual": "75",
+      "info": false
+    },
+    {
+      "name": "label_count",
+      "pass": true,
+      "expected": "33",
+      "actual": "33",
+      "info": false
+    },
+    {
+      "name": "reaction_count",
+      "pass": true,
+      "expected": "55",
+      "actual": "55",
+      "info": false
+    },
+    {
+      "name": "no_duplicate_issue_number",
+      "pass": true,
+      "expected": "0",
+      "actual": "0",
+      "info": false
+    },
+    {
+      "name": "no_duplicate_issue_id",
+      "pass": true,
+      "expected": "0",
+      "actual": "0",
+      "info": false
+    },
+    {
+      "name": "no_duplicate_comment_id",
+      "pass": true,
+      "expected": "0",
+      "actual": "0",
+      "info": false
+    },
+    {
+      "name": "no_duplicate_user_login",
+      "pass": true,
+      "expected": "0",
+      "actual": "0",
+      "info": false
+    },
+    {
+      "name": "no_duplicate_label_name",
+      "pass": true,
+      "expected": "0",
+      "actual": "0",
+      "info": false
+    },
+    {
+      "name": "issue_author_edges",
+      "pass": true,
+      "expected": "60",
+      "actual": "60",
+      "info": false
+    },
+    {
+      "name": "issue_comment_edges",
+      "pass": true,
+      "expected": "377",
+      "actual": "377",
+      "info": false
+    },
+    {
+      "name": "issue_label_edges",
+      "pass": true,
+      "expected": "141",
+      "actual": "141",
+      "info": false
+    },
+    {
+      "name": "no_orphan_comments",
+      "pass": true,
+      "expected": "0",
+      "actual": "0",
+      "info": false
+    },
+    {
+      "name": "issue_numbers_match",
+      "pass": true,
+      "expected": "60 exact numbers",
+      "actual": "60 present"
+    },
+    {
+      "name": "per_issue_comment_counts",
+      "pass": true,
+      "expected": "every issue has its corpus comment count",
+      "actual": "all match"
+    },
+    {
+      "name": "constraints_defined",
+      "pass": true,
+      "expected": "(informational)",
+      "actual": "10",
+      "info": true
+    },
+    {
+      "name": "indexes_defined",
+      "pass": true,
+      "expected": "(informational)",
+      "actual": "12",
+      "info": true
+    },
+    {
+      "name": "solution_nodes",
+      "pass": true,
+      "expected": "(informational)",
+      "actual": "58",
+      "info": true
+    },
+    {
+      "name": "workaround_nodes",
+      "pass": true,
+      "expected": "(informational)",
+      "actual": "17",
+      "info": true
+    },
+    {
+      "name": "category_nodes",
+      "pass": true,
+      "expected": "(informational)",
+      "actual": "34",
+      "info": true
+    },
+    {
+      "name": "competitor_nodes",
+      "pass": true,
+      "expected": "(informational)",
+      "actual": "6",
+      "info": true
+    },
+    {
+      "name": "keyword_nodes",
+      "pass": true,
+      "expected": "(informational)",
+      "actual": "289",
+      "info": true
+    },
+    {
+      "name": "issues_with_category",
+      "pass": true,
+      "expected": "(informational)",
+      "actual": "60",
+      "info": true
+    },
+    {
+      "name": "vector_indexes",
+      "pass": true,
+      "expected": "(informational)",
+      "actual": "0",
+      "info": true
+    },
+    {
+      "name": "nodes_with_embedding",
+      "pass": true,
+      "expected": "(informational)",
+      "actual": "0",
+      "info": true
+    }
+  ],
+  "qa": {
+    "tasks": [
+      {
+        "id": "astropy-holdout-001",
+        "template": "total_issues",
+        "kind": "structural",
+        "canary": true,
+        "question": "How many issues are in the knowledge graph in total?",
+        "oracle": "60",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 60",
+            "answer": "There are a total of 60 issues in the knowledge graph.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) RETURN count(i) AS totalIssues"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1822,
+              "output": 45
+            },
+            "ms": 2644
+          },
+          {
+            "pass": true,
+            "reason": "found 60",
+            "answer": "There are a total of 60 issues in the knowledge graph.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) RETURN count(i) AS totalIssues"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1822,
+              "output": 45
+            },
+            "ms": 2678
+          },
+          {
+            "pass": true,
+            "reason": "found 60",
+            "answer": "There are a total of 60 issues in the knowledge graph.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) RETURN COUNT(i) AS totalIssues"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1822,
+              "output": 45
+            },
+            "ms": 2347
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "astropy-holdout-002",
+        "template": "total_comments",
+        "kind": "structural",
+        "canary": true,
+        "question": "How many comments are stored across all issues in total?",
+        "oracle": "377",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 377",
+            "answer": "There are a total of 377 comments stored across all issues.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (c:Comment) RETURN count(c) AS totalComments"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1822,
+              "output": 45
+            },
+            "ms": 2627
+          },
+          {
+            "pass": true,
+            "reason": "found 377",
+            "answer": "There are a total of 377 comments stored across all issues.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (c:Comment) RETURN COUNT(c) AS totalComments"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1822,
+              "output": 45
+            },
+            "ms": 2578
+          },
+          {
+            "pass": true,
+            "reason": "found 377",
+            "answer": "There are a total of 377 comments stored across all issues.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (c:Comment) RETURN count(c) AS totalComments"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1822,
+              "output": 45
+            },
+            "ms": 3073
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "astropy-holdout-003",
+        "template": "open_count",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many issues are currently open?",
+        "oracle": "24",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 24",
+            "answer": "There are currently 24 open issues.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {state: 'OPEN'}) RETURN COUNT(i) AS openIssuesCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1821,
+              "output": 46
+            },
+            "ms": 2594
+          },
+          {
+            "pass": true,
+            "reason": "found 24",
+            "answer": "There are currently 24 open issues.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {state: 'OPEN'}) RETURN count(i) as openIssuesCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1821,
+              "output": 46
+            },
+            "ms": 2410
+          },
+          {
+            "pass": true,
+            "reason": "found 24",
+            "answer": "There are currently 24 open issues.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {state: 'OPEN'}) RETURN count(i) as openIssuesCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1821,
+              "output": 46
+            },
+            "ms": 2525
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "astropy-holdout-004",
+        "template": "closed_count",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many issues are closed?",
+        "oracle": "36",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 36",
+            "answer": "There are 36 closed issues.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {state: 'CLOSED'}) RETURN count(i) AS closedIssuesCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1820,
+              "output": 46
+            },
+            "ms": 3318
+          },
+          {
+            "pass": true,
+            "reason": "found 36",
+            "answer": "There are 36 issues that are closed.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {state: 'CLOSED'}) RETURN count(i) as closedIssuesCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1820,
+              "output": 48
+            },
+            "ms": 2463
+          },
+          {
+            "pass": true,
+            "reason": "found 36",
+            "answer": "There are 36 closed issues.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {state: 'CLOSED'}) RETURN count(i) as closedIssuesCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1820,
+              "output": 46
+            },
+            "ms": 2500
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "astropy-holdout-005",
+        "template": "state_of_issue",
+        "kind": "retrieval",
+        "canary": false,
+        "question": "Is issue #386 open or closed?",
+        "oracle": "CLOSED",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "Issue [#386](https://github.com) is closed.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 386}) RETURN i.state LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1821,
+              "output": 49
+            },
+            "ms": 2609
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "Issue [#386](https://github.com/issues/386) is closed.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 386}) RETURN i.state LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1821,
+              "output": 52
+            },
+            "ms": 2267
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "Issue [#386](https://github.com/your-repo/issues/386) is closed.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 386}) RETURN i.state LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1821,
+              "output": 56
+            },
+            "ms": 2147
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "astropy-holdout-006",
+        "template": "open_label_count",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many OPEN issues carry the label \"Bug\"?",
+        "oracle": "8",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 8",
+            "answer": "There are 8 open issues with the label \"Bug\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE i.state = 'OPEN' AND l.name = 'Bug' RETURN COUNT(i) AS open_bug_issues"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1847,
+              "output": 69
+            },
+            "ms": 2468
+          },
+          {
+            "pass": true,
+            "reason": "found 8",
+            "answer": "There are **8 OPEN issues** labeled as \"Bug\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE i.state = 'OPEN' AND l.name = 'Bug' RETURN COUNT(i) AS openBugIssues"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1845,
+              "output": 68
+            },
+            "ms": 2408
+          },
+          {
+            "pass": true,
+            "reason": "found 8",
+            "answer": "There are 8 open issues labeled as \"Bug\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label)\nWHERE i.state = 'OPEN' AND l.name = 'Bug'\nRETURN count(i) AS openBugIssues"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1847,
+              "output": 69
+            },
+            "ms": 2313
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "astropy-holdout-007",
+        "template": "open_with_label",
+        "kind": "structural",
+        "canary": false,
+        "question": "List the issue numbers of every OPEN issue labelled \"Bug\".",
+        "oracle": "#8011, #9752, #12197, #13667, #14313, #15366, #16379, #17780",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "cited 8011,9752,12197,13667,14313,15366,16379,17780",
+            "answer": "Here are the issue numbers of the open issues labeled \"Bug\":\n\n- [#15366](#15366)\n- [#17780](#17780)\n- [#13667](#13667)\n- [#14313](#14313)\n- [#16379](#16379)\n- [#12197](#12197)\n- [#9752](#9752)\n- [#8011](#8011)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE i.state = 'OPEN' AND l.name = 'Bug' RETURN i.number LIMIT 50"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1889,
+              "output": 147
+            },
+            "ms": 2814
+          },
+          {
+            "pass": true,
+            "reason": "cited 8011,9752,12197,13667,14313,15366,16379,17780",
+            "answer": "Here are the open issues labeled \"Bug\":\n\n- [#15366](https://github.com/repo/issues/15366)\n- [#17780](https://github.com/repo/issues/17780)\n- [#13667](https://github.com/repo/issues/13667)\n- [#14313](https://github.com/repo/issues/14313)\n- [#16379](https://github.com/repo/issues/16379)\n- [#12197](https://github.com/repo/issues/12197)\n- [#9752](https://github.com/repo/issues/9752)\n- [#8011](https://github.com/repo/issues/8011)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE i.state = 'OPEN' AND l.name = 'Bug' RETURN i.number LIMIT 25"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1889,
+              "output": 199
+            },
+            "ms": 3321
+          },
+          {
+            "pass": true,
+            "reason": "cited 8011,9752,12197,13667,14313,15366,16379,17780",
+            "answer": "Here are the issue numbers of every **OPEN** issue labeled \"Bug\":\n\n- [#15366](https://github.com/user/repo/issues/15366)\n- [#17780](https://github.com/user/repo/issues/17780)\n- [#13667](https://github.com/user/repo/issues/13667)\n- [#14313](https://github.com/user/repo/issues/14313)\n- [#16379](https://github.com/user/repo/issues/16379)\n- [#12197](https://github.com/user/repo/issues/12197)\n- [#9752](https://github.com/user/repo/issues/9752)\n- [#8011](https://github.com/user/repo/issues/8011)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label)\nWHERE i.state = 'OPEN' AND l.name = 'Bug'\nRETURN i.number LIMIT 50"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1891,
+              "output": 215
+            },
+            "ms": 3531
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "astropy-holdout-008",
+        "template": "open_label_count",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many OPEN issues carry the label \"units\"?",
+        "oracle": "2",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 2",
+            "answer": "There are 2 open issues with the label \"units\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE i.state = 'OPEN' AND l.name = 'units' RETURN COUNT(i) AS openIssuesWithUnitsLabel LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1852,
+              "output": 73
+            },
+            "ms": 2530
+          },
+          {
+            "pass": true,
+            "reason": "found 2",
+            "answer": "There are 2 open issues with the label \"units\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) \nWHERE i.state = 'OPEN' AND l.name = 'units' \nRETURN COUNT(i) AS openIssuesWithUnitsLabel"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1853,
+              "output": 74
+            },
+            "ms": 3014
+          },
+          {
+            "pass": true,
+            "reason": "found 2",
+            "answer": "There are 2 open issues with the label \"units\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label)\nWHERE i.state = 'OPEN' AND l.name = 'units'\nRETURN COUNT(i) AS openIssuesWithUnitsLabel"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1851,
+              "output": 72
+            },
+            "ms": 2952
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "astropy-holdout-009",
+        "template": "open_with_label",
+        "kind": "structural",
+        "canary": false,
+        "question": "List the issue numbers of every OPEN issue labelled \"units\".",
+        "oracle": "#10575, #17780",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "cited 10575,17780",
+            "answer": "Here are the issue numbers of the OPEN issues labeled \"units\":\n\n- [#10575](https://github.com/your-repo/issues/10575)\n- [#17780](https://github.com/your-repo/issues/17780)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"units\"}) WHERE i.state = \"OPEN\" RETURN i.number LIMIT 50"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1852,
+              "output": 104
+            },
+            "ms": 2798
+          },
+          {
+            "pass": true,
+            "reason": "cited 10575,17780",
+            "answer": "The issue numbers for OPEN issues labeled \"units\" are:\n\n- [#10575](https://github.com/org/repo/issues/10575)\n- [#17780](https://github.com/org/repo/issues/17780)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE l.name = \"units\" AND i.state = \"OPEN\" RETURN i.number LIMIT 100"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1853,
+              "output": 102
+            },
+            "ms": 3433
+          },
+          {
+            "pass": true,
+            "reason": "cited 10575,17780",
+            "answer": "The open issues labeled \"units\" are:\n\n- [#10575](https://github.com/org/repo/issues/10575)\n- [#17780](https://github.com/org/repo/issues/17780)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"units\"}) WHERE i.state = \"OPEN\" RETURN i.number LIMIT 25"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1852,
+              "output": 98
+            },
+            "ms": 2691
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "astropy-holdout-010",
+        "template": "distinct_labels",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many distinct labels exist in the knowledge graph?",
+        "oracle": "33",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 33",
+            "answer": "There are 33 distinct labels in the knowledge graph.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (l:Label) RETURN COUNT(DISTINCT l.name) AS labelCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1824,
+              "output": 47
+            },
+            "ms": 2200
+          },
+          {
+            "pass": true,
+            "reason": "found 33",
+            "answer": "There are 33 distinct labels in the knowledge graph.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (l:Label) RETURN count(DISTINCT l.name) AS labelCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1824,
+              "output": 47
+            },
+            "ms": 2451
+          },
+          {
+            "pass": true,
+            "reason": "found 33",
+            "answer": "There are 33 distinct labels in the knowledge graph.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (l:Label) RETURN count(DISTINCT l.name) AS labelCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1824,
+              "output": 47
+            },
+            "ms": 2385
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "astropy-holdout-011",
+        "template": "label_count",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many issues carry the label \"Bug\"?",
+        "oracle": "35",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 35",
+            "answer": "There are 35 issues labeled as \"Bug.\"",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: 'Bug'}) RETURN COUNT(i) AS bugCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1832,
+              "output": 56
+            },
+            "ms": 2490
+          },
+          {
+            "pass": true,
+            "reason": "found 35",
+            "answer": "There are 35 issues with the label \"Bug.\"",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"Bug\"}) RETURN count(i) AS numberOfIssuesWithBugLabel"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1841,
+              "output": 62
+            },
+            "ms": 2328
+          },
+          {
+            "pass": true,
+            "reason": "found 35",
+            "answer": "There are 35 issues labeled as \"Bug\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"Bug\"}) RETURN count(i) AS bugIssueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1835,
+              "output": 58
+            },
+            "ms": 2496
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "astropy-holdout-012",
+        "template": "label_natural_casing",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many issues are tagged \"bug\"?",
+        "oracle": "35 (stored as \"Bug\")",
+        "attempts": [
+          {
+            "pass": false,
+            "reason": "expected 35, not present in answer",
+            "answer": "There are no issues currently tagged with \"bug.\"",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"bug\"}) RETURN COUNT(i) AS bugIssueCount LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1836,
+              "output": 61
+            },
+            "ms": 2218
+          },
+          {
+            "pass": false,
+            "reason": "expected 35, not present in answer",
+            "answer": "There are no issues tagged with \"bug\" at the moment.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"bug\"}) RETURN COUNT(i) AS bugIssuesCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1833,
+              "output": 61
+            },
+            "ms": 2377
+          },
+          {
+            "pass": false,
+            "reason": "expected 35, not present in answer",
+            "answer": "There are currently no issues tagged with \"bug\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"bug\"}) RETURN count(i) AS bugIssuesCount LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1836,
+              "output": 61
+            },
+            "ms": 2216
+          }
+        ],
+        "passRate": 0
+      },
+      {
+        "id": "astropy-holdout-013",
+        "template": "label_count",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many issues carry the label \"units\"?",
+        "oracle": "11",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 11",
+            "answer": "There are 11 issues with the label \"units\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"units\"}) RETURN COUNT(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1833,
+              "output": 58
+            },
+            "ms": 2240
+          },
+          {
+            "pass": true,
+            "reason": "found 11",
+            "answer": "There are 11 issues labeled with \"units\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"units\"}) RETURN COUNT(i) AS count"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1831,
+              "output": 56
+            },
+            "ms": 3693
+          },
+          {
+            "pass": true,
+            "reason": "found 11",
+            "answer": "There are 11 issues labeled with \"units\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"units\"}) RETURN count(i) as unit_issues_count LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1840,
+              "output": 62
+            },
+            "ms": 3211
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "astropy-holdout-014",
+        "template": "label_members",
+        "kind": "structural",
+        "canary": false,
+        "question": "List the issue numbers of every issue labelled \"wcs\".",
+        "oracle": "#5461, #6483, #7389, #7845, #9752, #11446, #13667, #14255",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "cited 5461,6483,7389,7845,9752,11446,13667,14255",
+            "answer": "Here are the issue numbers labeled \"wcs\":\n\n- [#5461](https://github.com/owner/repo/issues/5461)\n- [#7845](https://github.com/owner/repo/issues/7845)\n- [#9752](https://github.com/owner/repo/issues/9752)\n- [#13667](https://github.com/owner/repo/issues/13667)\n- [#6483](https://github.com/owner/repo/issues/6483)\n- [#11446](https://github.com/owner/repo/issues/11446)\n- [#7389](https://github.com/owner/repo/issues/7389)\n- [#14255](https://github.com/owner/repo/issues/14255)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"wcs\"}) RETURN i.number LIMIT 100"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1882,
+              "output": 209
+            },
+            "ms": 2865
+          },
+          {
+            "pass": true,
+            "reason": "cited 5461,6483,7389,7845,9752,11446,13667,14255",
+            "answer": "Here are the issue numbers labeled \"wcs\":\n\n- [5461](https://github.com/issues/5461)\n- [7845](https://github.com/issues/7845)\n- [9752](https://github.com/issues/9752)\n- [13667](https://github.com/issues/13667)\n- [6483](https://github.com/issues/6483)\n- [11446](https://github.com/issues/11446)\n- [7389](https://github.com/issues/7389)\n- [14255](https://github.com/issues/14255)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"wcs\"}) RETURN i.number LIMIT 100"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1882,
+              "output": 169
+            },
+            "ms": 3060
+          },
+          {
+            "pass": true,
+            "reason": "cited 5461,6483,7389,7845,9752,11446,13667,14255",
+            "answer": "Here are the issue numbers labelled \"wcs\":\n\n- [#5461](https://github.com/<repository>/issues/5461)\n- [#7845](https://github.com/<repository>/issues/7845)\n- [#9752](https://github.com/<repository>/issues/9752)\n- [#13667](https://github.com/<repository>/issues/13667)\n- [#6483](https://github.com/<repository>/issues/6483)\n- [#11446](https://github.com/<repository>/issues/11446)\n- [#7389](https://github.com/<repository>/issues/7389)\n- [#14255](https://github.com/<repository>/issues/14255)\n\n(Note: Please replace `<repository>` with the actual repository name in the URLs.)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"wcs\"}) RETURN i.number LIMIT 100"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1882,
+              "output": 217
+            },
+            "ms": 3009
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "astropy-holdout-015",
+        "template": "distinct_authors",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many distinct users have authored issues in the knowledge graph?",
+        "oracle": "40",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 40",
+            "answer": "There are 40 distinct users who have authored issues in the knowledge graph.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User) RETURN COUNT(DISTINCT u.login) AS userCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1839,
+              "output": 62
+            },
+            "ms": 2946
+          },
+          {
+            "pass": true,
+            "reason": "found 40",
+            "answer": "There are 40 distinct users who have authored issues in the knowledge graph.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (u:User)<-[:AUTHORED_BY]-(i:Issue) RETURN COUNT(DISTINCT u.login) AS userCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1840,
+              "output": 63
+            },
+            "ms": 1924
+          },
+          {
+            "pass": true,
+            "reason": "found 40",
+            "answer": "There are 40 distinct users who have authored issues in the knowledge graph.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (u:User)<-[:AUTHORED_BY]-(i:Issue) RETURN COUNT(DISTINCT u) AS distinctUserCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1841,
+              "output": 63
+            },
+            "ms": 3864
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "astropy-holdout-016",
+        "template": "author_issues",
+        "kind": "structural",
+        "canary": false,
+        "question": "Which issues were opened by the user \"taldcroft\"? Give their issue numbers.",
+        "oracle": "#386, #7151, #13231, #13232",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "cited 386,7151,13231,13232",
+            "answer": "The issues opened by the user \"taldcroft\" are:\n\n- [#13232](https://github.com/username/repo/issues/13232)\n- [#13231](https://github.com/username/repo/issues/13231)\n- [#386](https://github.com/username/repo/issues/386)\n- [#7151](https://github.com/username/repo/issues/7151)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User {login: \"taldcroft\"}) RETURN i.number LIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1870,
+              "output": 137
+            },
+            "ms": 3843
+          },
+          {
+            "pass": true,
+            "reason": "cited 386,7151,13231,13232",
+            "answer": "The issues opened by the user \"taldcroft\" are:\n\n- [#13232](https://github.com/organization/repo/issues/13232)\n- [#13231](https://github.com/organization/repo/issues/13231)\n- [#386](https://github.com/organization/repo/issues/386)\n- [#7151](https://github.com/organization/repo/issues/7151)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User {login: \"taldcroft\"}) RETURN i.number LIMIT 25"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1870,
+              "output": 137
+            },
+            "ms": 2567
+          },
+          {
+            "pass": true,
+            "reason": "cited 386,7151,13231,13232",
+            "answer": "The issues opened by the user \"taldcroft\" are:\n\n- [#13232](https://github.com/org/repo/issues/13232)\n- [#13231](https://github.com/org/repo/issues/13231)\n- [#386](https://github.com/org/repo/issues/386)\n- [#7151](https://github.com/org/repo/issues/7151)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User {login: \"taldcroft\"}) RETURN i.number LIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1870,
+              "output": 133
+            },
+            "ms": 3171
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "astropy-holdout-017",
+        "template": "issue_author",
+        "kind": "retrieval",
+        "canary": false,
+        "question": "Who opened issue #386?",
+        "oracle": "taldcroft",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "Issue [#386](https://github.com/your-repo/issues/386) was opened by the user **taldcroft**.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 386})-[:AUTHORED_BY]->(u:User) RETURN u.login, u.name LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1838,
+              "output": 79
+            },
+            "ms": 2472
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "Issue [#386](https://github.com/your-repository/issues/386) was opened by the user **taldcroft**.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 386})-[:AUTHORED_BY]->(u:User) RETURN u.login LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1830,
+              "output": 76
+            },
+            "ms": 3938
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "Issue [#386](https://github.com/issues/386) was opened by the user **taldcroft**.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 386})-[:AUTHORED_BY]->(u:User) RETURN u.login LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1830,
+              "output": 72
+            },
+            "ms": 2337
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "astropy-holdout-018",
+        "template": "commenter_count",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many distinct users have commented on issue #4738?",
+        "oracle": "18",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 18",
+            "answer": "There are 18 distinct users who have commented on [issue #4738](#).",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 4738})-[:HAS_COMMENT]->(c:Comment)-[:AUTHORED_BY]->(u:User)\nRETURN COUNT(DISTINCT u.login) AS distinct_users_count"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1858,
+              "output": 83
+            },
+            "ms": 2490
+          },
+          {
+            "pass": true,
+            "reason": "found 18",
+            "answer": "There are 18 distinct users who have commented on [issue #4738](https://github.com/issues/4738).",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 4738})-[:HAS_COMMENT]->(c:Comment)-[:AUTHORED_BY]->(u:User) RETURN COUNT(DISTINCT u.login) AS userCount LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1858,
+              "output": 91
+            },
+            "ms": 2238
+          },
+          {
+            "pass": true,
+            "reason": "found 18",
+            "answer": "There are 18 distinct users who have commented on issue [#4738](https://github.com/repo/issues/4738).",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 4738})-[:HAS_COMMENT]->(c:Comment)-[:AUTHORED_BY]->(u:User)\nRETURN COUNT(DISTINCT u.login) AS distinctUserCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1858,
+              "output": 92
+            },
+            "ms": 3826
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "astropy-holdout-019",
+        "template": "month_count",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many issues were created in 2018-07?",
+        "oracle": "3",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 3",
+            "answer": "In July 2018, a total of 3 issues were created.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)\nWHERE i.createdAt >= '2018-07-01' AND i.createdAt < '2018-08-01'\nRETURN COUNT(i) AS issueCount LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1855,
+              "output": 78
+            },
+            "ms": 2390
+          },
+          {
+            "pass": true,
+            "reason": "found 3",
+            "answer": "In July 2018, a total of 3 issues were created.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.createdAt STARTS WITH '2018-07' RETURN COUNT(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1837,
+              "output": 60
+            },
+            "ms": 3487
+          },
+          {
+            "pass": true,
+            "reason": "found 3",
+            "answer": "There were 3 issues created in July 2018.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)\nWHERE i.createdAt STARTS WITH '2018-07'\nRETURN count(i) AS issueCount LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1842,
+              "output": 62
+            },
+            "ms": 1996
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "astropy-holdout-020",
+        "template": "created_before",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many issues were created before 2019-01-11?",
+        "oracle": "16",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 16",
+            "answer": "There were 16 issues created before 2019-01-11.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)\nWHERE i.createdAt < '2019-01-11'\nRETURN COUNT(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1843,
+              "output": 62
+            },
+            "ms": 4675
+          },
+          {
+            "pass": true,
+            "reason": "found 16",
+            "answer": "There were 16 issues created before 2019-01-11.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.createdAt < '2019-01-11' RETURN COUNT(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1841,
+              "output": 60
+            },
+            "ms": 2414
+          },
+          {
+            "pass": true,
+            "reason": "found 16",
+            "answer": "It seems there was an error with the date format. Let me fix that and try again.There were 16 issues created before January 11, 2019.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE date(i.createdAt) < date('2019-01-11') RETURN count(i) as issueCount"
+                }
+              },
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE datetime(i.createdAt) < datetime('2019-01-11T00:00:00Z') RETURN count(i) as issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2947,
+              "output": 137
+            },
+            "ms": 4117
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "astropy-holdout-021",
+        "template": "created_after",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many issues were created after 2019-01-11?",
+        "oracle": "44",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 44",
+            "answer": "A total of 44 issues were created after 2019-01-11.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.createdAt > '2019-01-11' RETURN COUNT(i) as issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1841,
+              "output": 62
+            },
+            "ms": 2045
+          },
+          {
+            "pass": true,
+            "reason": "found 44",
+            "answer": "A total of 44 issues were created after January 11, 2019.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.createdAt > \"2019-01-11\" RETURN COUNT(i) as issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1841,
+              "output": 62
+            },
+            "ms": 2378
+          },
+          {
+            "pass": true,
+            "reason": "found 44",
+            "answer": "There were 44 issues created after 2019-01-11.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (issue:Issue) WHERE issue.createdAt > '2019-01-11' RETURN COUNT(issue) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1841,
+              "output": 60
+            },
+            "ms": 2373
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "astropy-holdout-022",
+        "template": "created_after",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many issues were created after 2022-02-11?",
+        "oracle": "29",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 29",
+            "answer": "There were 29 issues created after 2022-02-11.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (issue:Issue) WHERE issue.createdAt > '2022-02-11' RETURN count(issue) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1841,
+              "output": 60
+            },
+            "ms": 2602
+          },
+          {
+            "pass": true,
+            "reason": "found 29",
+            "answer": "There were 29 issues created after 2022-02-11.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.createdAt > '2022-02-11' RETURN count(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1841,
+              "output": 60
+            },
+            "ms": 3357
+          },
+          {
+            "pass": true,
+            "reason": "found 29",
+            "answer": "There are 29 issues that were created after 2022-02-11.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.createdAt > '2022-02-11' RETURN COUNT(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1841,
+              "output": 62
+            },
+            "ms": 2549
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "astropy-holdout-023",
+        "template": "created_between",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many issues were created between 2019-01-11 and 2022-12-10?",
+        "oracle": "30",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 30",
+            "answer": "A total of 30 issues were created between 2019-01-11 and 2022-12-10.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE date(i.createdAt) >= date('2019-01-11') AND date(i.createdAt) <= date('2022-12-10') RETURN count(i) AS issueCount"
+                }
+              },
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.createdAt >= '2019-01-11T00:00:00Z' AND i.createdAt <= '2022-12-10T23:59:59Z' RETURN count(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2995,
+              "output": 159
+            },
+            "ms": 4980
+          },
+          {
+            "pass": true,
+            "reason": "found 30",
+            "answer": "A total of 30 issues were created between 2019-01-11 and 2022-12-10.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)\nWHERE date(i.createdAt) >= date('2019-01-11') AND date(i.createdAt) <= date('2022-12-10')\nRETURN count(i) AS issueCount"
+                }
+              },
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)\nWHERE i.createdAt >= '2019-01-11' AND i.createdAt <= '2022-12-10'\nRETURN count(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2989,
+              "output": 150
+            },
+            "ms": 3950
+          },
+          {
+            "pass": true,
+            "reason": "found 30",
+            "answer": "A total of 30 issues were created between 2019-01-11 and 2022-12-10.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE date(i.createdAt) >= date('2019-01-11') AND date(i.createdAt) <= date('2022-12-10') RETURN count(i) AS issueCount"
+                }
+              },
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE datetime(i.createdAt) >= datetime('2019-01-11T00:00:00Z') AND datetime(i.createdAt) <= datetime('2022-12-10T23:59:59Z') RETURN count(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 3001,
+              "output": 165
+            },
+            "ms": 3587
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "astropy-holdout-024",
+        "template": "zero_comment_count",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many issues have no comments at all?",
+        "oracle": "15",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 15",
+            "answer": "There are 15 issues with no comments at all.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE NOT (i)-[:HAS_COMMENT]->(:Comment) RETURN count(i) AS noCommentIssues"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1832,
+              "output": 56
+            },
+            "ms": 2730
+          },
+          {
+            "pass": true,
+            "reason": "found 15",
+            "answer": "There are 15 issues with no comments at all.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE NOT (i)-[:HAS_COMMENT]->() RETURN count(i) AS issuesWithoutComments"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1830,
+              "output": 54
+            },
+            "ms": 2686
+          },
+          {
+            "pass": true,
+            "reason": "found 15",
+            "answer": "There are 15 issues with no comments at all.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)\nWHERE NOT (i)-[:HAS_COMMENT]->(:Comment)\nRETURN count(i) AS issuesWithoutComments"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1834,
+              "output": 58
+            },
+            "ms": 3129
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "astropy-holdout-025",
+        "template": "most_comments",
+        "kind": "structural",
+        "canary": false,
+        "question": "Which issue has the most comments? Give its issue number.",
+        "oracle": "#4738 (50 comments)",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "cited 4738",
+            "answer": "The issue with the most comments is [#4738](https://github.com/issues/4738), with 50 comments.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment)\nRETURN i.number AS issueNumber, COUNT(c) AS commentCount\nORDER BY commentCount DESC\nLIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1856,
+              "output": 84
+            },
+            "ms": 2727
+          },
+          {
+            "pass": true,
+            "reason": "cited 4738",
+            "answer": "The issue with the most comments is [#4738](https://github.com/4738).",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment)\nRETURN i.number as issueNumber, COUNT(c) as commentCount\nORDER BY commentCount DESC\nLIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1856,
+              "output": 78
+            },
+            "ms": 2546
+          },
+          {
+            "pass": true,
+            "reason": "cited 4738",
+            "answer": "The issue with the most comments is issue [#4738](https://github.com/issues/4738).",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment)\nRETURN i.number AS issueNumber, COUNT(c) AS commentCount\nORDER BY commentCount DESC\nLIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1856,
+              "output": 80
+            },
+            "ms": 2708
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "astropy-holdout-026",
+        "template": "most_reactions",
+        "kind": "structural",
+        "canary": false,
+        "question": "Which issue has received the most reactions? Give its issue number.",
+        "oracle": "#7689 (2 reactions)",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "cited 7689",
+            "answer": "The issue that has received the most reactions is issue number [#7689](https://github.com/your-repo/issues/7689).",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_REACTION]->(r:Reaction)\nRETURN i.number, COUNT(r) as reactionCount\nORDER BY reactionCount DESC\nLIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1856,
+              "output": 85
+            },
+            "ms": 2574
+          },
+          {
+            "pass": true,
+            "reason": "cited 7689",
+            "answer": "The issue with the most reactions is issue number [#7689](https://github.com/owner/repo/issues/7689).",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_REACTION]->(r:Reaction)\nRETURN i.number AS issueNumber, COUNT(r) AS reactionCount\nORDER BY reactionCount DESC\nLIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1859,
+              "output": 86
+            },
+            "ms": 3112
+          },
+          {
+            "pass": true,
+            "reason": "cited 7689",
+            "answer": "The issue with the most reactions is [#7689](https://github.com/your-repo/your-project/issues/7689).",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_REACTION]->(r:Reaction)\nRETURN i.number, COUNT(r) AS reactions_count\nORDER BY reactions_count DESC\nLIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1857,
+              "output": 84
+            },
+            "ms": 2572
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "astropy-holdout-027",
+        "template": "issues_with_ge_n_comments",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many issues have at least 3 comments?",
+        "oracle": "34",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 34",
+            "answer": "There are 34 issues that have at least 3 comments.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment)\nWITH i, COUNT(c) AS commentCount\nWHERE commentCount >= 3\nRETURN COUNT(i) AS issuesWithAtLeastThreeComments"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1855,
+              "output": 76
+            },
+            "ms": 3111
+          },
+          {
+            "pass": true,
+            "reason": "found 34",
+            "answer": "There are 34 issues that have at least 3 comments.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment)\nWITH i, COUNT(c) AS comment_count\nWHERE comment_count >= 3\nRETURN COUNT(i) AS issue_count LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1850,
+              "output": 75
+            },
+            "ms": 2256
+          },
+          {
+            "pass": true,
+            "reason": "found 34",
+            "answer": "There are 34 issues that have at least 3 comments.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment)\nWITH i, COUNT(c) AS commentCount \nWHERE commentCount >= 3\nRETURN COUNT(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1848,
+              "output": 73
+            },
+            "ms": 2697
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "astropy-holdout-028",
+        "template": "issue_comment_count",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many comments does issue #4738 have?",
+        "oracle": "50",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 50",
+            "answer": "Issue [#4738](https://github.com/repository/issues/4738) has 50 comments.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 4738})-[:HAS_COMMENT]->(c:Comment) RETURN COUNT(c) as commentCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1836,
+              "output": 70
+            },
+            "ms": 2228
+          },
+          {
+            "pass": true,
+            "reason": "found 50",
+            "answer": "Issue [#4738](https://github.com/your-repo/issues/4738) has 50 comments.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment) WHERE i.number = 4738 RETURN COUNT(c) AS commentCount LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1839,
+              "output": 75
+            },
+            "ms": 2556
+          },
+          {
+            "pass": true,
+            "reason": "found 50",
+            "answer": "Issue [#4738](https://github.com/your-repo/issues/4738) has 50 comments.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 4738})-[:HAS_COMMENT]->(c:Comment) RETURN count(c) AS commentCount LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1839,
+              "output": 75
+            },
+            "ms": 2461
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "astropy-holdout-029",
+        "template": "issue_title",
+        "kind": "retrieval",
+        "canary": false,
+        "question": "What is the title of issue #386?",
+        "oracle": "Add option to input/output column units for fixed width tables",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "The title of issue [#386](https://github.com) is \"Add option to input/output column units for fixed width tables.\"",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 386}) RETURN i.title LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1832,
+              "output": 63
+            },
+            "ms": 2106
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "The title of issue [#386](#) is \"Add option to input/output column units for fixed width tables\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 386}) RETURN i.title LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1832,
+              "output": 60
+            },
+            "ms": 2396
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "The title of issue [#386](https://github.com/issue/386) is \"Add option to input/output column units for fixed width tables.\"",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 386}) RETURN i.title LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1832,
+              "output": 67
+            },
+            "ms": 2218
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "astropy-holdout-030",
+        "template": "issue_title",
+        "kind": "retrieval",
+        "canary": false,
+        "question": "What is the title of issue #4738?",
+        "oracle": "Consider replacing astropy's progress bar machinery with tqdm",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "The title of issue [#4738](https://github.com/issues/4738) is \"Consider replacing astropy's progress bar machinery with tqdm\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 4738}) RETURN i.title LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1834,
+              "output": 68
+            },
+            "ms": 2472
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "The title of issue [#4738](https://github.com/issues/4738) is \"Consider replacing astropy's progress bar machinery with tqdm\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 4738}) RETURN i.title LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1834,
+              "output": 68
+            },
+            "ms": 2173
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "The title of issue [#4738](https://github.com/issue/4738) is \"Consider replacing astropy's progress bar machinery with tqdm.\"",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 4738}) RETURN i.title LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1834,
+              "output": 69
+            },
+            "ms": 2219
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "astropy-holdout-031",
+        "template": "mentions_term",
+        "kind": "retrieval",
+        "canary": false,
+        "question": "Which issues mention \"better\" in their title or body? Give their issue numbers.",
+        "oracle": "#4738, #7657, #10575, #10894, #11278, #17780",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "cited 4738,7657,10575,10894,11278,17780",
+            "answer": "Here are the issues that mention \"better\" in their title or body:\n\n- [#4738](https://github.com/user/repo/issues/4738)\n- [#7657](https://github.com/user/repo/issues/7657)\n- [#10575](https://github.com/user/repo/issues/10575)\n- [#10894](https://github.com/user/repo/issues/10894)\n- [#11278](https://github.com/user/repo/issues/11278)\n- [#17780](https://github.com/user/repo/issues/17780)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)\nWHERE toLower(i.title) CONTAINS \"better\" OR toLower(i.bodyText) CONTAINS \"better\"\nRETURN i.number\nLIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1892,
+              "output": 182
+            },
+            "ms": 2915
+          },
+          {
+            "pass": true,
+            "reason": "cited 4738,7657,10575,10894,11278,17780",
+            "answer": "Here are the issue numbers that mention \"better\" in their title or body:\n\n- [#4738](https://github.com/user/repo/issues/4738)\n- [#7657](https://github.com/user/repo/issues/7657)\n- [#10575](https://github.com/user/repo/issues/10575)\n- [#10894](https://github.com/user/repo/issues/10894)\n- [#11278](https://github.com/user/repo/issues/11278)\n- [#17780](https://github.com/user/repo/issues/17780)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)\nWHERE toLower(i.title) CONTAINS \"better\" OR toLower(i.bodyText) CONTAINS \"better\"\nRETURN i.number AS issueNumber\nLIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1895,
+              "output": 186
+            },
+            "ms": 3260
+          },
+          {
+            "pass": true,
+            "reason": "cited 4738,7657,10575,10894,11278,17780",
+            "answer": "Here are the issue numbers that mention \"better\" in their title or body:\n\n- [#4738](https://github.com/4738)\n- [#7657](https://github.com/7657)\n- [#10575](https://github.com/10575)\n- [#10894](https://github.com/10894)\n- [#11278](https://github.com/11278)\n- [#17780](https://github.com/17780)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)\nWHERE toLower(i.title) CONTAINS 'better' OR toLower(i.bodyText) CONTAINS 'better'\nRETURN i.number AS issueNumber\nLIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1895,
+              "output": 162
+            },
+            "ms": 2814
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "astropy-holdout-032",
+        "template": "labels_cooccurring",
+        "kind": "retrieval",
+        "canary": false,
+        "question": "Which other labels appear on issues that also carry the label \"io.fits\"?",
+        "oracle": "Bug, Feature Request, unified-io, units (not: :zzz: Package-novice, :zzz: good first issue, API change, Docs, Effort-medium, Enhancement, Performance, Refactoring, Upstream Action Required, coordinates, cosmology, dev-automation, io.ascii, io.votable, modeling, numpy-dev, question, stats, table, testing, time, timeseries, typing, utils, visualization.wcsaxes, wcs.wcsapi)",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "Issues labeled with \"io.fits\" also carry the following labels:\n\n- Bug\n- Feature Request\n- unified-io\n- units",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l1:Label {name: \"io.fits\"}),\n      (i)-[:HAS_LABEL]->(l2:Label)\nWHERE l1 <> l2\nRETURN DISTINCT l2.name AS labelName LIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1897,
+              "output": 106
+            },
+            "ms": 2721
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "Issues labeled with \"io.fits\" also carry the following labels:\n\n- Bug\n- Feature Request\n- unified-io\n- units",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (issue:Issue)-[:HAS_LABEL]->(label:Label)\nWHERE label.name = \"io.fits\"\nMATCH (issue)-[:HAS_LABEL]->(otherLabel:Label)\nWHERE otherLabel.name <> \"io.fits\"\nRETURN DISTINCT otherLabel.name AS labelName\nLIMIT 50"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1902,
+              "output": 111
+            },
+            "ms": 2700
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "Issues labeled with \"io.fits\" also commonly carry the following labels:\n\n- **Bug**: 6 occurrences\n- **Feature Request**: 1 occurrence\n- **unified-io**: 1 occurrence\n- **units**: 1 occurrence",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (l:Label {name: \"io.fits\"})<-[:HAS_LABEL]-(i:Issue)-[:HAS_LABEL]->(other:Label)\nRETURN other.name, COUNT(*) AS count\nORDER BY count DESC\nLIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1905,
+              "output": 124
+            },
+            "ms": 2647
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "astropy-holdout-033",
+        "template": "commenters_on_label",
+        "kind": "retrieval",
+        "canary": false,
+        "question": "Which users have commented on issues labelled \"table\"? Give their usernames.",
+        "oracle": "github-actions, mhvk, taldcroft",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "Here are the users who have commented on issues labeled \"table\":\n\n- **mhvk**\n- **taldcroft**\n- **github-actions**",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (issue:Issue)-[:HAS_LABEL]->(label:Label {name: \"table\"})\nMATCH (issue)-[:HAS_COMMENT]->(comment:Comment)\nMATCH (comment)-[:AUTHORED_BY]->(user:User)\nRETURN DISTINCT user.login LIMIT 50"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1889,
+              "output": 108
+            },
+            "ms": 2509
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "The users who have commented on issues labeled \"table\" are:\n\n- mhvk\n- taldcroft\n- github-actions",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment)-[:AUTHORED_BY]->(u:User), (i)-[:HAS_LABEL]->(l:Label) WHERE l.name = \"table\" RETURN DISTINCT u.login LIMIT 25"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1881,
+              "output": 97
+            },
+            "ms": 2582
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "The users who have commented on issues labeled \"table\" are:\n\n- mhvk\n- taldcroft\n- github-actions",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (u:User)<-[:AUTHORED_BY]-(c:Comment)<-[:HAS_COMMENT]-(i:Issue)-[:HAS_LABEL]->(l:Label {name: \"table\"})\nRETURN DISTINCT u.login AS username\nLIMIT 50"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1881,
+              "output": 100
+            },
+            "ms": 2745
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "astropy-holdout-034",
+        "template": "author_of_most_commented",
+        "kind": "retrieval",
+        "canary": false,
+        "question": "Who opened the issue that has the most comments?",
+        "oracle": "eteq (#4738)",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "The issue with the most comments is [#4738](https://github.com/issues/4738), and it was opened by the user **eteq**.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment)\nRETURN i.number AS issueNumber, i.authorLogin AS author, COUNT(c) AS commentCount \nORDER BY commentCount DESC LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1863,
+              "output": 97
+            },
+            "ms": 2833
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "The issue with the most comments is [#4738](https://github.com/user/repo/issues/4738), opened by the user **eteq**, with a total of 50 comments.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment) WITH i, count(c) AS commentCount ORDER BY commentCount DESC LIMIT 1 MATCH (i)-[:AUTHORED_BY]->(u:User) RETURN i.number AS issueNumber, u.login AS authorLogin, commentCount LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1884,
+              "output": 124
+            },
+            "ms": 3324
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "The issue with the most comments is [#4738](https://github.com/your-repo-link/issues/4738), and it was opened by the user \"eteq\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment)\nRETURN i.number AS issueNumber, i.authorLogin AS author, COUNT(c) AS commentCount\nORDER BY commentCount DESC\nLIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1863,
+              "output": 101
+            },
+            "ms": 2866
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "astropy-holdout-035",
+        "template": "author_of_most_reacted",
+        "kind": "retrieval",
+        "canary": false,
+        "question": "Who opened the issue with the most reactions?",
+        "oracle": "astrofrog (#7689)",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "The issue with the most reactions is [#7689](https://github.com/issues/7689), opened by the user **astrofrog**, with a total of 2 reactions.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_REACTION]->(r:Reaction)\nRETURN i.number AS issueNumber, i.authorLogin AS author, COUNT(r) AS reactionCount\nORDER BY reactionCount DESC\nLIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1862,
+              "output": 102
+            },
+            "ms": 2641
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "The issue with the most reactions was opened by [astrofrog](https://github.com/astrofrog) and is issue number [#7689](https://github.com/org/repo/issues/7689) with 2 reactions.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_REACTION]->(r:Reaction)\nRETURN i.number AS issueNumber, i.authorLogin AS author, COUNT(r) AS reactionsCount\nORDER BY reactionsCount DESC\nLIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1863,
+              "output": 112
+            },
+            "ms": 2932
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "The issue with the most reactions is [Issue #7689](https://github.com/issue/7689), titled \"SkyCoord initialization with another SkyCoord.\" It was opened by the user with the login \"astrofrog.\"",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[r:HAS_REACTION]->(react:Reaction)\nRETURN i, COUNT(r) as reactionsCount\nORDER BY reactionsCount DESC\nLIMIT 1"
+                }
+              },
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (u:User)-[:AUTHORED_BY]->(i:Issue {number: 7689})\nRETURN u.login, u.name\nLIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 4578,
+              "output": 155
+            },
+            "ms": 4649
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "astropy-holdout-036",
+        "template": "absent_label_count",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many issues carry the label \"API: argument checking\"?",
+        "oracle": "0 (no such label in this repo)",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "stated absence",
+            "answer": "There are no issues with the label \"API: argument checking.\"",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"API: argument checking\"}) RETURN count(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1842,
+              "output": 63
+            },
+            "ms": 2433
+          },
+          {
+            "pass": true,
+            "reason": "stated absence",
+            "answer": "There are no issues carrying the label \"API: argument checking.\"",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"API: argument checking\"}) RETURN COUNT(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1842,
+              "output": 63
+            },
+            "ms": 2352
+          },
+          {
+            "pass": true,
+            "reason": "stated absence",
+            "answer": "There are no issues labeled \"API: argument checking\" in the repository.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"API: argument checking\"}) RETURN COUNT(i) AS count"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1840,
+              "output": 64
+            },
+            "ms": 2889
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "astropy-holdout-037",
+        "template": "absent_label_members",
+        "kind": "structural",
+        "canary": false,
+        "question": "List the issue numbers of every issue labelled \"API: argument checking\".",
+        "oracle": "none",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "cited ",
+            "answer": "There are no issues labeled \"API: argument checking\" in the repository.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"API: argument checking\"}) RETURN i.number LIMIT 100"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1839,
+              "output": 64
+            },
+            "ms": 2237
+          },
+          {
+            "pass": true,
+            "reason": "cited ",
+            "answer": "There are no issues currently labeled \"API: argument checking.\"",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"API: argument checking\"}) RETURN i.number LIMIT 100"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1839,
+              "output": 61
+            },
+            "ms": 2675
+          },
+          {
+            "pass": true,
+            "reason": "cited ",
+            "answer": "There are no issues labeled \"API: argument checking\" in the repository.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"API: argument checking\"}) RETURN i.number LIMIT 100"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1839,
+              "output": 64
+            },
+            "ms": 2381
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "astropy-holdout-038",
+        "template": "absent_term",
+        "kind": "retrieval",
+        "canary": false,
+        "question": "Which issues mention \"CPython\" in their title or body? Give their issue numbers.",
+        "oracle": "none",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "cited ",
+            "answer": "There are no issues mentioning \"CPython\" in their title or body.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)\nWHERE i.title CONTAINS \"CPython\" OR i.bodyText CONTAINS \"CPython\"\nRETURN i.number AS issueNumber\nLIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1856,
+              "output": 73
+            },
+            "ms": 2726
+          },
+          {
+            "pass": true,
+            "reason": "cited ",
+            "answer": "There are no issues mentioning \"CPython\" in their title or body. If you have any other questions, feel free to ask!",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)\nWHERE i.title CONTAINS 'CPython' OR i.bodyText CONTAINS 'CPython'\nRETURN i.number LIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1852,
+              "output": 81
+            },
+            "ms": 2382
+          },
+          {
+            "pass": true,
+            "reason": "cited ",
+            "answer": "No issues mentioning \"CPython\" in their title or body were found.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.title CONTAINS 'CPython' OR i.bodyText CONTAINS 'CPython' RETURN i.number LIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1850,
+              "output": 67
+            },
+            "ms": 2560
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "astropy-holdout-039",
+        "template": "absent_author_issues",
+        "kind": "structural",
+        "canary": false,
+        "question": "Which issues were opened by the user \"08walkersj\"? Give their issue numbers.",
+        "oracle": "none",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "cited ",
+            "answer": "There are no issues opened by the user \"08walkersj.\"",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User {login: \"08walkersj\"}) RETURN i.number LIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1849,
+              "output": 65
+            },
+            "ms": 2400
+          },
+          {
+            "pass": true,
+            "reason": "cited ",
+            "answer": "There are no issues opened by the user \"08walkersj.\"",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (u:User {login: \"08walkersj\"})<-[:AUTHORED_BY]-(i:Issue)\nRETURN i.number AS issueNumber\nLIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1855,
+              "output": 71
+            },
+            "ms": 2589
+          },
+          {
+            "pass": true,
+            "reason": "cited ",
+            "answer": "There are no issues opened by the user \"08walkersj\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User {login: \"08walkersj\"}) RETURN i.number LIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1849,
+              "output": 65
+            },
+            "ms": 2546
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "astropy-holdout-040",
+        "template": "absent_month_count",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many issues were created in 2012-10?",
+        "oracle": "0",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "stated absence",
+            "answer": "No issues were created in October 2012.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)\nWHERE i.createdAt STARTS WITH \"2012-10\"\nRETURN COUNT(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1839,
+              "output": 57
+            },
+            "ms": 2574
+          },
+          {
+            "pass": true,
+            "reason": "stated absence",
+            "answer": "No issues were created in October 2012.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)\nWHERE i.createdAt STARTS WITH '2012-10'\nRETURN COUNT(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1839,
+              "output": 57
+            },
+            "ms": 2207
+          },
+          {
+            "pass": true,
+            "reason": "stated absence",
+            "answer": "No issues were created in October 2012.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.createdAt STARTS WITH '2012-10' RETURN count(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1837,
+              "output": 55
+            },
+            "ms": 2434
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "astropy-holdout-041",
+        "template": "closed_count_paraphrase",
+        "kind": "structural",
+        "canary": false,
+        "question": "What is the number of issues in a closed state?",
+        "oracle": "36",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 36",
+            "answer": "There are 36 issues in a closed state.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {state: 'CLOSED'}) RETURN count(i) AS closedIssueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1830,
+              "output": 49
+            },
+            "ms": 2176
+          },
+          {
+            "pass": true,
+            "reason": "found 36",
+            "answer": "There are 36 issues in a closed state.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {state: \"CLOSED\"}) RETURN count(i) AS closedIssuesCount LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1834,
+              "output": 53
+            },
+            "ms": 2475
+          },
+          {
+            "pass": true,
+            "reason": "found 36",
+            "answer": "There are **36 issues** currently in a closed state.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {state: 'CLOSED'}) RETURN COUNT(i) AS closedIssueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1830,
+              "output": 51
+            },
+            "ms": 2658
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "astropy-holdout-042",
+        "template": "closed_count_paraphrase",
+        "kind": "structural",
+        "canary": false,
+        "question": "Count the issues in this repository that have been closed.",
+        "oracle": "36",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 36",
+            "answer": "There are 36 issues in this repository that have been closed.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {state: 'CLOSED'}) RETURN COUNT(i) as closedIssuesCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1830,
+              "output": 52
+            },
+            "ms": 2539
+          },
+          {
+            "pass": true,
+            "reason": "found 36",
+            "answer": "There are 36 issues in this repository that have been closed.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {state: 'CLOSED'}) RETURN count(i) as closedIssueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1830,
+              "output": 52
+            },
+            "ms": 2824
+          },
+          {
+            "pass": true,
+            "reason": "found 36",
+            "answer": "There are 36 closed issues in this repository.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {state: 'CLOSED'}) RETURN count(i) AS closedIssuesCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1830,
+              "output": 49
+            },
+            "ms": 2291
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "astropy-holdout-043",
+        "template": "distinct_authors_paraphrase",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many different people opened issues?",
+        "oracle": "40",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 40",
+            "answer": "A total of 40 different people have opened issues.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User) RETURN COUNT(DISTINCT u.login) AS uniqueAuthors"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1829,
+              "output": 58
+            },
+            "ms": 2976
+          },
+          {
+            "pass": true,
+            "reason": "found 40",
+            "answer": "There are 40 different people who have opened issues.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) RETURN COUNT(DISTINCT i.authorLogin) AS uniqueAuthors"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1819,
+              "output": 48
+            },
+            "ms": 2900
+          },
+          {
+            "pass": true,
+            "reason": "found 40",
+            "answer": "A total of 40 different people opened issues.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User) RETURN COUNT(DISTINCT u.login) AS uniqueAuthors"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1829,
+              "output": 57
+            },
+            "ms": 2430
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "astropy-holdout-044",
+        "template": "distinct_authors_paraphrase",
+        "kind": "structural",
+        "canary": false,
+        "question": "What is the number of unique issue authors?",
+        "oracle": "40",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 40",
+            "answer": "There are 40 unique issue authors.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (u:User)<-[:AUTHORED_BY]-(i:Issue) RETURN COUNT(DISTINCT u.login) AS uniqueAuthors"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1834,
+              "output": 56
+            },
+            "ms": 2169
+          },
+          {
+            "pass": true,
+            "reason": "found 40",
+            "answer": "There are 40 unique issue authors.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User) RETURN COUNT(DISTINCT u.login) AS uniqueAuthors"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1833,
+              "output": 55
+            },
+            "ms": 2583
+          },
+          {
+            "pass": true,
+            "reason": "found 40",
+            "answer": "There are 40 unique issue authors.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User) RETURN COUNT(DISTINCT u.login) AS uniqueAuthors"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1833,
+              "output": 55
+            },
+            "ms": 2638
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "astropy-holdout-045",
+        "template": "summarize_issue",
+        "kind": "semantic",
+        "canary": false,
+        "question": "Summarize the discussion on issue #4738. What is the problem and what did people say about it?",
+        "oracle": "Consider replacing astropy's progress bar machinery with tqdm",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue, its core problem, and the key discussion points without contradicting the reference facts.",
+            "answer": "The discussion on [issue #4738](https://github.com/owner/repo/issues/4738) centers around the possibility of replacing Astropy's custom progress bar utility with the `tqdm` library. Here are the key points from the conversation:\n\n### Problem\n- Should Astropy replace its custom progress bar with `tqdm`?\n\n### Key Discussion Points\n\n1. **Initial Concerns**: \n   - Some participants were concerned about adding a new dependency just for a progress bar. Others argued for the switch to promote modularity.\n\n2. **Dependency vs. Bundling**: \n   - There was debate about whether `tqdm` should be bundled with Astropy or added as a dependency, with differing opinions on the impact on users.\n\n3. **User Feedback and API Issues**: \n   - Issues such as API inconsistencies and lack of output in Jupyter notebooks were noted with the current progress bar.\n\n4. **Support for `tqdm`**: \n   - Many participants supported switching to `tqdm` due to its widespread use, ease of integration, and minimal dependencies.\n\n5. **Challenges with Switching**: \n   - Challenges in switching were noted, especially due to additional functionalities like multiprocessing in Astropy's `ProgressBar`.\n\n6. **Potential Solutions**: \n   - Suggestions included rewriting `ProgressBar` internals to use `tqdm` while maintaining compatibility and recommending `tqdm` in documentation.\n\n7. **Conclusion**: \n   - The discussion ended without a resolution, acknowledging the complexity of the switch but considering the recommendation of `tqdm` in documentation as an interim solution.\n\nOverall, while there is a strong inclination towards adopting `tqdm`, practical challenges and considerations were highlighted.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 4738,
+                  "userQuery": "What is the problem discussed and what did participants say about it?"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2409,
+              "output": 401
+            },
+            "ms": 7938
+          },
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue, key points, and discussion around replacing Astropy's progress bar with tqdm, aligning with the reference facts.",
+            "answer": "Here is a summary of the discussion on [issue #4738](https://github.com/org/repo/issues/4738):\n\n### Problem\nThe issue is about whether the Astropy library should replace its custom progress bar implementation with the `tqdm` library.\n\n### Key Points from the Discussion\n\n1. **Dependency Concerns**\n   - Some contributors express concerns about adding `tqdm` as a required dependency, viewing it as potentially excessive.\n   - Others argue that `tqdm` is lightweight and widely used, making it a reasonable choice.\n\n2. **Maintenance and Modularity**\n   - Arguments are made for using `tqdm` to avoid unnecessary maintenance of a custom progress bar.\n   - Aligns with open-source modularity principles, as a robust alternative is already available.\n\n3. **Functionality and Compatibility**\n   - Concerns exist about losing the current progress bar's multiprocessing capabilities if replaced by `tqdm`.\n\n4. **Community Feedback**\n   - Many support switching to `tqdm` due to its ease of use and widespread adoption.\n   - Some suggestions include keeping the current implementation to retain necessary functionality.\n\n5. **Potential Solutions**\n   - Proposals include making `tqdm` an optional dependency, integrating it while retaining existing functionality, or recommending it in documentation.\n\nOverall, while there is strong support for `tqdm`, the community is carefully considering the impact of new dependencies and retaining necessary features.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 4738,
+                  "userQuery": "What is the problem and what did people say about it?"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2241,
+              "output": 333
+            },
+            "ms": 7375
+          },
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue, focusing on the potential replacement of Astropy's progress bar with tqdm, and covers key discussion points without contradicting the reference facts.",
+            "answer": "### Issue Overview\n\nThe discussion on [issue #4738](https://github.com/astropy/astropy/issues/4738) focuses on whether to replace Astropy's custom progress bar utility with the `tqdm` library.\n\n### Key Discussion Points\n\n1. **Dependency Concerns**:\n   - Some contributors are worried about adding `tqdm` as a required dependency, considering it excessive for a non-core utility.\n   - Others argue that `tqdm` is lightweight and manageable as a dependency.\n\n2. **Maintenance and Modularity**:\n   - Suggestions to use `tqdm` as it would reduce maintenance overhead align with Astropy's modularity goals.\n\n3. **Functionality and Compatibility**:\n   - The existing `ProgressBar` includes features beyond showing progress, like multiprocessing logic, which complicates a simple switch.\n\n4. **Community Feedback**:\n   - Support exists for adopting `tqdm`, praising its usability and widespread adoption.\n   - Recognized that the transition would be complex due to current additional features.\n\n5. **Potential Solutions**:\n   - Ideas include making `tqdm` optional, rewriting `ProgressBar` with `tqdm` while ensuring compatibility, or recommending `tqdm` in documentation.\n\n6. **Final Considerations**:\n   - There's consensus on potential long-term benefits of using `tqdm`, but the complexity, especially with multiprocessing features, necessitates a careful approach.\n\n### Conclusion\n\nThe issue underscores a common open-source dilemma: adopting external libraries must balance benefits with functionality maintenance and dependency management.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 4738,
+                  "userQuery": "What is the problem and what did people say about it?"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2316,
+              "output": 361
+            },
+            "ms": 8533
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "astropy-holdout-046",
+        "template": "summarize_issue",
+        "kind": "semantic",
+        "canary": false,
+        "question": "Summarize the discussion on issue #10230. What is the problem and what did people say about it?",
+        "oracle": "Requesting two additional built-in frames. ",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue, its problems, and the discussion, without contradicting the reference facts.",
+            "answer": "### Issue #10230: Requesting Two Additional Built-in Frames\n\n**Summary:**\nThe issue discusses the need for adding new coordinate frames in the Astropy library to handle solar system ephemerides and transformations between celestial coordinate systems.\n\n**Problems Identified:**\n1. **Lack of Built-in Frames:** There are no built-in frames for translating ICRS coordinates to observer-specific locations or for converting positions to classical apparent places. This is crucial for tasks like comparing outputs with JPL Horizons or Skyfield.\n\n2. **Specific Needs:**\n   - Astrometric frame for translating ICRS without aberration and gravitational light deflection.\n   - Frame for handling transformations useful for equatorial mounted telescopes using local sidereal time.\n\n**Discussion Highlights:**\n- **Interest from Various Astronomy Fields:** Users, including those from the SunPy project, expressed interest, noting its utility in precise astronomical observations.\n  \n- **Implementation Challenges:** Concerns were raised about handling light-travel-time corrections and transformations for arbitrary coordinates.\n\n- **Frame Naming Suggestions:** Names such as \"Astrometric\" and \"TETE\" (True Equator, True Equinox) were suggested.\n\n- **Collaboration and Contributions:** Encouragement for community contributions, with suggestions to collaborate with other projects like poliastro.\n\n- **Accuracy and Calculations:** Emphasized the need for rigorous calculations to meet standards like SOFA for high precision.\n\nOverall, the discussion reflects a collaborative effort to improve Astropy's functionality in solar system dynamics and coordinate transformations.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 10230}) RETURN i.title, i.bodyText, i.state LIMIT 1"
+                }
+              },
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 10230,
+                  "userQuery": "What is the problem and what did people say about it?"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2710,
+              "output": 403
+            },
+            "ms": 9334
+          },
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue, focusing on the request for new coordinate frames in Astropy, which aligns with the reference.",
+            "answer": "The discussion on [issue #10230](https://github.com/astropy/astropy/issues/10230) focuses on implementing new coordinate frames in the Astropy library, essential for solar system ephemerides and astronomical calculations.\n\n### Key Points:\n\n1. **Problem Identification**: \n   - Lack of built-in frames for astrometric coordinates, crucial for specific astronomical tasks.\n\n2. **Astrometric Frame Proposal**:\n   - Suggested by contributors to create a frame that would aid calculations by accounting for factors like proper motion and light travel time.\n\n3. **TETE Frame Proposal**:\n   - The True Equator, True Equinox (TETE) frame would benefit observatories still using it, involving complex transformation calculations.\n\n4. **Challenges**:\n   - Concerns were raised regarding the complexity involved, particularly with solar system trajectory calculations.\n\n5. **Community Engagement**:\n   - Encouragement for community contributions, with appreciation for expert guidance provided within the discussion.\n\n6. **Integration Suggestions**:\n   - Integration with tools like poliastro was suggested for added flexibility in handling solar system dynamics.\n\nThe discussion highlights a collaborative effort among experts to extend Astropy's capabilities, addressing specific needs for astronomical research.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 10230,
+                  "userQuery": "What is the problem discussed and the main points from participants?"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2305,
+              "output": 284
+            },
+            "ms": 7464
+          },
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue, its core problem, and key discussion points without contradicting the reference facts.",
+            "answer": "The discussion on [issue #10230](https://github.com/astropy/astropy/issues/10230) concerns the implementation of specific astronomical coordinate frames in the Astropy library, specifically the \"Astrometric\" and \"TETE\" (True Equator, True Equinox) frames. Here's a summary of the key points:\n\n### Problem\nThe issue highlights the absence of certain built-in frames necessary for astronomical transformations useful in solar system ephemerides and radio astronomy. Specifically, there's a need for frames that handle astrometric coordinates, translating ICRS coordinates to the observer's location without aberration and gravitational light deflection.\n\n### Key Discussion Points\n\n1. **Lack of Built-in Frames**: The current lack of specific frames is attributed to them not being needed by previous contributors. There is a suggestion to add these frames for improved observations.\n\n2. **Astrometric Frame**: This frame is crucial for calculations involving the light travel time and observer location, sitting between BCRS and GCRS in SOFA astrometric tools.\n\n3. **TETE Frame**: Proposed for true equator, true equinox transformations, with naming conventions and implementation simplicity being discussed.\n\n4. **Implementation Challenges**: Concerns about complexity, especially with proper motion, radial velocity, and light travel time corrections, with a suggestion to derive the TETE frame from GCRS for accuracy.\n\n5. **Integration with Solar System Bodies**: Challenges of integrating trajectory calculations into the framework are discussed, debating whether Astropy or specialized packages like poliastro should manage these.\n\n6. **Community Contributions**: Contributors express willingness to help, acknowledging the complexity and expressing appreciation for guidance on enhancing implementations.\n\nOverall, this is a collaborative effort to boost Astropy's capabilities for specific astronomical uses, focusing on accuracy and usability.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 10230,
+                  "userQuery": "What is the problem and what are the comments about?"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2320,
+              "output": 406
+            },
+            "ms": 8432
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "astropy-holdout-047",
+        "template": "summarize_issue",
+        "kind": "semantic",
+        "canary": false,
+        "question": "Summarize the discussion on issue #13355. What is the problem and what did people say about it?",
+        "oracle": "A direct approach to ITRS to Observed transformations that stays within the ITRS.",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue #13355, addressing the core problem of ITRS transformations and the discussion points about obstime, distances, proposed solutions, and future directions. It does not contradict any reference facts and is specific to the issue.",
+            "answer": "### Problem Description\n\nThe issue [#13355](https://github.com/astropy/astropy/issues/13355) deals with transformations between different coordinate frames in Astropy, particularly focusing on the ITRS (International Terrestrial Reference System) frame. The main challenge is ensuring accurate transformations involving the ITRS, especially concerning satellite observations and corrections for stellar aberration. A significant part of the issue is how to appropriately handle observation time (obstime) in these transformations.\n\n### Key Points from the Discussion\n\n1. **Relevance of Obstime:**\n   - Obstime is deemed irrelevant for transformations like ITRS<->ITRS since stationary objects on Earth don't change with time, except for tectonic movements.\n   - Some propose raising warnings or exceptions if obstimes in frames do not match, advising alternative transformation paths.\n\n2. **Handling of Distances and Aberration:**\n   - Debate on the importance of distances for aberration corrections, with an assumption that co-moving with Earth is standard.\n   - A suggestion to document the handling of stellar aberration clearly, particularly for solar system bodies.\n\n3. **Proposed Solutions:**\n   - Propose creating a topocentric ITRS frame for intuitive satellite observation transformations.\n   - Suggestions to introduce new classes, like `TrueCoord` and `SkyCoord`, to manage various object transformations, distinguishing true from apparent positions.\n\n4. **Challenges and Considerations:**\n   - Concerns about altering existing API and transformation logic.\n   - Emphasis on the necessity for clear documentation to explain transformation behaviors and assumptions.\n   - Complexity in implementing new frameworks separating coordinate frames from data.\n\n5. **Future Directions:**\n   - Propose distinct classes for specific coordinate needs (e.g., `SatelliteCoord`, `EarthCoord`).\n   - Suggest transferring broader discussions to separate issues to maintain focus.\n\nOverall, the discussion underscores the intricacies of coordinate transformations in Astropy and the careful deliberation needed for handling frames and times in satellite observations and stellar aberration.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 13355,
+                  "userQuery": "Describe the problem and summarize key points from the discussion."
+                }
+              }
+            ],
+            "usage": {
+              "input": 2341,
+              "output": 446
+            },
+            "ms": 9154
+          },
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue, focusing on the ITRS transformations and related discussions, without contradicting the reference facts.",
+            "answer": "The discussion on [issue #13355](https://github.com/astropy/astropy/issues/13355) revolves around handling transformations between different coordinate frames, specifically focusing on the International Terrestrial Reference System (ITRS) frame in the Astropy library. Here's a summary of the key points:\n\n### Problem\nThe main issue is how to handle transformations involving ITRS coordinates, particularly concerning the observation time (obstime) and the necessity of distance in these transformations.\n\n### Key Points from the Discussion\n\n1. **Relevance of Obstime**:\n   - Debate over whether obstime should be considered in ITRS transformations.\n   - Some argue for time-invariant ITRS coordinates for stationary objects, while others note differences with other frames in Astropy.\n\n2. **Distance Considerations**:\n   - Questioning the necessity of considering distances, especially regarding aberration effects.\n   - General consensus is that co-moving with Earth is assumed, so distances might not be crucial.\n\n3. **Error Handling and Warnings**:\n   - Suggestion to handle errors for nonsensical inputs and provide warnings when making certain assumptions, such as ignoring obstime.\n\n4. **Class Design and API Changes**:\n   - Potential need for different classes for various coordinate types (e.g., satellites, Earth-based) which may necessitate significant API changes.\n\n5. **Documentation and User Guidance**:\n   - Emphasis on clear documentation to guide users on ITRS transformations and explain limitations and assumptions.\n\n6. **Proposed Solutions**:\n   - Proposal to create a topocentric ITRS frame for better handling of satellite observations and transformations without stellar aberration corrections.\n\nThe discussion highlights the complexity of coordinate transformations in Astropy and the importance of clear documentation and careful consideration of frame interactions and assumptions.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 13355,
+                  "userQuery": "What is the problem and what did people say about it?"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2277,
+              "output": 402
+            },
+            "ms": 7491
+          },
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue, its core problem, and key points from the discussion without contradicting the reference facts.",
+            "answer": "### Issue Summary: Handling Coordinate Transformations in Astropy\n\nThe discussion on [issue #13355](https://github.com/astropy/astropy/issues/13355) centers around transformations between different coordinate frames in the Astropy library, particularly focusing on the ITRS (International Terrestrial Reference System).\n\n#### Problem Description\nThe core issue involves handling transformations involving ITRS coordinates, especially with satellite observations and the inclusion of stellar aberration corrections.\n\n#### Key Points from the Discussion\n\n1. **Relevance of Distance and Obstime**:\n   - Debate on whether distances and observation times (obstime) should be considered in ITRS transformations.\n   - Some argue obstime is irrelevant for ITRS<->ITRS transformations, while others believe ignoring it could cause inconsistencies.\n\n2. **Error Handling and Warnings**:\n   - Suggestions to implement error handling for nonsensical inputs and warnings for assumptions like ignoring the obstime.\n\n3. **Coordinate Frame Consistency**:\n   - Concerns about maintaining consistency across different frames, ensuring ITRS coordinates don't behave differently.\n\n4. **Potential Solutions**:\n   - Ideas include creating a new class for specific use cases, using context managers, or introducing a topocentric ITRS frame.\n\n5. **Documentation and User Guidance**:\n   - Emphasis on clear documentation to help users understand limitations and proper usage.\n\n6. **Implementation Challenges**:\n   - Technical challenges in handling arguments for ITRS and ensuring compatibility with Astropy's existing structures.\n\n#### Conclusion\nThe conversation highlights the complexity of coordinate transformations in Astropy, particularly in specialized cases like satellite tracking, and discusses potential changes to improve flexibility and accuracy.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 13355,
+                  "userQuery": "What is the problem and what did people say about it?"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2282,
+              "output": 380
+            },
+            "ms": 8174
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "astropy-holdout-048",
+        "template": "summarize_issue",
+        "kind": "semantic",
+        "canary": false,
+        "question": "Summarize the discussion on issue #12840. What is the problem and what did people say about it?",
+        "oracle": "No longer able to read BinnedTimeSeries with datetime column saved as ECSV after upgrading from 4.2.1 -> 5.0+",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue, focusing on the same core problem and key points without contradicting the reference facts.",
+            "answer": "The discussion on [issue #12840](https://github.com/astropy/astropy/issues/12840) focuses on problems with the `astropy.TimeSeries` module regarding ECSV file handling. Here's a summary of the key points:\n\n### Problem\n- A recent update made the ECSV reader strict, causing exceptions for non-compliant files which previously worked. This creates backward compatibility issues, particularly with `datetime64` and `str` data types.\n\n### Key Points\n\n1. **Strict ECSV Reader**: \n   - The update to a strict reader was seen as a mistake. The community suggests changing it to issue warnings instead of exceptions, allowing non-compliant files to be read if possible.\n\n2. **Datetime64 Issue**:\n   - `datetime64` format causes unexpected output types. It's suggested to serialize `datetime64` to a string format to maintain compatibility.\n\n3. **Backward Compatibility**:\n   - Concerns were raised about older ECSV files' compatibility (version 0.9). A bug-fix release is proposed to handle older files without warnings, ensuring continued readability.\n\n4. **Data Type Handling**:\n   - Issues with `str` vs `string` data types are discussed. A workaround involves replacing `str` with `string`. There's a suggestion to allow `str` as an alias for `string` to improve compatibility.\n\n5. **Contributions and Testing**:\n   - Contributors are working on pull requests to resolve these issues. They are also considering more tests for regression prevention and code coverage improvement.\n\n6. **Future Changes**:\n   - There is a consensus to maintain ECSV files' human-readable aspect and consider changes for future releases (e.g., Astropy 5.1).\n\nThe discussion stresses balancing strict compliance with standards and practical usability, emphasizing backward compatibility and user expectations.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 12840,
+                  "userQuery": "Summarize the discussion, focusing on the problem and key points made by commenters."
+                }
+              }
+            ],
+            "usage": {
+              "input": 2307,
+              "output": 416
+            },
+            "ms": 8343
+          },
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue, aligns with the core problem, and does not contradict any reference facts.",
+            "answer": "### Summary of Issue #12840\n\n- **Problem:**  \n  The issue revolves around handling `datetime64` formats and compatibility issues when writing and reading ECSV files using `astropy.TimeSeries`. Users faced problems converting data from pandas to `TimeSeries`, downsampling, and ensuring compatibility with different versions of Astropy.\n\n- **Key Workflows or Use Cases:**\n  - Converting time-series data from pandas to `TimeSeries`.\n  - Downsampling data and writing it to an ECSV file.\n  - Ensuring datetime64 compatibility across Astropy versions and backward compatibility with older ECSV versions.\n\n- **Competitor Tools/Services Mentioned:**\n  - **Pandas** was mentioned for handling data before converting to `TimeSeries`.\n\n- **Workarounds:**\n  - **Monkey Patching:** Users found a workaround by modifying the ECSV reader to avoid exceptions.\n  - **JSON String Conversion:** Replacing 'str' with 'string' in JSON strings for compatibility.\n\n- **Proposed Solutions:**\n  - Modify the ECSV reader to issue warnings rather than exceptions for non-compliant files.\n  - Overwrite `_represent_as_dict` in `TimeInfo` for better `datetime64` serialization.\n  - Implement a bug-fix release for backward compatibility with ECSV 0.9.\n  - Allow 'str' as an alias for 'string' in ECSV to maintain compatibility.\n\n- **Emotional Tone:**\n  - The discussion is mainly neutral, with some frustration over compatibility issues. However, there is a constructive and collaborative effort between users and maintainers to find solutions.\n\nFor more detailed insights, you can view the comments directly on the GitHub issue page [here](https://github.com/org/repo/issues/12840).",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 12840,
+                  "userQuery": null
+                }
+              }
+            ],
+            "usage": {
+              "input": 2181,
+              "output": 388
+            },
+            "ms": 7198
+          },
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue, aligns with the core problem, and does not contradict any reference facts.",
+            "answer": "The discussion on [issue #12840](https://github.com/repository/issues/12840) primarily revolves around problems with the `astropy.TimeSeries` module related to reading and writing ECSV files. Here is a summary of the key points:\n\n### Main Problems\n1. **Strict ECSV Reader**:\n   - The ECSV file reader is too strict, resulting in exceptions for non-compliant files. \n   - Consensus is to issue warnings instead and try to proceed with reading the file. A pull request is proposed to make this change.\n\n2. **Datetime64 Format**:\n   - Issues arise with the `Time` object having a `datetime64` format, causing unexpected numpy dtypes in the output.\n   - Suggested fix involves converting `datetime64` to a string format when writing ECSV files for better readability and compatibility.\n\n3. **Backward Compatibility**:\n   - Concerns about backward compatibility, particularly with ECSV 0.9 files, as current updates break compatibility with older Astropy versions.\n   - Suggestions include a bug-fix release to handle ECSV 0.9 files without warnings.\n\n4. **Datatype Issues**:\n   - Certain datatypes like `str` are not recognized as valid ECSV datatypes, resulting in errors.\n   - The ECSV standard's lack of specificity to Python and Numpy leads to issues in datatype handling.\n\n### Community Involvement\n- The discussion includes contributions from multiple users, with @emirkmo actively working on a PR.\n- Suggestions for adding tests to prevent regressions.\n\nOverall, the discussion focuses on enhancing the flexibility of ECSV handling in Astropy, ensuring compatibility while preserving the format's readability.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 12840,
+                  "userQuery": "What is the problem and what did people say about it?"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2226,
+              "output": 380
+            },
+            "ms": 7916
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "astropy-holdout-049",
+        "template": "summarize_issue",
+        "kind": "semantic",
+        "canary": false,
+        "question": "Summarize the discussion on issue #14255. What is the problem and what did people say about it?",
+        "oracle": "Presence of SIP keywords leads to ignored PV keywords.",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue #14255, focusing on the problem with SIP and PV keywords in Astropy's WCS, and the discussion around potential solutions and challenges. It aligns with the core problem and does not contradict any reference facts.",
+            "answer": "### Problem Summary\n\nThe discussion on [issue #14255](https://github.com/astropy/astropy/issues/14255) centers around handling SCAMP and SIP distortion parameters in the Astropy library's World Coordinate System (WCS). The problem is tied to an earlier fix that didn't completely solve conflicts for users using CAR projections requiring PV keywords.\n\n### Key Discussion Points\n\n- **Proposed Solutions:**\n  1. Adjust handling based on projection type (TAN or TPV) and SCAMP distortion presence.\n  2. Use 3rd and 4th order polynomial terms as SCAMP distortion indicators.\n  3. Remove the `_fix_scamp` function if the underlying WCS library (wcslib) now natively supports SCAMP distortions.\n\n- **Challenges:**\n  - CAR projections conflict with the current assumption that PV keywords aren't used.\n  - Legacy files, like those from the Palomar Transient Factory (PTF), still rely on old behaviors.\n  - Manually modifying FITS headers is suggested but not ideal.\n\n- **Community Input:**\n  - Historical context and manual updates to CTYPE are discussed for handling legacy files.\n  - Consideration of removing `_fix_scamp` with the understanding of varied FITS keyword interpretations.\n\n- **Next Steps:**\n  - The removal of `_fix_scamp` is a favored direction, with a call to create a pull request.\n  - Suggestions include testing with legacy files to avoid new problems post-removal.\n\nOverall, the discussion reflects on balancing backward compatibility with current needs, considering the evolving support from libraries like wcslib.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 14255,
+                  "userQuery": "problem and discussion summary"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2401,
+              "output": 361
+            },
+            "ms": 10097
+          },
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue, its core problem, and the discussion points without contradicting the reference facts.",
+            "answer": "### Problem Summary\n\nThe issue discusses a problem in the Astropy library's WCS (World Coordinate System) module regarding the handling of SCAMP and SIP distortion parameters. The `_fix_scamp` function currently removes SCAMP's PVi_m parameters when SIP parameters are present, which causes issues for users needing PV keywords, particularly for the CAR projection.\n\n### Key Discussion Points\n\n- **Problem Identification**: \n  - The removal of SCAMP PVi_m distortion parameters is an issue for those using the CAR projection.\n  \n- **Proposed Solutions**: \n  - Determine projection type (TAN or TPV) to handle SCAMP distortions.\n  - Identify SCAMP distortions by specific polynomial terms.\n  - Consider wcslib’s current support for SCAMP distortions to potentially eliminate the filtering.\n\n- **Debate on CAR Projection**:\n  - Some contributors questioned the necessity of PV keywords for CAR projection, but specific use cases were clarified where they are needed.\n\n- **Temporary Workarounds**: \n  - Commenting out `_fix_scamp` or setting PV parameters manually.\n  - Concerns about regressions with older image data, like PTF images.\n\n- **Legacy and Future Considerations**: \n  - Discussion of relevance of pre-2012 FITS conventions.\n  - Suggestion to potentially remove `_fix_scamp` due to wcslib's improved capabilities.\n\n- **Community Input**: \n  - Contributors provided insights, with consensus on users updating legacy SCAMP files and possibly removing `_fix_scamp`.\n\nOverall, the discussion centers on maintaining backward compatibility while addressing current and future capabilities, with varying opinions on the necessity of some parameters for specific projections.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 14255,
+                  "userQuery": "What is the problem and what did people say about it?"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2395,
+              "output": 382
+            },
+            "ms": 8454
+          },
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue, its problem, and the key discussions without contradicting the reference facts.",
+            "answer": "The discussion on [issue #14255](https://github.com/org/repo/issues/14255) is centered around handling SCAMP distortion parameters in the Astropy library's `_fix_scamp` function. Here’s a detailed breakdown:\n\n### Problem\n- **Issue with `_fix_scamp`**: The function removes SCAMP's PVi_m distortion parameters when SIP distortion parameters are present, confusing the wcslib library.\n- **Impact on CAR Projections**: The problem is prominent when using a CAR projection requiring PV keywords, which the current implementation improperly removes.\n\n### Key Discussions\n\n1. **Identify the Problem**:\n   - Confusion when both distortion parameter types are present.\n   - Difficulty with CAR projections needing PV keywords.\n\n2. **Proposed Solutions**:\n   - **Projection Type Check**: Determine the projection type (TAN or TPV).\n   - **SCAMP Distortion Identification**: Look for third and fourth-order polynomial terms.\n   - **Evaluate WCSLIB**: Investigate whether wcslib's latest version supports SCAMP distortions and potentially remove filtering.\n\n3. **CAR Projection Discussion**:\n   - Clarification needed on the necessity of PV keywords.\n\n4. **Temporary Workarounds**:\n   - Commenting out the `_fix_scamp` line temporarily resolves the issue but isn’t ideal.\n\n5. **Legacy Files Concern**:\n   - The effect on legacy files like those from the Palomar Transient Factory (PTF).\n   - Manual updating suggested as a temporary measure.\n\n6. **Community Input**:\n   - Discussions on the potential impact, historical context, and opinions from those familiar with the issue.\n\n7. **Next Steps**:\n   - Consider removal of the `_fix_scamp` function.\n   - Suggest a pull request (PR) as a potential resolution.\n\nThe discourse stresses maintaining backward compatibility and the value of community contributions.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 14255,
+                  "userQuery": "What is the problem and what did people say about it?"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2354,
+              "output": 423
+            },
+            "ms": 9584
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "astropy-holdout-050",
+        "template": "summarize_issue",
+        "kind": "semantic",
+        "canary": false,
+        "question": "Summarize the discussion on issue #12239. What is the problem and what did people say about it?",
+        "oracle": "Angle bug for (d, m, s) tuple input (deprecate dms_to_degrees)",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue, problem, proposed solutions, challenges, and outcome without contradicting the reference facts.",
+            "answer": "The discussion on [issue #12239](https://github.com/org/repo/issues/12239) focuses on a problem with the `dms_to_degrees` function in the `astropy` library, specifically regarding the handling of negative zero and sign preservation. Here's a summary of the key points discussed:\n\n### Problem Identification\n- **Issue**: Python treats `-0` as `0`, which leads to the sign being lost when passing arguments. This is significant for calculations involving degrees, minutes, and seconds (d, m, s).\n\n### Proposed Solutions\n1. **String Conversion**: Convert (d, m, s) to strings to preserve the sign and convert back to numeric values when needed.\n2. **Sign Logic**: Determine the sign based on non-zero elements of (d, m, s). Check the sign of `m` if `d` is zero, and of `s` if `m` is also zero.\n3. **Simple Calculation**: Calculate as `deg + min/60 + sec/3600`, which allows for handling of all values without complex sign checks.\n\n### Challenges and Considerations\n- **Implementation Complexity**: Concerns about complexity and potential breaking changes to existing code.\n- **Deprecation**: Decided to deprecate `dms_to_degrees` due to its complexity and limited use, rather than refine it.\n- **Backward Compatibility**: Discussions on maintaining compatibility with users' existing code.\n\n### Outcome\n- The function `dms_to_degrees` was marked for deprecation. If a critical use case arises, a new approach may be considered, requiring explicit handling of negative signs by users.\n\nThe discussion underscores the difficulties in handling edge cases in numerical computations and balancing simplicity, correctness, and backward compatibility in software development.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 12239,
+                  "userQuery": "What is the problem and what are the key points discussed?"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2290,
+              "output": 406
+            },
+            "ms": 13252
+          },
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue, problem, and discussion points without contradicting the reference facts.",
+            "answer": "The discussion on [issue #12239](https://github.com/astropy/astropy/issues/12239) focuses on a problem with the `dms_to_degrees` function in the Astropy library, concerning the handling of negative zero and sign preservation in angle conversions.\n\n### Problem\n\nThe core issue is that when converting degrees, minutes, and seconds (d, m, s) to a float degrees value, the function fails to maintain the sign of zero. This can lead to incorrect results, especially with inputs like (0, -40, -30), which should represent a negative angle.\n\n### Key Points from the Discussion\n\n1. **Problem Identification**\n   - The sign of zero is lost during argument passing, affecting conversion accuracy.\n   - This loss mainly impacts cases with negative values and unconventional inputs.\n\n2. **Proposed Solutions**\n   - Convert (d, m, s) into strings to preserve the sign, then use numeric values.\n   - Implement logic to determine the sign based on non-zero elements.\n   - Simplify calculations with `deg + min/60 + sec/3600`, ignoring zero’s sign.\n\n3. **Challenges and Implementation**\n   - The proposed solutions faced issues in execution and impacted existing checks.\n   - Current inconsistencies deterred further complex fixes due to low usage frequency.\n\n4. **Deprecation Decision**\n   - The function is marked for deprecation as its maintenance is deemed unnecessary.\n   - Alternative handling modes were considered but not implemented.\n\nOverall, the complexity of handling negative zero and sign preservation has led to the decision to phase out the function. The community’s efforts focused on minimizing impact on current users while addressing the identified flaws.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 12239,
+                  "userQuery": "What is the problem and what did people say about it?"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2307,
+              "output": 380
+            },
+            "ms": 8284
+          },
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue, problem, and discussion points without contradicting the reference facts.",
+            "answer": "The discussion on [issue #12239](https://github.com/user/repo/issues/12239) focuses on a problem related to handling negative zero and sign preservation in the `dms_to_degrees` function. Here's a summary of the issue and the discussion:\n\n### Problem\n- **Sign Preservation**: The main problem is with the `dms_to_degrees` function, which loses the sign of zero during argument passing. This conversion is crucial for calculations where the sign indicates directionality or position.\n\n### Proposed Solutions\n1. **`webbdays`' Initial Proposal**: Suggested treating `d`, `m`, `s` as strings first to preserve the sign, converting them to numbers only when necessary.\n2. **`adrn`'s Logic**: Proposed checking the sign of subsequent elements if `d` is zero and raising an exception if there are inconsistent signs in `m` and `s`.\n3. **`mhvk`'s Simpler Method**: Recommended calculating degrees as `deg + min/60 + sec/3600`, ignoring complex sign logic.\n\n### Discussion Points\n- **Preservation vs. Change**: There was a debate on whether to maintain the current approach or introduce changes, with concerns about breaking existing code.\n- **Simplification vs. Functionality**: `webbdays` emphasized simplicity, suggesting no additional sign checks or conversions are necessary.\n\n### Resolution\n- **Deprecation Decision**: The discussion concluded with the decision to deprecate the `dms_to_degrees` function due to a lack of critical use cases and maintenance complexity. This was supported by `pllim` and `eteq`.\n- **Alternative Considerations**: Although alternative methods were considered to handle signs explicitly, they were deemed unnecessary as the function is not widely used.\n\nOverall, the issue illustrates the complexity of sign preservation in coordinate conversions and the balance between backward compatibility and codebase simplification.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 12239,
+                  "userQuery": "What is the problem and what did people say about it?"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2343,
+              "output": 433
+            },
+            "ms": 10000
+          }
+        ],
+        "passRate": 1
+      }
+    ],
+    "openai": {
+      "requests": 323,
+      "byModel": {
+        "gpt-4o-2024-08-06": {
+          "requests": 323,
+          "promptTokens": 359118,
+          "completionTokens": 25695,
+          "unmetered": 0
+        }
+      },
+      "byEndpoint": {
+        "/responses": 305,
+        "/chat/completions": 18
+      },
+      "byHost": {
+        "api.openai.com": 323
+      },
+      "unpricedModels": [],
+      "unmetered": 0,
+      "usageSource": "wire",
+      "reportedTokens": {
+        "input": 292956,
+        "output": 17614
+      },
+      "costUsd": 1.1547450000000001
+    },
+    "neo4j": {
+      "queries": 156,
+      "sessions": 156,
+      "transactions": 0,
+      "samples": [
+        "MATCH (i:Issue) RETURN COUNT(i) AS totalIssues",
+        "MATCH (c:Comment) RETURN count(c) AS totalComments",
+        "MATCH (c:Comment) RETURN COUNT(c) AS totalComments",
+        "MATCH (i:Issue) RETURN count(i) AS totalIssues",
+        "MATCH (i:Issue) RETURN count(i) AS totalIssues",
+        "MATCH (c:Comment) RETURN count(c) AS totalComments",
+        "MATCH (i:Issue {state: 'OPEN'}) RETURN COUNT(i) AS openIssue",
+        "MATCH (i:Issue {state: 'CLOSED'}) RETURN count(i) AS closedI",
+        "MATCH (i:Issue {state: 'OPEN'}) RETURN count(i) as openIssue",
+        "MATCH (i:Issue {state: 'CLOSED'}) RETURN count(i) as closedI",
+        "MATCH (i:Issue {state: 'OPEN'}) RETURN count(i) as openIssue",
+        "MATCH (i:Issue {state: 'CLOSED'}) RETURN count(i) as closedI",
+        "MATCH (i:Issue {number: 386}) RETURN i.state LIMIT 1",
+        "MATCH (i:Issue {number: 386}) RETURN i.state LIMIT 1",
+        "MATCH (i:Issue {number: 386}) RETURN i.state LIMIT 1",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE i.state = 'OPE",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE i.state = 'OPE",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE i.state = 'OPE",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE i.state = 'OPE",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE i.state = 'OPE",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE i.state = 'OPE",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE i.state = 'OPE",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE i.state = 'OPE",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE i.state = 'OPE",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"units\"}) WHER",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE l.name = \"unit",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"units\"}) WHER",
+        "MATCH (l:Label) RETURN COUNT(DISTINCT l.name) AS labelCount",
+        "MATCH (l:Label) RETURN count(DISTINCT l.name) AS labelCount",
+        "MATCH (l:Label) RETURN count(DISTINCT l.name) AS labelCount",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: 'Bug'}) RETURN",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"Bug\"}) RETURN",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"Bug\"}) RETURN",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"bug\"}) RETURN",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"bug\"}) RETURN",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"bug\"}) RETURN",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"units\"}) RETU",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"wcs\"}) RETURN",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"units\"}) RETU",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"wcs\"}) RETURN",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"wcs\"}) RETURN",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"units\"}) RETU",
+        "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User) RETURN COUNT(DISTIN",
+        "MATCH (u:User)<-[:AUTHORED_BY]-(i:Issue) RETURN COUNT(DISTIN",
+        "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User {login: \"taldcroft\"}",
+        "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User {login: \"taldcroft\"}",
+        "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User {login: \"taldcroft\"}",
+        "MATCH (u:User)<-[:AUTHORED_BY]-(i:Issue) RETURN COUNT(DISTIN",
+        "MATCH (i:Issue {number: 386})-[:AUTHORED_BY]->(u:User) RETUR",
+        "MATCH (i:Issue {number: 386})-[:AUTHORED_BY]->(u:User) RETUR",
+        "MATCH (i:Issue {number: 386})-[:AUTHORED_BY]->(u:User) RETUR",
+        "MATCH (i:Issue {number: 4738})-[:HAS_COMMENT]->(c:Comment)-[",
+        "MATCH (i:Issue {number: 4738})-[:HAS_COMMENT]->(c:Comment)-[",
+        "MATCH (i:Issue) WHERE i.createdAt >= '2018-07-01' AND i.crea",
+        "MATCH (i:Issue {number: 4738})-[:HAS_COMMENT]->(c:Comment)-[",
+        "MATCH (i:Issue) WHERE i.createdAt STARTS WITH '2018-07' RETU",
+        "MATCH (i:Issue) WHERE i.createdAt STARTS WITH '2018-07' RETU",
+        "MATCH (i:Issue) WHERE i.createdAt < '2019-01-11' RETURN COUN",
+        "MATCH (i:Issue) WHERE date(i.createdAt) < date('2019-01-11')",
+        "MATCH (i:Issue) WHERE i.createdAt > '2019-01-11' RETURN COUN",
+        "MATCH (i:Issue) WHERE i.createdAt > \"2019-01-11\" RETURN COUN",
+        "MATCH (i:Issue) WHERE i.createdAt < '2019-01-11' RETURN COUN",
+        "MATCH (i:Issue) WHERE datetime(i.createdAt) < datetime('2019",
+        "MATCH (issue:Issue) WHERE issue.createdAt > '2019-01-11' RET",
+        "MATCH (issue:Issue) WHERE issue.createdAt > '2022-02-11' RET",
+        "MATCH (i:Issue) WHERE i.createdAt > '2022-02-11' RETURN COUN",
+        "MATCH (i:Issue) WHERE i.createdAt > '2022-02-11' RETURN coun",
+        "MATCH (i:Issue) WHERE date(i.createdAt) >= date('2019-01-11'",
+        "MATCH (i:Issue) WHERE date(i.createdAt) >= date('2019-01-11'",
+        "MATCH (i:Issue) WHERE NOT (i)-[:HAS_COMMENT]->(:Comment) RET",
+        "MATCH (i:Issue) WHERE date(i.createdAt) >= date('2019-01-11'",
+        "MATCH (i:Issue) WHERE datetime(i.createdAt) >= datetime('201",
+        "MATCH (i:Issue) WHERE i.createdAt >= '2019-01-11' AND i.crea",
+        "MATCH (i:Issue) WHERE NOT (i)-[:HAS_COMMENT]->() RETURN coun",
+        "MATCH (i:Issue) WHERE i.createdAt >= '2019-01-11T00:00:00Z' ",
+        "MATCH (i:Issue) WHERE NOT (i)-[:HAS_COMMENT]->(:Comment) RET",
+        "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment) RETURN i.number ",
+        "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment) RETURN i.number ",
+        "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment) RETURN i.number ",
+        "MATCH (i:Issue)-[:HAS_REACTION]->(r:Reaction) RETURN i.numbe",
+        "MATCH (i:Issue)-[:HAS_REACTION]->(r:Reaction) RETURN i.numbe",
+        "MATCH (i:Issue)-[:HAS_REACTION]->(r:Reaction) RETURN i.numbe",
+        "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment) WITH i, COUNT(c)",
+        "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment) WITH i, COUNT(c)",
+        "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment) WITH i, COUNT(c)",
+        "MATCH (i:Issue {number: 4738})-[:HAS_COMMENT]->(c:Comment) R",
+        "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment) WHERE i.number =",
+        "MATCH (i:Issue {number: 4738})-[:HAS_COMMENT]->(c:Comment) R",
+        "MATCH (i:Issue {number: 386}) RETURN i.title LIMIT 1",
+        "MATCH (i:Issue {number: 386}) RETURN i.title LIMIT 1",
+        "MATCH (i:Issue {number: 386}) RETURN i.title LIMIT 1",
+        "MATCH (i:Issue {number: 4738}) RETURN i.title LIMIT 1",
+        "MATCH (i:Issue {number: 4738}) RETURN i.title LIMIT 1",
+        "MATCH (i:Issue {number: 4738}) RETURN i.title LIMIT 1",
+        "MATCH (i:Issue) WHERE toLower(i.title) CONTAINS \"better\" OR ",
+        "MATCH (i:Issue) WHERE toLower(i.title) CONTAINS \"better\" OR ",
+        "MATCH (i:Issue) WHERE toLower(i.title) CONTAINS 'better' OR ",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l1:Label {name: \"io.fits\"}), ",
+        "MATCH (issue:Issue)-[:HAS_LABEL]->(label:Label) WHERE label.",
+        "MATCH (l:Label {name: \"io.fits\"})<-[:HAS_LABEL]-(i:Issue)-[:",
+        "MATCH (issue:Issue)-[:HAS_LABEL]->(label:Label {name: \"table",
+        "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment)-[:AUTHORED_BY]->",
+        "MATCH (u:User)<-[:AUTHORED_BY]-(c:Comment)<-[:HAS_COMMENT]-(",
+        "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment) RETURN i.number ",
+        "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment) WITH i, count(c)",
+        "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment) RETURN i.number ",
+        "MATCH (i:Issue)-[:HAS_REACTION]->(r:Reaction) RETURN i.numbe",
+        "MATCH (i:Issue)-[:HAS_REACTION]->(r:Reaction) RETURN i.numbe",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"API: argument",
+        "MATCH (i:Issue)-[r:HAS_REACTION]->(react:Reaction) RETURN i,",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"API: argument",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"API: argument",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"API: argument",
+        "MATCH (u:User)-[:AUTHORED_BY]->(i:Issue {number: 7689}) RETU",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"API: argument",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"API: argument",
+        "MATCH (i:Issue) WHERE i.title CONTAINS 'CPython' OR i.bodyTe",
+        "MATCH (i:Issue) WHERE i.title CONTAINS \"CPython\" OR i.bodyTe",
+        "MATCH (i:Issue) WHERE i.title CONTAINS 'CPython' OR i.bodyTe",
+        "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User {login: \"08walkersj\"",
+        "MATCH (u:User {login: \"08walkersj\"})<-[:AUTHORED_BY]-(i:Issu",
+        "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User {login: \"08walkersj\"",
+        "MATCH (i:Issue) WHERE i.createdAt STARTS WITH '2012-10' RETU",
+        "MATCH (i:Issue) WHERE i.createdAt STARTS WITH \"2012-10\" RETU",
+        "MATCH (i:Issue) WHERE i.createdAt STARTS WITH '2012-10' RETU",
+        "MATCH (i:Issue {state: 'CLOSED'}) RETURN count(i) AS closedI",
+        "MATCH (i:Issue {state: \"CLOSED\"}) RETURN count(i) AS closedI",
+        "MATCH (i:Issue {state: 'CLOSED'}) RETURN COUNT(i) AS closedI",
+        "MATCH (i:Issue {state: 'CLOSED'}) RETURN COUNT(i) as closedI",
+        "MATCH (i:Issue {state: 'CLOSED'}) RETURN count(i) as closedI",
+        "MATCH (i:Issue {state: 'CLOSED'}) RETURN count(i) AS closedI",
+        "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User) RETURN COUNT(DISTIN",
+        "MATCH (i:Issue) RETURN COUNT(DISTINCT i.authorLogin) AS uniq",
+        "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User) RETURN COUNT(DISTIN",
+        "MATCH (u:User)<-[:AUTHORED_BY]-(i:Issue) RETURN COUNT(DISTIN",
+        "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User) RETURN COUNT(DISTIN",
+        "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User) RETURN COUNT(DISTIN",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: 10230}) RETURN i.title, i.bodyText, ",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT"
+      ]
+    },
+    "judgeCostUsd": 0.18838999999999997
+  },
+  "score": {
+    "overall": 0.98,
+    "deterministic": 0.9772727272727273,
+    "semantic": 1,
+    "byKind": {
+      "structural": 0.9705882352941176,
+      "retrieval": 1,
+      "semantic": 1
+    },
+    "solvedAllAttempts": 49,
+    "solvedAnyAttempt": 49,
+    "totalTasks": 50,
+    "canaryPass": true,
+    "toolUseRate": 1,
+    "agentErrorRate": 0
+  },
+  "cost": {
+    "ingestUsd": 0,
+    "qaUsd": 1.1547450000000001,
+    "judgeUsd": 0.18838999999999997,
+    "sutTotalUsd": 1.1547450000000001
+  },
+  "finishedAt": "2026-09-05T11:28:39.988Z",
+  "trace": {
+    "files": [
+      "github-issue-analyzer-2026-09-05T11-26-54-467Z-1826350.jsonl"
+    ],
+    "spans": 644,
+    "byName": {
+      "gen_ai.request": {
+        "count": 305,
+        "totalMs": 440727,
+        "maxMs": 4559,
+        "errors": 0
+      },
+      "tool.summarizeComments": {
+        "count": 18,
+        "totalMs": 71773,
+        "maxMs": 7887,
+        "errors": 0
+      },
+      "neo4j.query": {
+        "count": 183,
+        "totalMs": 1873,
+        "maxMs": 40,
+        "errors": 4
+      },
+      "tool.queryNeo4j": {
+        "count": 138,
+        "totalMs": 1752,
+        "maxMs": 41,
+        "errors": 0
+      }
+    }
+  }
+}

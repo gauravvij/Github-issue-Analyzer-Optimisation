@@ -1,0 +1,4170 @@
+{
+  "job": "C-champion__sympy2-dev",
+  "split": "sympy2-dev",
+  "startedAt": "2026-09-05T10:41:28.406Z",
+  "valid": true,
+  "invalidReason": null,
+  "config": {
+    "split": "sympy2-dev",
+    "job": "C-champion__sympy2-dev",
+    "stage": "all",
+    "attempts": 3,
+    "latencyMs": 120,
+    "qaConcurrency": 6,
+    "keepGraph": false,
+    "noTypecheck": false,
+    "model": "openai/gpt-4o",
+    "judgeModel": "gpt-4o",
+    "corpusIssues": 60,
+    "tasks": 50
+  },
+  "sut": {
+    "hash": "9eeb557db3e87c2d",
+    "files": 19
+  },
+  "preflight": [
+    {
+      "name": "sut_present",
+      "pass": true,
+      "detail": "/home/azureuser/githubIssue/.worktrees/champion/github_issue"
+    },
+    {
+      "name": "sut_deps_installed",
+      "pass": true,
+      "detail": "node_modules present"
+    },
+    {
+      "name": "corpus_present",
+      "pass": true,
+      "detail": "/home/azureuser/githubIssue/verification_bench/corpus/sympy2-dev.json"
+    },
+    {
+      "name": "tasks_present",
+      "pass": true,
+      "detail": "/home/azureuser/githubIssue/verification_bench/tasks/sympy2-dev.jsonl"
+    },
+    {
+      "name": "splits_frozen",
+      "pass": true,
+      "detail": "60 issues, 50 tasks, corpus built 2026-09-05T10:12:03.711Z"
+    },
+    {
+      "name": "canaries_present",
+      "pass": true,
+      "detail": "2 canary task(s)"
+    },
+    {
+      "name": "splits_unmodified",
+      "pass": true,
+      "detail": "checksums match"
+    },
+    {
+      "name": "seam_github_api_url",
+      "pass": true,
+      "detail": "github.ts honours GITHUB_API_URL"
+    },
+    {
+      "name": "seam_agent_config",
+      "pass": true,
+      "detail": "agent/config.ts present"
+    },
+    {
+      "name": "openai_key_set",
+      "pass": true,
+      "detail": "set"
+    },
+    {
+      "name": "openai_key_live",
+      "pass": true,
+      "detail": "model=gpt-4o-mini-2024-07-18 usage=9"
+    },
+    {
+      "name": "meter_sees_openai",
+      "pass": true,
+      "detail": "1 request(s) intercepted"
+    },
+    {
+      "name": "meter_reads_usage",
+      "pass": true,
+      "detail": "prompt=8 completion=1 model=gpt-4o-mini-2024-07-18"
+    },
+    {
+      "name": "meter_can_price_models",
+      "pass": true,
+      "detail": "all models priced"
+    },
+    {
+      "name": "docker_running",
+      "pass": true,
+      "detail": "29.1.3"
+    },
+    {
+      "name": "neo4j_image",
+      "pass": true,
+      "detail": "neo4j:5 present"
+    },
+    {
+      "name": "ports_free",
+      "pass": true,
+      "detail": "7690/7475 available"
+    },
+    {
+      "name": "sut_typechecks",
+      "pass": true,
+      "detail": "clean"
+    }
+  ],
+  "ingest": {
+    "durationMs": 139807,
+    "pipeline": {
+      "issuesFetched": 60,
+      "issuesIngested": 60,
+      "issuesAnalyzed": 60,
+      "issuesSkipped": 0,
+      "errors": [],
+      "durationMs": 139801,
+      "incremental": false
+    },
+    "github": {
+      "requests": 121,
+      "listingRequests": 1,
+      "issueRequests": 120,
+      "maxConcurrent": 1,
+      "busyMs": 14838
+    },
+    "neo4j": {
+      "queries": 264,
+      "sessions": 4,
+      "transactions": 1,
+      "samples": [
+        "CREATE CONSTRAINT issue_id_unique IF NOT EXISTS FOR (i:Issue",
+        "CREATE CONSTRAINT issue_number_unique IF NOT EXISTS FOR (i:I",
+        "CREATE CONSTRAINT comment_id_unique IF NOT EXISTS FOR (c:Com",
+        "CREATE CONSTRAINT user_login_unique IF NOT EXISTS FOR (u:Use",
+        "CREATE CONSTRAINT label_name_unique IF NOT EXISTS FOR (l:Lab",
+        "CREATE CONSTRAINT category_name_unique IF NOT EXISTS FOR (c:",
+        "CREATE CONSTRAINT competitor_name_unique IF NOT EXISTS FOR (",
+        "CREATE CONSTRAINT solution_text_unique IF NOT EXISTS FOR (s:",
+        "CREATE CONSTRAINT workaround_text_unique IF NOT EXISTS FOR (",
+        "CREATE CONSTRAINT keyword_name_unique IF NOT EXISTS FOR (k:K",
+        "CREATE INDEX issue_state_lookup IF NOT EXISTS FOR (i:Issue) ",
+        "CREATE INDEX issue_updated_at_lookup IF NOT EXISTS FOR (i:Is",
+        "UNWIND $issues AS item MERGE (i:Issue {issueId: item.issueId",
+        "UNWIND $issues AS item UNWIND item.users AS user MERGE (u:Us",
+        "UNWIND $issues AS item WITH item WHERE item.authorLogin IS N",
+        "UNWIND $issues AS item UNWIND item.labels AS label MERGE (l:",
+        "UNWIND $issues AS item UNWIND item.issueReactions AS reactio",
+        "UNWIND $issues AS item UNWIND item.comments AS c MERGE (comm",
+        "UNWIND $issues AS item UNWIND item.comments AS c WITH c WHER",
+        "UNWIND $issues AS item UNWIND item.comments AS c UNWIND c.re",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MERGE (w:Workaround {workaroundText: $text}) SET w.embedding",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MATCH (i:Issue {number: $n}) UNWIND $competitors AS comp MER",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MATCH (i:Issue {number: $n}) UNWIND $competitors AS comp MER",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MERGE (w:Workaround {workaroundText: $text}) SET w.embedding",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (w:Workaround {workaroundText: $text}) SET w.embedding",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MATCH (i:Issue {number: $n}) UNWIND $competitors AS comp MER",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MERGE (w:Workaround {workaroundText: $text}) SET w.embedding",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MERGE (w:Workaround {workaroundText: $text}) SET w.embedding",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MERGE (w:Workaround {workaroundText: $text}) SET w.embedding",
+        "MATCH (i:Issue {number: $n}) UNWIND $competitors AS comp MER",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MERGE (w:Workaround {workaroundText: $text}) SET w.embedding",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (w:Workaround {workaroundText: $text}) SET w.embedding",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MERGE (w:Workaround {workaroundText: $text}) SET w.embedding",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MERGE (w:Workaround {workaroundText: $text}) SET w.embedding",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MERGE (w:Workaround {workaroundText: $text}) SET w.embedding",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG"
+      ]
+    },
+    "openai": {
+      "requests": 60,
+      "byModel": {
+        "gpt-4o-2024-08-06": {
+          "requests": 60,
+          "promptTokens": 107337,
+          "completionTokens": 7483,
+          "unmetered": 0
+        }
+      },
+      "byEndpoint": {
+        "/chat/completions": 60
+      },
+      "byHost": {
+        "api.openai.com": 60
+      },
+      "unpricedModels": [],
+      "costUsd": 0.3431725
+    }
+  },
+  "graphProvenance": {
+    "sutHash": "9eeb557db3e87c2d",
+    "split": "sympy2-dev",
+    "job": "C-champion__sympy2-dev",
+    "at": "2026-09-05T10:43:51.728Z"
+  },
+  "integrity": [
+    {
+      "name": "issue_count",
+      "pass": true,
+      "expected": "60",
+      "actual": "60",
+      "info": false
+    },
+    {
+      "name": "comment_count",
+      "pass": true,
+      "expected": "245",
+      "actual": "245",
+      "info": false
+    },
+    {
+      "name": "user_count",
+      "pass": true,
+      "expected": "77",
+      "actual": "77",
+      "info": false
+    },
+    {
+      "name": "label_count",
+      "pass": true,
+      "expected": "28",
+      "actual": "28",
+      "info": false
+    },
+    {
+      "name": "reaction_count",
+      "pass": true,
+      "expected": "17",
+      "actual": "17",
+      "info": false
+    },
+    {
+      "name": "no_duplicate_issue_number",
+      "pass": true,
+      "expected": "0",
+      "actual": "0",
+      "info": false
+    },
+    {
+      "name": "no_duplicate_issue_id",
+      "pass": true,
+      "expected": "0",
+      "actual": "0",
+      "info": false
+    },
+    {
+      "name": "no_duplicate_comment_id",
+      "pass": true,
+      "expected": "0",
+      "actual": "0",
+      "info": false
+    },
+    {
+      "name": "no_duplicate_user_login",
+      "pass": true,
+      "expected": "0",
+      "actual": "0",
+      "info": false
+    },
+    {
+      "name": "no_duplicate_label_name",
+      "pass": true,
+      "expected": "0",
+      "actual": "0",
+      "info": false
+    },
+    {
+      "name": "issue_author_edges",
+      "pass": true,
+      "expected": "60",
+      "actual": "60",
+      "info": false
+    },
+    {
+      "name": "issue_comment_edges",
+      "pass": true,
+      "expected": "245",
+      "actual": "245",
+      "info": false
+    },
+    {
+      "name": "issue_label_edges",
+      "pass": true,
+      "expected": "49",
+      "actual": "49",
+      "info": false
+    },
+    {
+      "name": "no_orphan_comments",
+      "pass": true,
+      "expected": "0",
+      "actual": "0",
+      "info": false
+    },
+    {
+      "name": "issue_numbers_match",
+      "pass": true,
+      "expected": "60 exact numbers",
+      "actual": "60 present"
+    },
+    {
+      "name": "per_issue_comment_counts",
+      "pass": true,
+      "expected": "every issue has its corpus comment count",
+      "actual": "all match"
+    },
+    {
+      "name": "constraints_defined",
+      "pass": true,
+      "expected": "(informational)",
+      "actual": "10",
+      "info": true
+    },
+    {
+      "name": "indexes_defined",
+      "pass": true,
+      "expected": "(informational)",
+      "actual": "12",
+      "info": true
+    },
+    {
+      "name": "solution_nodes",
+      "pass": true,
+      "expected": "(informational)",
+      "actual": "41",
+      "info": true
+    },
+    {
+      "name": "workaround_nodes",
+      "pass": true,
+      "expected": "(informational)",
+      "actual": "18",
+      "info": true
+    },
+    {
+      "name": "category_nodes",
+      "pass": true,
+      "expected": "(informational)",
+      "actual": "106",
+      "info": true
+    },
+    {
+      "name": "competitor_nodes",
+      "pass": true,
+      "expected": "(informational)",
+      "actual": "5",
+      "info": true
+    },
+    {
+      "name": "keyword_nodes",
+      "pass": true,
+      "expected": "(informational)",
+      "actual": "237",
+      "info": true
+    },
+    {
+      "name": "issues_with_category",
+      "pass": true,
+      "expected": "(informational)",
+      "actual": "59",
+      "info": true
+    },
+    {
+      "name": "vector_indexes",
+      "pass": true,
+      "expected": "(informational)",
+      "actual": "0",
+      "info": true
+    },
+    {
+      "name": "nodes_with_embedding",
+      "pass": true,
+      "expected": "(informational)",
+      "actual": "0",
+      "info": true
+    }
+  ],
+  "qa": {
+    "tasks": [
+      {
+        "id": "sympy2-dev-001",
+        "template": "total_issues",
+        "kind": "structural",
+        "canary": true,
+        "question": "How many issues are in the knowledge graph in total?",
+        "oracle": "60",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 60",
+            "answer": "There are a total of 60 issues in the knowledge graph.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) RETURN count(i) as totalIssues"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1806,
+              "output": 45
+            },
+            "ms": 2546
+          },
+          {
+            "pass": true,
+            "reason": "found 60",
+            "answer": "There are a total of 60 issues in the knowledge graph.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) RETURN count(i) AS totalIssues"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1806,
+              "output": 45
+            },
+            "ms": 2736
+          },
+          {
+            "pass": true,
+            "reason": "found 60",
+            "answer": "There are a total of 60 issues in the knowledge graph.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) RETURN count(i) AS totalIssues"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1806,
+              "output": 45
+            },
+            "ms": 3428
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "sympy2-dev-002",
+        "template": "total_comments",
+        "kind": "structural",
+        "canary": true,
+        "question": "How many comments are stored across all issues in total?",
+        "oracle": "245",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 245",
+            "answer": "There are a total of 245 comments stored across all issues.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (c:Comment) RETURN count(c) AS totalComments"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1806,
+              "output": 45
+            },
+            "ms": 3030
+          },
+          {
+            "pass": true,
+            "reason": "found 245",
+            "answer": "There are a total of 245 comments stored across all issues.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (c:Comment) RETURN COUNT(c) as totalComments"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1806,
+              "output": 45
+            },
+            "ms": 2564
+          },
+          {
+            "pass": true,
+            "reason": "found 245",
+            "answer": "There are a total of 245 comments stored across all issues.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (c:Comment) RETURN count(c) AS totalComments"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1806,
+              "output": 45
+            },
+            "ms": 2346
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "sympy2-dev-003",
+        "template": "open_count",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many issues are currently open?",
+        "oracle": "24",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 24",
+            "answer": "There are currently 24 open issues.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {state: 'OPEN'}) RETURN count(i) as openIssuesCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1805,
+              "output": 46
+            },
+            "ms": 2497
+          },
+          {
+            "pass": true,
+            "reason": "found 24",
+            "answer": "There are currently 24 open issues.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {state: 'OPEN'}) RETURN count(i) AS openIssuesCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1805,
+              "output": 46
+            },
+            "ms": 2134
+          },
+          {
+            "pass": true,
+            "reason": "found 24",
+            "answer": "There are currently 24 open issues.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {state: 'OPEN'}) RETURN count(i) AS openIssues"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1803,
+              "output": 45
+            },
+            "ms": 3026
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "sympy2-dev-004",
+        "template": "closed_count",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many issues are closed?",
+        "oracle": "36",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 36",
+            "answer": "There are 36 closed issues.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {state: 'CLOSED'}) RETURN count(i) as closed_issues_count"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1806,
+              "output": 47
+            },
+            "ms": 2055
+          },
+          {
+            "pass": true,
+            "reason": "found 36",
+            "answer": "There are 36 closed issues.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.state = 'CLOSED' RETURN count(i) AS closedIssuesCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1806,
+              "output": 48
+            },
+            "ms": 2466
+          },
+          {
+            "pass": true,
+            "reason": "found 36",
+            "answer": "There are 36 closed issues.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {state: 'CLOSED'}) RETURN count(i) AS closedIssuesCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1804,
+              "output": 46
+            },
+            "ms": 2257
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "sympy2-dev-005",
+        "template": "state_of_issue",
+        "kind": "retrieval",
+        "canary": false,
+        "question": "Is issue #5295 open or closed?",
+        "oracle": "OPEN",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "Issue [#5295](https://github.com/issues/5295) is currently open.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 5295}) RETURN i.state LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1807,
+              "output": 56
+            },
+            "ms": 2427
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "Issue [#5295](https://github.com/user/repo/issues/5295) is currently **open**.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 5295}) RETURN i.state LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1807,
+              "output": 61
+            },
+            "ms": 2405
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "Issue [#5295](https://github.com/issue/5295) is currently open.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (issue:Issue {number: 5295}) RETURN issue.state LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1807,
+              "output": 57
+            },
+            "ms": 2971
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "sympy2-dev-006",
+        "template": "state_of_issue",
+        "kind": "retrieval",
+        "canary": false,
+        "question": "Is issue #5834 open or closed?",
+        "oracle": "CLOSED",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "Issue [#5834](https://github.com/issues/5834) is closed.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 5834}) RETURN i.state LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1808,
+              "output": 55
+            },
+            "ms": 2220
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "Issue [#5834](https://github.com/issues/5834) is closed.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 5834}) RETURN i.state LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1808,
+              "output": 55
+            },
+            "ms": 2092
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "Issue [#5834](https://github.com) is closed.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 5834}) RETURN i.state LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1808,
+              "output": 51
+            },
+            "ms": 2494
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "sympy2-dev-007",
+        "template": "open_label_count",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many OPEN issues carry the label \"Bug\"?",
+        "oracle": "1",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 1",
+            "answer": "There is 1 open issue labeled as \"Bug\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE i.state = 'OPEN' AND l.name = 'Bug' RETURN count(i) AS openBugIssues"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1829,
+              "output": 67
+            },
+            "ms": 2620
+          },
+          {
+            "pass": true,
+            "reason": "found 1",
+            "answer": "There is currently 1 open issue labeled as \"Bug\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE i.state = 'OPEN' AND l.name = 'Bug' RETURN COUNT(i) AS openBugCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1829,
+              "output": 68
+            },
+            "ms": 2860
+          },
+          {
+            "pass": true,
+            "reason": "found 1",
+            "answer": "There is currently **1** open issue labeled as \"Bug\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE i.state = 'OPEN' AND l.name = 'Bug' RETURN COUNT(i) AS openBugIssues"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1829,
+              "output": 69
+            },
+            "ms": 2280
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "sympy2-dev-008",
+        "template": "open_label_count",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many OPEN issues carry the label \"Wrong Result\"?",
+        "oracle": "1",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 1",
+            "answer": "There is 1 open issue with the label \"Wrong Result.\"",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE i.state = 'OPEN' AND l.name = 'Wrong Result' RETURN COUNT(i) AS openIssuesWithWrongResultLabel"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1838,
+              "output": 73
+            },
+            "ms": 4235
+          },
+          {
+            "pass": true,
+            "reason": "found 1",
+            "answer": "There is 1 open issue labeled as \"Wrong Result\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE l.name = \"Wrong Result\" AND i.state = \"OPEN\" RETURN COUNT(i) AS openIssueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1832,
+              "output": 69
+            },
+            "ms": 2340
+          },
+          {
+            "pass": true,
+            "reason": "found 1",
+            "answer": "There is 1 open issue with the label \"Wrong Result\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE i.state = 'OPEN' AND l.name = 'Wrong Result' RETURN count(i) AS openIssuesWithLabelWrongResult"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1838,
+              "output": 73
+            },
+            "ms": 2728
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "sympy2-dev-009",
+        "template": "open_with_label",
+        "kind": "structural",
+        "canary": false,
+        "question": "List the issue numbers of every OPEN issue labelled \"Documentation\".",
+        "oracle": "#5295, #12962",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "cited 5295,12962",
+            "answer": "Here are the issue numbers of open issues labeled \"Documentation\":\n\n- [#5295](https://github.com/your-repo/issues/5295)\n- [#12962](https://github.com/your-repo/issues/12962)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE l.name = \"Documentation\" AND i.state = \"OPEN\" RETURN i.number LIMIT 25"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1837,
+              "output": 104
+            },
+            "ms": 3530
+          },
+          {
+            "pass": true,
+            "reason": "cited 5295,12962",
+            "answer": "The open issues labeled \"Documentation\" are:\n\n- [#5295](https://github.com/your-repo/issues/5295)\n- [#12962](https://github.com/your-repo/issues/12962)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE i.state = 'OPEN' AND l.name = 'Documentation' RETURN i.number LIMIT 100"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1837,
+              "output": 101
+            },
+            "ms": 3004
+          },
+          {
+            "pass": true,
+            "reason": "cited 5295,12962",
+            "answer": "Here are the issue numbers for open issues labeled \"Documentation\":\n\n- [#5295](https://github.com/your-repo/issue/5295)\n- [#12962](https://github.com/your-repo/issue/12962)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"Documentation\"}) WHERE i.state = \"OPEN\" RETURN i.number LIMIT 50"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1836,
+              "output": 105
+            },
+            "ms": 2425
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "sympy2-dev-010",
+        "template": "distinct_labels",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many distinct labels exist in the knowledge graph?",
+        "oracle": "28",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 28",
+            "answer": "There are 28 distinct labels in the knowledge graph.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (l:Label) RETURN count(DISTINCT l.name) AS distinctLabelCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1810,
+              "output": 48
+            },
+            "ms": 2509
+          },
+          {
+            "pass": true,
+            "reason": "found 28",
+            "answer": "There are 28 distinct labels in the knowledge graph.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (l:Label) RETURN count(DISTINCT l.name) AS distinctLabelCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1810,
+              "output": 48
+            },
+            "ms": 2673
+          },
+          {
+            "pass": true,
+            "reason": "found 28",
+            "answer": "There are 28 distinct labels in the knowledge graph.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (l:Label) RETURN COUNT(DISTINCT l.name) AS distinctLabelCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1810,
+              "output": 48
+            },
+            "ms": 3459
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "sympy2-dev-011",
+        "template": "label_count",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many issues carry the label \"Bug\"?",
+        "oracle": "4",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 4",
+            "answer": "There are 4 issues labeled as \"Bug\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"Bug\"}) RETURN COUNT(i) AS bugIssuesCount LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1822,
+              "output": 61
+            },
+            "ms": 2744
+          },
+          {
+            "pass": true,
+            "reason": "found 4",
+            "answer": "There are 4 issues labeled as \"Bug\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"Bug\"}) RETURN count(i) as bugCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1817,
+              "output": 57
+            },
+            "ms": 2811
+          },
+          {
+            "pass": true,
+            "reason": "found 4",
+            "answer": "There are 4 issues labeled as \"Bug\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"Bug\"}) RETURN count(i) as bugCount LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1820,
+              "output": 60
+            },
+            "ms": 2402
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "sympy2-dev-012",
+        "template": "label_members",
+        "kind": "structural",
+        "canary": false,
+        "question": "List the issue numbers of every issue labelled \"Bug\".",
+        "oracle": "#5295, #5834, #5907, #21094",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "cited 5295,5834,5907,21094",
+            "answer": "Here are the issue numbers labeled \"Bug\":\n\n- [#5295](https://github.com/user/repo/issues/5295)\n- [#5834](https://github.com/user/repo/issues/5834)\n- [#5907](https://github.com/user/repo/issues/5907)\n- [#21094](https://github.com/user/repo/issues/21094)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: 'Bug'}) RETURN i.number LIMIT 50"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1838,
+              "output": 126
+            },
+            "ms": 2833
+          },
+          {
+            "pass": true,
+            "reason": "cited 5295,5834,5907,21094",
+            "answer": "Here are the issue numbers labeled as \"Bug\":\n\n- [Issue #5295](https://github.com/owner/repo/issues/5295)\n- [Issue #5834](https://github.com/owner/repo/issues/5834)\n- [Issue #21094](https://github.com/owner/repo/issues/21094)\n- [Issue #5907](https://github.com/owner/repo/issues/5907)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: 'Bug'}) RETURN i.number LIMIT 100"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1838,
+              "output": 135
+            },
+            "ms": 3106
+          },
+          {
+            "pass": true,
+            "reason": "cited 5295,5834,5907,21094",
+            "answer": "Here are the issue numbers labeled as \"Bug\":\n\n- [#5295](https://github.com/org/repo/issues/5295)\n- [#5834](https://github.com/org/repo/issues/5834)\n- [#5907](https://github.com/org/repo/issues/5907)\n- [#21094](https://github.com/org/repo/issues/21094)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"Bug\"}) RETURN i.number LIMIT 100"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1839,
+              "output": 128
+            },
+            "ms": 4109
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "sympy2-dev-013",
+        "template": "label_natural_casing",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many issues are tagged \"bug\"?",
+        "oracle": "4 (stored as \"Bug\")",
+        "attempts": [
+          {
+            "pass": false,
+            "reason": "expected 4, not present in answer",
+            "answer": "There are no issues currently tagged with \"bug\" in the repository.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE l.name = \"bug\" RETURN COUNT(i) AS bugCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1816,
+              "output": 62
+            },
+            "ms": 2285
+          },
+          {
+            "pass": false,
+            "reason": "expected 4, not present in answer",
+            "answer": "There are currently no issues tagged as \"bug\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"bug\"}) RETURN COUNT(i) AS bugIssuesCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1817,
+              "output": 58
+            },
+            "ms": 3601
+          },
+          {
+            "pass": false,
+            "reason": "expected 4, not present in answer",
+            "answer": "There are no issues currently tagged with \"bug\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"bug\"}) RETURN count(i) as bugCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1815,
+              "output": 57
+            },
+            "ms": 2496
+          }
+        ],
+        "passRate": 0
+      },
+      {
+        "id": "sympy2-dev-014",
+        "template": "label_count",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many issues carry the label \"Wrong Result\"?",
+        "oracle": "4",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 4",
+            "answer": "There are 4 issues labeled with \"Wrong Result\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"Wrong Result\"}) RETURN COUNT(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1820,
+              "output": 59
+            },
+            "ms": 2150
+          },
+          {
+            "pass": true,
+            "reason": "found 4",
+            "answer": "There are 4 issues labeled with \"Wrong Result.\"",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"Wrong Result\"}) RETURN COUNT(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1820,
+              "output": 59
+            },
+            "ms": 2412
+          },
+          {
+            "pass": true,
+            "reason": "found 4",
+            "answer": "There are 4 issues labeled as \"Wrong Result.\"",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"Wrong Result\"}) RETURN COUNT(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1820,
+              "output": 59
+            },
+            "ms": 3150
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "sympy2-dev-015",
+        "template": "distinct_authors",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many distinct users have authored issues in the knowledge graph?",
+        "oracle": "44",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 44",
+            "answer": "There are 44 distinct users who have authored issues in the knowledge graph.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User) RETURN COUNT(DISTINCT u.login) AS distinctUserCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1825,
+              "output": 63
+            },
+            "ms": 2446
+          },
+          {
+            "pass": true,
+            "reason": "found 44",
+            "answer": "There are 44 distinct users who have authored issues in the knowledge graph.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User) RETURN COUNT(DISTINCT u.login) AS distinctUserCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1825,
+              "output": 63
+            },
+            "ms": 2221
+          },
+          {
+            "pass": true,
+            "reason": "found 44",
+            "answer": "There are 44 distinct users who have authored issues in the knowledge graph.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User) RETURN COUNT(DISTINCT u.login) AS distinctUserCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1825,
+              "output": 63
+            },
+            "ms": 2366
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "sympy2-dev-016",
+        "template": "author_issues",
+        "kind": "structural",
+        "canary": false,
+        "question": "Which issues were opened by the user \"smichr\"? Give their issue numbers.",
+        "oracle": "#13129, #16323, #16872, #21303",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "cited 13129,16323,16872,21303",
+            "answer": "The user \"smichr\" opened the following issues:\n\n- [#16872](https://github.com/org/repo/issues/16872)\n- [#16323](https://github.com/org/repo/issues/16323)\n- [#21303](https://github.com/org/repo/issues/21303)\n- [#13129](https://github.com/org/repo/issues/13129)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User {login: \"smichr\"}) RETURN i.number LIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1855,
+              "output": 134
+            },
+            "ms": 2516
+          },
+          {
+            "pass": true,
+            "reason": "cited 13129,16323,16872,21303",
+            "answer": "Here are the issue numbers opened by the user \"smichr\":\n\n- [#16872](https://github.com/org/repo/issues/16872)\n- [#16323](https://github.com/org/repo/issues/16323)\n- [#21303](https://github.com/org/repo/issues/21303)\n- [#13129](https://github.com/org/repo/issues/13129)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User {login: \"smichr\"}) RETURN i.number LIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1855,
+              "output": 136
+            },
+            "ms": 2389
+          },
+          {
+            "pass": true,
+            "reason": "cited 13129,16323,16872,21303",
+            "answer": "The issues opened by the user \"smichr\" are:\n\n- [#16872](https://github.com/{repository}/issues/16872)\n- [#16323](https://github.com/{repository}/issues/16323)\n- [#21303](https://github.com/{repository}/issues/21303)\n- [#13129](https://github.com/{repository}/issues/13129)\n\n(Note: Replace `{repository}` with the actual repository name to access the links.)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User {login: \"smichr\"}) RETURN i.number LIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1855,
+              "output": 151
+            },
+            "ms": 2672
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "sympy2-dev-017",
+        "template": "issue_author",
+        "kind": "retrieval",
+        "canary": false,
+        "question": "Who opened issue #5295?",
+        "oracle": "asmeurer",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "Issue [#5295](https://github.com/org/repo/issues/5295) was opened by the user `asmeurer`.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 5295})-[:AUTHORED_BY]->(u:User) RETURN u.login LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1817,
+              "output": 77
+            },
+            "ms": 2802
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "Issue [#5295](https://github.com/asmeurer) was opened by the user **asmeurer**.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 5295})-[:AUTHORED_BY]->(u:User) RETURN u.login LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1817,
+              "output": 74
+            },
+            "ms": 2293
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "Issue [#5295](https://github.com/asmeurer/issue/5295) was opened by the user **asmeurer**.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 5295})-[:AUTHORED_BY]->(u:User) RETURN u.login, u.name LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1825,
+              "output": 82
+            },
+            "ms": 2600
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "sympy2-dev-018",
+        "template": "commenter_count",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many distinct users have commented on issue #5295?",
+        "oracle": "3",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 3",
+            "answer": "There are 3 distinct users who have commented on issue [#5295](https://github.com/path/to/repo/issues/5295).",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 5295})-[:HAS_COMMENT]->(c:Comment)-[:AUTHORED_BY]->(u:User)\nRETURN COUNT(DISTINCT u) AS distinctUserCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1841,
+              "output": 93
+            },
+            "ms": 2756
+          },
+          {
+            "pass": true,
+            "reason": "found 3",
+            "answer": "There are 3 distinct users who have commented on issue [#5295](https://github.com/issues/5295).",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 5295})-[:HAS_COMMENT]->(c:Comment)-[:AUTHORED_BY]->(u:User) RETURN COUNT(DISTINCT u.login) AS distinctCommenters"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1841,
+              "output": 89
+            },
+            "ms": 2494
+          },
+          {
+            "pass": true,
+            "reason": "found 3",
+            "answer": "Three distinct users have commented on issue [#5295](https://github.com).",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 5295})-[:HAS_COMMENT]->(c:Comment)-[:AUTHORED_BY]->(u:User) RETURN COUNT(DISTINCT u.login) AS distinctUserCount LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1844,
+              "output": 84
+            },
+            "ms": 2213
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "sympy2-dev-019",
+        "template": "month_count",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many issues were created in 2018-02?",
+        "oracle": "3",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 3",
+            "answer": "In February 2018, a total of 3 issues were created.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.createdAt STARTS WITH '2018-02' RETURN COUNT(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1821,
+              "output": 60
+            },
+            "ms": 2388
+          },
+          {
+            "pass": true,
+            "reason": "found 3",
+            "answer": "In February 2018, a total of 3 issues were created.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.createdAt STARTS WITH \"2018-02\" RETURN count(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1821,
+              "output": 60
+            },
+            "ms": 2679
+          },
+          {
+            "pass": true,
+            "reason": "found 3",
+            "answer": "In February 2018, a total of 3 issues were created.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.createdAt STARTS WITH '2018-02' RETURN count(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1821,
+              "output": 60
+            },
+            "ms": 3599
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "sympy2-dev-020",
+        "template": "created_before",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many issues were created before 2017-09-28?",
+        "oracle": "16",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 16",
+            "answer": "There were 16 issues created before 2017-09-28.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.createdAt < '2017-09-28' RETURN count(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1825,
+              "output": 60
+            },
+            "ms": 2749
+          },
+          {
+            "pass": true,
+            "reason": "found 16",
+            "answer": "There were 16 issues created before 2017-09-28.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE date(i.createdAt) < date('2017-09-28') RETURN COUNT(i) AS issueCount"
+                }
+              },
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE datetime(i.createdAt) < datetime('2017-09-28T00:00:00Z') RETURN COUNT(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2898,
+              "output": 116
+            },
+            "ms": 4235
+          },
+          {
+            "pass": true,
+            "reason": "found 16",
+            "answer": "It seems there was an error with parsing the date format. Let me correct that and try again.There are 16 issues that were created before 2017-09-28.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE date(i.createdAt) < date('2017-09-28') RETURN count(i) AS issueCount"
+                }
+              },
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE datetime(i.createdAt) < datetime('2017-09-28T00:00:00Z') RETURN count(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2924,
+              "output": 140
+            },
+            "ms": 3703
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "sympy2-dev-021",
+        "template": "created_after",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many issues were created after 2017-09-28?",
+        "oracle": "44",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 44",
+            "answer": "There were 44 issues created after September 28, 2017.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE date(i.createdAt) > date('2017-09-28') RETURN count(i) AS issueCount"
+                }
+              },
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE datetime(i.createdAt) > datetime('2017-09-28T00:00:00Z') RETURN count(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2898,
+              "output": 116
+            },
+            "ms": 3553
+          },
+          {
+            "pass": true,
+            "reason": "found 44",
+            "answer": "A total of 44 issues were created after 2017-09-28.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.createdAt > '2017-09-28' RETURN count(i) AS number_of_issues"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1829,
+              "output": 64
+            },
+            "ms": 3316
+          },
+          {
+            "pass": true,
+            "reason": "found 44",
+            "answer": "There were 44 issues created after 2017-09-28.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.createdAt > '2017-09-28' RETURN count(i) as issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1825,
+              "output": 60
+            },
+            "ms": 2645
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "sympy2-dev-022",
+        "template": "created_after",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many issues were created after 2019-06-27?",
+        "oracle": "29",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 29",
+            "answer": "There were 29 issues created after 2019-06-27.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE date(i.createdAt) > date('2019-06-27') RETURN COUNT(i) as issueCount"
+                }
+              },
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE datetime(i.createdAt) > datetime('2019-06-27T00:00:00Z') RETURN COUNT(i) as issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2898,
+              "output": 116
+            },
+            "ms": 5264
+          },
+          {
+            "pass": true,
+            "reason": "found 29",
+            "answer": "There were 29 issues created after 2019-06-27.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.createdAt > '2019-06-27' RETURN count(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1825,
+              "output": 60
+            },
+            "ms": 2459
+          },
+          {
+            "pass": true,
+            "reason": "found 29",
+            "answer": "There were 29 issues created after 2019-06-27.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE date(i.createdAt) > date('2019-06-27') RETURN COUNT(i) AS issueCount"
+                }
+              },
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE datetime(i.createdAt) > datetime('2019-06-27T00:00:00Z') RETURN COUNT(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2898,
+              "output": 116
+            },
+            "ms": 4370
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "sympy2-dev-023",
+        "template": "created_between",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many issues were created between 2017-09-28 and 2022-03-23?",
+        "oracle": "30",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 30",
+            "answer": "There were 30 issues created between 2017-09-28 and 2022-03-23.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.createdAt >= '2017-09-28' AND i.createdAt <= '2022-03-23' RETURN count(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1854,
+              "output": 81
+            },
+            "ms": 3573
+          },
+          {
+            "pass": true,
+            "reason": "found 30",
+            "answer": "It seems there was an issue with parsing the date format. Let me correct that and try again.There were 30 issues created between 2017-09-28 and 2022-03-23.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE date(i.createdAt) >= date('2017-09-28') AND date(i.createdAt) <= date('2022-03-23') RETURN count(i) AS issueCount"
+                }
+              },
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE datetime(i.createdAt) >= datetime('2017-09-28T00:00:00Z') AND datetime(i.createdAt) <= datetime('2022-03-23T23:59:59Z') RETURN count(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 3003,
+              "output": 185
+            },
+            "ms": 4774
+          },
+          {
+            "pass": true,
+            "reason": "found 30",
+            "answer": "There were 30 issues created between 2017-09-28 and 2022-03-23.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.createdAt >= '2017-09-28' AND i.createdAt <= '2022-03-23' RETURN COUNT(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1854,
+              "output": 81
+            },
+            "ms": 2673
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "sympy2-dev-024",
+        "template": "zero_comment_count",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many issues have no comments at all?",
+        "oracle": "20",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 20",
+            "answer": "There are 20 issues that have no comments at all.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE NOT (i)-[:HAS_COMMENT]->(:Comment) RETURN count(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1814,
+              "output": 56
+            },
+            "ms": 2738
+          },
+          {
+            "pass": true,
+            "reason": "found 20",
+            "answer": "There are 20 issues with no comments at all.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE NOT (i)-[:HAS_COMMENT]->() RETURN count(i) AS issuesWithoutComments"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1814,
+              "output": 54
+            },
+            "ms": 2392
+          },
+          {
+            "pass": true,
+            "reason": "found 20",
+            "answer": "There are 20 issues that have no comments at all.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)\nWHERE NOT (i)-[:HAS_COMMENT]->(:Comment)\nRETURN COUNT(i) AS countWithoutComments LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1821,
+              "output": 62
+            },
+            "ms": 2494
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "sympy2-dev-025",
+        "template": "issues_with_ge_n_comments",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many issues have at least 3 comments?",
+        "oracle": "28",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 28",
+            "answer": "There are 28 issues that have at least 3 comments.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment)\nWITH i, COUNT(c) AS commentCount\nWHERE commentCount >= 3\nRETURN COUNT(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1831,
+              "output": 72
+            },
+            "ms": 2887
+          },
+          {
+            "pass": true,
+            "reason": "found 28",
+            "answer": "There are 28 issues with at least 3 comments.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment)\nWITH i, COUNT(c) AS comment_count\nWHERE comment_count >= 3\nRETURN COUNT(i) AS issue_count"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1831,
+              "output": 71
+            },
+            "ms": 2438
+          },
+          {
+            "pass": true,
+            "reason": "found 28",
+            "answer": "There are 28 issues with at least 3 comments.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment)\nWITH i, COUNT(c) AS commentCount\nWHERE commentCount >= 3\nRETURN COUNT(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1831,
+              "output": 71
+            },
+            "ms": 2486
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "sympy2-dev-026",
+        "template": "issues_with_ge_n_comments",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many issues have at least 5 comments?",
+        "oracle": "21",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 21",
+            "answer": "There are 21 issues that have at least 5 comments.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment)\nWITH i, COUNT(c) AS commentCount\nWHERE commentCount >= 5\nRETURN COUNT(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1831,
+              "output": 72
+            },
+            "ms": 2302
+          },
+          {
+            "pass": true,
+            "reason": "found 21",
+            "answer": "There are 21 issues that have at least 5 comments.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment) WITH i, COUNT(c) as commentCount WHERE commentCount >= 5 RETURN COUNT(i) as issueCount LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1831,
+              "output": 72
+            },
+            "ms": 2104
+          },
+          {
+            "pass": true,
+            "reason": "found 21",
+            "answer": "There are 21 issues with at least 5 comments.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment)\nWITH i, COUNT(c) AS commentCount\nWHERE commentCount >= 5\nRETURN COUNT(i) AS issuesWithFiveOrMoreComments"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1839,
+              "output": 75
+            },
+            "ms": 2335
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "sympy2-dev-027",
+        "template": "issue_comment_count",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many comments does issue #5295 have?",
+        "oracle": "13",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 13",
+            "answer": "Issue [#5295](https://github.com/issues/5295) has 13 comments.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 5295})-[:HAS_COMMENT]->(c:Comment) RETURN count(c) AS commentCount LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1823,
+              "output": 71
+            },
+            "ms": 2373
+          },
+          {
+            "pass": true,
+            "reason": "found 13",
+            "answer": "Issue [#5295](https://github.com/org/repo/issues/5295) has 13 comments.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 5295})-[:HAS_COMMENT]->(c:Comment)\nRETURN COUNT(c) AS commentCount LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1824,
+              "output": 75
+            },
+            "ms": 3099
+          },
+          {
+            "pass": true,
+            "reason": "found 13",
+            "answer": "Issue [#5295](https://github.com/your-repository/issues/5295) has 13 comments.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 5295})-[:HAS_COMMENT]->(c:Comment) RETURN COUNT(c) AS commentCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1820,
+              "output": 72
+            },
+            "ms": 2097
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "sympy2-dev-028",
+        "template": "issue_comment_count",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many comments does issue #5834 have?",
+        "oracle": "5",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 5",
+            "answer": "Issue [#5834](https://github.com/user/repo/issues/5834) has 5 comments.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 5834})-[:HAS_COMMENT]->(c:Comment) RETURN COUNT(c) AS commentCount LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1823,
+              "output": 74
+            },
+            "ms": 2943
+          },
+          {
+            "pass": true,
+            "reason": "found 5",
+            "answer": "Issue [#5834](https://github.com/org/repo/issues/5834) has 5 comments.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment) WHERE i.number = 5834 RETURN COUNT(c) AS commentCount LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1823,
+              "output": 74
+            },
+            "ms": 2607
+          },
+          {
+            "pass": true,
+            "reason": "found 5",
+            "answer": "Issue [#5834](https://github.com/issues/5834) has 5 comments.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 5834})-[:HAS_COMMENT]->(c:Comment) RETURN COUNT(c) AS commentCount LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1823,
+              "output": 71
+            },
+            "ms": 2379
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "sympy2-dev-029",
+        "template": "issue_title",
+        "kind": "retrieval",
+        "canary": false,
+        "question": "What is the title of issue #5834?",
+        "oracle": "primepi doesn't work with symbolic arguments",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "The title of issue [#5834](https://github.com/issues/5834) is \"primepi doesn't work with symbolic arguments\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 5834}) RETURN i.title LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1815,
+              "output": 65
+            },
+            "ms": 2467
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "The title of issue [#5834](https://github.com/issues/5834) is \"primepi doesn't work with symbolic arguments\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 5834}) RETURN i.title LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1815,
+              "output": 65
+            },
+            "ms": 2744
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "The title of issue [#5834](https://github.com/your-repo/issues/5834) is \"primepi doesn't work with symbolic arguments.\"",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 5834}) RETURN i.title LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1815,
+              "output": 69
+            },
+            "ms": 2827
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "sympy2-dev-030",
+        "template": "issue_title",
+        "kind": "retrieval",
+        "canary": false,
+        "question": "What is the title of issue #5907?",
+        "oracle": "integrate(1/(x**2 + a**2)**2, x) is wrong if a is real",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "The title of issue [#5907](https://github.com/issues/5907) is \"integrate(1/(x**2 + a**2)**2, x) is wrong if a is real\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 5907}) RETURN i.title LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1831,
+              "output": 81
+            },
+            "ms": 2550
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "The title of issue [#5907](https://github.com/user/repo/issues/5907) is \"integrate(1/(x**2 + a**2)**2, x) is wrong if a is real\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 5907}) RETURN i.title LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1831,
+              "output": 84
+            },
+            "ms": 3042
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "The title of issue [#5907](https://github.com/issues/5907) is \"integrate(1/(x**2 + a**2)**2, x) is wrong if a is real\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 5907}) RETURN i.title LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1831,
+              "output": 81
+            },
+            "ms": 3036
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "sympy2-dev-031",
+        "template": "mentions_term",
+        "kind": "retrieval",
+        "canary": false,
+        "question": "Which issues mention \"about\" in their title or body? Give their issue numbers.",
+        "oracle": "#7842, #10979, #12962, #15570, #21303, #25420",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "cited 7842,10979,12962,15570,21303,25420",
+            "answer": "Here are the issue numbers that mention \"about\" in their title or body:\n\n- [#7842](https://github.com/repo/issues/7842)\n- [#10979](https://github.com/repo/issues/10979)\n- [#12962](https://github.com/repo/issues/12962)\n- [#15570](https://github.com/repo/issues/15570)\n- [#21303](https://github.com/repo/issues/21303)\n- [#25420](https://github.com/repo/issues/25420)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)\nWHERE i.title CONTAINS 'about' OR i.bodyText CONTAINS 'about'\nRETURN i.number AS issueNumber\nLIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1873,
+              "output": 174
+            },
+            "ms": 4183
+          },
+          {
+            "pass": true,
+            "reason": "cited 7842,10979,12962,15570,21303,25420",
+            "answer": "Here are the issues that mention \"about\" in their title or body:\n\n- [#7842](https://github.com/issues/7842)\n- [#10979](https://github.com/issues/10979)\n- [#12962](https://github.com/issues/12962)\n- [#15570](https://github.com/issues/15570)\n- [#21303](https://github.com/issues/21303)\n- [#25420](https://github.com/issues/25420)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)\nWHERE i.title CONTAINS 'about' OR i.bodyText CONTAINS 'about'\nRETURN i.number LIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1869,
+              "output": 157
+            },
+            "ms": 4336
+          },
+          {
+            "pass": true,
+            "reason": "cited 7842,10979,12962,15570,21303,25420",
+            "answer": "Here are the issue numbers that mention \"about\" in their title or body:\n\n- [#7842](https://github.com/issues/7842)\n- [#10979](https://github.com/issues/10979)\n- [#12962](https://github.com/issues/12962)\n- [#15570](https://github.com/issues/15570)\n- [#21303](https://github.com/issues/21303)\n- [#25420](https://github.com/issues/25420)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)\nWHERE i.title CONTAINS \"about\" OR i.bodyText CONTAINS \"about\"\nRETURN i.number\nLIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1870,
+              "output": 159
+            },
+            "ms": 2584
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "sympy2-dev-032",
+        "template": "commenters_on_label",
+        "kind": "retrieval",
+        "canary": false,
+        "question": "Which users have commented on issues labelled \"Wrong Result\"? Give their usernames.",
+        "oracle": "asmeurer, gschintgen, oscarbenjamin, smichr",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "The following users have commented on issues labeled \"Wrong Result\":\n\n- oscarbenjamin\n- gschintgen\n- asmeurer\n- smichr",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (l:Label {name: \"Wrong Result\"})<-[:HAS_LABEL]-(i:Issue)-[:HAS_COMMENT]->(c:Comment)-[:AUTHORED_BY]->(u:User)\nRETURN DISTINCT u.login LIMIT 100"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1877,
+              "output": 103
+            },
+            "ms": 3173
+          },
+          {
+            "pass": false,
+            "reason": "missing: asmeurer, gschintgen, oscarbenjamin, smichr",
+            "answer": "No users have commented on issues labeled \"Wrong Result.\"",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (issue:Issue)-[:HAS_LABEL]->(label:Label {name: \"Wrong Result\"})-[:HAS_COMMENT]->(comment:Comment)-[:AUTHORED_BY]->(user:User)\nRETURN DISTINCT user.login AS username LIMIT 100"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1848,
+              "output": 83
+            },
+            "ms": 2862
+          },
+          {
+            "pass": false,
+            "reason": "missing: asmeurer, gschintgen, oscarbenjamin, smichr",
+            "answer": "It looks like there are no users who have commented on issues labelled \"Wrong Result\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"Wrong Result\"})-[:HAS_COMMENT]->(c:Comment)-[:AUTHORED_BY]->(u:User) \nRETURN DISTINCT u.login AS username LIMIT 100"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1849,
+              "output": 90
+            },
+            "ms": 2573
+          }
+        ],
+        "passRate": 0.3333333333333333
+      },
+      {
+        "id": "sympy2-dev-033",
+        "template": "labels_cooccurring",
+        "kind": "retrieval",
+        "canary": false,
+        "question": "Which other labels appear on issues that also carry the label \"Easy to Fix\"?",
+        "oracle": "Bug, printing, printing.latex (not: Documentation, Enhancement, Uncategorised, Wrong Result, assumptions, calculus, core, geometry, imported, integrals, integrals.intpoly, matrices.expressions, ntheory, parsing, parsing.latex, physics.quantum, physics.units, series, sets, solvers, solvers.rsolve, tensor, utilities.lambdify)",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "Issues labeled as \"Easy to Fix\" often also carry the following labels:\n\n- printing\n- printing.latex\n- Bug\n\nThese labels are associated with other characteristics or areas related to the issues.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (label:Label {name: \"Easy to Fix\"})<-[:HAS_LABEL]-(issue:Issue)-[:HAS_LABEL]->(otherLabel:Label)\nWHERE otherLabel.name <> \"Easy to Fix\"\nRETURN DISTINCT otherLabel.name AS labelName\nLIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1873,
+              "output": 117
+            },
+            "ms": 3112
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "Issues labeled \"Easy to Fix\" also carry the following labels:\n\n- **printing**\n- **printing.latex**\n- **Bug**",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (label:Label)<-[:HAS_LABEL]-(issue:Issue)-[:HAS_LABEL]->(otherLabel:Label) \nWHERE label.name = \"Easy to Fix\" AND otherLabel.name <> \"Easy to Fix\"\nRETURN DISTINCT otherLabel.name AS labelName LIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1874,
+              "output": 105
+            },
+            "ms": 3618
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "Issues labeled \"Easy to Fix\" also frequently carry the following labels:\n\n- **printing**\n- **printing.latex**\n- **Bug**",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (l:Label)<-[:HAS_LABEL]-(i:Issue)-[:HAS_LABEL]->(other:Label)\nWHERE l.name = \"Easy to Fix\"\nRETURN DISTINCT other.name AS label\nLIMIT 20"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1858,
+              "output": 93
+            },
+            "ms": 2680
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "sympy2-dev-034",
+        "template": "commenters_on_label",
+        "kind": "retrieval",
+        "canary": false,
+        "question": "Which users have commented on issues labelled \"core\"? Give their usernames.",
+        "oracle": "Smit-create, asmeurer, latot, smichr",
+        "attempts": [
+          {
+            "pass": false,
+            "reason": "missing: Smit-create, asmeurer, latot, smichr",
+            "answer": "It seems there are no comments from users on issues labeled \"core.\" If you have any other questions or need further assistance, feel free to ask!",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"core\"})-[:HAS_COMMENT]->(c:Comment)-[:AUTHORED_BY]->(u:User) RETURN DISTINCT u.login LIMIT 100"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1842,
+              "output": 98
+            },
+            "ms": 2308
+          },
+          {
+            "pass": false,
+            "reason": "missing: Smit-create, asmeurer, latot, smichr",
+            "answer": "It looks like there are no users who have commented on issues labeled \"core.\"",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"core\"})-[:HAS_COMMENT]->(c:Comment)-[:AUTHORED_BY]->(u:User)\nRETURN DISTINCT u.login AS username\nLIMIT 100"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1846,
+              "output": 88
+            },
+            "ms": 2742
+          },
+          {
+            "pass": false,
+            "reason": "missing: Smit-create, asmeurer, latot, smichr",
+            "answer": "It looks like there are no users who have commented on issues labeled \"core\" in the database.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"core\"})-[:HAS_COMMENT]->(c:Comment)-[:AUTHORED_BY]->(u:User) RETURN DISTINCT u.login LIMIT 100"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1842,
+              "output": 88
+            },
+            "ms": 2716
+          }
+        ],
+        "passRate": 0
+      },
+      {
+        "id": "sympy2-dev-035",
+        "template": "labels_cooccurring",
+        "kind": "retrieval",
+        "canary": false,
+        "question": "Which other labels appear on issues that also carry the label \"printing\"?",
+        "oracle": "Easy to Fix, printing.latex (not: Documentation, Enhancement, Uncategorised, Wrong Result, assumptions, calculus, core, geometry, imported, integrals, integrals.intpoly, matrices.expressions, ntheory, parsing, parsing.latex, physics.quantum, physics.units, series, sets, solvers, solvers.rsolve, tensor, utilities.lambdify)",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "The labels that commonly appear on issues along with the \"printing\" label are:\n\n1. **Easy to Fix** — appears on 2 issues\n2. **printing.latex** — appears on 1 issue",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (l1:Label {name: \"printing\"})<-[:HAS_LABEL]-(i:Issue)-[:HAS_LABEL]->(l2:Label)\nWHERE l2.name <> \"printing\"\nRETURN DISTINCT l2.name AS label, count(i) AS issueCount\nORDER BY issueCount DESC\nLIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1883,
+              "output": 129
+            },
+            "ms": 2472
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "Issues labeled with \"printing\" also often carry the following labels:\n\n- **Easy to Fix**\n- **printing.latex**",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (label1:Label {name: 'printing'})<-[:HAS_LABEL]-(issue:Issue)-[:HAS_LABEL]->(label2:Label)\nWHERE label2.name <> 'printing'\nRETURN DISTINCT label2.name AS labelName LIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1861,
+              "output": 97
+            },
+            "ms": 2959
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "Other labels that appear on issues with the \"printing\" label include:\n\n- **Easy to Fix**: 2 issues\n- **printing.latex**: 1 issue",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (label:Label {name: \"printing\"})<-[:HAS_LABEL]-(issue:Issue)-[:HAS_LABEL]->(otherLabel:Label)\nRETURN otherLabel.name AS Label, COUNT(*) AS Count\nORDER BY Count DESC\nLIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1867,
+              "output": 107
+            },
+            "ms": 2642
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "sympy2-dev-036",
+        "template": "absent_label_count",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many issues carry the label \"API: argument checking\"?",
+        "oracle": "0 (no such label in this repo)",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "stated absence",
+            "answer": "There are no issues currently labeled with \"API: argument checking.\"",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"API: argument checking\"}) RETURN COUNT(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1826,
+              "output": 63
+            },
+            "ms": 2194
+          },
+          {
+            "pass": true,
+            "reason": "stated absence",
+            "answer": "There are no issues currently labeled with \"API: argument checking.\"",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"API: argument checking\"}) RETURN COUNT(i) as issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1826,
+              "output": 63
+            },
+            "ms": 2213
+          },
+          {
+            "pass": true,
+            "reason": "stated absence",
+            "answer": "There are no issues carrying the label \"API: argument checking.\"",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"API: argument checking\"}) RETURN count(i) as count"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1824,
+              "output": 62
+            },
+            "ms": 2896
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "sympy2-dev-037",
+        "template": "absent_label_members",
+        "kind": "structural",
+        "canary": false,
+        "question": "List the issue numbers of every issue labelled \"API: argument checking\".",
+        "oracle": "none",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "cited ",
+            "answer": "There are currently no issues labeled \"API: argument checking.\" If you have further questions or need additional help, feel free to ask!",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"API: argument checking\"}) RETURN i.number LIMIT 25"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1823,
+              "output": 76
+            },
+            "ms": 2261
+          },
+          {
+            "pass": true,
+            "reason": "cited ",
+            "answer": "There are no issues currently labeled as \"API: argument checking.\"",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"API: argument checking\"}) RETURN i.number LIMIT 100"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1823,
+              "output": 62
+            },
+            "ms": 2709
+          },
+          {
+            "pass": true,
+            "reason": "cited ",
+            "answer": "There are no issues currently labeled as \"API: argument checking.\"",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"API: argument checking\"}) RETURN i.number AS issueNumber LIMIT 100"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1826,
+              "output": 65
+            },
+            "ms": 3672
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "sympy2-dev-038",
+        "template": "absent_term",
+        "kind": "retrieval",
+        "canary": false,
+        "question": "Which issues mention \"CPython\" in their title or body? Give their issue numbers.",
+        "oracle": "none",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "cited ",
+            "answer": "There are no issues mentioning \"CPython\" in their title or body text.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE toLower(i.title) CONTAINS 'cpython' OR toLower(i.bodyText) CONTAINS 'cpython' RETURN i.number LIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1840,
+              "output": 74
+            },
+            "ms": 3000
+          },
+          {
+            "pass": true,
+            "reason": "cited ",
+            "answer": "There are no issues mentioning \"CPython\" in their title or body.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)\nWHERE i.title CONTAINS 'CPython' OR i.bodyText CONTAINS 'CPython'\nRETURN i.number LIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1836,
+              "output": 69
+            },
+            "ms": 2136
+          },
+          {
+            "pass": true,
+            "reason": "cited ",
+            "answer": "No issues mention \"CPython\" in their title or body.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (issue:Issue) WHERE issue.title CONTAINS 'CPython' OR issue.bodyText CONTAINS 'CPython' RETURN issue.number LIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1834,
+              "output": 65
+            },
+            "ms": 2635
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "sympy2-dev-039",
+        "template": "absent_author_issues",
+        "kind": "structural",
+        "canary": false,
+        "question": "Which issues were opened by the user \"08walkersj\"? Give their issue numbers.",
+        "oracle": "none",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "cited ",
+            "answer": "No issues were opened by the user \"08walkersj\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (u:User {login: \"08walkersj\"})<-[:AUTHORED_BY]-(i:Issue) RETURN i.number LIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1834,
+              "output": 65
+            },
+            "ms": 2716
+          },
+          {
+            "pass": true,
+            "reason": "cited ",
+            "answer": "There are no issues opened by the user \"08walkersj.\"",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (u:User {login: '08walkersj'})-[:AUTHORED_BY]-(i:Issue) RETURN i.number LIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1833,
+              "output": 65
+            },
+            "ms": 2255
+          },
+          {
+            "pass": true,
+            "reason": "cited ",
+            "answer": "There are no issues opened by the user \"08walkersj\" in the repository.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User {login: \"08walkersj\"}) RETURN i.number LIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1833,
+              "output": 69
+            },
+            "ms": 2456
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "sympy2-dev-040",
+        "template": "absent_month_count",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many issues were created in 2011-03?",
+        "oracle": "0",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "stated absence",
+            "answer": "No issues were created in March 2011.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.createdAt STARTS WITH '2011-03' RETURN COUNT(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1821,
+              "output": 55
+            },
+            "ms": 2245
+          },
+          {
+            "pass": true,
+            "reason": "stated absence",
+            "answer": "No issues were created in March 2011.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (issue:Issue) WHERE issue.createdAt STARTS WITH '2011-03' RETURN COUNT(issue) AS issuesCount LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1824,
+              "output": 58
+            },
+            "ms": 2438
+          },
+          {
+            "pass": true,
+            "reason": "stated absence",
+            "answer": "No issues were created in March 2011.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.createdAt STARTS WITH '2011-03' RETURN count(i) as issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1821,
+              "output": 55
+            },
+            "ms": 2431
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "sympy2-dev-041",
+        "template": "closed_count_paraphrase",
+        "kind": "structural",
+        "canary": false,
+        "question": "What is the number of issues in a closed state?",
+        "oracle": "36",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 36",
+            "answer": "There are 36 issues in a closed state.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {state: 'CLOSED'}) RETURN count(i) AS closed_issues_count"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1816,
+              "output": 50
+            },
+            "ms": 2912
+          },
+          {
+            "pass": true,
+            "reason": "found 36",
+            "answer": "There are 36 issues in a closed state.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {state: \"CLOSED\"}) RETURN count(i) AS closedIssuesCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1815,
+              "output": 50
+            },
+            "ms": 2402
+          },
+          {
+            "pass": false,
+            "reason": "expected 36, not present in answer",
+            "answer": "There are currently no issues in a closed state.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {state: 'closed'}) RETURN count(i) AS closedIssuesCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1813,
+              "output": 48
+            },
+            "ms": 2346
+          }
+        ],
+        "passRate": 0.6666666666666666
+      },
+      {
+        "id": "sympy2-dev-042",
+        "template": "closed_count_paraphrase",
+        "kind": "structural",
+        "canary": false,
+        "question": "Count the issues in this repository that have been closed.",
+        "oracle": "36",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 36",
+            "answer": "There are 36 issues in this repository that have been closed.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {state: 'CLOSED'}) RETURN COUNT(i) AS closed_issues_count"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1816,
+              "output": 53
+            },
+            "ms": 2398
+          },
+          {
+            "pass": true,
+            "reason": "found 36",
+            "answer": "There are 36 issues in this repository that have been closed.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {state: \"CLOSED\"}) RETURN count(i) AS closedIssuesCount LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1818,
+              "output": 56
+            },
+            "ms": 2487
+          },
+          {
+            "pass": true,
+            "reason": "found 36",
+            "answer": "There are 36 issues that have been closed in this repository.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.state = 'CLOSED' RETURN COUNT(i) AS closedIssuesCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1816,
+              "output": 54
+            },
+            "ms": 2828
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "sympy2-dev-043",
+        "template": "distinct_authors_paraphrase",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many different people opened issues?",
+        "oracle": "44",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 44",
+            "answer": "There are 44 different people who have opened issues.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User) RETURN count(DISTINCT u.login) as unique_authors"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1815,
+              "output": 59
+            },
+            "ms": 2476
+          },
+          {
+            "pass": true,
+            "reason": "found 44",
+            "answer": "There are 44 different people who have opened issues.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User) RETURN COUNT(DISTINCT u.login) AS uniqueAuthors"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1813,
+              "output": 58
+            },
+            "ms": 2189
+          },
+          {
+            "pass": true,
+            "reason": "found 44",
+            "answer": "There are 44 different people who have opened issues.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User) RETURN COUNT(DISTINCT u.login) AS uniqueAuthors"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1813,
+              "output": 58
+            },
+            "ms": 2070
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "sympy2-dev-044",
+        "template": "distinct_authors_paraphrase",
+        "kind": "structural",
+        "canary": false,
+        "question": "What is the number of unique issue authors?",
+        "oracle": "44",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 44",
+            "answer": "There are 44 unique issue authors.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (u:User)<-[:AUTHORED_BY]-(i:Issue) RETURN count(DISTINCT u.login) AS uniqueAuthors"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1818,
+              "output": 56
+            },
+            "ms": 2030
+          },
+          {
+            "pass": true,
+            "reason": "found 44",
+            "answer": "There are 44 unique issue authors.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User) RETURN COUNT(DISTINCT u.login) AS uniqueAuthors"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1817,
+              "output": 55
+            },
+            "ms": 2552
+          },
+          {
+            "pass": true,
+            "reason": "found 44",
+            "answer": "There are 44 unique issue authors.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (u:User)<-[:AUTHORED_BY]-(i:Issue) RETURN COUNT(DISTINCT u.login) AS uniqueAuthors"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1818,
+              "output": 56
+            },
+            "ms": 2685
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "sympy2-dev-045",
+        "template": "summarize_issue",
+        "kind": "semantic",
+        "canary": false,
+        "question": "Summarize the discussion on issue #21426. What is the problem and what did people say about it?",
+        "oracle": "meijerint error: _CoeffExpValueError: expr not of form `a*x**b`",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue, its core problem, and the discussion around it without contradicting the reference facts.",
+            "answer": "The discussion on [issue #21426](https://github.com/org/repo/issues/21426) concerns problems with the `meijerint` backend in SymPy, particularly involving floating-point numbers and the Heaviside function. Here's a summary of the key points:\n\n### Problem\n- **Initial Issue:** The need to accurately handle floating-point coefficients in `meijerint.py`. This involves adding `rational=False` to mitigate errors with floating-point expressions.\n- **Heaviside Function:** When integrating the Heaviside function, the result improperly involves Meijer G-functions, causing incorrect outcomes when converted to floats.\n\n### Discussion Highlights\n- **Patch Suggestion:** `jksuom` suggests handling `Piecewise` expressions differently for definite integrals, helping with some specific cases but not the broader issue.\n- **Feedback:** `laolux` confirms the patch fixes part of their problem but voices concerns about handling of piecewise results and zero-evaluation conditions.\n- **Floating-point Handling:** `jsdodge` encounters a `_CoeffExpValueError` with floating-point exponents. `oscarbenjamin` advises using rational numbers to resolve this.\n- **Conclusion:** A suggestion is made to improve error messages for better understanding of floating-point limitations in integration routines.\n\nOverall, the discussion emphasizes challenges with floating-point accuracy and suggests specific patches and best practices to mitigate issues.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 21426,
+                  "userQuery": "Focus on the problem described and the discussion around it."
+                }
+              }
+            ],
+            "usage": {
+              "input": 2207,
+              "output": 317
+            },
+            "ms": 7794
+          },
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue, focusing on the integration problems with floating-point numbers and the Meijer G-function, and aligns with the reference facts.",
+            "answer": "The discussion on [issue #21426](https://github.com/sympy/sympy/issues/21426) focuses on problems related to integration in SymPy, specifically involving floating-point numbers and the Meijer G-function.\n\n### Key Problems\n\n1. **Floating-Point Coefficients**: The integration code struggles with floating-point coefficients, leading to incorrect results. The suggestion is to use `rational=False` to handle these better.\n\n2. **Meijer G-function Issues**: The integration of the Heaviside function using the Meijer G-function backend produces incorrect results. Converting the result to a float yields a nonsensical complex number.\n\n3. **Definite vs. Indefinite Integrals**: The Meijer G-function manages definite integrals correctly but often fails with antiderivatives, especially under certain conditions (e.g., \\( x < -1 \\)).\n\n4. **Error Handling**: Users encounter a `_CoeffExpValueError` related to floating-point exponents, highlighting a recurring issue with floats in integration.\n\n### Proposed Solutions and Discussions\n\n- **Patch for Definite Integrals**: Proposed adjustments involve handling `Piecewise` objects better, solving some problems but not the original issue entirely.\n\n- **Handling Floats**: Recommendations include avoiding floats in expressions and using rational numbers instead.\n\n- **Further Work Needed**: Discussions acknowledge the necessity for comprehensive fixes. A partial fix was submitted, but it doesn't resolve the entire problem.\n\n- **Improving Error Messages**: Clearer error messages could help new users understand the limitations regarding floating-point numbers in SymPy.\n\nThe discussion reflects ongoing challenges and suggests incremental improvements with the acknowledgment of the need for more robust solutions.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 21426,
+                  "userQuery": "What is the problem and what did people say about it?"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2358,
+              "output": 383
+            },
+            "ms": 9111
+          },
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue, its problems, and the discussion around it without contradicting the reference facts.",
+            "answer": "### Problem Summary\n\n1. **Floating Point Coefficients**: Issues with extracting floating-point coefficients in `meijerint.py`, especially with the function `as_coeff_mul`, which doesn't handle floats properly unless `rational=False` is used.\n\n2. **Heaviside Function Integration**: Incorrect integration results for the Heaviside function using the Meijer G-function backend, leading to complex expressions that evaluate incorrectly.\n\n3. **Antiderivatives and Piecewise Results**: Difficulties with antiderivatives, incorrect results for negative \\( x \\), and unexpected piecewise results involving floating-point numbers.\n\n4. **General Integration Issues**: Errors like `_CoeffExpValueError` occur when integrating expressions with floating-point exponents.\n\n### Discussion Highlights\n\n- **Proposed Fixes**:\n  - Suggestions to improve definite integral handling using `meijerint_definite`.\n  - Using `rational=False` for float handling, though not solving all issues.\n\n- **User Feedback**:\n  - Users tested patches, resolving some but not all issues, particularly with piecewise conditions.\n  - A merge request was submitted addressing some aspects but not the entire problem.\n\n- **Further Suggestions**:\n  - Avoid floats in expressions for better handling.\n  - Improve error messages for better clarity on floating-point limitations in SymPy.\n\nOverall, the discussion highlights challenges with integrating certain functions using SymPy, particularly floating-point numbers and the Meijer G-function, with community suggestions and partial solutions shared.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 21426,
+                  "userQuery": "What is the problem and what did people say about it?"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2356,
+              "output": 337
+            },
+            "ms": 10269
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "sympy2-dev-046",
+        "template": "summarize_issue",
+        "kind": "semantic",
+        "canary": false,
+        "question": "Summarize the discussion on issue #25420. What is the problem and what did people say about it?",
+        "oracle": "[GSoC] Logarithm bases for `\\lg` and `\\log`",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue, focusing on the default bases for `log` and `lg`, user configurability, and diverse conventions, without contradicting the reference facts.",
+            "answer": "The discussion in [issue #25420](https://github.com/issues/25420) focuses on the default base for logarithms in a parser, with key points including:\n\n### Main Discussion Points\n\n1. **Default Base for `log`:** \n   - Consensus is that `log` should default to base e, consistent with mathematical norms and LaTeX defaults.\n\n2. **Notation for `lg`:** \n   - Debate over `lg` defaulting to base 2, supported by references to academic usage, especially in computer science. A suggestion was made to make it configurable.\n\n3. **User Configurability:**\n   - Importance of having good defaults and allowing customization in the parser. Two types of configurability are proposed: altering existing nodes and extending the grammar.\n\n4. **Type Safety and Parser Design:**\n   - Emphasis on type annotations for configurability and maintaining clarity through grammar modularization. There's a suggestion to handle typing during conversion to SymPy.\n\n5. **Diverse Conventions:**\n   - Highlighted by participants, different fields (like chemistry and engineering) use varied conventions, e.g., `log` for base 10, presenting a challenge in standardization.\n\nThe overall sentiment is about balancing standard conventions with user flexibility.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 25420,
+                  "userQuery": "What is the problem discussed and the opinions or solutions shared by the participants?"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2232,
+              "output": 297
+            },
+            "ms": 8031
+          },
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue, aligns with the core problem, and does not contradict any reference facts.",
+            "answer": "The discussion on [issue #25420](https://github.com/user/repository/issues/25420) centers on the default base for logarithmic functions in a parser. Here's a summary of the key points:\n\n### Problem\n- The issue concerns whether the function \"log\" should default to base \\\\(e\\\\) and how to handle \"lg\" notation in the parser.\n\n### Key Opinions and Solutions\n\n- **Default Base for \"log\":** \n  - There is a consensus, including opinions from participants like asmeurer and wermos, that \"log\" should default to base \\\\(e\\\\), following common mathematical conventions and the LaTeX printer's existing default behavior.\n\n- **Handling \"lg\":**\n  - The discussion suggests more research into its use, particularly in academic works.\n  - wermos found that in computer science, \"lg\" often denotes base 2, supported by examples from popular texts such as CLRS.\n  - upabjojr suggested a user-configurable parser transformation to let users define their preferred \"lg\" interpretation.\n\n- **Broader Parser Configuration:**\n  - asmeurer emphasized sensible defaults with customization possibilities.\n  - sylee957 raised concerns about type safety, suggesting a modular grammar for manageability and cross-system code generation.\n  \n- **Diverse Conventions Across Fields:**\n  - bjodah highlighted that in chemistry, \"log\" typically means base 10, echoed by wermos for engineering standards.\n\nOverall, the conversation reflects a need to balance standard mathematical practices with flexibility for diverse use cases and user preferences.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 25420,
+                  "userQuery": "summarize the discussion, problem, and people's opinions"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2186,
+              "output": 357
+            },
+            "ms": 7319
+          },
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue, aligns with the core problem, and does not contradict any reference facts.",
+            "answer": "### Issue #25420 Discussion Summary\n\n**Problem:**\nThe issue revolves around the default behavior of the logarithm function in mathematical contexts, particularly related to the Lark parser's interpretation of LaTeX notations. The key questions involve whether the logarithm function should default to base \\( e \\) and how the \\( \\lg \\) notation should be interpreted, often used to denote base 2.\n\n**Discussion Points:**\n\n- **Key Workflows:**\n  - Defaulting logarithm functions to base \\( e \\).\n  - Usage of \\( \\lg \\) for base 2.\n  - User configurability in parsing LaTeX, including altering default interpretations and grammar extensions.\n\n- **Competitor References:**\n  - Common notations in ArXiv, Google Scholar, and the popular algorithms book CLRS.\n  - Texas Instruments TI-83 calculator's base conventions.\n  - Antlr parser as a model for parser design.\n\n- **Workarounds:**\n  - Employing a dictionary of transformations for user customization in the Lark parser.\n  - Modularizing grammar for improved organization and flexibility.\n\n- **Proposed Solutions:**\n  - Creating a \\( \\lg \\) node in the parser and allowing user-defined transformation dictionaries.\n  - Enhancing user configurability, possibly through boolean or string flags and a lower-level API.\n  - Parsing LaTeX to an abstract syntax tree (AST) then converting it to SymPy.\n  - Keeping the options simple for user convenience.\n\n**Overall Tone:**\nThe discussion is generally neutral, focused on constructive collaboration and solution-finding, though there's some mild frustration regarding notation conventions and configurability complexities.\n\n**Comment Count:** 20\n\nFor a deeper dive, you can view the full discussion on [GitHub](#25420).",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 25420,
+                  "userQuery": null
+                }
+              }
+            ],
+            "usage": {
+              "input": 2194,
+              "output": 391
+            },
+            "ms": 6982
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "sympy2-dev-047",
+        "template": "summarize_issue",
+        "kind": "semantic",
+        "canary": false,
+        "question": "Summarize the discussion on issue #18626. What is the problem and what did people say about it?",
+        "oracle": "sqrt(8)**Rational(2, 3) doesn't simplify",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue, its discussion, and resolution without contradicting the reference facts.",
+            "answer": "The discussion on [issue #18626](https://github.com/sympy/sympy/issues/18626) focuses on a problem with the `sympy` library's handling of power evaluations and square roots.\n\n### Problem Description\n- **Inconsistency**: An issue arises with how `Pow` objects are evaluated, particularly when using the `evaluate=False` flag. The function `sqrt(8, evaluate=False)**Rational(2, 3)` simplifies to `2`, but similar expressions do not simplify correctly.\n- **Simplification Errors**: The algorithm for simplifying products of rational powers is not consistently applied, leading to unexpected results.\n\n### Discussion and Proposed Solutions\n- **Examples and Suggestions**: User `smichr` provided examples demonstrating the issue and suggested changes to improve how `Pow` objects are combined during multiplication.\n- **Code Modifications**: Changes to the `sympy` codebase were proposed, particularly for `power.py` and `test_arit.py`.\n- **Test File Issues**: There was a problem with test files not appearing in the git diff, which was resolved with help from another user, `asmeurer`.\n\n### Resolution\n- **Implementation**: The issue was addressed by implementing a change that allows numerical factors to reevaluate, enabling correct combination of terms during multiplication flattening.\n\nThe overall discussion emphasizes a detailed look at expression evaluation in `sympy`, balancing automatic evaluation with the control necessary for correct simplification.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 18626,
+                  "userQuery": "What is the problem and what did people say about it?"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2271,
+              "output": 337
+            },
+            "ms": 8940
+          },
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue, problem, and discussion points without contradicting the reference facts.",
+            "answer": "The discussion on [GitHub issue #18626](https://github.com/sympy/sympy/issues/18626) centers around a problem with the `sympy` library's handling of powers and square roots, especially when using `evaluate=False`.\n\n### Problem\n- The issue arises when using expressions like `sqrt(8, evaluate=False)**Rational(2, 3)`, where the expected simplification does not occur.\n- The simplification algorithm for products of rational powers of rational numbers is not functioning correctly in certain cases.\n\n### Proposed Solutions and Opinions\n1. **Code Changes:**\n   - A suggestion was made to modify the `sqrt` function to default to `evaluate=False`.\n   - A code change in `sympy/core/power.py` was proposed to handle rational powers more effectively, by sifting through commutative arguments and allowing numerical factors to reevaluate for combination during multiplication flattening.\n\n2. **Discussion on Evaluation:**\n   - There was a discussion on whether the library should auto-evaluate such expressions. The expectation is for `Mul` and `Pow` to fully canonicalize rational powers, but this isn't happening consistently.\n   - Allowing numerical factors to reevaluate was suggested to help them combine correctly during multiplication.\n\n3. **Testing and Debugging:**\n   - Issues with test files not showing up in `git diff` were encountered and resolved.\n   - Tips on managing untracked files in Git were shared, including using `git clean`.\n\nOverall, the need for a more robust handling of rational powers in `sympy` is highlighted, along with suggestions for code changes and improvements in testing and debugging practices.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 18626,
+                  "userQuery": "Summarize the problem discussed and people’s opinions or solutions"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2228,
+              "output": 374
+            },
+            "ms": 9092
+          },
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue, discussion, and resolution without contradicting the reference facts.",
+            "answer": "The discussion on [issue #18626](https://github.com/sympy/sympy/issues/18626) focuses on a problem with the `sympy` library related to the evaluation of powers and square roots.\n\n### Problem Description\n- The issue occurs when using `evaluate=False` with the `Pow` and `sqrt` functions. Specifically, `sqrt(8, evaluate=False)**Rational(2, 3)` unexpectedly returns `2`.\n- There is a problem with the core algorithm that simplifies rational powers of rational numbers, leading to incorrect simplifications.\n\n### Discussion and Suggestions\n- **smit-create** suspects the issue is linked to `evaluate=False` and suggests a code change to default `evaluate` to `False` in the `sqrt` function.\n- **asmeurer** notes that the core algorithm for simplifying rational powers isn't functioning as expected.\n- **smichr** provides a detailed analysis, identifying that the issue arises from how `Mul._eval_power` deals with power-base expansions and proposes a code change to enable numerical factors to re-evaluate and combine correctly.\n- A side issue involving local testing was resolved by identifying a file rename in the repository.\n\n### Resolution and Opinions\n- **asmeurer** and **smichr** discuss the auto-evaluation of expressions, with agreement that the proposed changes should allow expressions to simplify correctly.\n- The consensus is that the proposed changes will help in resolving the issue by facilitating proper simplification of rational powers.\n\nThe conversation comprised 14 comments, where contributors analyzed the root cause and suggested potential fixes.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 18626,
+                  "userQuery": "What is the problem and what did people say about it?"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2263,
+              "output": 358
+            },
+            "ms": 7943
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "sympy2-dev-048",
+        "template": "summarize_issue",
+        "kind": "semantic",
+        "canary": false,
+        "question": "Summarize the discussion on issue #5295. What is the problem and what did people say about it?",
+        "oracle": "Document assumptions",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue #5295, focusing on the need for better documentation of assumptions in SymPy, and does not contradict any reference facts.",
+            "answer": "The discussion on [issue #5295](https://github.com/issue-5295) focuses on the need to improve the documentation of assumptions in the SymPy library by incorporating truth tables in the docstrings. Here's a summary of the key points:\n\n### Problem\n- The main issue is the lack of clarity in the assumptions system of SymPy, which affects how certain properties of mathematical objects are inferred.\n\n### Discussion Highlights\n- **Interconnectedness:** This issue is linked to several others, signifying its importance.\n- **Blocking Issues:** It's marked as \"blocking\" or \"blocked on\" various issues, indicating its resolution is crucial for progress.\n- **Specific Cases:** Contributors, including asmeurer, smichr, and skirpichev, highlight cases where the current system returns `None`, indicating inadequate resolution of assumptions.\n- **Progress:** By 2013, work had begun, noted with a pull request mentioned by asmeurer.\n\n### Conclusion\nThe emphasis is on creating a more robust assumptions system in SymPy to ensure correct and expected behavior in mathematical computations.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 5295,
+                  "userQuery": "What is the problem and what did people say about it?"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2101,
+              "output": 257
+            },
+            "ms": 7047
+          },
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue, focusing on the need for improved documentation of assumptions in SymPy, and does not contradict any reference facts.",
+            "answer": "The discussion on [issue #5295](https://github.com/sympy/sympy/issues/5295) focuses on improving the handling of assumptions in the SymPy library by incorporating truth tables into assumption docstrings. Here's a summary of the main points discussed:\n\n### Problem\nThe issue addresses improving the clarity and documentation of assumptions within the SymPy library. It involves:\n- Adding truth tables to assumption docstrings to better illustrate how different assumptions interact.\n- Ensuring that assumptions like `is_bounded` and `is_zero` have explicit outcomes, rather than returning `None`.\n\n### Key Points\n1. **Dependencies and Blocking**: The issue is closely linked with several others, such as #5264, #5585, #5263, #5393, #5976, #6291, and #6730. Resolving this issue is crucial for the progress of these related tasks.\n\n2. **Documentation Improvement**: Enhancing documentation by adding truth tables would clarify how assumptions should function and interact.\n\n3. **Implementation Progress**: A pull request was initiated (https://github.com/sympy/sympy/pull/2538), indicating active efforts to address the problem. Contributors emphasize the need to review blocking issues before moving forward.\n\n4. **Assumption Clarity**: Contributors discuss the importance of clear and predictable behavior for assumptions. They provide examples and highlight the current shortcomings, such as the return of vague `None` results.\n\nIn conclusion, the discussion highlights the need for better documentation and clarity to ensure correct behavior in SymPy’s mathematical computations.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 5295,
+                  "userQuery": "Summarize the discussion focusing on the problem and the main points made by contributors."
+                }
+              }
+            ],
+            "usage": {
+              "input": 2170,
+              "output": 363
+            },
+            "ms": 7934
+          },
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue, focusing on the problem of unclear assumptions documentation in SymPy and the discussion around using truth tables in docstrings. It aligns with the reference facts and does not contradict any key details.",
+            "answer": "The discussion on [issue #5295](https://github.com/issues/5295) focuses on improving SymPy's handling of assumptions, particularly using truth tables in the assumption docstrings. Here's a summary of the key points:\n\n- **Problem:** The issue is about the lack of clarity and consistency in how SymPy documents and processes assumptions. This has led to confusion and difficulties in managing assumptions within the library.\n\n- **Discussion:**\n  - **Asmeurer** emphasizes the importance of using truth tables in docstrings to clarify assumptions. This suggestion is linked to a pull request and multiple related issues, indicating a broader effort to solve the problem.\n  - **Smichr** and **Skirpichev** provide specific examples of expected behavior for assumptions, like boundedness and complexity. They point out that these currently return `None`, suggesting inadequacies in the system.\n\n- **Consensus:** There is a general agreement on the need for more explicit documentation and consistent handling of assumptions. Ongoing work is being conducted through linked pull requests and related discussions.\n\nThe issue is interconnected with other parts of the project, reflecting its complexity and the ongoing efforts to improve SymPy's assumption framework.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 5295,
+                  "userQuery": "Summarize the problem discussed and the opinions shared."
+                }
+              }
+            ],
+            "usage": {
+              "input": 2046,
+              "output": 275
+            },
+            "ms": 6536
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "sympy2-dev-049",
+        "template": "summarize_issue",
+        "kind": "semantic",
+        "canary": false,
+        "question": "Summarize the discussion on issue #22935. What is the problem and what did people say about it?",
+        "oracle": "Periodicity of trigonometric expression incorrect .",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue, its core problem, and the discussion around it without contradicting the reference facts.",
+            "answer": "The discussion on [issue #22935](https://github.com/issues/22935) centers on the problem of determining the correct periodicity of mathematical functions using the `periodicity` function in the SymPy library. Here are the key points from the conversation:\n\n### Problem Overview\n- The issue involves inconsistencies in the periodicity results for certain functions, such as `Abs(sin(x))` and `Abs(sin(x))**2`, which yield different periods despite being similar.\n- The main concern is whether the function returns the \"fundamental\" or \"minimal\" period, as it sometimes provides a period that is a multiple of the actual minimal period.\n\n### Contributions and Suggestions\n- Several contributors expressed interest in addressing the issue. They noted that the function might not return the smallest period and discussed methods to ensure it does.\n- One proposed method involved evaluating the function at equally spaced points to determine the minimal period. While logical, it was critiqued for its limitations since evaluating at fixed points can't universally confirm periodicity.\n\n### Technical Discussion\n- Clarification was sought on the expected behavior of the `periodicity` function—whether it should compute any period or specifically the minimal period.\n- Suggestions were made about using zeros or extrema of functions to better determine periodicity.\n\n### Resolution Attempts\n- A contributor mentioned a fix that provided expected results and suggested a new function `min_period` to compute minimal periods more accurately.\n- The conversation emphasized needing a robust method to accurately determine periodicity, possibly through solving for zeros or extrema and using numerical methods for verification.\n\nOverall, the discussion is a collaborative effort to enhance the accuracy of the `periodicity` function in determining minimal periods of functions.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 22935,
+                  "userQuery": "What is the problem and what did people say about it?"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2303,
+              "output": 380
+            },
+            "ms": 9403
+          },
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue and discussion on periodicity of trigonometric expressions, matching the core problem and details from the reference.",
+            "answer": "### Issue Summary\n\n- **Title:** [Periodicity of trigonometric expression incorrect](https://github.com/repository/issues/22935)\n- **Problem:** The issue is about the incorrect periodicity of trigonometric expressions in specific cases, particularly when calculating the period of powers of `sin(x)` and `cos(x)`. The function returns `2*pi` regardless of the power, whereas it should vary with the power `n`.\n- **Details:** When the power `n` is even, the period should be `pi`, but the function currently returns `2*pi`. The author is asking if this is a legitimate issue and suggests correction.\n\n### Discussion Highlights\n\n- **Key Workflows:**\n  - Using the `periodicity` function to determine periods of mathematical expressions.\n  - Evaluating function at multiple points for determining periodicity.\n  - Utilizing zeros or extrema as reference points.\n\n- **Workarounds:**\n  - One user proposed dividing the period into equal parts and checking function values.\n  - Using print statements for logical verification of periodicity results.\n\n- **Proposed Solutions:**\n  - Clarifying the expected output for the `periodicity` function: whether to return any period or the minimal period.\n  - Implementing a function to compute periods without needing to find the minimal period.\n  - Using a solver to find other satisfying roots for determining the period.\n  - A proof of concept involves making the function and its derivative identical.\n\n- **Tone:** The discussion is constructive and collaborative with some mild frustration regarding the function's limitations. The focus is on problem-solving and improving the function's accuracy.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 22935}) RETURN i.title, i.bodyText, i.state, i.createdAt LIMIT 1"
+                }
+              },
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 22935,
+                  "userQuery": null
+                }
+              }
+            ],
+            "usage": {
+              "input": 2343,
+              "output": 418
+            },
+            "ms": 6731
+          },
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue and key comments without contradicting the reference facts.",
+            "answer": "The discussion on [issue #22935](https://github.com/organization/repo/issues/22935) focuses on improving the `periodicity` function in a symbolic mathematics library. Here's a summary of the problem and key comments:\n\n### Problem\nThe main issue is that the `periodicity` function sometimes returns a period that isn't the minimal one. For instance, `cos(x)**2` has a period of `2π`, but its minimal period is `π`. The function needs to compute or attempt to find this minimal period.\n\n### Key Comments and Contributions\n\n- **oscargus**: Highlights inconsistencies in periodicity results with trigonometric expressions. Suggests the need for improvements.\n  \n- **faze-geek**: Keen to work on the issue; notes the documentation indicates awareness about the non-fundamental periods being returned.\n\n- **AhmedTareek**: Seeks advice on addressing the problem. Shares a method using print statements to divide the period into parts, attempting to find a smaller period by checking for repeated results.\n\n- **oscarbenjamin**: Advises that the documentation should clarify whether a minimal period is expected from the function. Critiques AhmedTareek's approach, explaining that evaluating finite points isn't reliable for periodicity.\n\n- **smichr**: Suggests using zeros or extrema to determine periodicity, proposing that finding matching roots and derivatives might lead to the minimal period.\n\nThe discussion suggests using a solver to find roots and derivative matches for a more accurate minimal period determination.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 22935,
+                  "userQuery": "Summarize the discussion, main problem, and any comments or solutions provided."
+                }
+              }
+            ],
+            "usage": {
+              "input": 2260,
+              "output": 352
+            },
+            "ms": 7564
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "sympy2-dev-050",
+        "template": "summarize_issue",
+        "kind": "semantic",
+        "canary": false,
+        "question": "Summarize the discussion on issue #15623. What is the problem and what did people say about it?",
+        "oracle": "Jupyter notebook LaTeX output breaks when processed in LaTeX, ironically",
+        "attempts": [
+          {
+            "pass": false,
+            "reason": "The answer does not accurately summarize the core problem of issue #15623, which is about LaTeX output errors when converting Jupyter notebooks. It incorrectly focuses on testing and converting workflows rather than the specific LaTeX error described in the reference.",
+            "answer": "### Issue #15623 Discussion Summary\n\n**Problem:**\nThe issue revolves around problems with testing and converting Jupyter notebooks using `nbconvert`. Users have noted breakages in `nbconvert` that affect their workflows.\n\n**Key Discussions:**\n- **Workflows and Use Cases:**\n  - Testing and converting Jupyter notebooks using `nbconvert`.\n  - Incorporating notebooks into automated testing, similar to doctests.\n  - Integrating notebooks into documentation for CI testing.\n  - Utilizing notebooks as part of user documentation or regression tests.\n\n- **Competitor Tools/Services:**\n  - `nbval` for verifying notebook outputs.\n  - `nbsphinx` for incorporating notebooks into documentation.\n\n- **User Workarounds:**\n  - Using `jupyter nbconvert` with execution to run notebooks for basic testing.\n  - Moving notebooks into documentation to automate execution and testing during documentation builds.\n\n- **Proposed Solutions:**\n  - Adding these tests to the overall test suite that execute and convert SymPy notebooks.\n  - Leveraging `nbval` to test notebook outputs against expected results.\n  - Utilizing `nbsphinx` for documentation purposes if needed.\n\n**Emotional Tone:**\n- The conversation remains mostly neutral but includes some frustration about `nbconvert` issues. However, the focus is on constructive dialogue to find solutions and improve the current workflows.\n\nFeel free to reach out if you have further questions or need more details on this issue!",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 15623,
+                  "userQuery": null
+                }
+              }
+            ],
+            "usage": {
+              "input": 2105,
+              "output": 322
+            },
+            "ms": 6121
+          },
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue #15623, addressing the core problem of LaTeX output breaking in Jupyter notebooks and the discussions around solutions and testing practices. It does not contradict any reference facts.",
+            "answer": "The discussion on [issue #15623](https://github.com/user/repo/issues/15623) centers around a problem introduced by a change that broke the `nbconvert` functionality, which is crucial for converting Jupyter notebooks. Here's a summary of the key points:\n\n### Problem\n- The issue arose following a change (#15367), impacting `nbconvert` related to using math environments like `equation*`.\n- It relates back to a previous issue (#15329), suggesting that the current approach was problematic.\n\n### Proposed Solutions and Discussions\n- A pull request (#15625) was initiated to resolve the issue.\n- Participants discussed the importance of integrating notebook testing in the continuous integration (CI) process.\n- It was proposed to shift notebooks to documentation, using tools like `nbsphinx` for execution during doc builds, which would catch errors in PDF generation.\n- Testing notebook outputs using `nbval` was suggested, similar to doctests for documentation, but with limitations regarding LaTeX-related errors.\n\n### Organizational Considerations\n- There was discussion about existing yet underused repositories for SymPy notebooks.\n- Emphasis was placed on not storing notebooks with outputs or image binaries in the primary repository to maintain efficiency.\n\nOverall, the conversation underlined the need to enhance testing and documentation practices to avert similar issues in the future.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 15623,
+                  "userQuery": "What is the problem and what did people say about it?"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2117,
+              "output": 306
+            },
+            "ms": 7745
+          },
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue, its core problem, and the discussion around it without contradicting any reference facts.",
+            "answer": "### Problem Description\n\nThe issue pertains to a change (#15367) that disrupted the `nbconvert` functionality in the SymPy project, linked to a math environment mishandling, as noted in issue #15329. This needs to be fixed before the next release.\n\n### Discussion Summary\n\n1. **Identification and Fix Proposal:**\n   - The issue was traced to a recent change, and a pull request (#15625) was initiated to resolve it.\n\n2. **Testing and Documentation Suggestions:**\n   - A test was suggested to convert a simple SymPy notebook as part of the test suite to catch such issues early.\n   - It was proposed to migrate notebooks from the examples directory to the documentation, allowing for automated execution during documentation builds and integration into CI tests.\n\n3. **Notebook Testing Tools:**\n   - The use of `nbval` was recommended to test notebook outputs for consistency.\n   - Challenges around testing notebooks with image outputs were discussed, emphasizing the need not to store these outputs in the main repository.\n\n4. **Execution vs. Output Testing:**\n   - Executing notebooks is a good initial test, but checking the output is more comprehensive.\n   - The error occurred during a LaTeX run, indicating that the `nbconvert` command should employ `--to=pdf` to catch these errors.\n\n5. **Documentation vs. Regression Tests:**\n   - A discussion occurred on whether notebooks should be part of the documentation or used for regression tests.\n   - For documentation purposes, `nbsphinx` was recommended; for regression tests, `nbval` was suggested.\n   - Doctests ensure documentation accuracy but aren't primarily for regression testing, a role `nbval` could fulfill for notebooks. \n\nThis issue generated 12 comments, reflecting a constructive and solution-focused dialogue.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 15623,
+                  "userQuery": "Describe the problem and summarize the discussion."
+                }
+              }
+            ],
+            "usage": {
+              "input": 2281,
+              "output": 399
+            },
+            "ms": 9368
+          }
+        ],
+        "passRate": 0.6666666666666666
+      }
+    ],
+    "openai": {
+      "requests": 324,
+      "byModel": {
+        "gpt-4o-2024-08-06": {
+          "requests": 324,
+          "promptTokens": 326899,
+          "completionTokens": 22785,
+          "unmetered": 0
+        }
+      },
+      "byEndpoint": {
+        "/responses": 306,
+        "/chat/completions": 18
+      },
+      "byHost": {
+        "api.openai.com": 324
+      },
+      "unpricedModels": [],
+      "unmetered": 0,
+      "usageSource": "wire",
+      "reportedTokens": {
+        "input": 287828,
+        "output": 16178
+      },
+      "costUsd": 1.0450975
+    },
+    "neo4j": {
+      "queries": 157,
+      "sessions": 157,
+      "transactions": 0,
+      "samples": [
+        "MATCH (c:Comment) RETURN count(c) AS totalComments",
+        "MATCH (i:Issue) RETURN count(i) as totalIssues",
+        "MATCH (c:Comment) RETURN COUNT(c) as totalComments",
+        "MATCH (i:Issue) RETURN count(i) AS totalIssues",
+        "MATCH (c:Comment) RETURN count(c) AS totalComments",
+        "MATCH (i:Issue) RETURN count(i) AS totalIssues",
+        "MATCH (i:Issue {state: 'OPEN'}) RETURN count(i) as openIssue",
+        "MATCH (i:Issue {state: 'OPEN'}) RETURN count(i) AS openIssue",
+        "MATCH (i:Issue {state: 'OPEN'}) RETURN count(i) AS openIssue",
+        "MATCH (i:Issue {state: 'CLOSED'}) RETURN count(i) as closed_",
+        "MATCH (i:Issue) WHERE i.state = 'CLOSED' RETURN count(i) AS ",
+        "MATCH (i:Issue {state: 'CLOSED'}) RETURN count(i) AS closedI",
+        "MATCH (i:Issue {number: 5295}) RETURN i.state LIMIT 1",
+        "MATCH (i:Issue {number: 5295}) RETURN i.state LIMIT 1",
+        "MATCH (issue:Issue {number: 5295}) RETURN issue.state LIMIT ",
+        "MATCH (i:Issue {number: 5834}) RETURN i.state LIMIT 1",
+        "MATCH (i:Issue {number: 5834}) RETURN i.state LIMIT 1",
+        "MATCH (i:Issue {number: 5834}) RETURN i.state LIMIT 1",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE i.state = 'OPE",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE i.state = 'OPE",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE i.state = 'OPE",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE l.name = \"Wron",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE i.state = 'OPE",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE i.state = 'OPE",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE l.name = \"Docu",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"Documentation",
+        "MATCH (l:Label) RETURN count(DISTINCT l.name) AS distinctLab",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE i.state = 'OPE",
+        "MATCH (l:Label) RETURN count(DISTINCT l.name) AS distinctLab",
+        "MATCH (l:Label) RETURN COUNT(DISTINCT l.name) AS distinctLab",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"Bug\"}) RETURN",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"Bug\"}) RETURN",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"Bug\"}) RETURN",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: 'Bug'}) RETURN",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: 'Bug'}) RETURN",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE l.name = \"bug\"",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"bug\"}) RETURN",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"bug\"}) RETURN",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"Bug\"}) RETURN",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"Wrong Result\"",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"Wrong Result\"",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"Wrong Result\"",
+        "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User) RETURN COUNT(DISTIN",
+        "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User) RETURN COUNT(DISTIN",
+        "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User) RETURN COUNT(DISTIN",
+        "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User {login: \"smichr\"}) R",
+        "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User {login: \"smichr\"}) R",
+        "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User {login: \"smichr\"}) R",
+        "MATCH (i:Issue {number: 5295})-[:AUTHORED_BY]->(u:User) RETU",
+        "MATCH (i:Issue {number: 5295})-[:AUTHORED_BY]->(u:User) RETU",
+        "MATCH (i:Issue {number: 5295})-[:AUTHORED_BY]->(u:User) RETU",
+        "MATCH (i:Issue {number: 5295})-[:HAS_COMMENT]->(c:Comment)-[",
+        "MATCH (i:Issue {number: 5295})-[:HAS_COMMENT]->(c:Comment)-[",
+        "MATCH (i:Issue) WHERE i.createdAt STARTS WITH '2018-02' RETU",
+        "MATCH (i:Issue {number: 5295})-[:HAS_COMMENT]->(c:Comment)-[",
+        "MATCH (i:Issue) WHERE i.createdAt STARTS WITH \"2018-02\" RETU",
+        "MATCH (i:Issue) WHERE date(i.createdAt) < date('2017-09-28')",
+        "MATCH (i:Issue) WHERE i.createdAt < '2017-09-28' RETURN coun",
+        "MATCH (i:Issue) WHERE i.createdAt STARTS WITH '2018-02' RETU",
+        "MATCH (i:Issue) WHERE date(i.createdAt) < date('2017-09-28')",
+        "MATCH (i:Issue) WHERE date(i.createdAt) > date('2017-09-28')",
+        "MATCH (i:Issue) WHERE datetime(i.createdAt) < datetime('2017",
+        "MATCH (i:Issue) WHERE datetime(i.createdAt) > datetime('2017",
+        "MATCH (i:Issue) WHERE i.createdAt > '2017-09-28' RETURN coun",
+        "MATCH (i:Issue) WHERE datetime(i.createdAt) < datetime('2017",
+        "MATCH (i:Issue) WHERE i.createdAt > '2017-09-28' RETURN coun",
+        "MATCH (i:Issue) WHERE date(i.createdAt) > date('2019-06-27')",
+        "MATCH (i:Issue) WHERE i.createdAt > '2019-06-27' RETURN coun",
+        "MATCH (i:Issue) WHERE date(i.createdAt) >= date('2017-09-28'",
+        "MATCH (i:Issue) WHERE i.createdAt >= '2017-09-28' AND i.crea",
+        "MATCH (i:Issue) WHERE date(i.createdAt) > date('2019-06-27')",
+        "MATCH (i:Issue) WHERE datetime(i.createdAt) > datetime('2019",
+        "MATCH (i:Issue) WHERE i.createdAt >= '2017-09-28' AND i.crea",
+        "MATCH (i:Issue) WHERE datetime(i.createdAt) > datetime('2019",
+        "MATCH (i:Issue) WHERE NOT (i)-[:HAS_COMMENT]->(:Comment) RET",
+        "MATCH (i:Issue) WHERE datetime(i.createdAt) >= datetime('201",
+        "MATCH (i:Issue) WHERE NOT (i)-[:HAS_COMMENT]->() RETURN coun",
+        "MATCH (i:Issue) WHERE NOT (i)-[:HAS_COMMENT]->(:Comment) RET",
+        "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment) WITH i, COUNT(c)",
+        "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment) WITH i, COUNT(c)",
+        "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment) WITH i, COUNT(c)",
+        "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment) WITH i, COUNT(c)",
+        "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment) WITH i, COUNT(c)",
+        "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment) WITH i, COUNT(c)",
+        "MATCH (i:Issue {number: 5295})-[:HAS_COMMENT]->(c:Comment) R",
+        "MATCH (i:Issue {number: 5295})-[:HAS_COMMENT]->(c:Comment) R",
+        "MATCH (i:Issue {number: 5295})-[:HAS_COMMENT]->(c:Comment) R",
+        "MATCH (i:Issue {number: 5834})-[:HAS_COMMENT]->(c:Comment) R",
+        "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment) WHERE i.number =",
+        "MATCH (i:Issue {number: 5834})-[:HAS_COMMENT]->(c:Comment) R",
+        "MATCH (i:Issue {number: 5834}) RETURN i.title LIMIT 1",
+        "MATCH (i:Issue {number: 5834}) RETURN i.title LIMIT 1",
+        "MATCH (i:Issue {number: 5834}) RETURN i.title LIMIT 1",
+        "MATCH (i:Issue {number: 5907}) RETURN i.title LIMIT 1",
+        "MATCH (i:Issue {number: 5907}) RETURN i.title LIMIT 1",
+        "MATCH (i:Issue {number: 5907}) RETURN i.title LIMIT 1",
+        "MATCH (i:Issue) WHERE i.title CONTAINS 'about' OR i.bodyText",
+        "MATCH (i:Issue) WHERE i.title CONTAINS 'about' OR i.bodyText",
+        "MATCH (i:Issue) WHERE i.title CONTAINS \"about\" OR i.bodyText",
+        "MATCH (l:Label {name: \"Wrong Result\"})<-[:HAS_LABEL]-(i:Issu",
+        "MATCH (issue:Issue)-[:HAS_LABEL]->(label:Label {name: \"Wrong",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"Wrong Result\"",
+        "MATCH (label:Label {name: \"Easy to Fix\"})<-[:HAS_LABEL]-(iss",
+        "MATCH (l:Label)<-[:HAS_LABEL]-(i:Issue)-[:HAS_LABEL]->(other",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"core\"})-[:HAS",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"core\"})-[:HAS",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"core\"})-[:HAS",
+        "MATCH (label:Label)<-[:HAS_LABEL]-(issue:Issue)-[:HAS_LABEL]",
+        "MATCH (l1:Label {name: \"printing\"})<-[:HAS_LABEL]-(i:Issue)-",
+        "MATCH (label1:Label {name: 'printing'})<-[:HAS_LABEL]-(issue",
+        "MATCH (label:Label {name: \"printing\"})<-[:HAS_LABEL]-(issue:",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"API: argument",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"API: argument",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"API: argument",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"API: argument",
+        "MATCH (i:Issue) WHERE i.title CONTAINS 'CPython' OR i.bodyTe",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"API: argument",
+        "MATCH (i:Issue) WHERE toLower(i.title) CONTAINS 'cpython' OR",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"API: argument",
+        "MATCH (issue:Issue) WHERE issue.title CONTAINS 'CPython' OR ",
+        "MATCH (u:User {login: \"08walkersj\"})<-[:AUTHORED_BY]-(i:Issu",
+        "MATCH (u:User {login: '08walkersj'})-[:AUTHORED_BY]-(i:Issue",
+        "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User {login: \"08walkersj\"",
+        "MATCH (i:Issue) WHERE i.createdAt STARTS WITH '2011-03' RETU",
+        "MATCH (issue:Issue) WHERE issue.createdAt STARTS WITH '2011-",
+        "MATCH (i:Issue) WHERE i.createdAt STARTS WITH '2011-03' RETU",
+        "MATCH (i:Issue {state: \"CLOSED\"}) RETURN count(i) AS closedI",
+        "MATCH (i:Issue {state: 'CLOSED'}) RETURN count(i) AS closed_",
+        "MATCH (i:Issue {state: 'closed'}) RETURN count(i) AS closedI",
+        "MATCH (i:Issue {state: 'CLOSED'}) RETURN COUNT(i) AS closed_",
+        "MATCH (i:Issue {state: \"CLOSED\"}) RETURN count(i) AS closedI",
+        "MATCH (i:Issue) WHERE i.state = 'CLOSED' RETURN COUNT(i) AS ",
+        "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User) RETURN count(DISTIN",
+        "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User) RETURN COUNT(DISTIN",
+        "MATCH (u:User)<-[:AUTHORED_BY]-(i:Issue) RETURN count(DISTIN",
+        "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User) RETURN COUNT(DISTIN",
+        "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User) RETURN COUNT(DISTIN",
+        "MATCH (u:User)<-[:AUTHORED_BY]-(i:Issue) RETURN COUNT(DISTIN",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: 22935}) RETURN i.title, i.bodyText, ",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT"
+      ]
+    },
+    "judgeCostUsd": 0.12189499999999999
+  },
+  "score": {
+    "overall": 0.9333333333333331,
+    "deterministic": 0.9318181818181817,
+    "semantic": 0.9444444444444445,
+    "byKind": {
+      "structural": 0.9595959595959597,
+      "retrieval": 0.8484848484848484,
+      "semantic": 0.9444444444444445
+    },
+    "solvedAllAttempts": 45,
+    "solvedAnyAttempt": 48,
+    "totalTasks": 50,
+    "canaryPass": true,
+    "toolUseRate": 1,
+    "agentErrorRate": 0
+  },
+  "cost": {
+    "ingestUsd": 0.3431725,
+    "qaUsd": 1.0450975,
+    "judgeUsd": 0.12189499999999999,
+    "sutTotalUsd": 1.38827
+  },
+  "finishedAt": "2026-09-05T10:45:35.435Z",
+  "trace": {
+    "files": [
+      "github-issue-analyzer-2026-09-05T10-41-31-738Z-1812186.jsonl"
+    ],
+    "spans": 1283,
+    "byName": {
+      "gen_ai.request": {
+        "count": 306,
+        "totalMs": 439393,
+        "maxMs": 4011,
+        "errors": 0
+      },
+      "pipeline.run": {
+        "count": 1,
+        "totalMs": 139804,
+        "maxMs": 139804,
+        "errors": 0
+      },
+      "pipeline.analyzeIssue": {
+        "count": 60,
+        "totalMs": 121786,
+        "maxMs": 6571,
+        "errors": 0
+      },
+      "openai.chat": {
+        "count": 60,
+        "totalMs": 121751,
+        "maxMs": 6570,
+        "errors": 0
+      },
+      "tool.summarizeComments": {
+        "count": 18,
+        "totalMs": 61917,
+        "maxMs": 5023,
+        "errors": 0
+      },
+      "github.graphql": {
+        "count": 121,
+        "totalMs": 14931,
+        "maxMs": 129,
+        "errors": 0
+      },
+      "pipeline.fetch": {
+        "count": 1,
+        "totalMs": 14862,
+        "maxMs": 14862,
+        "errors": 0
+      },
+      "github.fetchCompleteIssue": {
+        "count": 60,
+        "totalMs": 14847,
+        "maxMs": 250,
+        "errors": 0
+      },
+      "neo4j.query": {
+        "count": 454,
+        "totalMs": 5591,
+        "maxMs": 148,
+        "errors": 6
+      },
+      "tool.queryNeo4j": {
+        "count": 139,
+        "totalMs": 2290,
+        "maxMs": 61,
+        "errors": 0
+      },
+      "pipeline.persistAnalysis": {
+        "count": 1,
+        "totalMs": 1748,
+        "maxMs": 1748,
+        "errors": 0
+      },
+      "analysis.persistIssue": {
+        "count": 60,
+        "totalMs": 1739,
+        "maxMs": 236,
+        "errors": 0
+      },
+      "pipeline.ingest": {
+        "count": 1,
+        "totalMs": 711,
+        "maxMs": 711,
+        "errors": 0
+      },
+      "pipeline.discover": {
+        "count": 1,
+        "totalMs": 131,
+        "maxMs": 131,
+        "errors": 0
+      }
+    }
+  }
+}

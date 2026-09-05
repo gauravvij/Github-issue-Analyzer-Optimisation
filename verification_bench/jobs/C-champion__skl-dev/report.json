@@ -1,0 +1,4177 @@
+{
+  "job": "C-champion__skl-dev",
+  "split": "skl-dev",
+  "startedAt": "2026-09-05T10:53:18.329Z",
+  "valid": true,
+  "invalidReason": null,
+  "config": {
+    "split": "skl-dev",
+    "job": "C-champion__skl-dev",
+    "stage": "all",
+    "attempts": 3,
+    "latencyMs": 120,
+    "qaConcurrency": 6,
+    "keepGraph": false,
+    "noTypecheck": false,
+    "model": "openai/gpt-4o",
+    "judgeModel": "gpt-4o",
+    "corpusIssues": 60,
+    "tasks": 50
+  },
+  "sut": {
+    "hash": "9eeb557db3e87c2d",
+    "files": 19
+  },
+  "preflight": [
+    {
+      "name": "sut_present",
+      "pass": true,
+      "detail": "/home/azureuser/githubIssue/.worktrees/champion/github_issue"
+    },
+    {
+      "name": "sut_deps_installed",
+      "pass": true,
+      "detail": "node_modules present"
+    },
+    {
+      "name": "corpus_present",
+      "pass": true,
+      "detail": "/home/azureuser/githubIssue/verification_bench/corpus/skl-dev.json"
+    },
+    {
+      "name": "tasks_present",
+      "pass": true,
+      "detail": "/home/azureuser/githubIssue/verification_bench/tasks/skl-dev.jsonl"
+    },
+    {
+      "name": "splits_frozen",
+      "pass": true,
+      "detail": "60 issues, 50 tasks, corpus built 2026-09-05T10:14:21.637Z"
+    },
+    {
+      "name": "canaries_present",
+      "pass": true,
+      "detail": "2 canary task(s)"
+    },
+    {
+      "name": "splits_unmodified",
+      "pass": true,
+      "detail": "checksums match"
+    },
+    {
+      "name": "seam_github_api_url",
+      "pass": true,
+      "detail": "github.ts honours GITHUB_API_URL"
+    },
+    {
+      "name": "seam_agent_config",
+      "pass": true,
+      "detail": "agent/config.ts present"
+    },
+    {
+      "name": "openai_key_set",
+      "pass": true,
+      "detail": "set"
+    },
+    {
+      "name": "openai_key_live",
+      "pass": true,
+      "detail": "model=gpt-4o-mini-2024-07-18 usage=9"
+    },
+    {
+      "name": "meter_sees_openai",
+      "pass": true,
+      "detail": "1 request(s) intercepted"
+    },
+    {
+      "name": "meter_reads_usage",
+      "pass": true,
+      "detail": "prompt=8 completion=1 model=gpt-4o-mini-2024-07-18"
+    },
+    {
+      "name": "meter_can_price_models",
+      "pass": true,
+      "detail": "all models priced"
+    },
+    {
+      "name": "docker_running",
+      "pass": true,
+      "detail": "29.1.3"
+    },
+    {
+      "name": "neo4j_image",
+      "pass": true,
+      "detail": "neo4j:5 present"
+    },
+    {
+      "name": "ports_free",
+      "pass": true,
+      "detail": "7690/7475 available"
+    },
+    {
+      "name": "sut_typechecks",
+      "pass": true,
+      "detail": "clean"
+    }
+  ],
+  "ingest": {
+    "durationMs": 144184,
+    "pipeline": {
+      "issuesFetched": 60,
+      "issuesIngested": 60,
+      "issuesAnalyzed": 60,
+      "issuesSkipped": 0,
+      "errors": [],
+      "durationMs": 144180,
+      "incremental": false
+    },
+    "github": {
+      "requests": 121,
+      "listingRequests": 1,
+      "issueRequests": 120,
+      "maxConcurrent": 1,
+      "busyMs": 14829
+    },
+    "neo4j": {
+      "queries": 283,
+      "sessions": 4,
+      "transactions": 1,
+      "samples": [
+        "CREATE CONSTRAINT issue_id_unique IF NOT EXISTS FOR (i:Issue",
+        "CREATE CONSTRAINT issue_number_unique IF NOT EXISTS FOR (i:I",
+        "CREATE CONSTRAINT comment_id_unique IF NOT EXISTS FOR (c:Com",
+        "CREATE CONSTRAINT user_login_unique IF NOT EXISTS FOR (u:Use",
+        "CREATE CONSTRAINT label_name_unique IF NOT EXISTS FOR (l:Lab",
+        "CREATE CONSTRAINT category_name_unique IF NOT EXISTS FOR (c:",
+        "CREATE CONSTRAINT competitor_name_unique IF NOT EXISTS FOR (",
+        "CREATE CONSTRAINT solution_text_unique IF NOT EXISTS FOR (s:",
+        "CREATE CONSTRAINT workaround_text_unique IF NOT EXISTS FOR (",
+        "CREATE CONSTRAINT keyword_name_unique IF NOT EXISTS FOR (k:K",
+        "CREATE INDEX issue_state_lookup IF NOT EXISTS FOR (i:Issue) ",
+        "CREATE INDEX issue_updated_at_lookup IF NOT EXISTS FOR (i:Is",
+        "UNWIND $issues AS item MERGE (i:Issue {issueId: item.issueId",
+        "UNWIND $issues AS item UNWIND item.users AS user MERGE (u:Us",
+        "UNWIND $issues AS item WITH item WHERE item.authorLogin IS N",
+        "UNWIND $issues AS item UNWIND item.labels AS label MERGE (l:",
+        "UNWIND $issues AS item UNWIND item.issueReactions AS reactio",
+        "UNWIND $issues AS item UNWIND item.comments AS c MERGE (comm",
+        "UNWIND $issues AS item UNWIND item.comments AS c WITH c WHER",
+        "UNWIND $issues AS item UNWIND item.comments AS c UNWIND c.re",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MERGE (w:Workaround {workaroundText: $text}) SET w.embedding",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MERGE (w:Workaround {workaroundText: $text}) SET w.embedding",
+        "MERGE (w:Workaround {workaroundText: $text}) SET w.embedding",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MERGE (w:Workaround {workaroundText: $text}) SET w.embedding",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (w:Workaround {workaroundText: $text}) SET w.embedding",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MERGE (w:Workaround {workaroundText: $text}) SET w.embedding",
+        "MATCH (i:Issue {number: $n}) UNWIND $competitors AS comp MER",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MERGE (w:Workaround {workaroundText: $text}) SET w.embedding",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (w:Workaround {workaroundText: $text}) SET w.embedding",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (w:Workaround {workaroundText: $text}) SET w.embedding",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MERGE (w:Workaround {workaroundText: $text}) SET w.embedding",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MERGE (w:Workaround {workaroundText: $text}) SET w.embedding",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (w:Workaround {workaroundText: $text}) SET w.embedding",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MERGE (w:Workaround {workaroundText: $text}) SET w.embedding",
+        "MATCH (i:Issue {number: $n}) UNWIND $competitors AS comp MER",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = ["
+      ]
+    },
+    "openai": {
+      "requests": 60,
+      "byModel": {
+        "gpt-4o-2024-08-06": {
+          "requests": 60,
+          "promptTokens": 103387,
+          "completionTokens": 8914,
+          "unmetered": 0
+        }
+      },
+      "byEndpoint": {
+        "/chat/completions": 60
+      },
+      "byHost": {
+        "api.openai.com": 60
+      },
+      "unpricedModels": [],
+      "costUsd": 0.3476075
+    }
+  },
+  "graphProvenance": {
+    "sutHash": "9eeb557db3e87c2d",
+    "split": "skl-dev",
+    "job": "C-champion__skl-dev",
+    "at": "2026-09-05T10:55:46.007Z"
+  },
+  "integrity": [
+    {
+      "name": "issue_count",
+      "pass": true,
+      "expected": "60",
+      "actual": "60",
+      "info": false
+    },
+    {
+      "name": "comment_count",
+      "pass": true,
+      "expected": "292",
+      "actual": "292",
+      "info": false
+    },
+    {
+      "name": "user_count",
+      "pass": true,
+      "expected": "105",
+      "actual": "105",
+      "info": false
+    },
+    {
+      "name": "label_count",
+      "pass": true,
+      "expected": "36",
+      "actual": "36",
+      "info": false
+    },
+    {
+      "name": "reaction_count",
+      "pass": true,
+      "expected": "43",
+      "actual": "43",
+      "info": false
+    },
+    {
+      "name": "no_duplicate_issue_number",
+      "pass": true,
+      "expected": "0",
+      "actual": "0",
+      "info": false
+    },
+    {
+      "name": "no_duplicate_issue_id",
+      "pass": true,
+      "expected": "0",
+      "actual": "0",
+      "info": false
+    },
+    {
+      "name": "no_duplicate_comment_id",
+      "pass": true,
+      "expected": "0",
+      "actual": "0",
+      "info": false
+    },
+    {
+      "name": "no_duplicate_user_login",
+      "pass": true,
+      "expected": "0",
+      "actual": "0",
+      "info": false
+    },
+    {
+      "name": "no_duplicate_label_name",
+      "pass": true,
+      "expected": "0",
+      "actual": "0",
+      "info": false
+    },
+    {
+      "name": "issue_author_edges",
+      "pass": true,
+      "expected": "60",
+      "actual": "60",
+      "info": false
+    },
+    {
+      "name": "issue_comment_edges",
+      "pass": true,
+      "expected": "292",
+      "actual": "292",
+      "info": false
+    },
+    {
+      "name": "issue_label_edges",
+      "pass": true,
+      "expected": "82",
+      "actual": "82",
+      "info": false
+    },
+    {
+      "name": "no_orphan_comments",
+      "pass": true,
+      "expected": "0",
+      "actual": "0",
+      "info": false
+    },
+    {
+      "name": "issue_numbers_match",
+      "pass": true,
+      "expected": "60 exact numbers",
+      "actual": "60 present"
+    },
+    {
+      "name": "per_issue_comment_counts",
+      "pass": true,
+      "expected": "every issue has its corpus comment count",
+      "actual": "all match"
+    },
+    {
+      "name": "constraints_defined",
+      "pass": true,
+      "expected": "(informational)",
+      "actual": "10",
+      "info": true
+    },
+    {
+      "name": "indexes_defined",
+      "pass": true,
+      "expected": "(informational)",
+      "actual": "12",
+      "info": true
+    },
+    {
+      "name": "solution_nodes",
+      "pass": true,
+      "expected": "(informational)",
+      "actual": "62",
+      "info": true
+    },
+    {
+      "name": "workaround_nodes",
+      "pass": true,
+      "expected": "(informational)",
+      "actual": "18",
+      "info": true
+    },
+    {
+      "name": "category_nodes",
+      "pass": true,
+      "expected": "(informational)",
+      "actual": "106",
+      "info": true
+    },
+    {
+      "name": "competitor_nodes",
+      "pass": true,
+      "expected": "(informational)",
+      "actual": "2",
+      "info": true
+    },
+    {
+      "name": "keyword_nodes",
+      "pass": true,
+      "expected": "(informational)",
+      "actual": "299",
+      "info": true
+    },
+    {
+      "name": "issues_with_category",
+      "pass": true,
+      "expected": "(informational)",
+      "actual": "60",
+      "info": true
+    },
+    {
+      "name": "vector_indexes",
+      "pass": true,
+      "expected": "(informational)",
+      "actual": "0",
+      "info": true
+    },
+    {
+      "name": "nodes_with_embedding",
+      "pass": true,
+      "expected": "(informational)",
+      "actual": "0",
+      "info": true
+    }
+  ],
+  "qa": {
+    "tasks": [
+      {
+        "id": "skl-dev-001",
+        "template": "total_issues",
+        "kind": "structural",
+        "canary": true,
+        "question": "How many issues are in the knowledge graph in total?",
+        "oracle": "60",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 60",
+            "answer": "There are a total of 60 issues in the knowledge graph.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) RETURN count(i) AS totalIssues"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1806,
+              "output": 45
+            },
+            "ms": 2695
+          },
+          {
+            "pass": true,
+            "reason": "found 60",
+            "answer": "There are a total of 60 issues in the knowledge graph.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) RETURN COUNT(i) AS totalIssues"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1806,
+              "output": 45
+            },
+            "ms": 3325
+          },
+          {
+            "pass": true,
+            "reason": "found 60",
+            "answer": "There are a total of 60 issues in the knowledge graph.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) RETURN count(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1806,
+              "output": 45
+            },
+            "ms": 2678
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "skl-dev-002",
+        "template": "total_comments",
+        "kind": "structural",
+        "canary": true,
+        "question": "How many comments are stored across all issues in total?",
+        "oracle": "292",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 292",
+            "answer": "There are a total of 292 comments stored across all issues.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (c:Comment) RETURN count(c) AS totalComments"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1806,
+              "output": 45
+            },
+            "ms": 2705
+          },
+          {
+            "pass": true,
+            "reason": "found 292",
+            "answer": "There are a total of 292 comments stored across all issues.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (c:Comment) RETURN count(c) as totalComments"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1806,
+              "output": 45
+            },
+            "ms": 2558
+          },
+          {
+            "pass": true,
+            "reason": "found 292",
+            "answer": "There are a total of 292 comments stored across all issues.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (c:Comment) RETURN count(c) AS totalComments"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1806,
+              "output": 45
+            },
+            "ms": 2412
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "skl-dev-003",
+        "template": "open_count",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many issues are currently open?",
+        "oracle": "24",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 24",
+            "answer": "There are currently 24 open issues.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {state: 'OPEN'}) RETURN COUNT(i) AS openIssuesCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1805,
+              "output": 46
+            },
+            "ms": 2450
+          },
+          {
+            "pass": false,
+            "reason": "expected 24, not present in answer",
+            "answer": "There are currently no open issues.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.state = 'open' RETURN count(i) AS openIssuesCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1807,
+              "output": 47
+            },
+            "ms": 2341
+          },
+          {
+            "pass": true,
+            "reason": "found 24",
+            "answer": "There are currently 24 open issues.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {state: 'OPEN'}) RETURN COUNT(i) AS openIssues"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1803,
+              "output": 45
+            },
+            "ms": 2124
+          }
+        ],
+        "passRate": 0.6666666666666666
+      },
+      {
+        "id": "skl-dev-004",
+        "template": "closed_count",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many issues are closed?",
+        "oracle": "36",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 36",
+            "answer": "There are 36 closed issues.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {state: 'CLOSED'}) RETURN count(i) as closed_count"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1802,
+              "output": 45
+            },
+            "ms": 2637
+          },
+          {
+            "pass": false,
+            "reason": "expected 36, not present in answer",
+            "answer": "There are currently no closed issues.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {state: 'closed'}) RETURN COUNT(i) as closedIssueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1803,
+              "output": 45
+            },
+            "ms": 2351
+          },
+          {
+            "pass": true,
+            "reason": "found 36",
+            "answer": "There are 36 closed issues in the repository.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.state = 'CLOSED' RETURN count(i) as closedIssueCount LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1809,
+              "output": 54
+            },
+            "ms": 2102
+          }
+        ],
+        "passRate": 0.6666666666666666
+      },
+      {
+        "id": "skl-dev-005",
+        "template": "state_of_issue",
+        "kind": "retrieval",
+        "canary": false,
+        "question": "Is issue #4580 open or closed?",
+        "oracle": "OPEN",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "Issue [#4580](https://github.com/issues/4580) is currently open.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 4580}) RETURN i.state LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1807,
+              "output": 56
+            },
+            "ms": 2396
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "Issue [#4580](https://github.com/your-repo/issues/4580) is currently open.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 4580}) RETURN i.state LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1807,
+              "output": 60
+            },
+            "ms": 2561
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "Issue [#4580](https://github.com/org/repo/issues/4580) is currently open.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 4580}) RETURN i.state LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1807,
+              "output": 59
+            },
+            "ms": 3039
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "skl-dev-006",
+        "template": "open_label_count",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many OPEN issues carry the label \"Bug\"?",
+        "oracle": "4",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 4",
+            "answer": "There are 4 open issues labeled as \"Bug.\"",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE i.state = 'OPEN' AND l.name = 'Bug' RETURN COUNT(i) AS openBugIssues"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1829,
+              "output": 67
+            },
+            "ms": 2869
+          },
+          {
+            "pass": true,
+            "reason": "found 4",
+            "answer": "There are 4 open issues labeled as \"Bug\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE i.state = 'OPEN' AND l.name = 'Bug' RETURN COUNT(i) AS openBugIssues LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1832,
+              "output": 70
+            },
+            "ms": 2897
+          },
+          {
+            "pass": true,
+            "reason": "found 4",
+            "answer": "There are 4 open issues labeled as \"Bug.\"",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE i.state = 'OPEN' AND l.name = 'Bug' RETURN COUNT(i) AS openBugIssues LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1832,
+              "output": 70
+            },
+            "ms": 2577
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "skl-dev-007",
+        "template": "open_with_label",
+        "kind": "structural",
+        "canary": false,
+        "question": "List the issue numbers of every OPEN issue labelled \"Bug\".",
+        "oracle": "#12315, #23112, #29551, #32168",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "cited 12315,23112,29551,32168",
+            "answer": "Here are the issue numbers of open issues labeled \"Bug\":\n\n- [#23112](https://github.com/org/repo/issues/23112)\n- [#29551](https://github.com/org/repo/issues/29551)\n- [#12315](https://github.com/org/repo/issues/12315)\n- [#32168](https://github.com/org/repo/issues/32168)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE i.state = 'OPEN' AND l.name = 'Bug' RETURN i.number LIMIT 50"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1849,
+              "output": 138
+            },
+            "ms": 3356
+          },
+          {
+            "pass": true,
+            "reason": "cited 12315,23112,29551,32168",
+            "answer": "Here are the issue numbers of open issues labeled \"Bug\":\n\n- [#23112](https://github.com/owner/repo/issues/23112)\n- [#29551](https://github.com/owner/repo/issues/29551)\n- [#12315](https://github.com/owner/repo/issues/12315)\n- [#32168](https://github.com/owner/repo/issues/32168)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE l.name = \"Bug\" AND i.state = \"OPEN\" RETURN i.number LIMIT 100"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1849,
+              "output": 142
+            },
+            "ms": 3550
+          },
+          {
+            "pass": true,
+            "reason": "cited 12315,23112,29551,32168",
+            "answer": "Here are the issue numbers of the open issues labeled as \"Bug\":\n\n- [#23112](https://github.com/owner/repo/issues/23112)\n- [#29551](https://github.com/owner/repo/issues/29551)\n- [#12315](https://github.com/owner/repo/issues/12315)\n- [#32168](https://github.com/owner/repo/issues/32168)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE l.name = 'Bug' AND i.state = 'OPEN' RETURN i.number LIMIT 50"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1849,
+              "output": 144
+            },
+            "ms": 3007
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "skl-dev-008",
+        "template": "open_label_count",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many OPEN issues carry the label \"New Feature\"?",
+        "oracle": "8",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 8",
+            "answer": "There are 8 open issues labeled as \"New Feature\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label)\nWHERE i.state = 'OPEN' AND l.name = 'New Feature'\nRETURN count(i) AS openFeatureIssuesCount LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1839,
+              "output": 75
+            },
+            "ms": 2859
+          },
+          {
+            "pass": true,
+            "reason": "found 8",
+            "answer": "There are 8 open issues labeled as \"New Feature\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE i.state = 'OPEN' AND l.name = 'New Feature' RETURN COUNT(i) AS openIssuesWithLabel"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1834,
+              "output": 70
+            },
+            "ms": 2841
+          },
+          {
+            "pass": true,
+            "reason": "found 8",
+            "answer": "There are 8 open issues labeled as \"New Feature\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE i.state = 'OPEN' AND l.name = 'New Feature' RETURN count(i) AS openNewFeatureIssues LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1837,
+              "output": 73
+            },
+            "ms": 3000
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "skl-dev-009",
+        "template": "open_with_label",
+        "kind": "structural",
+        "canary": false,
+        "question": "List the issue numbers of every OPEN issue labelled \"New Feature\".",
+        "oracle": "#4580, #16931, #20801, #20917, #21209, #22966, #28386, #30037",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "cited 4580,16931,20801,20917,21209,22966,28386,30037",
+            "answer": "Here are the issue numbers for open issues labeled \"New Feature\":\n\n- [#4580](https://github.com/user/repo/issues/4580)\n- [#22966](https://github.com/user/repo/issues/22966)\n- [#16931](https://github.com/user/repo/issues/16931)\n- [#21209](https://github.com/user/repo/issues/21209)\n- [#20801](https://github.com/user/repo/issues/20801)\n- [#28386](https://github.com/user/repo/issues/28386)\n- [#20917](https://github.com/user/repo/issues/20917)\n- [#30037](https://github.com/user/repo/issues/30037)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE i.state = 'OPEN' AND l.name = 'New Feature' RETURN i.number LIMIT 100"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1876,
+              "output": 212
+            },
+            "ms": 3269
+          },
+          {
+            "pass": true,
+            "reason": "cited 4580,16931,20801,20917,21209,22966,28386,30037",
+            "answer": "Here are the issue numbers for the open issues labeled \"New Feature\":\n\n- [#4580](https://github.com/your-repo/issues/4580)\n- [#22966](https://github.com/your-repo/issues/22966)\n- [#16931](https://github.com/your-repo/issues/16931)\n- [#21209](https://github.com/your-repo/issues/21209)\n- [#20801](https://github.com/your-repo/issues/20801)\n- [#28386](https://github.com/your-repo/issues/28386)\n- [#20917](https://github.com/your-repo/issues/20917)\n- [#30037](https://github.com/your-repo/issues/30037)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE i.state = 'OPEN' AND l.name = 'New Feature' RETURN i.number LIMIT 50"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1876,
+              "output": 221
+            },
+            "ms": 3004
+          },
+          {
+            "pass": true,
+            "reason": "cited 4580,16931,20801,20917,21209,22966,28386,30037",
+            "answer": "Here are the issue numbers for open issues labeled \"New Feature\":\n\n- [#4580](https://github.com/user/repo/issues/4580)\n- [#22966](https://github.com/user/repo/issues/22966)\n- [#16931](https://github.com/user/repo/issues/16931)\n- [#21209](https://github.com/user/repo/issues/21209)\n- [#20801](https://github.com/user/repo/issues/20801)\n- [#28386](https://github.com/user/repo/issues/28386)\n- [#20917](https://github.com/user/repo/issues/20917)\n- [#30037](https://github.com/user/repo/issues/30037)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(:Label {name: 'New Feature'}) WHERE i.state = 'OPEN' RETURN i.number LIMIT 100"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1872,
+              "output": 208
+            },
+            "ms": 3401
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "skl-dev-010",
+        "template": "distinct_labels",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many distinct labels exist in the knowledge graph?",
+        "oracle": "36",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 36",
+            "answer": "There are 36 distinct labels in the knowledge graph.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (l:Label) RETURN count(DISTINCT l.name) AS distinctLabelCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1810,
+              "output": 48
+            },
+            "ms": 2604
+          },
+          {
+            "pass": true,
+            "reason": "found 36",
+            "answer": "There are 36 distinct labels in the knowledge graph.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (l:Label) RETURN COUNT(DISTINCT l.name) AS labelCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1808,
+              "output": 47
+            },
+            "ms": 2628
+          },
+          {
+            "pass": true,
+            "reason": "found 36",
+            "answer": "There are 36 distinct labels in the knowledge graph.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (l:Label) RETURN COUNT(DISTINCT l.name) AS distinctLabelCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1810,
+              "output": 48
+            },
+            "ms": 2695
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "skl-dev-011",
+        "template": "label_count",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many issues carry the label \"Bug\"?",
+        "oracle": "19",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 19",
+            "answer": "There are 19 issues labeled as \"Bug\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"Bug\"}) RETURN COUNT(i) AS bugIssueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1819,
+              "output": 58
+            },
+            "ms": 2410
+          },
+          {
+            "pass": true,
+            "reason": "found 19",
+            "answer": "There are 19 issues labeled as \"Bug\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"Bug\"}) RETURN count(i) AS bugIssueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1819,
+              "output": 58
+            },
+            "ms": 2129
+          },
+          {
+            "pass": true,
+            "reason": "found 19",
+            "answer": "There are 19 issues labeled as \"Bug\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"Bug\"}) RETURN COUNT(i) AS bugCount LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1820,
+              "output": 60
+            },
+            "ms": 2612
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "skl-dev-012",
+        "template": "label_natural_casing",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many issues are tagged \"bug\"?",
+        "oracle": "19 (stored as \"Bug\")",
+        "attempts": [
+          {
+            "pass": false,
+            "reason": "expected 19, not present in answer",
+            "answer": "There are no issues currently tagged as \"bug.\"",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: 'bug'}) RETURN COUNT(i) AS bug_count"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1814,
+              "output": 56
+            },
+            "ms": 2229
+          },
+          {
+            "pass": false,
+            "reason": "expected 19, not present in answer",
+            "answer": "There are currently no issues tagged as \"bug.\"",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: 'bug'}) RETURN COUNT(i) AS bugCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1814,
+              "output": 56
+            },
+            "ms": 2742
+          },
+          {
+            "pass": false,
+            "reason": "expected 19, not present in answer",
+            "answer": "There are no issues currently tagged with \"bug.\"",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: 'bug'}) RETURN COUNT(i) AS bugCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1814,
+              "output": 56
+            },
+            "ms": 2346
+          }
+        ],
+        "passRate": 0
+      },
+      {
+        "id": "skl-dev-013",
+        "template": "label_count",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many issues carry the label \"New Feature\"?",
+        "oracle": "9",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 9",
+            "answer": "There are 9 issues with the label \"New Feature.\"",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"New Feature\"}) RETURN COUNT(i) AS issueCount LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1823,
+              "output": 63
+            },
+            "ms": 2085
+          },
+          {
+            "pass": true,
+            "reason": "found 9",
+            "answer": "There are 9 issues labeled as \"New Feature.\"",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"New Feature\"}) RETURN COUNT(i) AS newFeatureIssuesCount LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1827,
+              "output": 64
+            },
+            "ms": 2453
+          },
+          {
+            "pass": true,
+            "reason": "found 9",
+            "answer": "There are 9 issues labeled as \"New Feature.\"",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: 'New Feature'}) RETURN count(i) as newFeatureIssueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1823,
+              "output": 60
+            },
+            "ms": 3017
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "skl-dev-014",
+        "template": "label_members",
+        "kind": "structural",
+        "canary": false,
+        "question": "List the issue numbers of every issue labelled \"help wanted\".",
+        "oracle": "#10540, #12906, #13062, #13968, #14615, #24515",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "cited 10540,12906,13062,13968,14615,24515",
+            "answer": "Here are the issue numbers with the label \"help wanted\":\n\n- [#14615](https://github.com/user/repo/issues/14615)\n- [#13968](https://github.com/user/repo/issues/13968)\n- [#24515](https://github.com/user/repo/issues/24515)\n- [#12906](https://github.com/user/repo/issues/12906)\n- [#10540](https://github.com/user/repo/issues/10540)\n- [#13062](https://github.com/user/repo/issues/13062)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: 'help wanted'}) RETURN i.number LIMIT 25"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1853,
+              "output": 166
+            },
+            "ms": 3016
+          },
+          {
+            "pass": true,
+            "reason": "cited 10540,12906,13062,13968,14615,24515",
+            "answer": "Here are the issue numbers labeled \"help wanted\":\n\n- [#14615](https://github.com/user/repo/issues/14615)\n- [#13968](https://github.com/user/repo/issues/13968)\n- [#24515](https://github.com/user/repo/issues/24515)\n- [#12906](https://github.com/user/repo/issues/12906)\n- [#10540](https://github.com/user/repo/issues/10540)\n- [#13062](https://github.com/user/repo/issues/13062)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: 'help wanted'}) RETURN i.number LIMIT 50"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1853,
+              "output": 164
+            },
+            "ms": 3245
+          },
+          {
+            "pass": true,
+            "reason": "cited 10540,12906,13062,13968,14615,24515",
+            "answer": "Here are the issue numbers for the issues labeled as \"help wanted\":\n\n- [#14615](https://github.com/org/repo/issues/14615)\n- [#13968](https://github.com/org/repo/issues/13968)\n- [#24515](https://github.com/org/repo/issues/24515)\n- [#12906](https://github.com/org/repo/issues/12906)\n- [#10540](https://github.com/org/repo/issues/10540)\n- [#13062](https://github.com/org/repo/issues/13062)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"help wanted\"}) RETURN i.number LIMIT 25"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1854,
+              "output": 169
+            },
+            "ms": 4186
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "skl-dev-015",
+        "template": "distinct_authors",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many distinct users have authored issues in the knowledge graph?",
+        "oracle": "47",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 47",
+            "answer": "There are 47 distinct users who have authored issues in the knowledge graph.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (u:User)<-[:AUTHORED_BY]-(i:Issue) RETURN COUNT(DISTINCT u.login) AS distinctUserCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1826,
+              "output": 64
+            },
+            "ms": 2419
+          },
+          {
+            "pass": true,
+            "reason": "found 47",
+            "answer": "There are 47 distinct users who have authored issues in the knowledge graph.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User) RETURN COUNT(DISTINCT u.login) AS distinctUserCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1825,
+              "output": 63
+            },
+            "ms": 3085
+          },
+          {
+            "pass": true,
+            "reason": "found 47",
+            "answer": "There are 47 distinct users who have authored issues in the knowledge graph.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User)\nRETURN COUNT(DISTINCT u.login) AS userCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1824,
+              "output": 63
+            },
+            "ms": 2406
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "skl-dev-016",
+        "template": "author_issues",
+        "kind": "structural",
+        "canary": false,
+        "question": "Which issues were opened by the user \"lorentzenchr\"? Give their issue numbers.",
+        "oracle": "#10540, #20998, #24515",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "cited 10540,20998,24515",
+            "answer": "The issues opened by the user \"lorentzenchr\" are:\n\n- [#20998](https://github.com/org/repo/issues/20998)\n- [#10540](https://github.com/org/repo/issues/10540)\n- [#24515](https://github.com/org/repo/issues/24515)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User {login: \"lorentzenchr\"}) RETURN i.number LIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1852,
+              "output": 119
+            },
+            "ms": 2961
+          },
+          {
+            "pass": true,
+            "reason": "cited 10540,20998,24515",
+            "answer": "The issues opened by the user \"lorentzenchr\" are:\n\n- [#20998](https://github.com/your-repo/issues/20998)\n- [#10540](https://github.com/your-repo/issues/10540)\n- [#24515](https://github.com/your-repo/issues/24515)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (u:User {login: \"lorentzenchr\"})-[:AUTHORED_BY]-(i:Issue)\nRETURN i.number LIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1854,
+              "output": 124
+            },
+            "ms": 2470
+          },
+          {
+            "pass": true,
+            "reason": "cited 10540,20998,24515",
+            "answer": "The issues opened by the user \"lorentzenchr\" are:\n\n- [#20998](https://github.com/org/repo/issues/20998)\n- [#10540](https://github.com/org/repo/issues/10540)\n- [#24515](https://github.com/org/repo/issues/24515)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (u:User {login: \"lorentzenchr\"})-[:AUTHORED_BY]-(i:Issue) RETURN i.number LIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1853,
+              "output": 120
+            },
+            "ms": 3766
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "skl-dev-017",
+        "template": "issue_author",
+        "kind": "retrieval",
+        "canary": false,
+        "question": "Who opened issue #4580?",
+        "oracle": "eyaler",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "[Issue #4580](https://github.com/issues/4580) was opened by the user `eyaler`.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 4580})-[:AUTHORED_BY]->(u:User) RETURN u.login AS author LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1817,
+              "output": 75
+            },
+            "ms": 2578
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "The issue [#4580](https://github.com/issues/4580) was opened by the user **eyaler**.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 4580})-[:AUTHORED_BY]->(u:User) RETURN u.login LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1816,
+              "output": 75
+            },
+            "ms": 2782
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "Issue [#4580](https://github.com/issue/4580) was opened by the user **eyaler**.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 4580})-[:AUTHORED_BY]->(u:User) RETURN u.login AS author LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1817,
+              "output": 77
+            },
+            "ms": 2453
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "skl-dev-018",
+        "template": "commenter_count",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many distinct users have commented on issue #4580?",
+        "oracle": "4",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 4",
+            "answer": "There are 4 distinct users who have commented on [issue #4580](https://github.com/user/repo/issues/4580).",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment)-[:AUTHORED_BY]->(u:User) WHERE i.number = 4580 RETURN COUNT(DISTINCT u.login) AS distinctUserCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1841,
+              "output": 92
+            },
+            "ms": 2493
+          },
+          {
+            "pass": true,
+            "reason": "found 4",
+            "answer": "Four distinct users have commented on issue [#4580](https://github.com/your-repo/issues/4580).",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 4580})-[:HAS_COMMENT]->(c:Comment)-[:AUTHORED_BY]->(u:User) RETURN COUNT(DISTINCT u.login) AS distinctUserCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1841,
+              "output": 89
+            },
+            "ms": 2825
+          },
+          {
+            "pass": true,
+            "reason": "found 4",
+            "answer": "There are 4 distinct users who have commented on issue [#4580](#).",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment)-[:AUTHORED_BY]->(u:User) WHERE i.number = 4580 RETURN COUNT(DISTINCT u.login) AS commenter_count"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1840,
+              "output": 81
+            },
+            "ms": 2452
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "skl-dev-019",
+        "template": "month_count",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many issues were created in 2019-01?",
+        "oracle": "4",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 4",
+            "answer": "In January 2019, 4 issues were created.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.createdAt STARTS WITH '2019-01' RETURN COUNT(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1821,
+              "output": 57
+            },
+            "ms": 2212
+          },
+          {
+            "pass": true,
+            "reason": "found 4",
+            "answer": "In January 2019, a total of 4 issues were created.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.createdAt STARTS WITH '2019-01' RETURN count(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1821,
+              "output": 60
+            },
+            "ms": 2289
+          },
+          {
+            "pass": true,
+            "reason": "found 4",
+            "answer": "In January 2019, a total of 4 issues were created.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.createdAt STARTS WITH '2019-01' RETURN count(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1821,
+              "output": 60
+            },
+            "ms": 2663
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "skl-dev-020",
+        "template": "created_before",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many issues were created before 2018-10-30?",
+        "oracle": "16",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 16",
+            "answer": "It seems there was an error with parsing dates in the query. Let me fix that.There were 16 issues created before 2018-10-30.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE date(i.createdAt) < date('2018-10-30') RETURN count(i) AS issueCount"
+                }
+              },
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE datetime(i.createdAt) < datetime('2018-10-30T00:00:00Z') RETURN count(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2922,
+              "output": 136
+            },
+            "ms": 4447
+          },
+          {
+            "pass": true,
+            "reason": "found 16",
+            "answer": "There were 16 issues created before 2018-10-30.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.createdAt < '2018-10-30' RETURN COUNT(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1825,
+              "output": 60
+            },
+            "ms": 2083
+          },
+          {
+            "pass": true,
+            "reason": "found 16",
+            "answer": "There were 16 issues created before 2018-10-30.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.createdAt < '2018-10-30' RETURN COUNT(i) as issueCount LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1828,
+              "output": 63
+            },
+            "ms": 2892
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "skl-dev-021",
+        "template": "created_after",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many issues were created after 2018-10-30?",
+        "oracle": "44",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 44",
+            "answer": "There have been 44 issues created after 2018-10-30.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE date(i.createdAt) > date('2018-10-30') RETURN count(i) AS issueCount"
+                }
+              },
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE datetime(i.createdAt) > datetime('2018-10-30T00:00:00Z') RETURN count(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2898,
+              "output": 117
+            },
+            "ms": 4263
+          },
+          {
+            "pass": true,
+            "reason": "found 44",
+            "answer": "There were 44 issues created after 2018-10-30.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE datetime(i.createdAt) > datetime('2018-10-30') RETURN count(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1828,
+              "output": 63
+            },
+            "ms": 2273
+          },
+          {
+            "pass": true,
+            "reason": "found 44",
+            "answer": "A total of 44 issues were created after 2018-10-30.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE date(i.createdAt) > date('2018-10-30') RETURN count(i) AS issueCount"
+                }
+              },
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE datetime(i.createdAt) > datetime('2018-10-30T00:00:00Z') RETURN count(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2898,
+              "output": 118
+            },
+            "ms": 3593
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "skl-dev-022",
+        "template": "created_after",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many issues were created after 2019-08-10?",
+        "oracle": "29",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 29",
+            "answer": "There were 29 issues created after 2019-08-10.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE date(i.createdAt) > date('2019-08-10') RETURN count(i) AS issueCount LIMIT 1"
+                }
+              },
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE datetime(i.createdAt) > datetime('2019-08-10T00:00:00Z') RETURN count(i) AS issueCount LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2907,
+              "output": 122
+            },
+            "ms": 3810
+          },
+          {
+            "pass": true,
+            "reason": "found 29",
+            "answer": "There were 29 issues created after 2019-08-10.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.createdAt > '2019-08-10' RETURN count(i) as issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1825,
+              "output": 60
+            },
+            "ms": 2586
+          },
+          {
+            "pass": true,
+            "reason": "found 29",
+            "answer": "There were 29 issues created after 2019-08-10.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE date(i.createdAt) > date('2019-08-10') RETURN count(i) AS numberOfIssues"
+                }
+              },
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE datetime(i.createdAt) > datetime('2019-08-10T00:00:00Z') RETURN count(i) AS numberOfIssues"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2902,
+              "output": 118
+            },
+            "ms": 3373
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "skl-dev-023",
+        "template": "created_between",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many issues were created between 2018-10-30 and 2021-10-02?",
+        "oracle": "30",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 30",
+            "answer": "A total of 30 issues were created between 2018-10-30 and 2021-10-02.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)\nWHERE date(i.createdAt) >= date('2018-10-30') AND date(i.createdAt) <= date('2021-10-02')\nRETURN count(i) AS issueCount"
+                }
+              },
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)\nWHERE datetime(i.createdAt) >= datetime('2018-10-30T00:00:00Z') AND datetime(i.createdAt) <= datetime('2021-10-02T23:59:59Z')\nRETURN count(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2986,
+              "output": 171
+            },
+            "ms": 5127
+          },
+          {
+            "pass": true,
+            "reason": "found 30",
+            "answer": "Between 2018-10-30 and 2021-10-02, a total of 30 issues were created.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.createdAt >= '2018-10-30' AND i.createdAt <= '2021-10-02' RETURN count(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1854,
+              "output": 84
+            },
+            "ms": 2903
+          },
+          {
+            "pass": true,
+            "reason": "found 30",
+            "answer": "A total of 30 issues were created between 2018-10-30 and 2021-10-02.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.createdAt >= '2018-10-30' AND i.createdAt <= '2021-10-02' RETURN count(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1854,
+              "output": 83
+            },
+            "ms": 2402
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "skl-dev-024",
+        "template": "zero_comment_count",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many issues have no comments at all?",
+        "oracle": "15",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 15",
+            "answer": "There are 15 issues with no comments at all.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE NOT (i)-[:HAS_COMMENT]->(:Comment) RETURN count(i) AS noCommentIssues"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1816,
+              "output": 56
+            },
+            "ms": 2769
+          },
+          {
+            "pass": true,
+            "reason": "found 15",
+            "answer": "There are 15 issues that have no comments at all.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)\nWHERE NOT (i)-[:HAS_COMMENT]->(:Comment)\nRETURN COUNT(i) AS noCommentIssues"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1818,
+              "output": 59
+            },
+            "ms": 2884
+          },
+          {
+            "pass": true,
+            "reason": "found 15",
+            "answer": "There are 15 issues that have no comments at all.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE NOT EXISTS {(i)-[:HAS_COMMENT]->(:Comment)} RETURN COUNT(i) AS issuesWithoutComments"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1817,
+              "output": 58
+            },
+            "ms": 3360
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "skl-dev-025",
+        "template": "most_comments",
+        "kind": "structural",
+        "canary": false,
+        "question": "Which issue has the most comments? Give its issue number.",
+        "oracle": "#15358 (29 comments)",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "cited 15358",
+            "answer": "The issue with the most comments is [#15358](https://github.com/org/repo/issues/15358).",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment)\nRETURN i.number AS issueNumber, COUNT(c) AS commentCount\nORDER BY commentCount DESC\nLIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1840,
+              "output": 82
+            },
+            "ms": 2424
+          },
+          {
+            "pass": true,
+            "reason": "cited 15358",
+            "answer": "The issue with the most comments is [#15358](https://github.com/yourrepo/issues/15358).",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment)\nRETURN i.number AS issueNumber, COUNT(c) AS commentCount\nORDER BY commentCount DESC\nLIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1840,
+              "output": 82
+            },
+            "ms": 4261
+          },
+          {
+            "pass": true,
+            "reason": "cited 15358",
+            "answer": "The issue with the most comments is [#15358](https://github.com/user/repo/issues/15358), with 29 comments.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment) RETURN i.number, COUNT(c) AS commentCount ORDER BY commentCount DESC LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1834,
+              "output": 81
+            },
+            "ms": 2544
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "skl-dev-026",
+        "template": "most_reactions",
+        "kind": "structural",
+        "canary": false,
+        "question": "Which issue has received the most reactions? Give its issue number.",
+        "oracle": "#16931 (4 reactions)",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "cited 16931",
+            "answer": "The issue that has received the most reactions is [#16931](https://github.com/org/repo/issues/16931).",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[r:HAS_REACTION]->()\nRETURN i.number AS issueNumber, COUNT(r) AS reactionCount\nORDER BY reactionCount DESC\nLIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1841,
+              "output": 83
+            },
+            "ms": 3186
+          },
+          {
+            "pass": true,
+            "reason": "cited 16931",
+            "answer": "The issue with the most reactions is [#16931](https://github.com/your-repo/issues/16931).",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[r:HAS_REACTION]->() RETURN i.number, COUNT(r) as reactionCount ORDER BY reactionCount DESC LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1835,
+              "output": 76
+            },
+            "ms": 2815
+          },
+          {
+            "pass": true,
+            "reason": "cited 16931",
+            "answer": "The issue with the most reactions is issue number [16931](https://github.com/issues/16931).",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_REACTION]->(r:Reaction)\nRETURN i.number AS issueNumber, COUNT(r) AS reactionCount\nORDER BY reactionCount DESC\nLIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1843,
+              "output": 81
+            },
+            "ms": 2627
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "skl-dev-027",
+        "template": "issues_with_ge_n_comments",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many issues have at least 3 comments?",
+        "oracle": "32",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 32",
+            "answer": "There are 32 issues with at least 3 comments.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment) WITH i, COUNT(c) AS commentCount WHERE commentCount >= 3 RETURN COUNT(i) AS issueCount LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1831,
+              "output": 71
+            },
+            "ms": 2244
+          },
+          {
+            "pass": true,
+            "reason": "found 32",
+            "answer": "There are 32 issues that have at least 3 comments.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment)\nWITH i, COUNT(c) as commentCount\nWHERE commentCount >= 3\nRETURN COUNT(i) as issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1831,
+              "output": 72
+            },
+            "ms": 2492
+          },
+          {
+            "pass": true,
+            "reason": "found 32",
+            "answer": "There are 32 issues that have at least 3 comments.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment)\nWITH i, COUNT(c) AS commentsCount\nWHERE commentsCount >= 3\nRETURN COUNT(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1831,
+              "output": 72
+            },
+            "ms": 2459
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "skl-dev-028",
+        "template": "issue_comment_count",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many comments does issue #4580 have?",
+        "oracle": "6",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 6",
+            "answer": "Issue [#4580](https://github.com/your-repo/issues/4580) has 6 comments.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 4580})-[:HAS_COMMENT]->(c:Comment) RETURN count(c) as commentCount LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1823,
+              "output": 75
+            },
+            "ms": 3024
+          },
+          {
+            "pass": true,
+            "reason": "found 6",
+            "answer": "Issue [#4580](https://github.com/your-repo/issues/4580) has 6 comments.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 4580})-[:HAS_COMMENT]->(c:Comment)\nRETURN COUNT(c) AS commentCount LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1824,
+              "output": 76
+            },
+            "ms": 2178
+          },
+          {
+            "pass": true,
+            "reason": "found 6",
+            "answer": "Issue [#4580](https://github.com/issues/4580) has 6 comments.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment) WHERE i.number = 4580 RETURN COUNT(c) AS commentCount LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1823,
+              "output": 71
+            },
+            "ms": 2242
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "skl-dev-029",
+        "template": "issue_title",
+        "kind": "retrieval",
+        "canary": false,
+        "question": "What is the title of issue #7975?",
+        "oracle": "A possible alternative to alpha at fit-time for GaussianProcessRegressor",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "The title of issue [#7975](https://github.com/org/repo/issues/7975) is \"A possible alternative to alpha at fit-time for GaussianProcessRegressor\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (issue:Issue {number: 7975}) RETURN issue.title LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1821,
+              "output": 74
+            },
+            "ms": 2288
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "The title of issue [#7975](https://github.com/org/repo/issues/7975) is \"A possible alternative to alpha at fit-time for GaussianProcessRegressor\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 7975}) RETURN i.title LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1821,
+              "output": 74
+            },
+            "ms": 2270
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "The title of issue [#7975](https://github.com/user/repo/issues/7975) is \"A possible alternative to alpha at fit-time for GaussianProcessRegressor.\"",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 7975}) RETURN i.title LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1821,
+              "output": 74
+            },
+            "ms": 2301
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "skl-dev-030",
+        "template": "issue_title",
+        "kind": "retrieval",
+        "canary": false,
+        "question": "What is the title of issue #8416?",
+        "oracle": "Isomap and LocallyLinearEmbedding do not accept sparse matrix input (contrary to documentation)",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "The title of issue [#8416](https://github.com/repo/issues/8416) is \"Isomap and LocallyLinearEmbedding do not accept sparse matrix input (contrary to documentation)\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 8416}) RETURN i.title LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1827,
+              "output": 79
+            },
+            "ms": 2647
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "The title of issue [#8416](https://github.com/repository/issues/8416) is \"Isomap and LocallyLinearEmbedding do not accept sparse matrix input (contrary to documentation).\"",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 8416}) RETURN i.title LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1827,
+              "output": 78
+            },
+            "ms": 2210
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "The title of issue [#8416](https://github.com/USERNAME/REPOSITORY/issues/8416) is \"Isomap and LocallyLinearEmbedding do not accept sparse matrix input (contrary to documentation)\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 8416}) RETURN i.title LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1827,
+              "output": 83
+            },
+            "ms": 3122
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "skl-dev-031",
+        "template": "mentions_term",
+        "kind": "retrieval",
+        "canary": false,
+        "question": "Which issues mention \"actually\" in their title or body? Give their issue numbers.",
+        "oracle": "#12703, #13451, #15994, #19615, #24515, #25550",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "cited 12703,13451,15994,19615,24515,25550",
+            "answer": "Here are the issue numbers that mention \"actually\" in their title or body:\n\n- [#12703](https://github.com/org/repo/issues/12703)\n- [#13451](https://github.com/org/repo/issues/13451)\n- [#15994](https://github.com/org/repo/issues/15994)\n- [#19615](https://github.com/org/repo/issues/19615)\n- [#24515](https://github.com/org/repo/issues/24515)\n- [#25550](https://github.com/org/repo/issues/25550)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.title CONTAINS 'actually' OR i.bodyText CONTAINS 'actually' RETURN i.number LIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1867,
+              "output": 174
+            },
+            "ms": 2884
+          },
+          {
+            "pass": true,
+            "reason": "cited 12703,13451,15994,19615,24515,25550",
+            "answer": "Here are the issues that mention \"actually\" in their title or body:\n\n- [#12703](https://github.com/user/repo/issues/12703)\n- [#13451](https://github.com/user/repo/issues/13451)\n- [#15994](https://github.com/user/repo/issues/15994)\n- [#19615](https://github.com/user/repo/issues/19615)\n- [#24515](https://github.com/user/repo/issues/24515)\n- [#25550](https://github.com/user/repo/issues/25550)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE toLower(i.title) CONTAINS 'actually' OR toLower(i.bodyText) CONTAINS 'actually' RETURN i.number LIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1873,
+              "output": 179
+            },
+            "ms": 3030
+          },
+          {
+            "pass": true,
+            "reason": "cited 12703,13451,15994,19615,24515,25550",
+            "answer": "The following issues mention \"actually\" in their title or body:\n\n- [Issue #12703](https://github.com/issue/12703)\n- [Issue #13451](https://github.com/issue/13451)\n- [Issue #15994](https://github.com/issue/15994)\n- [Issue #19615](https://github.com/issue/19615)\n- [Issue #24515](https://github.com/issue/24515)\n- [Issue #25550](https://github.com/issue/25550)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.title CONTAINS \"actually\" OR i.bodyText CONTAINS \"actually\" RETURN i.number LIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1867,
+              "output": 165
+            },
+            "ms": 2613
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "skl-dev-032",
+        "template": "labels_cooccurring",
+        "kind": "retrieval",
+        "canary": false,
+        "question": "Which other labels appear on issues that also carry the label \"good first issue\"?",
+        "oracle": "Bug, Easy, help wanted (not: Blocker, Build / CI, Documentation, Enhancement, Hard, Meta-issue, Moderate, Needs Benchmarks, Needs Decision, New Feature, Regression, Stalled, float32, module:cluster, module:cross_decomposition, module:datasets, module:ensemble, module:feature_extraction, module:gaussian_process, module:linear_model, module:metrics, module:mixture, module:model_selection, module:multioutput, module:neighbors, module:neural_network, module:pipeline, module:preprocessing, module:test-suite, module:utils)",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "The other labels that appear on issues with the \"good first issue\" label are:\n\n- **help wanted**\n- **Easy**\n- **Bug**",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l1:Label {name: \"good first issue\"}),\n      (i)-[:HAS_LABEL]->(l2:Label)\nWHERE l1 <> l2\nRETURN DISTINCT l2.name AS otherLabels\nLIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1874,
+              "output": 109
+            },
+            "ms": 2727
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "Issues labeled with \"good first issue\" often have other labels, such as:\n\n- **help wanted**\n- **Easy**: Well-defined and straightforward way to resolve\n- **Bug**",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (label:Label)<-[:HAS_LABEL]-(issue:Issue)-[:HAS_LABEL]->(otherLabel:Label)\nWHERE label.name = \"good first issue\" AND otherLabel.name <> \"good first issue\"\nRETURN DISTINCT otherLabel.name AS otherLabelName, otherLabel.description AS description\nLIMIT 20"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1901,
+              "output": 123
+            },
+            "ms": 2957
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "Issues labeled as \"good first issue\" also commonly have these labels:\n\n1. **help wanted**\n   - **Color:** #33aa3f\n\n2. **Easy**\n   - **Description:** Well-defined and straightforward way to resolve\n   - **Color:** #02d7e1\n\n3. **Bug**\n   - **Color:** #e10c02\n\nThese labels are often used to highlight issues that are accessible to new contributors or need assistance.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (l1:Label {name: \"good first issue\"})<-[:HAS_LABEL]-(i:Issue)-[:HAS_LABEL]->(l2:Label)\nWHERE l1 <> l2\nRETURN DISTINCT l2.name AS label, l2.description AS description, l2.color AS color\nLIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1917,
+              "output": 180
+            },
+            "ms": 3307
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "skl-dev-033",
+        "template": "commenters_on_label",
+        "kind": "retrieval",
+        "canary": false,
+        "question": "Which users have commented on issues labelled \"Blocker\"? Give their usernames.",
+        "oracle": "NicolasHug, adrinjalali, amueller, jnothman, jorisvandenbossche, rth",
+        "attempts": [
+          {
+            "pass": false,
+            "reason": "missing: NicolasHug, adrinjalali, amueller, jnothman, jorisvandenbossche, rth",
+            "answer": "It seems there are no users who have commented on issues labeled \"Blocker.\"",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"Blocker\"})-[:HAS_COMMENT]->(c:Comment)<-[:AUTHORED_BY]-(u:User)\nRETURN DISTINCT u.login LIMIT 50"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1847,
+              "output": 87
+            },
+            "ms": 2727
+          },
+          {
+            "pass": false,
+            "reason": "missing: NicolasHug, adrinjalali, amueller, jnothman, jorisvandenbossche, rth",
+            "answer": "It seems there are no users who have commented on issues labeled \"Blocker\" in the current dataset.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"Blocker\"})-[:HAS_COMMENT]->(c:Comment)-[:AUTHORED_BY]->(u:User) RETURN DISTINCT u.login AS username LIMIT 100"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1847,
+              "output": 92
+            },
+            "ms": 3975
+          },
+          {
+            "pass": false,
+            "reason": "missing: NicolasHug, adrinjalali, amueller, jnothman, jorisvandenbossche, rth",
+            "answer": "It seems there are no users who have commented on issues labeled \"Blocker.\"",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"Blocker\"})-[:HAS_COMMENT]->(c:Comment)-[:AUTHORED_BY]->(u:User)\nRETURN DISTINCT u.login LIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1846,
+              "output": 86
+            },
+            "ms": 2438
+          }
+        ],
+        "passRate": 0
+      },
+      {
+        "id": "skl-dev-034",
+        "template": "author_of_most_commented",
+        "kind": "retrieval",
+        "canary": false,
+        "question": "Who opened the issue that has the most comments?",
+        "oracle": "NicolasHug (#15358)",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "The issue with the most comments is [#15358](https://github.com/repository/issues/15358), and it was opened by NicolasHug, with a total of 29 comments.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment)\nRETURN i.number AS issueNumber, i.authorLogin AS author, COUNT(c) AS commentCount\nORDER BY commentCount DESC\nLIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1849,
+              "output": 104
+            },
+            "ms": 2997
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "The issue with the most comments is [#15358](https://github.com/user/repo/issues/15358) titled \"Use _check_sample_weight to consistently validate sample_weight\", and it was opened by NicolasHug. It has 29 comments.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment) RETURN i.number AS issueNumber, i.title AS title, i.authorLogin AS author, COUNT(c) AS commentCount ORDER BY commentCount DESC LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1864,
+              "output": 118
+            },
+            "ms": 2640
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "The issue with the most comments is [#15358](https://github.com/user/repo/issues/15358), and it was opened by NicolasHug.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment)\nRETURN i.number AS issueNumber, i.authorLogin AS author, COUNT(c) AS commentCount\nORDER BY commentCount DESC\nLIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1849,
+              "output": 97
+            },
+            "ms": 3135
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "skl-dev-035",
+        "template": "author_of_most_reacted",
+        "kind": "retrieval",
+        "canary": false,
+        "question": "Who opened the issue with the most reactions?",
+        "oracle": "mnky9800n (#16931)",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "The issue with the most reactions is [#16931](https://github.com/your-repo/issues/16931) titled \"make_regression should include categorical variables with weights,\" and it was opened by the user **mnky9800n**.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_REACTION]->(r:Reaction)\nWITH i, COUNT(r) as reactionsCount\nORDER BY reactionsCount DESC\nLIMIT 1\nRETURN i.number as issueNumber, i.title as title, i.authorLogin as author"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1864,
+              "output": 125
+            },
+            "ms": 2592
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "The issue with the most reactions was opened by [mnky9800n](https://github.com/mnky9800n) and is issue number [16931](https://github.com/issues/16931). It has 4 reactions.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_REACTION]->(r:Reaction) RETURN i.number AS issueNumber, i.authorLogin AS author, COUNT(r) AS reactionCount ORDER BY reactionCount DESC LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1846,
+              "output": 112
+            },
+            "ms": 2909
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "The issue with the most reactions was opened by [mnky9800n](https://github.com/mnky9800n) and it's issue [#16931](https://github.com/repository/issues/16931) with 4 reactions.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_REACTION]->(r:Reaction) RETURN i.number AS issueNumber, i.authorLogin AS author, count(r) AS reactionCount ORDER BY reactionCount DESC LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1846,
+              "output": 113
+            },
+            "ms": 2625
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "skl-dev-036",
+        "template": "absent_label_count",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many issues carry the label \"API: argument checking\"?",
+        "oracle": "0 (no such label in this repo)",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "stated absence",
+            "answer": "There are no issues carrying the label \"API: argument checking.\"",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"API: argument checking\"}) RETURN COUNT(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1826,
+              "output": 63
+            },
+            "ms": 2386
+          },
+          {
+            "pass": true,
+            "reason": "stated absence",
+            "answer": "There are no issues currently labeled with \"API: argument checking\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (l:Label {name: \"API: argument checking\"})<-[:HAS_LABEL]-(i:Issue) RETURN COUNT(i) AS issueCount LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1830,
+              "output": 67
+            },
+            "ms": 3146
+          },
+          {
+            "pass": true,
+            "reason": "stated absence",
+            "answer": "There are no issues with the label \"API: argument checking.\"",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"API: argument checking\"}) RETURN count(i) AS issueCount LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1829,
+              "output": 66
+            },
+            "ms": 2584
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "skl-dev-037",
+        "template": "absent_label_members",
+        "kind": "structural",
+        "canary": false,
+        "question": "List the issue numbers of every issue labelled \"API: argument checking\".",
+        "oracle": "none",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "cited ",
+            "answer": "There are currently no issues labeled \"API: argument checking\". If you have any other requests or need further assistance, feel free to ask!",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name:\"API: argument checking\"}) RETURN i.number LIMIT 50"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1822,
+              "output": 76
+            },
+            "ms": 4260
+          },
+          {
+            "pass": true,
+            "reason": "cited ",
+            "answer": "It seems there are no issues labeled \"API: argument checking\" at the moment. If you have any other questions or need further assistance, feel free to ask!",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"API: argument checking\"}) RETURN i.number LIMIT 50"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1823,
+              "output": 82
+            },
+            "ms": 2774
+          },
+          {
+            "pass": true,
+            "reason": "cited ",
+            "answer": "There are currently no issues labeled \"API: argument checking.\"",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"API: argument checking\"}) RETURN i.number LIMIT 50"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1823,
+              "output": 61
+            },
+            "ms": 2705
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "skl-dev-038",
+        "template": "absent_term",
+        "kind": "retrieval",
+        "canary": false,
+        "question": "Which issues mention \"CPython\" in their title or body? Give their issue numbers.",
+        "oracle": "none",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "cited ",
+            "answer": "There are no issues currently mentioning \"CPython\" in their title or body.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.title CONTAINS 'CPython' OR i.bodyText CONTAINS 'CPython' RETURN i.number LIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1834,
+              "output": 68
+            },
+            "ms": 2849
+          },
+          {
+            "pass": true,
+            "reason": "cited ",
+            "answer": "There are no issues mentioning \"CPython\" in their title or body.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE toLower(i.title) CONTAINS \"cpython\" OR toLower(i.bodyText) CONTAINS \"cpython\" RETURN i.number LIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1840,
+              "output": 73
+            },
+            "ms": 2825
+          },
+          {
+            "pass": true,
+            "reason": "cited ",
+            "answer": "There are no issues mentioning \"CPython\" in their title or body in the current dataset.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.title CONTAINS 'CPython' OR i.bodyText CONTAINS 'CPython' RETURN i.number LIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1834,
+              "output": 71
+            },
+            "ms": 2599
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "skl-dev-039",
+        "template": "absent_author_issues",
+        "kind": "structural",
+        "canary": false,
+        "question": "Which issues were opened by the user \"08walkersj\"? Give their issue numbers.",
+        "oracle": "none",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "cited ",
+            "answer": "It seems there are no issues opened by the user \"08walkersj.\" If you have any other questions or need further assistance, feel free to ask!",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (u:User {login: \"08walkersj\"})-[:AUTHORED_BY]-(i:Issue) RETURN i.number LIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1834,
+              "output": 84
+            },
+            "ms": 2385
+          },
+          {
+            "pass": true,
+            "reason": "cited ",
+            "answer": "There are no issues opened by the user \"08walkersj\" in the repository.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User {login: \"08walkersj\"}) RETURN i.number LIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1833,
+              "output": 69
+            },
+            "ms": 2832
+          },
+          {
+            "pass": true,
+            "reason": "cited ",
+            "answer": "There are no issues opened by the user \"08walkersj\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User {login: '08walkersj'}) RETURN i.number LIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1832,
+              "output": 64
+            },
+            "ms": 2350
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "skl-dev-040",
+        "template": "absent_month_count",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many issues were created in 2015-05?",
+        "oracle": "0",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "stated absence",
+            "answer": "No issues were created in May 2015.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (issue:Issue) WHERE issue.createdAt STARTS WITH '2015-05' RETURN count(issue) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1821,
+              "output": 55
+            },
+            "ms": 2446
+          },
+          {
+            "pass": true,
+            "reason": "stated absence",
+            "answer": "No issues were created in May 2015.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.createdAt STARTS WITH \"2015-05\" RETURN count(i) AS issueCount LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1824,
+              "output": 58
+            },
+            "ms": 1984
+          },
+          {
+            "pass": true,
+            "reason": "stated absence",
+            "answer": "No issues were created in May 2015.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.createdAt STARTS WITH '2015-05' RETURN count(i) as issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1821,
+              "output": 55
+            },
+            "ms": 2665
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "skl-dev-041",
+        "template": "closed_count_paraphrase",
+        "kind": "structural",
+        "canary": false,
+        "question": "What is the number of issues in a closed state?",
+        "oracle": "36",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 36",
+            "answer": "There are 36 issues in a closed state.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {state: 'CLOSED'}) RETURN count(i) AS closedIssuesCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1814,
+              "output": 49
+            },
+            "ms": 2281
+          },
+          {
+            "pass": false,
+            "reason": "expected 36, not present in answer",
+            "answer": "There are currently no issues in a closed state.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {state: 'closed'}) RETURN COUNT(i) AS closedIssuesCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1813,
+              "output": 48
+            },
+            "ms": 2219
+          },
+          {
+            "pass": true,
+            "reason": "found 36",
+            "answer": "There are 36 issues in a closed state.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {state: 'CLOSED'}) RETURN count(i) AS closedIssueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1814,
+              "output": 49
+            },
+            "ms": 2388
+          }
+        ],
+        "passRate": 0.6666666666666666
+      },
+      {
+        "id": "skl-dev-042",
+        "template": "closed_count_paraphrase",
+        "kind": "structural",
+        "canary": false,
+        "question": "Count the issues in this repository that have been closed.",
+        "oracle": "36",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 36",
+            "answer": "There are 36 issues that have been closed in this repository.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.state = 'CLOSED' RETURN count(i) as closedIssueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1816,
+              "output": 54
+            },
+            "ms": 3567
+          },
+          {
+            "pass": true,
+            "reason": "found 36",
+            "answer": "There are **36 closed issues** in this repository.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {state: 'CLOSED'}) RETURN count(i) AS closedIssueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1814,
+              "output": 50
+            },
+            "ms": 2675
+          },
+          {
+            "pass": true,
+            "reason": "found 36",
+            "answer": "There are 36 issues in this repository that have been closed.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {state: 'CLOSED'}) RETURN COUNT(i) AS closedIssues"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1812,
+              "output": 51
+            },
+            "ms": 2341
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "skl-dev-043",
+        "template": "distinct_authors_paraphrase",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many different people opened issues?",
+        "oracle": "47",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 47",
+            "answer": "A total of 47 different people have opened issues.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User) RETURN COUNT(DISTINCT u.login) AS numberOfAuthors"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1815,
+              "output": 59
+            },
+            "ms": 3109
+          },
+          {
+            "pass": true,
+            "reason": "found 47",
+            "answer": "There are 47 different people who have opened issues.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User) RETURN COUNT(DISTINCT u.login) AS uniqueAuthors"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1813,
+              "output": 58
+            },
+            "ms": 2261
+          },
+          {
+            "pass": true,
+            "reason": "found 47",
+            "answer": "There are 47 different people who have opened issues.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (u:User)<-[:AUTHORED_BY]-(i:Issue) RETURN COUNT(DISTINCT u.login) AS uniqueAuthors"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1814,
+              "output": 59
+            },
+            "ms": 2333
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "skl-dev-044",
+        "template": "distinct_authors_paraphrase",
+        "kind": "structural",
+        "canary": false,
+        "question": "What is the number of unique issue authors?",
+        "oracle": "47",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 47",
+            "answer": "There are 47 unique issue authors.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (u:User)<-[:AUTHORED_BY]-(i:Issue) RETURN COUNT(DISTINCT u.login) AS uniqueAuthors"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1818,
+              "output": 56
+            },
+            "ms": 2908
+          },
+          {
+            "pass": true,
+            "reason": "found 47",
+            "answer": "There are 47 unique issue authors.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User) RETURN COUNT(DISTINCT u.login) AS uniqueAuthors"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1817,
+              "output": 55
+            },
+            "ms": 2040
+          },
+          {
+            "pass": true,
+            "reason": "found 47",
+            "answer": "There are 47 unique issue authors.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User) RETURN COUNT(DISTINCT u.login) AS uniqueAuthors"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1817,
+              "output": 55
+            },
+            "ms": 2503
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "skl-dev-045",
+        "template": "summarize_issue",
+        "kind": "semantic",
+        "canary": false,
+        "question": "Summarize the discussion on issue #15358. What is the problem and what did people say about it?",
+        "oracle": "Use _check_sample_weight to consistently validate sample_weight",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue, focusing on refactoring and improving `sample_weight` handling across scikit-learn models, consistent with the reference.",
+            "answer": "The discussion on [issue #15358](https://github.com/scikit-learn/scikit-learn/issues/15358) focuses on refactoring and improving how `sample_weight` is handled across various scikit-learn models. Here's a summary of the key points:\n\n### Problem\n- The main issue is to ensure consistency in checking and validating `sample_weight` in different estimators, focusing on non-negativeness and ensuring the sum of weights is greater than zero.\n\n### Key Discussion Points\n1. **Refactoring for Learning**: \n   - The task was initially intended for new contributors to tackle simpler refactoring tasks.\n   - Experienced contributors like @lorentzenchr showed interest in more complex pieces, such as linear models.\n\n2. **Improving `sample_weight` Handling**:\n   - Suggestions were made to add a `return_ones` parameter for easier use of the `_check_sample_weights` function.\n   - There was discussion on whether `sample_weight` should always be converted to an array, and the previous allowance of negative weights in tree-based models.\n\n3. **Collaborative Efforts**:\n   - Contributors such as @salliewalecka and @kesshijordan coordinated to work on models like `BaseDecisionTree`, `DBSCAN`, `BaseBagging`, and `GaussianNB` during a scikit-learn sprint.\n\n4. **Progress Updates**:\n   - Contributors shared progress, with some models being completed and others in the works.\n   - Mention of needing a GitHub feature to prevent issues being closed prematurely by pull requests.\n\n5. **Finalization**:\n   - Most tasks addressed, with a suggestion to open a separate issue for linear models.\n   - Minor confusion resolved on existing pull requests for `IsotonicRegression`.\n\nOverall, it was a collaborative effort to improve `sample_weight` handling in scikit-learn, with active involvement from both new and experienced contributors.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 15358,
+                  "userQuery": "problem description and overall discussion"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2234,
+              "output": 423
+            },
+            "ms": 8492
+          },
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue, focusing on the core problem of improving sample_weight handling and validation across estimators in scikit-learn. It does not contradict any reference facts and aligns with the main points discussed in the issue.",
+            "answer": "The discussion on [issue #15358](https://github.com/scikit-learn/scikit-learn/issues/15358) focuses on improving the handling of `sample_weight` across different estimators in the scikit-learn library. Here's a summary of the key points:\n\n### Main Problem\nThe issue aims to ensure consistency in validating `sample_weight`, particularly checking for non-negativeness and ensuring the sum is greater than zero.\n\n### Key Discussion Points\n\n1. **Refactoring Targeted at New Contributors**:\n   - The issue was designed to be approachable for new contributors, focusing on areas like `_check_sample_weight` and linear models.\n\n2. **Validation Checks**:\n   - Suggestions include adding checks for non-negativeness and a positive sum of `sample_weight`. A configurable flag in `sklearn.set_config` is proposed to enable or disable this check.\n\n3. **Convenience Improvements**:\n   - Proposal to add a `return_ones` parameter to `_check_sample_weights` to simplify handling when `sample_weight` is `None`.\n\n4. **Handling of `sample_weight`**:\n   - Discussion on whether to always convert `sample_weight` to an array, with concerns about unnecessary operations when it is `None`.\n\n5. **Community Contributions**:\n   - Various contributors are working on different models such as `BaseDecisionTree`, `DBSCAN`, and `GaussianNB` during sprints.\n\n6. **Progress and Updates**:\n   - Contributors are providing updates, with some models completed and others in progress. The issue will remain open until all tasks are completed.\n\n7. **Documentation and Communication**:\n   - A suggestion to update the list of generalized estimators for readability and tracking progress.\n\nThe discussion is focused on collaborative efforts to enhance `sample_weight` validation, making it a shared task accessible to newcomers while maintaining thorough validation and flexibility.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 15358,
+                  "userQuery": "What is the problem discussed and what are the key points made by commenters?"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2280,
+              "output": 420
+            },
+            "ms": 9049
+          },
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue, focusing on the refactoring and improvement of `sample_weight` handling across different estimators in scikit-learn. It aligns with the core problem and key discussion points mentioned in the reference.",
+            "answer": "The discussion on [GitHub issue #15358](https://github.com/scikit-learn/scikit-learn/issues/15358) focuses on refactoring and improving the handling of `sample_weight` across different estimators within the scikit-learn library. Here's a summary of the main points discussed:\n\n### Problem\nThe main issue identified is the need for consistent handling of `sample_weight`, ensuring non-negativeness and a positive sum in various models.\n\n### Key Discussion Points\n\n- **Refactoring for New Contributors**: The task was initially aimed at new contributors, but experienced contributors joined in, focusing particularly on `_check_sample_weight` and linear models.\n\n- **Handling of `sample_weight`**: Suggestions included adding a `return_ones` parameter for convenience and discussions on converting `sample_weights` to an array. Some contributors noted that negative weights were allowed in tree-based models.\n\n- **Global Configuration Flag**: Proposed to add a flag in `sklearn.set_config` to manage checks for `sample_weight`'s non-negativeness and sum positivity.\n\n- **Collaborative Efforts**: Contributors coordinated efforts to address the issue across various models, including `BaseDecisionTree`, `DBSCAN`, `BaseBagging`, `GaussianNB`, etc., during scikit-learn sprints.\n\n- **Progress and Updates**: Contributors updated on progress, completing some models and submitting pull requests. Existing pull requests for models like `IsotonicRegression` were also mentioned.\n\n- **Issue Management**: Suggestions were made to prevent issues from being prematurely closed by pull requests. Updates were made to the list of addressed estimators to enhance readability.\n\nOverall, the discussion showcases a collaborative effort to standardize `sample_weight` handling, involving contributions from both new and experienced developers.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 15358,
+                  "userQuery": "What is the problem and what did people say about it?"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2276,
+              "output": 399
+            },
+            "ms": 7310
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "skl-dev-046",
+        "template": "summarize_issue",
+        "kind": "semantic",
+        "canary": false,
+        "question": "Summarize the discussion on issue #11000. What is the problem and what did people say about it?",
+        "oracle": "Preserving dtype for float32 / float64 in transformers",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue #11000, focusing on the preservation of data types in scikit-learn transformers, the motivations, risks, testing, progress, and challenges, without contradicting any reference facts.",
+            "answer": "### Issue Summary: [#11000](https://github.com/owner/repo/issues/11000)\n\nThe discussion centers around ensuring that scikit-learn transformers preserve data types, specifically float32, without causing numerical issues or performance regressions.\n\n#### Key Points:\n\n1. **Motivation and Risks**:\n   - **Motivation**: To prevent unnecessary data type conversions, especially when using libraries like TensorFlow that default to float32.\n   - **Risks**: Potential numerical issues and performance regressions.\n\n2. **Testing and Implementation**:\n   - Contributors are implementing tests to ensure transformers preserve data types.\n   - Development of generic tests for all estimators and performance benchmarking is emphasized.\n\n3. **Progress and Contributions**:\n   - Work in progress on specific transformers, such as LocallyLinearEmbedding, FastICA, and Isomap.\n   - Some transformers, like GaussianRandomProjection and Birch, have been successfully updated and tested.\n\n4. **Challenges and Considerations**:\n   - Some estimators, due to complex operations or infrequent use, may not preserve data types.\n   - Focus is advised on frequently used and simpler estimators.\n   - Updating tests and tags to ensure comprehensive type coverage is necessary.\n\nThis issue highlights collaborative efforts to improve scikit-learn's handling of data types, balancing support for float32 with associated risks and challenges.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 11000,
+                  "userQuery": "What is the problem and what did people say about it?"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2180,
+              "output": 314
+            },
+            "ms": 6841
+          },
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue, focusing on dtype preservation in transformers, and aligns with the reference facts.",
+            "answer": "### Issue Overview\n\nThe discussion on issue [#11000](https://github.com/scikit-learn/scikit-learn/issues/11000) centers around ensuring that scikit-learn transformers preserve the data types of input arrays. The primary focus is on supporting both 32-bit and 64-bit floating-point numbers.\n\n### Key Points from the Discussion\n\n- **Problem Identification**: \n  - Contributors identified the risk of numerical issues or performance regressions when supporting 32-bit arrays. Past untested regressions in Euclidean distance calculations were highlighted as concerns.\n\n- **Balancing Risks and Benefits**: \n  - Contributors, including jnothman, rth, and jeremiedbb, emphasized the importance of weighing the benefits against potential risks. Some transformers might not need to preserve data types due to their complexity or infrequent use.\n\n- **Performance and Testing**:\n  - The necessity of benchmarking was discussed to ensure no performance regressions occur when enabling float32 dtype preservation.\n  - Specific transformers like GaussianRandomProjection and Birch have already undergone tests confirming dtype preservation.\n\n- **Collaborative Efforts**:\n  - Contributors are actively working to ensure specific transformers like FastICA, FeatureAgglomeration, and Isomap preserve data types.\n  - ksslng is working on a generic test for all estimators to ensure dtype preservation.\n\nOverall, the issue reflects a collaborative effort to improve scikit-learn's handling of data types, ensuring changes are rigorously tested and benchmarked to avoid performance issues.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 11000,
+                  "userQuery": "What is the problem and what did people say about it?"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2110,
+              "output": 344
+            },
+            "ms": 6829
+          },
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue, focusing on dtype preservation in transformers, and does not contradict any reference facts.",
+            "answer": "### Summary of Issue #11000\n\n**Problem:**\nThe issue revolves around ensuring that transformers in scikit-learn preserve data types (float32/float64) to prevent unnecessary conversions. This is particularly important when integrating with libraries like TensorFlow, which defaults to float32.\n\n**Discussion Highlights:**\n\n- **Key Workflows:**\n  - Focus on preserving data types across transformers to maintain performance.\n  - Testing and benchmarking to prevent performance regressions, especially with float32 data.\n\n- **Specific Transformers and Models:**\n  - LocallyLinearEmbedding\n  - FastICA\n  - GenericUnivariateSelect\n  - FeatureAgglomeration\n  - FactorAnalysis\n  - Isomap\n\n- **Competitor Mentioned:**\n  - TensorFlow, due to its default use of float32, influencing the dtype handling in scikit-learn.\n\n- **User Workarounds:**\n  - Developing tests to ensure dtype preservation.\n  - Prioritizing handling of float32 in frequently used and simpler estimators to avoid conversion to float64.\n\n- **Proposed Solutions:**\n  - Creating a generic test for dtype preservation across all estimators.\n  - Benchmarking to assess potential regressions with float32.\n  - Updating tests to support both float64 and float32 dtypes.\n\n**Emotional Tone:**\nThe discussion is collaborative and solution-focused. While there is caution about avoiding regressions, no significant frustration is noted. The participants are engaged in problem-solving and thorough testing.\n\nThe issue contains [25 comments](https://github.com/repo/issues/11000) discussing these aspects.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 11000,
+                  "userQuery": null
+                }
+              }
+            ],
+            "usage": {
+              "input": 2137,
+              "output": 352
+            },
+            "ms": 8070
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "skl-dev-047",
+        "template": "summarize_issue",
+        "kind": "semantic",
+        "canary": false,
+        "question": "Summarize the discussion on issue #19615. What is the problem and what did people say about it?",
+        "oracle": "[RFC] Improve the Ridge solver speed / convergence tradeoff with better solver defaults",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue, focusing on solver options, numerical stability, tolerance levels, positivity constraints, and further evaluation, without contradicting the reference facts.",
+            "answer": "The discussion on [issue #19615](https://github.com/repository/issues/19615) focuses on improving solver options for the Ridge estimator in a machine learning library. Here's a summary of the main points:\n\n### Problem and Discussion Highlights\n\n1. **Solver Options**:\n   - There's consensus against adding L-BFGS as a solver.\n   - Some contributors question the need for a QR-based solver.\n   - Alternatives like `lsqr` or `lsmr` are suggested to be more effective than `sparse_cg`, especially for sparse data.\n\n2. **Numerical Stability**:\n   - The `cholesky` solver is considered numerically unstable in certain cases.\n   - `lsqr` is recommended for its speed and accuracy and proposed as a fallback when `cholesky` fails.\n\n3. **Tolerance Levels**:\n   - The default tolerance is suggested to be tightened from `1e-3` to `1e-4` to be more consistent with models like Lasso and LogisticRegression.\n\n4. **Positivity Constraints**:\n   - There's a discussion about incorporating positivity constraints in the Ridge model, similar to other models.\n   - While LBFGS could facilitate this, its performance benefits are debated.\n\n5. **Further Evaluation**:\n   - A systematic evaluation across various datasets is advised to determine the best default solver, considering different data shapes and regularization levels.\n\nOverall, the discussion addresses the need for optimal solver choices to enhance the numerical stability and performance of the Ridge estimator, with a focus on possibly using `lsqr` as a default or fallback solver.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 19615,
+                  "userQuery": "What is the problem and what did people say about it?"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2208,
+              "output": 363
+            },
+            "ms": 7269
+          },
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue, focusing on the core problem of improving solver options for the Ridge estimator, and does not contradict any reference facts.",
+            "answer": "The discussion on [issue #19615](https://github.com/user/repo/issues/19615) centers on improving solver options for the Ridge estimator in a machine learning library. Here's a summary of the key points:\n\n### Problem\nThe main concern is the potential numerical instability of the \"cholesky\" solver, especially with dense data. There is consideration over whether alternative solvers like \"lsqr\" or \"lsmr\" might offer better performance and stability.\n\n### Key Discussion Points\n\n1. **Solver Options**:\n   - L-BFGS: Adding this solver might not be necessary, though it could help with specific cases like enforcing positivity constraints in Ridge regression.\n   - Sparse CG: Discussions about its redundancy, but some argue for its reasonable performance on dense data.\n\n2. **Numerical Stability**:\n   - \"Cholesky\" solver’s instability in unpenalized cases or with small regularization parameters is noted.\n   - \"Lsqr\" and \"lsmr\" are suggested as better alternatives due to their numerical properties.\n\n3. **Tolerance Levels**:\n   - Suggestion to tighten the default tolerance level from 1e-3 to 1e-4 to match standards in models like Lasso and LogisticRegression.\n\n4. **Systematic Evaluation**:\n   - Proposal for a comprehensive evaluation of solvers across various datasets to determine the best default option, including using \"lsqr\" as a fallback when \"cholesky\" fails.\n\n5. **Related Issues**:\n   - Reference to related issues, such as solver behavior when alpha equals zero, indicating ongoing exploration of performance.\n\nThe discussion highlights a collaborative effort to refine solver options for better performance and stability, with 15 comments contributing to the conversation.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 19615,
+                  "userQuery": "What is the problem and what did people say about it?"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2228,
+              "output": 389
+            },
+            "ms": 9612
+          },
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue, focusing on solver options, tolerance levels, numerical stability, positivity constraints, and further evaluation, without contradicting the reference facts.",
+            "answer": "The discussion on [issue #19615](https://github.com/your-repo/issues/19615) centers around improving solver options for the Ridge estimator in a machine learning library. Here's a summary of the key points:\n\n### Problem and Discussion Points\n\n1. **Solver Options**: \n   - There is debate over whether adding L-BFGS as a solver is necessary.\n   - The QR-based solver is considered potentially excessive.\n   - `lsqr` or `lsmr` could perform better than `sparse_cg` for sparse data due to numerical stability, especially in ill-conditioned cases.\n\n2. **Tolerance Levels**: \n   - Suggestion to tighten default tolerance from `1e-3` to `1e-4` to match other models like Lasso and LogisticRegression.\n   - This change is irrelevant for solvers such as `cholesky` and `svd`.\n\n3. **Numerical Stability**: \n   - Concerns about the stability of the `cholesky` solver when unpenalized or with small alpha values.\n   - `lsqr` is recommended as a default or fallback for dense data in singular problems.\n\n4. **Positivity Constraints**: \n   - Ridge currently lacks support for positivity constraints on model weights, important for some use-cases.\n   - Adding L-BFGS could make Ridge consistent with other models like LinearRegression, Lasso, and ElasticNet.\n\n5. **Further Evaluation**: \n   - A systematic evaluation of datasets is suggested to determine a better default solver than `cholesky` for dense data.\n   - `lsqr` is proposed as a potential default or fallback, with warnings if `cholesky` is unsuitable.\n\n### Overall\nThe focus is on optimizing solver choices for Ridge regression by considering numerical stability, performance, and use-case requirements like positivity constraints.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 19615,
+                  "userQuery": "Summarize the problem discussed and key points from the comments."
+                }
+              }
+            ],
+            "usage": {
+              "input": 2234,
+              "output": 419
+            },
+            "ms": 7338
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "skl-dev-048",
+        "template": "summarize_issue",
+        "kind": "semantic",
+        "canary": false,
+        "question": "Summarize the discussion on issue #24515. What is the problem and what did people say about it?",
+        "oracle": "BUG log_loss renormalizes the predictions",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue, its core problem, and the discussion around it without contradicting any reference facts.",
+            "answer": "The discussion in [issue #24515](https://github.com/your/repo/issues/24515) focuses on how the `log_loss` function calculates log loss when predicted probabilities (`y_pred`) do not sum to one. Here are the key points and proposed solutions:\n\n### Problem\n- **Unexpected Behavior**: The current handling of probabilities that don't sum to one by renormalizing them is seen as surprising and potentially a bug.\n\n### Key Feedback and Solutions\n1. **Renormalization vs. Error/Warning**:\n   - **Proponents of Renormalization**: Some contributors believe renormalizing is acceptable for simplicity.\n   - **Opponents**: Others argue it misrepresents the metric and prefer requiring model predictions to sum to one without automatic renormalization.\n\n2. **Raising Warnings/Errors**:\n   - Suggestions are made to initially issue a warning for non-summing probabilities, transitioning to an error in future updates.\n\n3. **`eps` Parameter**:\n   - There's debate over the necessity of the `eps` parameter, with proposals to eliminate it and use defaults based on numerical precision inherent in libraries like PyTorch.\n\n4. **Implementation and Next Steps**:\n   - Contributors, like OmarManzoor, show interest in addressing the issue by raising warnings and removing `eps` with a proper deprecation plan.\n\nOverall, the contributors aim to align the function's behavior with recognized methodological standards by clarifying how it handles probabilities and parameters.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 24515,
+                  "userQuery": "What is the problem discussed and what feedback or solutions are provided?"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2270,
+              "output": 341
+            },
+            "ms": 8796
+          },
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue, its problem, and the discussion highlights without contradicting any reference facts.",
+            "answer": "### Issue Summary\n\n**Problem:**\nThe issue deals with computing log loss for models where predicted probabilities do not sum to one, which affects the accuracy of the log loss metric. There's also a focus on the `eps` parameter in the `log_loss` function and its impact.\n\n### Discussion Highlights\n\n- **Key Workflows:**\n  - The main concern is the accuracy of log loss when predicted probabilities are incorrectly summed.\n  - The `eps` parameter's role in the computation is debated.\n\n- **Competitors Mentioned:**\n  - PyTorch’s `binary_cross_entropy` function is used as a benchmark for handling such issues, particularly its clipping behavior.\n\n- **Workarounds:**\n  - A suggested workaround is to renormalize predicted probabilities before computing log loss.\n\n- **Proposed Solutions:**\n  - Introduce warnings for non-summing predicted probabilities, eventually leading to errors in future versions.\n  - Consider removing the `eps` parameter, replacing it with `np.finfo(y_pred.dtype).eps`.\n  - Implement a deprecation cycle for the `eps` parameter with warnings for two releases before its elimination.\n\n### Emotional Tone\n\nThe conversation is generally neutral but includes mild frustration over the current behavior, with the tone remaining constructive and solution-focused.\n\n**Comments Count:** 13",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 24515,
+                  "userQuery": null
+                }
+              }
+            ],
+            "usage": {
+              "input": 2123,
+              "output": 290
+            },
+            "ms": 6450
+          },
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue, its problem, and the key discussions without contradicting the reference facts.",
+            "answer": "**Issue Summary for [#24515](https://github.com/your-repo/issue/24515):**\n\n- **Problem:**\n  - The main issue being discussed is the computation of log loss with probabilities that do not sum to one, which can cause unexpected behavior in models. This problem is related to the handling of predictions where the sum of probabilities should be one.\n\n- **Key Discussions:**\n  - **Workflows/Use Cases:**\n    - Usage of `log_loss` function in scenarios where predictions are not properly normalized.\n  - **Competitor Mentions:**\n    - PyTorch’s `binary_cross_entropy` function is referenced for its default behavior of clipping logs to -100.\n  - **Workarounds:**\n    - Users suggested renormalizing probabilities and using `np.clip` to adjust predictions.\n\n- **Proposed Solutions:**\n  - Introduce a warning if probabilities do not sum to one, with a potential for an error in the future.\n  - Remove `eps` parameter, suggesting the use of `np.finfo(y_pred.dtype).eps` instead.\n  - Plan a deprecation cycle for `eps`, issuing warnings for two releases before its removal.\n\n- **Overall Tone:**\n  - The discussion is mostly neutral, though there is some frustration about the current behavior being seen as a bug. Participants are focused on constructive solutions.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 24515,
+                  "userQuery": null
+                }
+              }
+            ],
+            "usage": {
+              "input": 2078,
+              "output": 307
+            },
+            "ms": 5997
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "skl-dev-049",
+        "template": "summarize_issue",
+        "kind": "semantic",
+        "canary": false,
+        "question": "Summarize the discussion on issue #12906. What is the problem and what did people say about it?",
+        "oracle": "AttributeError: 'PrettyPrinter' object has no attribute '_indent_at_name'",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue, its core problem, and the discussion points without contradicting the reference facts.",
+            "answer": "### Issue Summary\n\n**Title**: [AttributeError: 'PrettyPrinter' object has no attribute '_indent_at_name'](https://github.com/scikit-learn/scikit-learn/issues/12906)\n\n**State**: Closed\n\n**Problem**: The issue involves an `AttributeError` encountered when using `PrettyPrinter` in the `joblib` library during rendering of `BaseEstimator` objects. It specifically arises in code handling the pipeline of model transformations, as described in an example that results in a failure.\n\n### Key Discussion Points\n\n- **Main Issue**: The error is triggered due to `_EstimatorPrettyPrinter` modifying the dispatch used by the standard `pprint` library, leading to an attribute access issue.\n\n- **Proposed Solutions**:\n  - **Copying Dispatch Dictionary**: A key proposal is to create a copy of the `_dispatch` dictionary to prevent interference with `PrettyPrinter`.\n  - **Alternative Approaches**: Concepts around using a configuration singleton were suggested to possibly address the issue differently.\n\n- **Tone of Discussion**: The conversation is technical and focused, with participants collaborating to diagnose and propose solutions without expressing frustration or dissatisfaction.\n\n- **Workarounds**: No explicit workarounds were provided in the comments, other than the solution proposals.\n\nThis issue's conversation reflects a constructive technical troubleshooting effort, aimed at resolving a specific software error.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 12906}) RETURN i.title, i.bodyText, i.state LIMIT 1"
+                }
+              },
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 12906,
+                  "userQuery": null
+                }
+              }
+            ],
+            "usage": {
+              "input": 3588,
+              "output": 364
+            },
+            "ms": 7530
+          },
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue, problem, and discussion points without contradicting the reference facts.",
+            "answer": "The issue [#12906](https://github.com/scikit-learn/scikit-learn/issues/12906) discusses a problem with the `PrettyPrinter` class in scikit-learn. Here's a summary of the discussion:\n\n### Problem\n- The problem involves the `_dispatch` dictionary of the `PrettyPrinter` class, which is altered unexpectedly by the `_EstimatorPrettyPrinter` class that inherits from it.\n- This alteration leads to incorrect behavior when `PrettyPrinter` is used to render `BaseEstimator` objects, as it mistakenly utilizes the `_EstimatorPrettyPrinter._pprint_estimator` method.\n\n### Key Points from Discussion\n1. **Problem Identification**: \n   - There is inconsistency when the method `_pprint_estimator` is called, affecting examples like `examples/compose/plot_compare_reduction.py`.\n\n2. **Reproduction**:\n   - A minimal example demonstrates that invoking `PrettyPrinter` on an estimator such as `LogisticRegression` results in the issue.\n\n3. **Proposed Solution**:\n   - The proposed fix is to create a copy of the `_dispatch` dictionary to isolate modifications specific to `_EstimatorPrettyPrinter`.\n\n4. **Action Plan**:\n   - NicolasHug acknowledges the issue and plans to submit a fix, recognizing the complexity of the bug and another associated concern.\n\nOverall, the discussion centers on a bug regarding pretty printing in scikit-learn, with a plan to resolve it by confining changes to the responsible class.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 12906,
+                  "userQuery": "What is the problem and what did people say about it?"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2187,
+              "output": 339
+            },
+            "ms": 7081
+          },
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue, problem, and key discussions without contradicting the reference facts.",
+            "answer": "### Summary of Issue [#12906](https://github.com/scikit-learn/scikit-learn/issues/12906)\n\n#### Problem\nThe issue involves the `PrettyPrinter` class in the scikit-learn library. The problem occurs because the `_dispatch` dictionary of `PrettyPrinter` is being altered by the `_EstimatorPrettyPrinter` class, which inherits from it. This alteration causes `PrettyPrinter` to improperly use the `_EstimatorPrettyPrinter._pprint_estimator` method when rendering `BaseEstimator` objects, leading to unexpected behavior.\n\n#### Key Discussions\n- **Contributors**: Several contributors, including `rth`, `adrinjalali`, `jnothman`, and `NicolasHug`, participated in the discussion.\n- **Example Script Issue**: `adrinjalali` pointed out that a specific example script fails due to this issue, even though continuous integration tests pass on the master branch.\n- **Design Concern**: `jnothman` raised a concern that the issue might be due to not copying the `_dispatch` dictionary, leading to global rather than local modifications. He also questioned the design, suggesting that `_pprint_estimator` might better reference an instance method.\n- **Proposed Fix**: `NicolasHug` acknowledged the problem and concurred on the necessity of copying `_dispatch`. He explained that the bug is triggered when `joblib` calls `PrettyPrinter` on an estimator, leading to incorrect method usage. He planned to submit a fix and provided a minimal example to illustrate the issue, though he expressed uncertainty about some aspects of `jnothman`'s concern.\n\nOverall, the discussion focused on identifying the root cause of the bug and proposing solutions to prevent global modifications affecting the `PrettyPrinter`.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 12906,
+                  "userQuery": "What is the problem and what did people say about it?"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2173,
+              "output": 398
+            },
+            "ms": 7682
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "skl-dev-050",
+        "template": "summarize_issue",
+        "kind": "semantic",
+        "canary": false,
+        "question": "Summarize the discussion on issue #16873. What is the problem and what did people say about it?",
+        "oracle": "Choose first feature to use in Tree and/or choose the order of features to use in the Tree",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue, aligns with the core problem, and does not contradict any reference facts.",
+            "answer": "The discussion on [issue #16873](https://github.com/scikit-learn/scikit-learn/issues/16873) revolves around a proposal to integrate user-enforced feature splits into the scikit-learn Decision Tree algorithm. This feature would allow users to specify which features to split on and in what order, enhancing model interpretability and performance, particularly in domains like finance.\n\n### Key Points:\n\n1. **Proposal and Concerns:**\n   - The integration of expert knowledge with machine learning is suggested to improve specific domains.\n   - Concerns include potential misalignment with scikit-learn's scope and possible complications for users.\n\n2. **Technical Challenges:**\n   - Challenges focus on scikit-learn not supporting feature properties with estimators.\n   - Progress includes work on new estimators that could accommodate these splits.\n\n3. **Existing Solutions and Comparisons:**\n   - LightGBM supports a similar feature with `forcedsplits_filename`.\n   - A \\\"Fern\\\" Decision Tree variant was mentioned as a possible implementation direction.\n\n4. **Use Cases and Benefits:**\n   - Use cases like insurance pricing are highlighted, where forced splits could enhance model logic and avoid multiple models.\n   - It could improve interpretability for datasets with distinct subgroups.\n\n5. **Current Status and Future Considerations:**\n   - Some technical challenges have been resolved, but the feature's priority remains uncertain.\n   - Participants are exploring manual implementation with custom estimators.\n\nOverall, while there's interest and practical use cases for this feature, technical and strategic challenges are yet to be addressed for its inclusion in scikit-learn.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 16873,
+                  "userQuery": "Summarize the discussion, highlighting the problem and key points raised by participants."
+                }
+              }
+            ],
+            "usage": {
+              "input": 2297,
+              "output": 367
+            },
+            "ms": 6743
+          },
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue, aligns with the core problem, and does not contradict any reference facts.",
+            "answer": "The discussion on [issue #16873](https://github.com/scikit-learn/scikit-learn/issues/16873) focuses on the idea of integrating user-defined feature splits into scikit-learn's Decision Tree algorithms. Here's a summary of the conversation:\n\n### Problem\nThe main issue is that current DecisionTreeClassifier and DecisionTreeRegressor do not allow users to enforce specific features or the order of features for splits. This limitation could be problematic in domains like finance and trading, where such control is beneficial.\n\n### Key Points from the Discussion\n\n1. **Initial Proposal**: The issue was proposed by Dylan-Cunningham, suggesting the implementation of feature splits to provide more control over Decision Tree models, particularly valuable in certain fields.\n\n2. **Concerns and Comparisons**: A user, onshek, supports the idea but mentions potential complexities, comparing it to past splits in matplotlib.finance.\n\n3. **Technical Challenges**: NicolasHug notes challenges related to supporting feature properties in scikit-learn's estimators but points out ongoing efforts to resolve these issues.\n\n4. **Alternative Approaches**: dcaohuu18 discusses a Decision Tree variant called Fern, which could be a potential alternative for implementation in scikit-learn.\n\n5. **Progress and Use Cases**: adrinjalali states that metadata-related challenges have seen progress. Mayer79 discusses insurance pricing use cases where forced splits could be helpful.\n\n6. **Current Status**: AhmedThahir asks about manual implementation options while waiting for an official feature decision.\n\nOverall, the issue highlights the balance between potential benefits and technical challenges, with ongoing efforts and community suggestions influencing its feasibility.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 16873,
+                  "userQuery": "What is the problem and what did people say about it?"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2256,
+              "output": 371
+            },
+            "ms": 8621
+          },
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue, its core problem, and the discussion around it without contradicting any reference facts.",
+            "answer": "### Issue Summary for [#16873](https://github.com/user/repo/issues/16873)\n\n**Title:** Choose first feature to use in Tree and/or choose the order of features to use in the Tree\n\n**Description:**\nThe issue discusses allowing users to pre-select the order of features used in decision trees. This proposed feature is aimed at enhancing model interpretability and integrating expert knowledge, particularly in fields like finance and trading.\n\n**Problem:**\n- Users want to force decision trees to split on a specific feature first or follow a particular order.\n- This is seen as useful in domains where the interpretability of feature selection is critical, such as finance, where expert knowledge can enhance machine learning models.\n\n**Key Comments & Discussions:**\n- **Use Cases:** Emphasized the need in finance and insurance for improved model explanation through controlled feature splits.\n- **Workarounds:** Current methods involve manually building separate models, which is inefficient.\n- **Competitors:** Mentioned tools like LightGBM, which already supports forced splits.\n- **Proposed Solutions:** Discussed implementing such features in scikit-learn, possibly by leveraging metadata for more natural handling of feature properties.\n- **Technical Challenges:** Passing feature information is currently under development and experimental in scikit-learn's API.\n\n**Emotional Tone:**\nThe discussion is largely neutral and constructive, focusing on potential solutions and the benefits of integrating the feature. There's a sense of collaboration and open dialogue about technical challenges and priorities.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 16873,
+                  "userQuery": null
+                }
+              },
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 16873})-[:HAS_COMMENT]->(c:Comment) RETURN i.title AS title, i.bodyText AS description, i.state AS state, COLLECT(c.bodyText) AS comments LIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 3896,
+              "output": 409
+            },
+            "ms": 7656
+          }
+        ],
+        "passRate": 1
+      }
+    ],
+    "openai": {
+      "requests": 324,
+      "byModel": {
+        "gpt-4o-2024-08-06": {
+          "requests": 324,
+          "promptTokens": 317620,
+          "completionTokens": 23865,
+          "unmetered": 0
+        }
+      },
+      "byEndpoint": {
+        "/responses": 306,
+        "/chat/completions": 18
+      },
+      "byHost": {
+        "api.openai.com": 324
+      },
+      "unpricedModels": [],
+      "unmetered": 0,
+      "usageSource": "wire",
+      "reportedTokens": {
+        "input": 290923,
+        "output": 17489
+      },
+      "costUsd": 1.0327
+    },
+    "neo4j": {
+      "queries": 158,
+      "sessions": 158,
+      "transactions": 0,
+      "samples": [
+        "MATCH (c:Comment) RETURN count(c) AS totalComments",
+        "MATCH (i:Issue) RETURN count(i) AS issueCount",
+        "MATCH (c:Comment) RETURN count(c) as totalComments",
+        "MATCH (c:Comment) RETURN count(c) AS totalComments",
+        "MATCH (i:Issue) RETURN count(i) AS totalIssues",
+        "MATCH (i:Issue) RETURN COUNT(i) AS totalIssues",
+        "MATCH (i:Issue {state: 'OPEN'}) RETURN COUNT(i) AS openIssue",
+        "MATCH (i:Issue) WHERE i.state = 'open' RETURN count(i) AS op",
+        "MATCH (i:Issue {state: 'OPEN'}) RETURN COUNT(i) AS openIssue",
+        "MATCH (i:Issue {state: 'CLOSED'}) RETURN count(i) as closed_",
+        "MATCH (i:Issue {state: 'closed'}) RETURN COUNT(i) as closedI",
+        "MATCH (i:Issue) WHERE i.state = 'CLOSED' RETURN count(i) as ",
+        "MATCH (i:Issue {number: 4580}) RETURN i.state LIMIT 1",
+        "MATCH (i:Issue {number: 4580}) RETURN i.state LIMIT 1",
+        "MATCH (i:Issue {number: 4580}) RETURN i.state LIMIT 1",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE i.state = 'OPE",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE i.state = 'OPE",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE i.state = 'OPE",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE i.state = 'OPE",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE l.name = \"Bug\"",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE l.name = 'Bug'",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE i.state = 'OPE",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE i.state = 'OPE",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE i.state = 'OPE",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE i.state = 'OPE",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE i.state = 'OPE",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(:Label {name: 'New Feature'})",
+        "MATCH (l:Label) RETURN count(DISTINCT l.name) AS distinctLab",
+        "MATCH (l:Label) RETURN COUNT(DISTINCT l.name) AS labelCount",
+        "MATCH (l:Label) RETURN COUNT(DISTINCT l.name) AS distinctLab",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"Bug\"}) RETURN",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"Bug\"}) RETURN",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: 'bug'}) RETURN",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: 'bug'}) RETURN",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"Bug\"}) RETURN",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: 'bug'}) RETURN",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"New Feature\"}",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"New Feature\"}",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: 'New Feature'}",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: 'help wanted'}",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: 'help wanted'}",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"help wanted\"}",
+        "MATCH (u:User)<-[:AUTHORED_BY]-(i:Issue) RETURN COUNT(DISTIN",
+        "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User) RETURN COUNT(DISTIN",
+        "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User) RETURN COUNT(DISTIN",
+        "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User {login: \"lorentzench",
+        "MATCH (u:User {login: \"lorentzenchr\"})-[:AUTHORED_BY]-(i:Iss",
+        "MATCH (u:User {login: \"lorentzenchr\"})-[:AUTHORED_BY]-(i:Iss",
+        "MATCH (i:Issue {number: 4580})-[:AUTHORED_BY]->(u:User) RETU",
+        "MATCH (i:Issue {number: 4580})-[:AUTHORED_BY]->(u:User) RETU",
+        "MATCH (i:Issue {number: 4580})-[:AUTHORED_BY]->(u:User) RETU",
+        "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment)-[:AUTHORED_BY]->",
+        "MATCH (i:Issue {number: 4580})-[:HAS_COMMENT]->(c:Comment)-[",
+        "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment)-[:AUTHORED_BY]->",
+        "MATCH (i:Issue) WHERE i.createdAt STARTS WITH '2019-01' RETU",
+        "MATCH (i:Issue) WHERE i.createdAt STARTS WITH '2019-01' RETU",
+        "MATCH (i:Issue) WHERE i.createdAt STARTS WITH '2019-01' RETU",
+        "MATCH (i:Issue) WHERE date(i.createdAt) < date('2018-10-30')",
+        "MATCH (i:Issue) WHERE i.createdAt < '2018-10-30' RETURN COUN",
+        "MATCH (i:Issue) WHERE i.createdAt < '2018-10-30' RETURN COUN",
+        "MATCH (i:Issue) WHERE datetime(i.createdAt) > datetime('2018",
+        "MATCH (i:Issue) WHERE date(i.createdAt) > date('2018-10-30')",
+        "MATCH (i:Issue) WHERE datetime(i.createdAt) < datetime('2018",
+        "MATCH (i:Issue) WHERE date(i.createdAt) > date('2018-10-30')",
+        "MATCH (i:Issue) WHERE date(i.createdAt) > date('2019-08-10')",
+        "MATCH (i:Issue) WHERE datetime(i.createdAt) > datetime('2018",
+        "MATCH (i:Issue) WHERE datetime(i.createdAt) > datetime('2018",
+        "MATCH (i:Issue) WHERE date(i.createdAt) > date('2019-08-10')",
+        "MATCH (i:Issue) WHERE datetime(i.createdAt) > datetime('2019",
+        "MATCH (i:Issue) WHERE i.createdAt > '2019-08-10' RETURN coun",
+        "MATCH (i:Issue) WHERE datetime(i.createdAt) > datetime('2019",
+        "MATCH (i:Issue) WHERE date(i.createdAt) >= date('2018-10-30'",
+        "MATCH (i:Issue) WHERE i.createdAt >= '2018-10-30' AND i.crea",
+        "MATCH (i:Issue) WHERE i.createdAt >= '2018-10-30' AND i.crea",
+        "MATCH (i:Issue) WHERE NOT (i)-[:HAS_COMMENT]->(:Comment) RET",
+        "MATCH (i:Issue) WHERE datetime(i.createdAt) >= datetime('201",
+        "MATCH (i:Issue) WHERE NOT (i)-[:HAS_COMMENT]->(:Comment) RET",
+        "MATCH (i:Issue) WHERE NOT EXISTS {(i)-[:HAS_COMMENT]->(:Comm",
+        "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment) RETURN i.number ",
+        "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment) RETURN i.number,",
+        "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment) RETURN i.number ",
+        "MATCH (i:Issue)-[r:HAS_REACTION]->() RETURN i.number, COUNT(",
+        "MATCH (i:Issue)-[r:HAS_REACTION]->() RETURN i.number AS issu",
+        "MATCH (i:Issue)-[:HAS_REACTION]->(r:Reaction) RETURN i.numbe",
+        "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment) WITH i, COUNT(c)",
+        "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment) WITH i, COUNT(c)",
+        "MATCH (i:Issue {number: 4580})-[:HAS_COMMENT]->(c:Comment) R",
+        "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment) WITH i, COUNT(c)",
+        "MATCH (i:Issue {number: 4580})-[:HAS_COMMENT]->(c:Comment) R",
+        "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment) WHERE i.number =",
+        "MATCH (issue:Issue {number: 7975}) RETURN issue.title LIMIT ",
+        "MATCH (i:Issue {number: 7975}) RETURN i.title LIMIT 1",
+        "MATCH (i:Issue {number: 7975}) RETURN i.title LIMIT 1",
+        "MATCH (i:Issue {number: 8416}) RETURN i.title LIMIT 1",
+        "MATCH (i:Issue {number: 8416}) RETURN i.title LIMIT 1",
+        "MATCH (i:Issue {number: 8416}) RETURN i.title LIMIT 1",
+        "MATCH (i:Issue) WHERE i.title CONTAINS 'actually' OR i.bodyT",
+        "MATCH (i:Issue) WHERE toLower(i.title) CONTAINS 'actually' O",
+        "MATCH (i:Issue) WHERE i.title CONTAINS \"actually\" OR i.bodyT",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l1:Label {name: \"good first i",
+        "MATCH (label:Label)<-[:HAS_LABEL]-(issue:Issue)-[:HAS_LABEL]",
+        "MATCH (l1:Label {name: \"good first issue\"})<-[:HAS_LABEL]-(i",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"Blocker\"})-[:",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"Blocker\"})-[:",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"Blocker\"})-[:",
+        "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment) RETURN i.number ",
+        "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment) RETURN i.number ",
+        "MATCH (i:Issue)-[:HAS_REACTION]->(r:Reaction) WITH i, COUNT(",
+        "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment) RETURN i.number ",
+        "MATCH (i:Issue)-[:HAS_REACTION]->(r:Reaction) RETURN i.numbe",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"API: argument",
+        "MATCH (i:Issue)-[:HAS_REACTION]->(r:Reaction) RETURN i.numbe",
+        "MATCH (l:Label {name: \"API: argument checking\"})<-[:HAS_LABE",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"API: argument",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"API: argument",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name:\"API: argument ",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"API: argument",
+        "MATCH (i:Issue) WHERE i.title CONTAINS 'CPython' OR i.bodyTe",
+        "MATCH (i:Issue) WHERE toLower(i.title) CONTAINS \"cpython\" OR",
+        "MATCH (i:Issue) WHERE i.title CONTAINS 'CPython' OR i.bodyTe",
+        "MATCH (u:User {login: \"08walkersj\"})-[:AUTHORED_BY]-(i:Issue",
+        "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User {login: '08walkersj'",
+        "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User {login: \"08walkersj\"",
+        "MATCH (issue:Issue) WHERE issue.createdAt STARTS WITH '2015-",
+        "MATCH (i:Issue) WHERE i.createdAt STARTS WITH \"2015-05\" RETU",
+        "MATCH (i:Issue) WHERE i.createdAt STARTS WITH '2015-05' RETU",
+        "MATCH (i:Issue {state: 'CLOSED'}) RETURN count(i) AS closedI",
+        "MATCH (i:Issue {state: 'closed'}) RETURN COUNT(i) AS closedI",
+        "MATCH (i:Issue {state: 'CLOSED'}) RETURN count(i) AS closedI",
+        "MATCH (i:Issue {state: 'CLOSED'}) RETURN count(i) AS closedI",
+        "MATCH (i:Issue) WHERE i.state = 'CLOSED' RETURN count(i) as ",
+        "MATCH (i:Issue {state: 'CLOSED'}) RETURN COUNT(i) AS closedI",
+        "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User) RETURN COUNT(DISTIN",
+        "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User) RETURN COUNT(DISTIN",
+        "MATCH (u:User)<-[:AUTHORED_BY]-(i:Issue) RETURN COUNT(DISTIN",
+        "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User) RETURN COUNT(DISTIN",
+        "MATCH (u:User)<-[:AUTHORED_BY]-(i:Issue) RETURN COUNT(DISTIN",
+        "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User) RETURN COUNT(DISTIN",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: 12906}) RETURN i.title, i.bodyText, ",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: 16873})-[:HAS_COMMENT]->(c:Comment) "
+      ]
+    },
+    "judgeCostUsd": 0.11191999999999999
+  },
+  "score": {
+    "overall": 0.9399999999999998,
+    "deterministic": 0.9318181818181817,
+    "semantic": 1,
+    "byKind": {
+      "structural": 0.9411764705882353,
+      "retrieval": 0.9,
+      "semantic": 1
+    },
+    "solvedAllAttempts": 45,
+    "solvedAnyAttempt": 48,
+    "totalTasks": 50,
+    "canaryPass": true,
+    "toolUseRate": 1,
+    "agentErrorRate": 0
+  },
+  "cost": {
+    "ingestUsd": 0.3476075,
+    "qaUsd": 1.0327,
+    "judgeUsd": 0.11191999999999999,
+    "sutTotalUsd": 1.3803075
+  },
+  "finishedAt": "2026-09-05T10:57:29.818Z",
+  "trace": {
+    "files": [
+      "github-issue-analyzer-2026-09-05T10-53-21-669Z-1815710.jsonl"
+    ],
+    "spans": 1304,
+    "byName": {
+      "gen_ai.request": {
+        "count": 306,
+        "totalMs": 439903,
+        "maxMs": 4012,
+        "errors": 0
+      },
+      "pipeline.run": {
+        "count": 1,
+        "totalMs": 144181,
+        "maxMs": 144181,
+        "errors": 0
+      },
+      "pipeline.analyzeIssue": {
+        "count": 60,
+        "totalMs": 126188,
+        "maxMs": 4975,
+        "errors": 0
+      },
+      "openai.chat": {
+        "count": 60,
+        "totalMs": 126153,
+        "maxMs": 4974,
+        "errors": 0
+      },
+      "tool.summarizeComments": {
+        "count": 18,
+        "totalMs": 57763,
+        "maxMs": 4474,
+        "errors": 0
+      },
+      "github.graphql": {
+        "count": 121,
+        "totalMs": 14921,
+        "maxMs": 130,
+        "errors": 0
+      },
+      "pipeline.fetch": {
+        "count": 1,
+        "totalMs": 14853,
+        "maxMs": 14853,
+        "errors": 0
+      },
+      "github.fetchCompleteIssue": {
+        "count": 60,
+        "totalMs": 14839,
+        "maxMs": 254,
+        "errors": 0
+      },
+      "neo4j.query": {
+        "count": 474,
+        "totalMs": 5760,
+        "maxMs": 172,
+        "errors": 6
+      },
+      "tool.queryNeo4j": {
+        "count": 140,
+        "totalMs": 2421,
+        "maxMs": 47,
+        "errors": 0
+      },
+      "pipeline.persistAnalysis": {
+        "count": 1,
+        "totalMs": 2010,
+        "maxMs": 2010,
+        "errors": 0
+      },
+      "analysis.persistIssue": {
+        "count": 60,
+        "totalMs": 2001,
+        "maxMs": 392,
+        "errors": 0
+      },
+      "pipeline.ingest": {
+        "count": 1,
+        "totalMs": 553,
+        "maxMs": 553,
+        "errors": 0
+      },
+      "pipeline.discover": {
+        "count": 1,
+        "totalMs": 128,
+        "maxMs": 128,
+        "errors": 0
+      }
+    }
+  }
+}

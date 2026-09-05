@@ -1,0 +1,2471 @@
+{
+  "split": "mpl-dev",
+  "job": "A-baseline__mpl-dev",
+  "at": "2026-09-05T11:03:29.784Z",
+  "issuesWithExtraction": 59,
+  "corpusIssues": 60,
+  "extractedStrings": 537,
+  "groundingPrecision": 0.8305400372439479,
+  "patchModuleRecall": 0.8387096774193549,
+  "patchGradeableIssues": 31,
+  "patchLinkedIssues": 36,
+  "ungroundedExamples": [
+    "#24273 Category: API: argument checking",
+    "#24273 Category: New feature",
+    "#24373 Category: New feature",
+    "#24797 Category: Maintenance",
+    "#25124 Solution: A fix for the issue has been identified and a pull request is being prepared."
+  ],
+  "missedExamples": [
+    "#12853 expected one of [matplotlib, axis]",
+    "#18312 expected one of [matplotlib]",
+    "#22882 expected one of [matplotlib, tripcolor]",
+    "#23083 expected one of [matplotlib, axes, _base]",
+    "#25199 expected one of [matplotlib]"
+  ],
+  "extraction": [
+    {
+      "number": 4067,
+      "items": [
+        {
+          "label": "Solution",
+          "text": "The solution is to probably force the evaluation of the norm + cmap in get_facecolors."
+        },
+        {
+          "label": "Workaround",
+          "text": "A temporary fix is to explicitly set the _facecolors2d and _edgecolors2d parameters after creating the surface plot by assigning them the values of _facecolors3d and _edgecolors3d respectively."
+        },
+        {
+          "label": "Workaround",
+          "text": "Modify the workaround by using _facecolor3d and _edgecolor3d without 's' on the RHS for matplotlib 3.3.3."
+        },
+        {
+          "label": "Workaround",
+          "text": "In matplotlib 3.5.1, set _facecolors2d to _facecolors and _edgecolors2d to _edgecolors, applying the workaround to each surface individually if there are multiple surfaces."
+        },
+        {
+          "label": "Workaround",
+          "text": "Use fig.draw_without_rendering() before calling r.get_facecolors() to update the state during the draw process in matplotlib 3.5."
+        },
+        {
+          "label": "Category",
+          "text": "matplotlib"
+        },
+        {
+          "label": "Category",
+          "text": "mplot3d"
+        },
+        {
+          "label": "Category",
+          "text": "Python"
+        },
+        {
+          "label": "Category",
+          "text": "3D plotting"
+        },
+        {
+          "label": "Keyword",
+          "text": "draw process"
+        },
+        {
+          "label": "Keyword",
+          "text": "fig.draw_without_rendering()"
+        },
+        {
+          "label": "Keyword",
+          "text": "matplotlib 3.5"
+        },
+        {
+          "label": "Keyword",
+          "text": "matplotlib 3.5.1"
+        },
+        {
+          "label": "Keyword",
+          "text": "_facecolors"
+        },
+        {
+          "label": "Keyword",
+          "text": "_facecolors2d"
+        },
+        {
+          "label": "Keyword",
+          "text": "_edgecolors"
+        },
+        {
+          "label": "Keyword",
+          "text": "_edgecolors2d"
+        },
+        {
+          "label": "Keyword",
+          "text": "_edgecolor3d"
+        },
+        {
+          "label": "Keyword",
+          "text": "_facecolor3d"
+        },
+        {
+          "label": "Keyword",
+          "text": "matplotlib 3.3.3"
+        },
+        {
+          "label": "Keyword",
+          "text": "workaround"
+        },
+        {
+          "label": "Keyword",
+          "text": "_edgecolors3d"
+        },
+        {
+          "label": "Keyword",
+          "text": "_facecolors3d"
+        },
+        {
+          "label": "Keyword",
+          "text": "temporary fix"
+        },
+        {
+          "label": "Keyword",
+          "text": "norm"
+        },
+        {
+          "label": "Keyword",
+          "text": "get_facecolors"
+        },
+        {
+          "label": "Keyword",
+          "text": "evaluation"
+        },
+        {
+          "label": "Keyword",
+          "text": "cmap"
+        },
+        {
+          "label": "Keyword",
+          "text": "solution"
+        }
+      ]
+    },
+    {
+      "number": 5876,
+      "items": [
+        {
+          "label": "Solution",
+          "text": "Adapt AutoLocator to handle multiple view limits simultaneously by picking the widest suitable tick spacing for all axes and adding ticks at the lowest and highest values for small axes."
+        },
+        {
+          "label": "Workaround",
+          "text": "Use MultipleLocator with the same step on both axes for data space or LinearLocator with the same number on each axes for screen space to achieve consistent tick spacing."
+        },
+        {
+          "label": "Category",
+          "text": "New feature"
+        },
+        {
+          "label": "Keyword",
+          "text": "tick spacing"
+        },
+        {
+          "label": "Keyword",
+          "text": "LinearLocator"
+        },
+        {
+          "label": "Keyword",
+          "text": "MultipleLocator"
+        },
+        {
+          "label": "Keyword",
+          "text": "axes"
+        },
+        {
+          "label": "Keyword",
+          "text": "view limits"
+        },
+        {
+          "label": "Keyword",
+          "text": "AutoLocator"
+        }
+      ]
+    },
+    {
+      "number": 6982,
+      "items": [
+        {
+          "label": "Category",
+          "text": "Artists"
+        },
+        {
+          "label": "Category",
+          "text": "Axes"
+        },
+        {
+          "label": "Category",
+          "text": "Matplotlib"
+        },
+        {
+          "label": "Category",
+          "text": "Attributes"
+        }
+      ]
+    },
+    {
+      "number": 12735,
+      "items": [
+        {
+          "label": "Solution",
+          "text": "Deprecate any non-1D input to scatter() to make the API more consistent, as suggested by @anntzer."
+        },
+        {
+          "label": "Category",
+          "text": "API: argument checking"
+        },
+        {
+          "label": "Keyword",
+          "text": "non-1D input"
+        },
+        {
+          "label": "Keyword",
+          "text": "deprecate"
+        },
+        {
+          "label": "Keyword",
+          "text": "consistent API"
+        },
+        {
+          "label": "Keyword",
+          "text": "scatter()"
+        }
+      ]
+    },
+    {
+      "number": 12853,
+      "items": [
+        {
+          "label": "Category",
+          "text": "array ducktypes"
+        },
+        {
+          "label": "Category",
+          "text": "units"
+        }
+      ]
+    },
+    {
+      "number": 13023,
+      "items": [
+        {
+          "label": "Solution",
+          "text": "Implement a proof of concept for specifying legend locations and arrangement with gridspec, using horizontal arrangement by default except for 'north' and 'south'."
+        },
+        {
+          "label": "Solution",
+          "text": "Propose writing a separate method for constrained_layout that figure.legend could call under the right conditions."
+        },
+        {
+          "label": "Workaround",
+          "text": "Attach the legend to one of the rightmost axes to make room for it in the layout."
+        },
+        {
+          "label": "Workaround",
+          "text": "Avoid anchoring the legend above the top of the axes to prevent it from making space for itself in the layout."
+        },
+        {
+          "label": "Category",
+          "text": "New feature"
+        },
+        {
+          "label": "Competitor",
+          "text": "seaborn"
+        },
+        {
+          "label": "Keyword",
+          "text": "anchoring"
+        },
+        {
+          "label": "Keyword",
+          "text": "legend"
+        },
+        {
+          "label": "Keyword",
+          "text": "layout"
+        },
+        {
+          "label": "Keyword",
+          "text": "rightmost axes"
+        },
+        {
+          "label": "Keyword",
+          "text": "proof of concept"
+        },
+        {
+          "label": "Keyword",
+          "text": "gridspec"
+        },
+        {
+          "label": "Keyword",
+          "text": "legend locations"
+        },
+        {
+          "label": "Keyword",
+          "text": "horizontal arrangement"
+        },
+        {
+          "label": "Keyword",
+          "text": "separate method"
+        },
+        {
+          "label": "Keyword",
+          "text": "constrained_layout"
+        },
+        {
+          "label": "Keyword",
+          "text": "figure.legend"
+        }
+      ]
+    },
+    {
+      "number": 13857,
+      "items": [
+        {
+          "label": "Solution",
+          "text": "Detect zero-length dimensions in the Figure class and raise an error."
+        },
+        {
+          "label": "Category",
+          "text": "Bug"
+        },
+        {
+          "label": "Category",
+          "text": "libpng"
+        },
+        {
+          "label": "Category",
+          "text": "Matplotlib"
+        },
+        {
+          "label": "Category",
+          "text": "RuntimeError"
+        },
+        {
+          "label": "Keyword",
+          "text": "Figure class"
+        },
+        {
+          "label": "Keyword",
+          "text": "raise an error"
+        },
+        {
+          "label": "Keyword",
+          "text": "zero-length dimensions"
+        }
+      ]
+    },
+    {
+      "number": 14039,
+      "items": [
+        {
+          "label": "Category",
+          "text": "Visualization"
+        },
+        {
+          "label": "Category",
+          "text": "Bug"
+        },
+        {
+          "label": "Category",
+          "text": "Matplotlib"
+        }
+      ]
+    },
+    {
+      "number": 14221,
+      "items": [
+        {
+          "label": "Solution",
+          "text": "Another proposed solution is to create a Color class that could handle color equivalence and representation, as discussed in comment MDEyOklzc3VlQ29tbWVudDQ5MjkzODA4Mw==."
+        },
+        {
+          "label": "Solution",
+          "text": "A proposed solution is to eagerly resolve colors against the previous color cycle or the default one if none is set, as discussed in comment MDEyOklzc3VlQ29tbWVudDQ5MjUyNTc2OA==."
+        },
+        {
+          "label": "Workaround",
+          "text": "A workaround is to use `matplotlib.colors.to_rgba_array` to convert 'CN' colors to RGBA before passing them to `ax.set_prop_cycle`, as mentioned in comment MDEyOklzc3VlQ29tbWVudDQ5MjQzOTU1NQ==."
+        },
+        {
+          "label": "Category",
+          "text": "needs comment/discussion"
+        },
+        {
+          "label": "Category",
+          "text": "color/cycle"
+        },
+        {
+          "label": "Keyword",
+          "text": "RGBA"
+        },
+        {
+          "label": "Keyword",
+          "text": "convert 'CN' colors"
+        },
+        {
+          "label": "Keyword",
+          "text": "ax.set_prop_cycle"
+        },
+        {
+          "label": "Keyword",
+          "text": "matplotlib.colors.to_rgba_array"
+        },
+        {
+          "label": "Keyword",
+          "text": "color equivalence"
+        },
+        {
+          "label": "Keyword",
+          "text": "Color class"
+        },
+        {
+          "label": "Keyword",
+          "text": "representation"
+        },
+        {
+          "label": "Keyword",
+          "text": "default color cycle"
+        },
+        {
+          "label": "Keyword",
+          "text": "eagerly resolve colors"
+        },
+        {
+          "label": "Keyword",
+          "text": "previous color cycle"
+        }
+      ]
+    },
+    {
+      "number": 14743,
+      "items": [
+        {
+          "label": "Category",
+          "text": "Axis Limits"
+        },
+        {
+          "label": "Category",
+          "text": "Logit Scale"
+        },
+        {
+          "label": "Category",
+          "text": "Bug"
+        },
+        {
+          "label": "Category",
+          "text": "Matplotlib"
+        }
+      ]
+    },
+    {
+      "number": 18294,
+      "items": [
+        {
+          "label": "Solution",
+          "text": "Matplotlib could potentially catch the warning at plot time to prevent it from being displayed."
+        },
+        {
+          "label": "Category",
+          "text": "Warnings"
+        },
+        {
+          "label": "Category",
+          "text": "NumPy"
+        },
+        {
+          "label": "Category",
+          "text": "Matplotlib"
+        },
+        {
+          "label": "Category",
+          "text": "Bug"
+        },
+        {
+          "label": "Keyword",
+          "text": "catch"
+        },
+        {
+          "label": "Keyword",
+          "text": "Matplotlib"
+        },
+        {
+          "label": "Keyword",
+          "text": "warning"
+        },
+        {
+          "label": "Keyword",
+          "text": "plot time"
+        }
+      ]
+    },
+    {
+      "number": 18312,
+      "items": [
+        {
+          "label": "Solution",
+          "text": "The solution suggests using __version_info__ as a common approach for version tuples, similar to Python's sys.version_info."
+        },
+        {
+          "label": "Category",
+          "text": "Usability"
+        },
+        {
+          "label": "Category",
+          "text": "Versioning"
+        },
+        {
+          "label": "Category",
+          "text": "Feature Request"
+        },
+        {
+          "label": "Keyword",
+          "text": "version tuples"
+        },
+        {
+          "label": "Keyword",
+          "text": "__version_info__"
+        },
+        {
+          "label": "Keyword",
+          "text": "sys.version_info"
+        }
+      ]
+    },
+    {
+      "number": 19029,
+      "items": [
+        {
+          "label": "Solution",
+          "text": "Setting verticalalignment='baseline' resolves the overlap issue with rotated colorbar labels."
+        },
+        {
+          "label": "Category",
+          "text": "Matplotlib"
+        },
+        {
+          "label": "Category",
+          "text": "Bug"
+        },
+        {
+          "label": "Category",
+          "text": "Visualization"
+        },
+        {
+          "label": "Keyword",
+          "text": "colorbar"
+        },
+        {
+          "label": "Keyword",
+          "text": "verticalalignment"
+        },
+        {
+          "label": "Keyword",
+          "text": "labels"
+        },
+        {
+          "label": "Keyword",
+          "text": "overlap"
+        },
+        {
+          "label": "Keyword",
+          "text": "baseline"
+        }
+      ]
+    },
+    {
+      "number": 19081,
+      "items": [
+        {
+          "label": "Category",
+          "text": "status: needs comment/discussion"
+        },
+        {
+          "label": "Category",
+          "text": "API: consistency"
+        },
+        {
+          "label": "Category",
+          "text": "Maintenance"
+        },
+        {
+          "label": "Category",
+          "text": "keep"
+        }
+      ]
+    },
+    {
+      "number": 19121,
+      "items": [
+        {
+          "label": "Solution",
+          "text": "Users should implement their own legend handler for Text if needed, as there is no default legend handler for Text in Matplotlib."
+        },
+        {
+          "label": "Solution",
+          "text": "Implement a warning when collecting all artists that have handlers if has_handler returns False, to alert users when a label is set but the Artist cannot appear in a legend."
+        },
+        {
+          "label": "Workaround",
+          "text": "Write a custom legend handler for Text to manually add the Text handle and label to the legend."
+        },
+        {
+          "label": "Category",
+          "text": "API"
+        },
+        {
+          "label": "Category",
+          "text": "text"
+        },
+        {
+          "label": "Category",
+          "text": "bug"
+        },
+        {
+          "label": "Category",
+          "text": "matplotlib"
+        },
+        {
+          "label": "Category",
+          "text": "legend"
+        },
+        {
+          "label": "Keyword",
+          "text": "legend"
+        },
+        {
+          "label": "Keyword",
+          "text": "handler"
+        },
+        {
+          "label": "Keyword",
+          "text": "label"
+        },
+        {
+          "label": "Keyword",
+          "text": "manually"
+        },
+        {
+          "label": "Keyword",
+          "text": "custom"
+        },
+        {
+          "label": "Keyword",
+          "text": "handle"
+        },
+        {
+          "label": "Keyword",
+          "text": "Text"
+        },
+        {
+          "label": "Keyword",
+          "text": "default"
+        },
+        {
+          "label": "Keyword",
+          "text": "implement"
+        },
+        {
+          "label": "Keyword",
+          "text": "users"
+        },
+        {
+          "label": "Keyword",
+          "text": "Matplotlib"
+        },
+        {
+          "label": "Keyword",
+          "text": "has_handler"
+        },
+        {
+          "label": "Keyword",
+          "text": "warning"
+        },
+        {
+          "label": "Keyword",
+          "text": "artists"
+        },
+        {
+          "label": "Keyword",
+          "text": "handlers"
+        },
+        {
+          "label": "Keyword",
+          "text": "collecting"
+        },
+        {
+          "label": "Keyword",
+          "text": "Artist"
+        }
+      ]
+    },
+    {
+      "number": 19199,
+      "items": [
+        {
+          "label": "Solution",
+          "text": "A suggestion was made to add a _NoValue singleton as a default, which is distinct from None, similar to np._NoValue."
+        },
+        {
+          "label": "Solution",
+          "text": "A third solution suggests using metadata='none', which aligns with common patterns in Matplotlib for visuals but not in other contexts."
+        },
+        {
+          "label": "Solution",
+          "text": "Another proposed solution is to expand metadata=None in print_svg() to a dictionary with all fields set to None, although this is considered hacky."
+        },
+        {
+          "label": "Solution",
+          "text": "One proposed solution is to use metadata=None and change the default sentinel, which is an API change but considered low-impact."
+        },
+        {
+          "label": "Category",
+          "text": "backend: agg"
+        },
+        {
+          "label": "Category",
+          "text": "backend: pdf"
+        },
+        {
+          "label": "Category",
+          "text": "New feature"
+        },
+        {
+          "label": "Category",
+          "text": "backend: svg"
+        },
+        {
+          "label": "Category",
+          "text": "backend: ps"
+        },
+        {
+          "label": "Category",
+          "text": "keep"
+        },
+        {
+          "label": "Keyword",
+          "text": "default"
+        },
+        {
+          "label": "Keyword",
+          "text": "np._NoValue"
+        },
+        {
+          "label": "Keyword",
+          "text": "_NoValue singleton"
+        },
+        {
+          "label": "Keyword",
+          "text": "distinct from None"
+        },
+        {
+          "label": "Keyword",
+          "text": "metadata='none'"
+        },
+        {
+          "label": "Keyword",
+          "text": "common patterns"
+        },
+        {
+          "label": "Keyword",
+          "text": "Matplotlib"
+        },
+        {
+          "label": "Keyword",
+          "text": "visuals"
+        },
+        {
+          "label": "Keyword",
+          "text": "hacky"
+        },
+        {
+          "label": "Keyword",
+          "text": "fields set to None"
+        },
+        {
+          "label": "Keyword",
+          "text": "metadata=None"
+        },
+        {
+          "label": "Keyword",
+          "text": "print_svg()"
+        },
+        {
+          "label": "Keyword",
+          "text": "dictionary"
+        },
+        {
+          "label": "Keyword",
+          "text": "API change"
+        },
+        {
+          "label": "Keyword",
+          "text": "default sentinel"
+        },
+        {
+          "label": "Keyword",
+          "text": "low-impact"
+        }
+      ]
+    },
+    {
+      "number": 19376,
+      "items": [
+        {
+          "label": "Solution",
+          "text": "The issue was fixed as a side effect of another issue, #22451."
+        },
+        {
+          "label": "Workaround",
+          "text": "You can pass colors as rgba values using matplotlib's to_rgba function to achieve the desired alpha effect."
+        },
+        {
+          "label": "Category",
+          "text": "eventplot"
+        },
+        {
+          "label": "Category",
+          "text": "feature request"
+        },
+        {
+          "label": "Category",
+          "text": "bug"
+        },
+        {
+          "label": "Category",
+          "text": "matplotlib"
+        },
+        {
+          "label": "Category",
+          "text": "alpha channels"
+        },
+        {
+          "label": "Keyword",
+          "text": "to_rgba function"
+        },
+        {
+          "label": "Keyword",
+          "text": "matplotlib"
+        },
+        {
+          "label": "Keyword",
+          "text": "rgba values"
+        },
+        {
+          "label": "Keyword",
+          "text": "side effect"
+        },
+        {
+          "label": "Keyword",
+          "text": "fixed"
+        },
+        {
+          "label": "Keyword",
+          "text": "issue #22451"
+        }
+      ]
+    },
+    {
+      "number": 20677,
+      "items": [
+        {
+          "label": "Solution",
+          "text": "Using text.usetex=True in matplotlib can reduce the space between tick labels and ticks by using a tighter bounding box with LaTeX rendering, though it is not a perfect solution."
+        },
+        {
+          "label": "Workaround",
+          "text": "Setting the pad to negative values in matplotlib can reduce the space between tick labels and ticks."
+        },
+        {
+          "label": "Category",
+          "text": "ticks axis labels"
+        },
+        {
+          "label": "Category",
+          "text": "text"
+        },
+        {
+          "label": "Keyword",
+          "text": "negative values"
+        },
+        {
+          "label": "Keyword",
+          "text": "matplotlib"
+        },
+        {
+          "label": "Keyword",
+          "text": "pad"
+        },
+        {
+          "label": "Keyword",
+          "text": "bounding box"
+        },
+        {
+          "label": "Keyword",
+          "text": "text.usetex=True"
+        },
+        {
+          "label": "Keyword",
+          "text": "LaTeX"
+        }
+      ]
+    },
+    {
+      "number": 20721,
+      "items": [
+        {
+          "label": "Solution",
+          "text": "Reverting the change that applies tick rcParams at the end of Axes.__init__ to instead apply them at the end of Axes.clear fixes the issue without breaking tests."
+        },
+        {
+          "label": "Category",
+          "text": "matplotlib"
+        },
+        {
+          "label": "Category",
+          "text": "shared axes"
+        },
+        {
+          "label": "Category",
+          "text": "bug"
+        },
+        {
+          "label": "Category",
+          "text": "ticks"
+        },
+        {
+          "label": "Category",
+          "text": "tick labels"
+        },
+        {
+          "label": "Keyword",
+          "text": "Axes.__init__"
+        },
+        {
+          "label": "Keyword",
+          "text": "Axes.clear"
+        },
+        {
+          "label": "Keyword",
+          "text": "tick rcParams"
+        },
+        {
+          "label": "Keyword",
+          "text": "tests"
+        },
+        {
+          "label": "Keyword",
+          "text": "issue"
+        },
+        {
+          "label": "Keyword",
+          "text": "change"
+        },
+        {
+          "label": "Keyword",
+          "text": "reverting"
+        },
+        {
+          "label": "Keyword",
+          "text": "fixes"
+        }
+      ]
+    },
+    {
+      "number": 20785,
+      "items": [
+        {
+          "label": "Solution",
+          "text": "Clone the entire Matplotlib repository and use the gh command line tool to checkout the specific commit #20788, then install using pip install -e ."
+        },
+        {
+          "label": "Category",
+          "text": "color/colorbar"
+        },
+        {
+          "label": "Keyword",
+          "text": "pip"
+        },
+        {
+          "label": "Keyword",
+          "text": "checkout"
+        },
+        {
+          "label": "Keyword",
+          "text": "repository"
+        },
+        {
+          "label": "Keyword",
+          "text": "install"
+        },
+        {
+          "label": "Keyword",
+          "text": "gh command line tool"
+        },
+        {
+          "label": "Keyword",
+          "text": "clone"
+        },
+        {
+          "label": "Keyword",
+          "text": "Matplotlib"
+        },
+        {
+          "label": "Keyword",
+          "text": "commit"
+        }
+      ]
+    },
+    {
+      "number": 21378,
+      "items": [
+        {
+          "label": "Category",
+          "text": "Deprecation"
+        },
+        {
+          "label": "Category",
+          "text": "Formatting"
+        },
+        {
+          "label": "Category",
+          "text": "Matplotlib"
+        },
+        {
+          "label": "Category",
+          "text": "Colorbar"
+        }
+      ]
+    },
+    {
+      "number": 21518,
+      "items": [
+        {
+          "label": "Workaround",
+          "text": "A workaround involves monkey patching the _wrap_in_tex function to adjust text rendering by replacing certain characters with TeX-friendly equivalents."
+        },
+        {
+          "label": "Category",
+          "text": "TeX Rendering"
+        },
+        {
+          "label": "Category",
+          "text": "Bug"
+        },
+        {
+          "label": "Category",
+          "text": "Matplotlib"
+        },
+        {
+          "label": "Category",
+          "text": "Datetime Axis"
+        },
+        {
+          "label": "Keyword",
+          "text": "_wrap_in_tex"
+        },
+        {
+          "label": "Keyword",
+          "text": "TeX-friendly"
+        },
+        {
+          "label": "Keyword",
+          "text": "text rendering"
+        },
+        {
+          "label": "Keyword",
+          "text": "workaround"
+        },
+        {
+          "label": "Keyword",
+          "text": "monkey patching"
+        }
+      ]
+    },
+    {
+      "number": 22236,
+      "items": [
+        {
+          "label": "Solution",
+          "text": "A commit was pushed to fix the case for pcolorfast, requiring uint8 for integer 0-255 values in images."
+        },
+        {
+          "label": "Category",
+          "text": "RGBA values"
+        },
+        {
+          "label": "Category",
+          "text": "Integer arrays"
+        },
+        {
+          "label": "Category",
+          "text": "pcolorfast"
+        },
+        {
+          "label": "Category",
+          "text": "Matplotlib"
+        },
+        {
+          "label": "Category",
+          "text": "Bug"
+        },
+        {
+          "label": "Keyword",
+          "text": "pcolorfast"
+        },
+        {
+          "label": "Keyword",
+          "text": "commit"
+        },
+        {
+          "label": "Keyword",
+          "text": "uint8"
+        },
+        {
+          "label": "Keyword",
+          "text": "images"
+        },
+        {
+          "label": "Keyword",
+          "text": "fix"
+        },
+        {
+          "label": "Keyword",
+          "text": "0-255"
+        },
+        {
+          "label": "Keyword",
+          "text": "integer"
+        }
+      ]
+    },
+    {
+      "number": 22726,
+      "items": [
+        {
+          "label": "Category",
+          "text": "Matplotlib"
+        },
+        {
+          "label": "Category",
+          "text": "Color Mapping"
+        },
+        {
+          "label": "Category",
+          "text": "Bug"
+        }
+      ]
+    },
+    {
+      "number": 23042,
+      "items": [
+        {
+          "label": "Solution",
+          "text": "Activating interactive mode using plt.ion() resolves the issue with figures not redrawing in IPython."
+        },
+        {
+          "label": "Workaround",
+          "text": "Reverting to a previous version of matplotlib in Void Linux pending a permanent fix."
+        },
+        {
+          "label": "Category",
+          "text": "IPython"
+        },
+        {
+          "label": "Category",
+          "text": "Interactive Mode"
+        },
+        {
+          "label": "Category",
+          "text": "Backend"
+        },
+        {
+          "label": "Category",
+          "text": "Matplotlib"
+        },
+        {
+          "label": "Category",
+          "text": "Bug"
+        },
+        {
+          "label": "Keyword",
+          "text": "previous version"
+        },
+        {
+          "label": "Keyword",
+          "text": "permanent fix"
+        },
+        {
+          "label": "Keyword",
+          "text": "reverting"
+        },
+        {
+          "label": "Keyword",
+          "text": "Void Linux"
+        },
+        {
+          "label": "Keyword",
+          "text": "matplotlib"
+        },
+        {
+          "label": "Keyword",
+          "text": "figures"
+        },
+        {
+          "label": "Keyword",
+          "text": "IPython"
+        },
+        {
+          "label": "Keyword",
+          "text": "plt.ion()"
+        },
+        {
+          "label": "Keyword",
+          "text": "redrawing"
+        },
+        {
+          "label": "Keyword",
+          "text": "interactive mode"
+        }
+      ]
+    },
+    {
+      "number": 23083,
+      "items": [
+        {
+          "label": "Solution",
+          "text": "A potential solution is to check if the second string in the plot function is a valid formatting string to determine whether the error should be a KeyError or a ValueError."
+        },
+        {
+          "label": "Workaround",
+          "text": "A suggested workaround is to use explicit column references in the plot function, such as ax.plot(df['header'], df['correctlySpelledHeader']), to avoid ambiguity and potential errors."
+        },
+        {
+          "label": "Workaround",
+          "text": "Another workaround is for framework developers to use the approach ax.plot(df[]) instead of ax.plot(..., data=df) to prevent errors related to typos in column names."
+        },
+        {
+          "label": "Category",
+          "text": "Error Handling"
+        },
+        {
+          "label": "Category",
+          "text": "Python Libraries"
+        },
+        {
+          "label": "Category",
+          "text": "Data Visualization"
+        },
+        {
+          "label": "Keyword",
+          "text": "framework developers"
+        },
+        {
+          "label": "Keyword",
+          "text": "typos"
+        },
+        {
+          "label": "Keyword",
+          "text": "ax.plot(df[])"
+        },
+        {
+          "label": "Keyword",
+          "text": "column names"
+        },
+        {
+          "label": "Keyword",
+          "text": "explicit column references"
+        },
+        {
+          "label": "Keyword",
+          "text": "errors"
+        },
+        {
+          "label": "Keyword",
+          "text": "plot function"
+        },
+        {
+          "label": "Keyword",
+          "text": "ambiguity"
+        },
+        {
+          "label": "Keyword",
+          "text": "valid formatting string"
+        },
+        {
+          "label": "Keyword",
+          "text": "KeyError"
+        },
+        {
+          "label": "Keyword",
+          "text": "ValueError"
+        }
+      ]
+    },
+    {
+      "number": 23108,
+      "items": [
+        {
+          "label": "Category",
+          "text": "Matplotlib"
+        },
+        {
+          "label": "Category",
+          "text": "Python"
+        },
+        {
+          "label": "Category",
+          "text": "Bug"
+        },
+        {
+          "label": "Category",
+          "text": "Data Visualization"
+        }
+      ]
+    },
+    {
+      "number": 23298,
+      "items": [
+        {
+          "label": "Solution",
+          "text": "A fix for this issue is being developed for Matplotlib version 3.6, but it cannot be backported to version 3.5.x."
+        },
+        {
+          "label": "Workaround",
+          "text": "Importing matplotlib, calling get_backend(), and then deleting matplotlib can force backend resolution and work around the issue without side effects."
+        },
+        {
+          "label": "Category",
+          "text": "Bug"
+        },
+        {
+          "label": "Category",
+          "text": "Matplotlib"
+        },
+        {
+          "label": "Category",
+          "text": "Backend"
+        },
+        {
+          "label": "Category",
+          "text": "rc_context"
+        },
+        {
+          "label": "Keyword",
+          "text": "work around"
+        },
+        {
+          "label": "Keyword",
+          "text": "backend resolution"
+        },
+        {
+          "label": "Keyword",
+          "text": "matplotlib"
+        },
+        {
+          "label": "Keyword",
+          "text": "importing"
+        },
+        {
+          "label": "Keyword",
+          "text": "get_backend"
+        },
+        {
+          "label": "Keyword",
+          "text": "Matplotlib"
+        },
+        {
+          "label": "Keyword",
+          "text": "version 3.6"
+        },
+        {
+          "label": "Keyword",
+          "text": "fix"
+        },
+        {
+          "label": "Keyword",
+          "text": "backport"
+        }
+      ]
+    },
+    {
+      "number": 23308,
+      "items": [
+        {
+          "label": "Category",
+          "text": "bug"
+        },
+        {
+          "label": "Category",
+          "text": "mplot3d"
+        },
+        {
+          "label": "Category",
+          "text": "matplotlib"
+        }
+      ]
+    },
+    {
+      "number": 24127,
+      "items": [
+        {
+          "label": "Solution",
+          "text": "A proposed fix involves modifying the Axes._convert_dx method to handle the StopIteration exception by falling back to the first element unconditionally."
+        },
+        {
+          "label": "Category",
+          "text": "Matplotlib"
+        },
+        {
+          "label": "Category",
+          "text": "Seaborn"
+        },
+        {
+          "label": "Category",
+          "text": "Bug"
+        },
+        {
+          "label": "Category",
+          "text": "Python"
+        },
+        {
+          "label": "Keyword",
+          "text": "StopIteration"
+        },
+        {
+          "label": "Keyword",
+          "text": "first element"
+        },
+        {
+          "label": "Keyword",
+          "text": "exception"
+        },
+        {
+          "label": "Keyword",
+          "text": "Axes._convert_dx"
+        },
+        {
+          "label": "Keyword",
+          "text": "unconditionally"
+        }
+      ]
+    },
+    {
+      "number": 24273,
+      "items": [
+        {
+          "label": "Solution",
+          "text": "Consider making any kwargs an error if labels is not set in Axis.set_ticks."
+        },
+        {
+          "label": "Category",
+          "text": "API: argument checking"
+        },
+        {
+          "label": "Category",
+          "text": "New feature"
+        },
+        {
+          "label": "Keyword",
+          "text": "labels"
+        },
+        {
+          "label": "Keyword",
+          "text": "kwargs"
+        },
+        {
+          "label": "Keyword",
+          "text": "error"
+        },
+        {
+          "label": "Keyword",
+          "text": "Axis.set_ticks"
+        }
+      ]
+    },
+    {
+      "number": 24373,
+      "items": [
+        {
+          "label": "Solution",
+          "text": "Switch from weak to strong references in the callback registry to prevent widgets from being garbage collected."
+        },
+        {
+          "label": "Workaround",
+          "text": "Use a lambda trick to obtain strong references cheaply in the callback registry."
+        },
+        {
+          "label": "Category",
+          "text": "widgets/UI"
+        },
+        {
+          "label": "Category",
+          "text": "New feature"
+        },
+        {
+          "label": "Keyword",
+          "text": "lambda trick"
+        },
+        {
+          "label": "Keyword",
+          "text": "callback registry"
+        },
+        {
+          "label": "Keyword",
+          "text": "strong references"
+        },
+        {
+          "label": "Keyword",
+          "text": "weak references"
+        }
+      ]
+    },
+    {
+      "number": 24681,
+      "items": [
+        {
+          "label": "Category",
+          "text": "New feature"
+        },
+        {
+          "label": "Category",
+          "text": "topic: color/alpha"
+        }
+      ]
+    },
+    {
+      "number": 24797,
+      "items": [
+        {
+          "label": "Solution",
+          "text": "Implement a registry system for hatches similar to the colormap registry system."
+        },
+        {
+          "label": "Solution",
+          "text": "Allow any string in rcParams for hatches, similar to how any string is allowed for image.cmap, and handle validation at runtime."
+        },
+        {
+          "label": "Solution",
+          "text": "Introduce a HatchStyle and have a single validator for hatch patterns."
+        },
+        {
+          "label": "Category",
+          "text": "Maintenance"
+        },
+        {
+          "label": "Category",
+          "text": "topic: hatch"
+        },
+        {
+          "label": "Keyword",
+          "text": "colormap"
+        },
+        {
+          "label": "Keyword",
+          "text": "hatches"
+        },
+        {
+          "label": "Keyword",
+          "text": "registry system"
+        },
+        {
+          "label": "Keyword",
+          "text": "runtime"
+        },
+        {
+          "label": "Keyword",
+          "text": "image.cmap"
+        },
+        {
+          "label": "Keyword",
+          "text": "rcParams"
+        },
+        {
+          "label": "Keyword",
+          "text": "HatchStyle"
+        },
+        {
+          "label": "Keyword",
+          "text": "single validator"
+        },
+        {
+          "label": "Keyword",
+          "text": "hatch patterns"
+        }
+      ]
+    },
+    {
+      "number": 24954,
+      "items": [
+        {
+          "label": "Category",
+          "text": "layout"
+        },
+        {
+          "label": "Category",
+          "text": "matplotlib"
+        },
+        {
+          "label": "Category",
+          "text": "bug"
+        },
+        {
+          "label": "Category",
+          "text": "figure saving"
+        }
+      ]
+    },
+    {
+      "number": 25015,
+      "items": [
+        {
+          "label": "Solution",
+          "text": "Implementing a smarter default logic for colorbar orientation based on aspect ratio, with the possibility of a warning cycle for users to adapt to changes."
+        },
+        {
+          "label": "Solution",
+          "text": "Using the aspect ratio as the primary criterion to determine whether the colorbar should be horizontal or vertical, and then setting its position relative to the mappable axes accordingly."
+        },
+        {
+          "label": "Category",
+          "text": "New feature"
+        },
+        {
+          "label": "Category",
+          "text": "color/colorbar"
+        },
+        {
+          "label": "Category",
+          "text": "keep"
+        },
+        {
+          "label": "Keyword",
+          "text": "default logic"
+        },
+        {
+          "label": "Keyword",
+          "text": "warning cycle"
+        },
+        {
+          "label": "Keyword",
+          "text": "aspect ratio"
+        },
+        {
+          "label": "Keyword",
+          "text": "colorbar orientation"
+        },
+        {
+          "label": "Keyword",
+          "text": "mappable axes"
+        },
+        {
+          "label": "Keyword",
+          "text": "vertical"
+        },
+        {
+          "label": "Keyword",
+          "text": "colorbar"
+        },
+        {
+          "label": "Keyword",
+          "text": "horizontal"
+        }
+      ]
+    },
+    {
+      "number": 25124,
+      "items": [
+        {
+          "label": "Solution",
+          "text": "A fix for the issue has been identified and a pull request is being prepared."
+        },
+        {
+          "label": "Workaround",
+          "text": "Commenting out the save and pause functions makes the linear plot appear correctly after switching from log scale."
+        },
+        {
+          "label": "Category",
+          "text": "Regression"
+        },
+        {
+          "label": "Category",
+          "text": "Plotting"
+        },
+        {
+          "label": "Category",
+          "text": "Matplotlib"
+        },
+        {
+          "label": "Category",
+          "text": "Bug"
+        },
+        {
+          "label": "Keyword",
+          "text": "scale"
+        },
+        {
+          "label": "Keyword",
+          "text": "log"
+        },
+        {
+          "label": "Keyword",
+          "text": "linear"
+        },
+        {
+          "label": "Keyword",
+          "text": "pause"
+        },
+        {
+          "label": "Keyword",
+          "text": "commenting"
+        },
+        {
+          "label": "Keyword",
+          "text": "save"
+        },
+        {
+          "label": "Keyword",
+          "text": "pull request"
+        },
+        {
+          "label": "Keyword",
+          "text": "issue"
+        },
+        {
+          "label": "Keyword",
+          "text": "fix"
+        }
+      ]
+    },
+    {
+      "number": 25168,
+      "items": [
+        {
+          "label": "Solution",
+          "text": "The solution involves setting the transform of the artist to the new axes' transform data after removal, or setting the artist's _transformSet attribute to False."
+        },
+        {
+          "label": "Category",
+          "text": "Python"
+        },
+        {
+          "label": "Category",
+          "text": "Graphics"
+        },
+        {
+          "label": "Category",
+          "text": "Matplotlib"
+        },
+        {
+          "label": "Keyword",
+          "text": "removal"
+        },
+        {
+          "label": "Keyword",
+          "text": "axes"
+        },
+        {
+          "label": "Keyword",
+          "text": "transform"
+        },
+        {
+          "label": "Keyword",
+          "text": "_transformSet"
+        },
+        {
+          "label": "Keyword",
+          "text": "artist"
+        }
+      ]
+    },
+    {
+      "number": 25199,
+      "items": [
+        {
+          "label": "Solution",
+          "text": "Remove the _props attribute and store properties directly in the instantiated artist, creating it as early as possible."
+        },
+        {
+          "label": "Solution",
+          "text": "Redefine the set_props method for LassoSelector to set the properties of the line directly."
+        },
+        {
+          "label": "Category",
+          "text": "widgets/UI"
+        },
+        {
+          "label": "Category",
+          "text": "bug"
+        },
+        {
+          "label": "Keyword",
+          "text": "instantiated artist"
+        },
+        {
+          "label": "Keyword",
+          "text": "properties"
+        },
+        {
+          "label": "Keyword",
+          "text": "_props"
+        },
+        {
+          "label": "Keyword",
+          "text": "LassoSelector"
+        },
+        {
+          "label": "Keyword",
+          "text": "line"
+        },
+        {
+          "label": "Keyword",
+          "text": "set_props"
+        }
+      ]
+    },
+    {
+      "number": 25233,
+      "items": [
+        {
+          "label": "Category",
+          "text": "topic: animation"
+        },
+        {
+          "label": "Category",
+          "text": "API: argument checking"
+        }
+      ]
+    },
+    {
+      "number": 25345,
+      "items": [
+        {
+          "label": "Solution",
+          "text": "To prevent the Axes from grabbing the mouse and not releasing it, check if the mouse is in use before executing the redraw callback."
+        },
+        {
+          "label": "Workaround",
+          "text": "Using a button to redraw everything instead of the range slider's on_changed callback resolves the input blocking issue."
+        },
+        {
+          "label": "Category",
+          "text": "Matplotlib"
+        },
+        {
+          "label": "Category",
+          "text": "Bug"
+        },
+        {
+          "label": "Category",
+          "text": "Widgets"
+        },
+        {
+          "label": "Category",
+          "text": "Python"
+        },
+        {
+          "label": "Keyword",
+          "text": "redraw"
+        },
+        {
+          "label": "Keyword",
+          "text": "range slider"
+        },
+        {
+          "label": "Keyword",
+          "text": "input blocking"
+        },
+        {
+          "label": "Keyword",
+          "text": "on_changed"
+        },
+        {
+          "label": "Keyword",
+          "text": "button"
+        },
+        {
+          "label": "Keyword",
+          "text": "mouse"
+        },
+        {
+          "label": "Keyword",
+          "text": "Axes"
+        },
+        {
+          "label": "Keyword",
+          "text": "callback"
+        }
+      ]
+    },
+    {
+      "number": 25477,
+      "items": [
+        {
+          "label": "Workaround",
+          "text": "An example is provided using Matplotlib to plot an ellipse with an arrow indicating rotation by utilizing basic plotting functions and vector calculations."
+        },
+        {
+          "label": "Category",
+          "text": "Documentation"
+        },
+        {
+          "label": "Keyword",
+          "text": "calculations"
+        },
+        {
+          "label": "Keyword",
+          "text": "rotation"
+        },
+        {
+          "label": "Keyword",
+          "text": "vector"
+        },
+        {
+          "label": "Keyword",
+          "text": "arrow"
+        },
+        {
+          "label": "Keyword",
+          "text": "plotting"
+        },
+        {
+          "label": "Keyword",
+          "text": "ellipse"
+        },
+        {
+          "label": "Keyword",
+          "text": "Matplotlib"
+        }
+      ]
+    },
+    {
+      "number": 25497,
+      "items": [
+        {
+          "label": "Category",
+          "text": "New feature"
+        },
+        {
+          "label": "Category",
+          "text": "topic: sphinx extension"
+        },
+        {
+          "label": "Category",
+          "text": "Documentation: build"
+        }
+      ]
+    },
+    {
+      "number": 25682,
+      "items": [
+        {
+          "label": "Solution",
+          "text": "Amend the code to check if 'transform' is not in kwargs before calling self.update_datalim in _fill_between_x_or_y()."
+        },
+        {
+          "label": "Category",
+          "text": "Axes Transform"
+        },
+        {
+          "label": "Category",
+          "text": "Matplotlib"
+        },
+        {
+          "label": "Category",
+          "text": "Bug"
+        },
+        {
+          "label": "Keyword",
+          "text": "_fill_between_x_or_y"
+        },
+        {
+          "label": "Keyword",
+          "text": "kwargs"
+        },
+        {
+          "label": "Keyword",
+          "text": "transform"
+        },
+        {
+          "label": "Keyword",
+          "text": "self.update_datalim"
+        }
+      ]
+    },
+    {
+      "number": 26081,
+      "items": [
+        {
+          "label": "Category",
+          "text": "New feature"
+        }
+      ]
+    },
+    {
+      "number": 26230,
+      "items": [
+        {
+          "label": "Category",
+          "text": "Error Handling"
+        },
+        {
+          "label": "Category",
+          "text": "Bug"
+        },
+        {
+          "label": "Category",
+          "text": "Masked Arrays"
+        },
+        {
+          "label": "Category",
+          "text": "Matplotlib"
+        }
+      ]
+    },
+    {
+      "number": 26750,
+      "items": [
+        {
+          "label": "Solution",
+          "text": "Setting angles=\"uv\" interprets the u/v values as in the Cartesian space of the display, which may align with user expectations for quiver plots in polar coordinates."
+        },
+        {
+          "label": "Workaround",
+          "text": "Writing a polar_quiver wrapper can help translate Cartesian quiver functionality to polar coordinates, addressing confusion with the default quiver behavior."
+        },
+        {
+          "label": "Category",
+          "text": "topic: polar"
+        },
+        {
+          "label": "Category",
+          "text": "Documentation"
+        },
+        {
+          "label": "Keyword",
+          "text": "polar_quiver wrapper"
+        },
+        {
+          "label": "Keyword",
+          "text": "polar coordinates"
+        },
+        {
+          "label": "Keyword",
+          "text": "Cartesian quiver"
+        },
+        {
+          "label": "Keyword",
+          "text": "angles=\"uv\""
+        },
+        {
+          "label": "Keyword",
+          "text": "display"
+        },
+        {
+          "label": "Keyword",
+          "text": "u/v values"
+        },
+        {
+          "label": "Keyword",
+          "text": "Cartesian space"
+        }
+      ]
+    },
+    {
+      "number": 27077,
+      "items": [
+        {
+          "label": "Category",
+          "text": "topic: color/colorbar"
+        },
+        {
+          "label": "Category",
+          "text": "New feature"
+        },
+        {
+          "label": "Category",
+          "text": "GUI: Qt"
+        }
+      ]
+    },
+    {
+      "number": 27984,
+      "items": [
+        {
+          "label": "Category",
+          "text": "Bug"
+        },
+        {
+          "label": "Category",
+          "text": "macOS"
+        },
+        {
+          "label": "Category",
+          "text": "CI"
+        },
+        {
+          "label": "Category",
+          "text": "Testing"
+        },
+        {
+          "label": "Category",
+          "text": "Qt"
+        }
+      ]
+    },
+    {
+      "number": 28356,
+      "items": [
+        {
+          "label": "Category",
+          "text": "New feature"
+        }
+      ]
+    },
+    {
+      "number": 28405,
+      "items": [
+        {
+          "label": "Category",
+          "text": "Autoscale"
+        },
+        {
+          "label": "Category",
+          "text": "Bug"
+        },
+        {
+          "label": "Category",
+          "text": "Matplotlib"
+        },
+        {
+          "label": "Category",
+          "text": "Normalization"
+        }
+      ]
+    },
+    {
+      "number": 28433,
+      "items": [
+        {
+          "label": "Category",
+          "text": "New feature"
+        }
+      ]
+    },
+    {
+      "number": 28565,
+      "items": [
+        {
+          "label": "Category",
+          "text": "Documentation: tags"
+        },
+        {
+          "label": "Category",
+          "text": "Documentation"
+        }
+      ]
+    },
+    {
+      "number": 29029,
+      "items": [
+        {
+          "label": "Category",
+          "text": "GUI: tk"
+        },
+        {
+          "label": "Category",
+          "text": "GUI: wx"
+        },
+        {
+          "label": "Category",
+          "text": "GUI: gtk"
+        },
+        {
+          "label": "Category",
+          "text": "GUI: Qt"
+        },
+        {
+          "label": "Category",
+          "text": "GUI: webagg"
+        },
+        {
+          "label": "Category",
+          "text": "GUI: nbagg"
+        },
+        {
+          "label": "Category",
+          "text": "GUI: MacOSX"
+        }
+      ]
+    },
+    {
+      "number": 29567,
+      "items": [
+        {
+          "label": "Solution",
+          "text": "Changing the command from 'convert' to 'magick' on the specified line resolves the issue."
+        },
+        {
+          "label": "Workaround",
+          "text": "Implementing a try/except block to handle both 'convert' and 'magick' commands for compatibility with different ImageMagick versions."
+        },
+        {
+          "label": "Category",
+          "text": "Compatibility"
+        },
+        {
+          "label": "Category",
+          "text": "Bug"
+        },
+        {
+          "label": "Category",
+          "text": "Matplotlib"
+        },
+        {
+          "label": "Category",
+          "text": "ImageMagick"
+        },
+        {
+          "label": "Keyword",
+          "text": "block"
+        },
+        {
+          "label": "Keyword",
+          "text": "try/except"
+        },
+        {
+          "label": "Keyword",
+          "text": "convert"
+        },
+        {
+          "label": "Keyword",
+          "text": "versions"
+        },
+        {
+          "label": "Keyword",
+          "text": "magick"
+        },
+        {
+          "label": "Keyword",
+          "text": "ImageMagick"
+        },
+        {
+          "label": "Keyword",
+          "text": "compatibility"
+        },
+        {
+          "label": "Keyword",
+          "text": "command"
+        },
+        {
+          "label": "Keyword",
+          "text": "issue"
+        },
+        {
+          "label": "Keyword",
+          "text": "line"
+        }
+      ]
+    },
+    {
+      "number": 30159,
+      "items": [
+        {
+          "label": "Solution",
+          "text": "A quick fix for more consistency would be to make axs[0].clear() also leave scale and limits unchanged."
+        },
+        {
+          "label": "Category",
+          "text": "Log Scale"
+        },
+        {
+          "label": "Category",
+          "text": "Bug"
+        },
+        {
+          "label": "Category",
+          "text": "Warnings"
+        },
+        {
+          "label": "Category",
+          "text": "Matplotlib"
+        },
+        {
+          "label": "Category",
+          "text": "Axes"
+        },
+        {
+          "label": "Keyword",
+          "text": "consistency"
+        },
+        {
+          "label": "Keyword",
+          "text": "quick fix"
+        },
+        {
+          "label": "Keyword",
+          "text": "scale"
+        },
+        {
+          "label": "Keyword",
+          "text": "limits"
+        },
+        {
+          "label": "Keyword",
+          "text": "axs[0].clear()"
+        }
+      ]
+    },
+    {
+      "number": 30515,
+      "items": [
+        {
+          "label": "Solution",
+          "text": "Develop a hybrid approach where Matplotlib provides a general overlay API at the canvas level, with each backend implementing rendering using the most efficient approach available, such as GUI-native drawing primitives or hardware compositing."
+        },
+        {
+          "label": "Solution",
+          "text": "Introduce a Matplotlib-managed overlay layer that is rendered separately from the main figure image, allowing for backend-independent design and potentially evolving into a more general layered rendering architecture."
+        },
+        {
+          "label": "Solution",
+          "text": "Implement a GUI-native overlay primitive approach where each backend draws overlay primitives directly using the GUI toolkit’s native drawing capabilities, allowing for fast updates and avoiding full figure redraws."
+        },
+        {
+          "label": "Workaround",
+          "text": "Use Matplotlib’s existing blitting mechanism to update a crosshair cursor without triggering a full figure redraw by caching the axes background and redrawing only the crosshair artists during mouse movement using 'restore_region' and 'blit'."
+        },
+        {
+          "label": "Category",
+          "text": "Matplotlib"
+        },
+        {
+          "label": "Category",
+          "text": "Crosshair Tool"
+        },
+        {
+          "label": "Category",
+          "text": "GUI"
+        },
+        {
+          "label": "Category",
+          "text": "Performance"
+        },
+        {
+          "label": "Category",
+          "text": "Rendering"
+        },
+        {
+          "label": "Keyword",
+          "text": "axes background"
+        },
+        {
+          "label": "Keyword",
+          "text": "blit"
+        },
+        {
+          "label": "Keyword",
+          "text": "blitting mechanism"
+        },
+        {
+          "label": "Keyword",
+          "text": "crosshair cursor"
+        },
+        {
+          "label": "Keyword",
+          "text": "caching"
+        },
+        {
+          "label": "Keyword",
+          "text": "restore_region"
+        },
+        {
+          "label": "Keyword",
+          "text": "full figure redraw"
+        },
+        {
+          "label": "Keyword",
+          "text": "backend"
+        },
+        {
+          "label": "Keyword",
+          "text": "rendering"
+        },
+        {
+          "label": "Keyword",
+          "text": "overlay API"
+        },
+        {
+          "label": "Keyword",
+          "text": "canvas level"
+        },
+        {
+          "label": "Keyword",
+          "text": "hardware compositing"
+        },
+        {
+          "label": "Keyword",
+          "text": "hybrid approach"
+        },
+        {
+          "label": "Keyword",
+          "text": "GUI-native"
+        },
+        {
+          "label": "Keyword",
+          "text": "overlay layer"
+        },
+        {
+          "label": "Keyword",
+          "text": "architecture"
+        },
+        {
+          "label": "Keyword",
+          "text": "Matplotlib-managed"
+        },
+        {
+          "label": "Keyword",
+          "text": "backend-independent"
+        },
+        {
+          "label": "Keyword",
+          "text": "layered rendering"
+        },
+        {
+          "label": "Keyword",
+          "text": "overlay primitives"
+        },
+        {
+          "label": "Keyword",
+          "text": "fast updates"
+        },
+        {
+          "label": "Keyword",
+          "text": "drawing capabilities"
+        }
+      ]
+    },
+    {
+      "number": 30555,
+      "items": [
+        {
+          "label": "Category",
+          "text": "New feature"
+        }
+      ]
+    },
+    {
+      "number": 31120,
+      "items": [
+        {
+          "label": "Category",
+          "text": "Maintenance"
+        }
+      ]
+    }
+  ]
+}

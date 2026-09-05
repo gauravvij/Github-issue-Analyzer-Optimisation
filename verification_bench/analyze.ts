@@ -14,7 +14,8 @@
  *
  * Jobs are matched by name: `<arm>__<split>`, e.g. `A-baseline__skl-dev`.
  *
- *   bun verification_bench/analyze.ts
+ *   bun verification_bench/analyze.ts --splits sympy2-dev,skl-dev,mpl-dev,req-dev
+ *   bun verification_bench/analyze.ts --splits astropy-holdout
  *   bun verification_bench/analyze.ts --arms A-baseline,D-champion-enum
  *   bun verification_bench/analyze.ts --regrade bench/jobs/repro-champion
  *
@@ -134,13 +135,14 @@ const readTasks = (root: string, split: string): Map<string, TaskV2> => {
 /** Majority of attempts. A single lucky attempt is not a solved question. */
 const solvedBy = (passRate: number) => passRate >= 2 / 3 - 1e-9;
 
-function loadRows(armFilter?: string[]): { rows: Row[]; reports: Report[] } {
+function loadRows(armFilter?: string[], splitFilter?: string[]): { rows: Row[]; reports: Report[] } {
   const rows: Row[] = [];
   const reports: Report[] = [];
   for (const dir of readdirSync(JOBS).sort()) {
     if (!dir.includes('__')) continue;
     const [arm, split] = [dir.slice(0, dir.indexOf('__')), dir.slice(dir.indexOf('__') + 2)];
     if (armFilter && !armFilter.includes(arm)) continue;
+    if (splitFilter && !splitFilter.includes(split)) continue;
     const p = join(JOBS, dir, 'report.json');
     if (!existsSync(p)) continue;
     const r = JSON.parse(readFileSync(p, 'utf-8')) as Report;
@@ -226,8 +228,8 @@ function regrade(dirs: string[]) {
 // Main report
 // ---------------------------------------------------------------------------
 
-function report(armFilter?: string[]) {
-  const { rows, reports } = loadRows(armFilter);
+function report(armFilter?: string[], splitFilter?: string[]) {
+  const { rows, reports } = loadRows(armFilter, splitFilter);
   if (rows.length === 0) {
     console.log('No v2 jobs found. Jobs must be named <arm>__<split>, e.g. A-baseline__skl-dev.');
     return;
@@ -362,6 +364,10 @@ if (import.meta.main) {
     regrade(process.argv.slice(ri + 1).filter((a) => !a.startsWith('--')));
   } else {
     const ai = process.argv.indexOf('--arms');
-    report(ai >= 0 ? process.argv[ai + 1].split(',') : undefined);
+    const si = process.argv.indexOf('--splits');
+    report(
+      ai >= 0 ? process.argv[ai + 1].split(',') : undefined,
+      si >= 0 ? process.argv[si + 1].split(',') : undefined,
+    );
   }
 }
