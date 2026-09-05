@@ -15,6 +15,27 @@ Score a historical one with `git worktree add .worktrees/baseline f5b3184` and p
 
 ---
 
+## Addendum — superseded by the v2 benchmark
+
+This document is left exactly as written. Five of its findings have since been extended or
+corrected by a wider question set — 300 stratified questions across six repositories,
+reported in [`RESULTS-V2.md`](RESULTS-V2.md). Read this document with the following in mind.
+
+| in this document | what the wider measurement found |
+|---|---|
+| §1 `repro-champion` re-ran the champion at **98.10%**, not 100% | One of its three failing attempts was a **grader** defect, not the agent: `"…is 228."` was rejected because the guard excluding decimals also excluded a full stop. That attempt is `dev-002`, a **canary** — so by this harness's own rule the run should have been treated as broken rather than scored. Corrected it reads **99.05% with the canary passing**. The finding still stands: the champion did not reproduce at 100%, and its other deterministic failure was the real `closed_count` enum defect. |
+| §2 the accuracy gain is attributed to the `Issue.state` defect, on the evidence of a probe | Now measured by a four-arm ablation rather than inferred. The baseline with **only** that one line added fixes 16 of the 17 questions the whole champion fixes (+8.00pp, McNemar p = 3.05e-5). Adding the other eight retained changes on top moves one judge-graded question (p = 1.0000). |
+| "Both benchmarks are **single-repo**" and "SWE-bench selection **skews closed**" | v2 spans six repositories and mixes SWE-bench-linked issues with sampled open ones, giving ~40% open / 60% closed per corpus. |
+| "**W2 extraction-side cost remains unmeasurable**… no benchmark question reads extracted nodes" | Extraction is now dumped and graded — grounding precision and patch-module recall against SWE-bench's gold patches, at no API cost. The champion extracts 13.6% more than the baseline at unchanged grounding. |
+| `champion_fixed` was never scored on a sealed holdout | Scored on two: `astropy` and `pylint`, neither opened until the question generator was frozen. |
+
+The wider set also found **two further instances of the same defect this document is
+about**, both still live at `f195ffb`: label names have the identical casing problem, and
+two-hop queries lose their anchor and report a confident zero. Both are fixed at
+`f02bde21fe4ed0fd` and validated on a repository chosen before the fix was written.
+
+---
+
 ## 1. Verdict
 
 **The improvement is real, it reproduces on an independent benchmark, and the numbers

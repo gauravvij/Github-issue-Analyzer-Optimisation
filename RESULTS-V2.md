@@ -285,6 +285,11 @@ question got worse, on any corpus, in any stratum.
 | D — after the campaign + enum line | 94.00% | 96.00% |
 | **E — after the v2 fix** | **100.00%** | **100.00%** |
 
+Every figure in this document counts a question solved when the majority of its three
+attempts are correct. Each run's own `report.json` also records a mean over attempts,
+which on `pylint` reads 84.85% / 95.45% / 99.24% — same ordering, one stray attempt short
+of clean. `analyze.ts` prints both.
+
 The first step was worth +8pp and came from documenting one enum. The second was
 worth +6pp and came from stating two general rules about the same class of
 mistake. Both were only findable by asking questions the old set did not contain.

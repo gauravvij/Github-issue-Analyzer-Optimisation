@@ -203,6 +203,93 @@ A relationship-direction hint could not raise the weaker candidate to the requir
 
 Extraction remains the largest measured ingestion-side model cost, but the benchmark does not grade extracted entities. A cheaper extraction model could damage the graph while leaving the headline score unchanged. That optimization needs an extraction-quality benchmark first.
 
+## A wider benchmark found two more of the same defect
+
+The result above rests on 35 exact-answer questions about one repository, and two of them
+carried the entire gain. That is a real ceiling on what any of it can claim. A single
+question was worth 2.9 points, and a benchmark that cannot see a kind of mistake cannot
+tell you the mistake is there.
+
+So the question set was rebuilt: **300 questions across six repositories**, every question
+labelled with what it tests — state fields, labels, authors, date ranges, aggregates, text
+search, two-hop traversals, questions whose correct answer really is zero, and the same
+question asked three different ways. Corpora mix issues that SWE-bench links to a merged
+pull request with open issues sampled from the same repository, because SWE-bench only
+contains issues that were resolved, and a corpus drawn from it alone is almost entirely
+closed — which would leave the open/closed question untestable on every new repository.
+
+The first thing it settled was which change earned the original result. Four versions were
+scored on the same questions: the baseline, the baseline with only the one-line enum
+documentation added, the campaign champion without that line, and both together.
+
+| | 200 held-out questions |
+|---|---|
+| baseline | 86.00% |
+| baseline + the enum line only | 94.00% |
+| the eight retained changes, without the enum line | 94.50% |
+
+(A question counts as solved when the majority of its three attempts are correct.)
+
+The one line fixes 16 of the 17 questions the entire champion fixes. Adding the other eight
+changes on top of it moves one judge-graded summarisation question — the metric that had
+already been shown to swing 20 points on identical code. On answer accuracy, the rest of
+the campaign is not distinguishable from nothing. Its database work is a separate result
+and stands unchanged.
+
+The second thing it found was less comfortable and more useful. Two kinds of question sat
+unmoved in every version, including the one that shipped.
+
+Asked *how many issues are tagged "bug"* against a graph that stores `Bug`, the analyzer
+searched for the literal lowercase string, matched nothing, and answered **"there are
+currently no issues tagged bug."** There were 19. Documenting the values of `Issue.state`
+had solved that one field; label names are free text and were never described at all.
+
+Asked *which users commented on issues labelled X*, it wrote a path from the label straight
+to the comment — a connection that does not exist, because comments hang off the issue —
+got nothing back, and answered **"there are no users who have commented on issues labeled
+X."** There were six.
+
+Both end exactly where this article opens: an empty result read as an empty world.
+
+![Which kinds of question actually moved](assets/which-questions-moved.svg)
+
+Both are now fixed, by stating two rules the schema block never had: match free text
+case-insensitively, and come back to the issue rather than chaining onward from a label.
+The fix was tested on `pylint-dev/pylint`, chosen **before it was written** because across
+all twelve SWE-bench repositories it is the only one with mixed-case labels
+(`Bug :beetle:`, `Enhancement ✨`) and therefore the only one that can exercise the defect
+at all. Its corpus and questions came from the unchanged generator and were checksummed
+before anything was scored.
+
+On that repository the two questions the fix predicted it would fix both flipped, nothing
+else moved, and the query changed the way the rule says it should: `{name: "enhancement ✨"}`
+returning nothing became `toLower(l.name) = 'enhancement ✨'` returning 18. On the 200
+questions where the defects were found — a regression check, not an independent estimate,
+since the fix was written after seeing them — twelve questions were gained and none lost.
+
+| | 200 held-out questions | sealed `pylint` (n=50) |
+|---|---|---|
+| before the campaign | 86.00% | 88.00% |
+| after the campaign and the enum line | 94.00% | 96.00% |
+| after this fix | **100.00%** | **100.00%** |
+
+A question counts as solved when the majority of its three attempts are correct. Averaging
+the attempts instead — the figure each run's own report records — gives 84.85%, 95.45% and
+99.24% on `pylint`: the same ordering, one stray attempt short of clean.
+
+100% here is a ceiling, not a finish. It means these 300 questions no longer tell the last
+two versions apart — not that the system is correct. The next real result needs harder
+questions, not another run of these.
+
+Widening the benchmark also turned up four ways the grader itself scored a correct answer
+wrong, the plainest being that a number ending a sentence — "the total is 228." — was
+rejected by the guard meant to exclude decimals. Re-grading every answer the project has
+ever stored, 3,500 of them, flips exactly one. It is a canary question, on the run that
+had been reported as the champion failing to reproduce at 98.10%. Corrected, that run
+reads 99.05% and its canary passes. No headline number changes, and the finding it
+supported — that the champion did not reproduce at 100% — still stands, because its other
+failure was the enum defect and that one was real.
+
 ## What this experiment can and cannot claim
 
 The evidence supports these claims:
@@ -218,6 +305,22 @@ The cost figures use a local price table rather than an invoice. The final enum 
 
 The audit also found validation gaps around the final enum holdout, shared harness components, extraction quality, deployment concurrency, batch-failure behavior, and report provenance. Those gaps should be resolved before making broader evidence claims.
 
+**Four of those limits have since been closed**, and the paragraphs above are left as
+written so the change is visible. The corpora are no longer single-repository — there are
+six, and they mix linked issues with sampled open ones so the open/closed question is not
+degenerate. The enum change is no longer development-only: it was scored on two sealed
+repositories, `astropy` and `pylint`, neither opened until the question generator was
+frozen. Attribution is no longer inferred from a probe but measured by a four-arm
+ablation. And extraction quality is graded rather than listed as a gap.
+
+**What still stands.** The cost figures are still a price table, not an invoice. The
+semantic metric is still noisy and no claim rests on it. The v2 runs are one pass of three
+attempts each, so they carry attempt-level variance but not the run-to-run spread the
+original campaign measured. The sealed test of the newest fix rests on two questions — the
+two it predicted, on a corpus frozen beforehand, with no regressions across 250 others, but
+two is two. And the extraction metrics are proxies for grounding and topical relevance;
+nothing here can say an extracted solution is correct.
+
 ## What this approach demonstrates
 
 **A zero count is not always an empty world.** A valid query can use the wrong stored value. Suspicious zeros should trigger schema and query checks.
@@ -229,6 +332,13 @@ The audit also found validation gaps around the final enum holdout, shared harne
 **Unfamiliar data tests the benchmark too.** The separate corpus confirmed the state-casing mechanism and found two harness defects.
 
 **Retained code is not the same as proven outcome improvement.** Some changes have direct counter evidence; others need stronger tests before they support public claims.
+
+**The benchmark is the instrument, and a narrow one reads flat.** Thirty-five questions on
+one repository could not distinguish which of eight changes earned the result, and could
+not see that the same defect was live in two more places. Three hundred questions across
+six repositories answered both in an afternoon for about the price of a lunch. When a
+measurement stops being able to tell versions apart, the next move is harder questions,
+not another run.
 
 ## Reproduce the result
 

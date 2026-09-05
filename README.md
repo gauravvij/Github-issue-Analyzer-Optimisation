@@ -181,11 +181,18 @@ relationship traversals (`(User)-[:AUTHORED_BY]->(Issue)`, backwards, 10 times i
 queries), while `gpt-4.1-mini` failed exact-set retrieval — 8 of its 10 lost tasks were
 "list every issue that…" questions.
 
-One honest gap remains: **extraction cost, the dominant cost in production, cannot be
-optimised safely yet** because nothing grades extraction quality. No benchmark question
-reads the extracted nodes, so a cheaper extraction model would show "cost down, score
-unchanged" whether or not it got worse. That is recorded as an open measurement gap, not
-attempted.
+That left one honest gap: **extraction cost, the dominant cost in production, could not be
+optimised safely** because nothing graded extraction quality. No benchmark question read
+the extracted nodes, so a cheaper extraction model would show "cost down, score unchanged"
+whether or not it got worse.
+
+**That gap is now closed.** `verification_bench/score-extraction.ts` dumps the extracted
+nodes — which no artifact in this repository previously contained, because extraction text
+reaches Neo4j as a Cypher parameter the harness does not record — and scores two proxies
+against SWE-bench's gold patches at no API cost: whether extracted strings actually occur
+in the issue, and whether they name the module the fix turned out to touch. On the v2
+corpora the campaign champion extracts **13.6% more** than the baseline at unchanged
+grounding precision. Details and caveats in [`RESULTS-V2.md`](RESULTS-V2.md) §7.
 
 ---
 
