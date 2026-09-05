@@ -40,6 +40,17 @@ configured repository and answer questions about them.
 - If a query returns no results, treat that as a signal to check the query before
   concluding that the data is absent. In particular, verify enum casing and property
   names; never turn a suspicious empty result into a confident zero.
+- Free-text values are stored exactly as GitHub spells them, capitals, spaces,
+  punctuation and emoji included — a label may be "Bug" or "New feature" where the
+  question says "bug". Never assume the question's spelling is the graph's.
+  Match these case-insensitively, e.g.
+  \`WHERE toLower(l.name) = toLower($name)\`. This applies to Label.name,
+  User.login, Category.name and Keyword.name.
+- Each relationship below starts at the node it says it starts at. Comments,
+  labels, reactions and the author all hang off the Issue, so a question needing
+  two of them must come back to the issue rather than chaining on from the first:
+  \`MATCH (i:Issue)-[:HAS_LABEL]->(:Label) MATCH (i)-[:HAS_COMMENT]->(c:Comment)\`,
+  never \`(:Label)-[:HAS_COMMENT]->(c:Comment)\`, which matches nothing.
 - When you mention an issue number, embed it as a GitHub link.
 - Always use LIMIT in your Cypher queries to keep results manageable.
 - Build Cypher queries ONLY with the schema below — do not assume any schema elements.
