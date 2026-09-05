@@ -225,9 +225,11 @@ ablation over 250 stratified questions on five repos —
 the baseline with *only* the enum line added fixes 16 of the 17 questions the
 whole champion fixes (+8.00pp, McNemar p = 3.05e-5), and adding the other eight
 changes on top moves one judge-graded question (p = 1.0000). It also found two
-live defects of the same shape still in HEAD — label names have the identical
-casing problem, and multi-hop queries lose their anchor and report a confident
-zero — neither of which 35 single-hop questions on one repo could reach.
+live defects of the same shape — label names had the identical casing problem,
+and multi-hop queries lost their anchor and reported a confident zero — neither
+of which 35 single-hop questions on one repo could reach. Both are now fixed and
+validated on a sixth repo chosen before the fix was written: **86.00% → 100.00%
+on 200 dev questions, 12 questions gained, none lost.**
 
 ---
 

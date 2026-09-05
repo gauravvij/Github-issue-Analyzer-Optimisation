@@ -22,7 +22,7 @@ file `derive.ts` generates except through `derive.ts` itself.
 
 ## What it is
 
-**250 questions over five repos**, each question tagged with a stratum:
+**300 questions over six repos**, each question tagged with a stratum:
 
 | split | repo | why this repo |
 |---|---|---|
@@ -31,6 +31,7 @@ file `derive.ts` generates except through `derive.ts` itself.
 | `mpl-dev` | matplotlib/matplotlib | prefixed and emoji labels (`status: confirmed bug`, `🌱 Good first issue`) |
 | `req-dev` | psf/requests | deliberately sparse — the empty/zero-result path |
 | `astropy-holdout` | astropy/astropy | **sealed.** Module labels (`io.fits`, `units`) |
+| `pylint-holdout` | pylint-dev/pylint | **sealed.** The only SWE-bench repo with mixed-case labels (`Bug :beetle:`, `Enhancement ✨`) — the only one that can exercise the label-casing defect |
 
 50 questions per split, filled to fixed per-stratum weights rather than the
 alphabetical template round-robin `bench/` uses:
@@ -76,7 +77,12 @@ A 2×2: `{baseline, champion} × {enum documented, not}`.
 | `A-baseline` | `.worktrees/baseline/github_issue` @ `f5b3184` | `71c696b48a9da953` |
 | `B-baseline-enum` | `.worktrees/baseline-enum/github_issue` @ `f5b3184` + one line | `50bf9c564c4d8a20` |
 | `C-champion` | `.worktrees/champion/github_issue` @ `ee48387` | `9eeb557db3e87c2d` |
-| `D-champion-enum` | `github_issue` (HEAD) | `73acfdc375576226` |
+| `D-champion-enum` | `.worktrees/champion-enum/github_issue` | `73acfdc375576226` |
+| `E-freetext-fix` | `github_issue` (HEAD) | `f02bde21fe4ed0fd` |
+
+`E` adds two rules the schema block never stated — match free text
+case-insensitively, and re-anchor on the issue rather than chaining on from a
+label — closing the two defects section "Four defects…" below is about finding.
 
 B and D differ from A and C **only** in `agent/config.ts`, which the ingestion
 path never imports — so each is scored `--stage qa --keep-graph` on the graph its
@@ -177,6 +183,8 @@ bun verification_bench/scripts/build-tasks-v2.ts            # all splits
 # --- scored runs ------------------------------------------------------------
 bash verification_bench/run-v2-matrix.sh                    # the whole 2x2
 SPLITS="astropy-holdout" bash verification_bench/run-v2-matrix.sh   # sealed holdout
+bash verification_bench/run-v2-sealed.sh                   # A/D/E on sealed pylint
+bash verification_bench/run-v2-regression.sh               # E vs D across the dev set
 
 # --- reading results --------------------------------------------------------
 bun verification_bench/analyze.ts

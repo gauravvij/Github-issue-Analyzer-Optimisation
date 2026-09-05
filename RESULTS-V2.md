@@ -1,9 +1,15 @@
 # Results — benchmark v2
 
-Five repos, 250 stratified questions, four arms, 20 scored runs, **$27.11**.
+Six repos, 300 stratified questions, five arms, 27 scored runs, **$37.10**.
 Harness and method: [`verification_bench/BENCH-V2.md`](verification_bench/BENCH-V2.md).
 Reproduce any number below from `verification_bench/jobs/<arm>__<split>/report.json`
 with `bun verification_bench/analyze.ts`.
+
+**In one line:** widening the benchmark from 35 questions on one repo to 300 on
+six settled which change earned the original result, surfaced two more defects
+of the same kind that were still live, and those are now fixed and validated on
+a repo the fix had never seen — **86.00% → 100.00% on 200 held-out dev questions,
+zero regressions.**
 
 ---
 
@@ -202,10 +208,98 @@ B and D reuse their sibling's graph (`--stage qa --keep-graph`), so the matrix
 pays 10 ingests rather than 20; `analyze.ts` checks `graphProvenance.sutHash`
 per run rather than trusting the job name.
 
+## 9. The two defects it found are fixed
+
+Sections 3 named two failures alive in every arm. Both are now closed by one
+prompt change ([`377b81a`](.)) stating two rules the schema block never did:
+match free text case-insensitively, and re-anchor on the issue rather than
+chaining onward from a label.
+
+**Arm E** is that tree (`f02bde21fe4ed0fd`). **Arm D** — the tree before it — is
+preserved at `.worktrees/champion-enum` so the change has something to be
+measured against.
+
+### Tested on a repo it had never seen
+
+`pylint-dev/pylint` was chosen **before the fix was written**, on one criterion:
+across all 12 SWE-bench repos it is the only one with mixed-case labels
+(`Bug :beetle:`, `Enhancement ✨`, `Help wanted 🙏`), so it is the only one that
+can exercise the defect at all. Its corpus and 50 questions came from the
+unchanged v2 generator and were frozen in `SPLITS.sha256` before anything was
+scored. The examples in the prompt fix are drawn from the dev corpora, not from
+pylint.
+
+| stratum | A-baseline | D-champion-enum | **E-freetext-fix** |
+|---|---|---|---|
+| `label` (n=5) | 80.00% | 80.00% | **100%** |
+| `multi_hop` (n=4) | 75.00% | 75.00% | **100%** |
+| `enum_state` (n=7) | 71.43% | 100% | 100% |
+| every other stratum | — | 100% | 100% |
+| **overall (n=50)** | **88.00%** | **96.00%** | **100.00%** |
+
+Exactly the two questions the fix targeted flipped, nothing else moved, and the
+Cypher changed the way the rule says it should:
+
+```
+BEFORE (D)  MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: "enhancement ✨"})
+            -> 0 rows -> "There are no issues currently tagged with enhancement ✨."
+AFTER  (E)  MATCH (i:Issue)-[:HAS_LABEL]->(l:Label)
+            WHERE toLower(l.name) = 'enhancement ✨'
+            -> "There are 18 issues tagged with enhancement ✨."
+
+BEFORE (D)  ...(l:Label {name: "False Negative 🦋"})-[:HAS_COMMENT]->(c:Comment)
+            -> 0 rows -> "It seems there are no users who have commented..."
+AFTER  (E)  MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE toLower(l.name) = ...
+            MATCH (i)-[:HAS_COMMENT]->(c:Comment)-[:AUTHORED_BY]->(u:User)
+            -> Pierre-Sassoulas, DanielNoord, dbro...
+```
+
+At n=50 with two discordant pairs, McNemar gives p = 0.5. **The evidence here is
+not the p-value — it is that both questions the fix predicted it would fix
+flipped, on a corpus chosen and frozen beforehand, with nothing else moving.**
+
+### And it costs nothing on the questions already scored
+
+The 200 dev questions are where the two defects were found, so D → E on them is a
+**regression check, not an unbiased effect estimate** — the fix was written after
+seeing these failures. As a regression check it is decisive:
+
+| | A-baseline | D-champion-enum | **E-freetext-fix** |
+|---|---|---|---|
+| `label` (n=20) | 80.00% | 80.00% | **100%** |
+| `multi_hop` (n=16) | 56.25% | 56.25% | **100%** |
+| `author` (n=16) | 87.50% | 93.75% | **100%** |
+| `enum_state` (n=28) | 75.00% | 100% | 100% |
+| `paraphrase` (n=16) | 56.25% | 100% | 100% |
+| all other strata | 100% | 100% | 100% |
+| **overall (n=200)** | **86.00%** | **94.00%** | **100.00%** |
+
+**D → E: +6.00pp [3.00, 9.50], McNemar p = 0.0005, 12 gained, 0 lost.** Not one
+question got worse, on any corpus, in any stratum.
+
+### The arc
+
+| | 200 dev questions | sealed `pylint` (n=50) |
+|---|---|---|
+| A — before the campaign | 86.00% | 88.00% |
+| D — after the campaign + enum line | 94.00% | 96.00% |
+| **E — after the v2 fix** | **100.00%** | **100.00%** |
+
+The first step was worth +8pp and came from documenting one enum. The second was
+worth +6pp and came from stating two general rules about the same class of
+mistake. Both were only findable by asking questions the old set did not contain.
+
 ## What this does not show
 
 - **One pass at three attempts, not three passes.** Attempt-level variance only.
   The old campaign's run-to-run spread would cost about another $21 per pass.
+- **The sealed test of the v2 fix rests on two questions.** They are the two the
+  fix predicted, on a corpus frozen before it was written, with zero regressions
+  across 250 others — but two is two. A second mixed-case repo would strengthen
+  it, and SWE-bench does not contain one.
+- **100% is a ceiling, not a finish.** It means these 300 questions no longer
+  discriminate between D and E, not that the system is correct. The next real
+  result needs harder questions, not another run of these.
 - **The sealed holdout is 50 questions.** Its A → B contrast is p = 0.125. It
   corroborates the dev result's shape; it cannot carry the claim alone.
 - **Accuracy only.** The eight non-enum changes are indistinguishable from
