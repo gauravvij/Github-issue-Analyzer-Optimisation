@@ -14,7 +14,7 @@ This is the largest comparison that was run. It covers 300 questions across six 
 
 | Measure | Baseline | Final | What changed |
 |---|---:|---:|---|
-| Accuracy, 200 development questions (4 repos) | 86.0% | 100.0% | +14 points. 30 questions gained, 0 lost. |
+| Accuracy, 200 development questions (4 repos) | 86.0% | 100.0% | +14 points. 28 questions gained, 0 lost. |
 | Accuracy, 50 sealed pylint questions (never seen during any fix) | 88.0% | 100.0% | +12 points. Repo chosen before the fix was written. |
 | Neo4j queries per ingestion of 60 issues (mean of 5 repos) | 779 | 281 | 64% fewer. |
 | Neo4j sessions per ingestion | 122 | 4 | 97% fewer. |
@@ -26,7 +26,7 @@ Three things to take from this table before reading further.
 
 The accuracy gain is real, large, and holds on a repository the fix never saw. The database work reduction is real and holds on every repository. Neither of those two improvements caused the other. And two things did not improve: the system is not faster, and it costs more to run. Those are reported here rather than left out.
 
-A question counts as solved when at least two of its three attempts match the oracle answer. The 200-question set excludes the 24 judge-graded "semantic" questions per repo because that metric was shown to move by 20 points on identical code; the numbers above are for questions with an exact computable answer only.
+A question counts as solved when at least two of its three attempts match the oracle answer. Each repository's 50 questions include 6 that are judge-graded; those are excluded from every accuracy figure here because that metric was shown to move by 20 points on identical code. The 200 development questions are the 4 × 50 with the judge-graded ones still counted in the denominator, scored by the repaired grader described in section 3, step 5. The stored raw grader reports the baseline at 85.0% rather than 86.0%, because it rejected the answer "No issues were created in July 2012" as not stating zero; the repaired grader accepts it. `bun verification_bench/analyze.ts` reproduces every figure in this table.
 
 ---
 
@@ -34,9 +34,9 @@ A question counts as solved when at least two of its three attempts match the or
 
 ### Accuracy: three missing lines in a prompt
 
-The entire accuracy gain, all 30 questions, comes from one place: the text that describes the database schema to the language model before it writes a query. That description was incomplete in three ways, and each gap produced the same kind of failure. The model guessed at how data was stored, guessed wrong, got zero rows back, and reported the zero as a fact.
+The entire accuracy gain, all 28 questions, comes from one place: the text that describes the database schema to the language model before it writes a query. That description was incomplete in three ways, and each gap produced the same kind of failure. The model guessed at how data was stored, guessed wrong, got zero rows back, and reported the zero as a fact.
 
-The first gap was the issue state field. The graph stores `OPEN` and `CLOSED`. The prompt did not say so. The model wrote `state = 'open'`, got nothing, and told users there were no open issues. On the first benchmark this was 2 questions out of 35; on the wider one it was 16 of the 30.
+The first gap was the issue state field. The graph stores `OPEN` and `CLOSED`. The prompt did not say so. The model wrote `state = 'open'`, got nothing, and told users there were no open issues. On the first benchmark this was 2 questions out of 35; on the wider one it was 16 of the 28.
 
 The second gap was label names. Repositories store labels like `Bug`, `Enhancement ✨`, `status: confirmed bug`. Asked about "bug" issues, the model wrote `name = 'bug'`, matched nothing, and answered "there are currently no issues tagged bug" when there were 19. This failed in every arm of every run until it was fixed.
 
@@ -63,11 +63,11 @@ This was established by ablation, not inference. Four versions were scored on th
 
 Adding the eight optimization changes on top of the enum line moved one judge-graded question and nothing else (McNemar p = 1.0). The eight changes did not make the system more accurate. Adding the two remaining schema lines then took 94% to 100%.
 
-One check that mattered: the benchmark includes questions whose correct answer really is zero. Those pass at 100% in every version including the baseline. The fix moved wrong zeros to right answers without teaching the model to distrust zeros in general.
+One check that mattered: the benchmark includes questions whose correct answer really is zero. Under the repaired grader those pass at 100% in every version including the baseline. The fix moved wrong zeros to right answers without teaching the model to distrust zeros in general.
 
 ### Database work: batching
 
-The baseline wrote each issue to Neo4j in its own session with its own statements, and read back what it had just written. For 60 issues that produced roughly 780 queries across 122 sessions. The optimized ingestion collects all issues and writes them in a handful of `UNWIND` statements inside one transaction, with uniqueness constraints and two indexes created once up front. That produces about 280 queries across 4 sessions. The saving is 61% to 67% on every repository tested, and 122 sessions to 4 on all of them.
+The baseline wrote each issue to Neo4j in its own session with its own statements, and read back what it had just written. For 60 issues that produced roughly 780 queries across 122 sessions. The optimized ingestion collects all issues and writes them in a handful of `UNWIND` statements inside one transaction, with ten uniqueness constraints and two lookup indexes created once up front. That produces about 280 queries across 4 sessions. The saving is 61% to 67% on every repository tested, and 122 sessions to 4 on all of them.
 
 ![Database work per ingestion](assets/database-work.svg)
 
@@ -77,7 +77,7 @@ This change and the accuracy change are independent. The batching touches ingest
 
 ### Ingestion time: unchanged, because the database was never the bottleneck
 
-Ingestion of 60 issues takes about 140 seconds in both versions. Of that, roughly 3 seconds in the baseline was Neo4j writes, now under 1 second. The remaining time is 60 sequential calls to `gpt-4o` to extract structured information from each issue body. Cutting database work by two thirds removed about 2 seconds from a 140-second job.
+Ingestion of 60 issues takes about 140 seconds in both versions. Of that, the issue-write stage took about 3 seconds in the baseline and takes about half a second now; all Neo4j work together was about 7 seconds of a 203-second baseline trace. The remaining time is 60 calls to `gpt-4o`, one per issue, to extract structured information from each issue body. Cutting database work by two thirds removed about 2 seconds from a 140-second job.
 
 ![Where ingestion time goes](assets/where-ingestion-time-goes.svg)
 
@@ -111,7 +111,7 @@ Before changing anything, a benchmark was built so that changes could be scored.
 
 ### Step 3: the optimization loop
 
-Eight changes were made and kept, each scored against the benchmark before being accepted: batched writes, constraints and indexes, removal of the read-back, parallel GitHub fetching, and several smaller pipeline changes, plus one line added to the prompt as a hint about the state field. One ninth change, filtering comments before extraction, raised cost without improving anything and was reverted.
+Twelve hypotheses were tried, each stating in advance which metric it had to move and which it must not regress. Eight were kept, each scored against the benchmark before acceptance: uniqueness constraints and lookup indexes on the graph; `UNWIND`-batched writes in one managed transaction; scoping the orphan-cleanup query to the current issue instead of the whole graph; body-level extraction of solutions and workarounds with provenance; an opt-in bounded concurrency setting for GitHub fetches (off by default, and off in every benchmark run, so it contributes nothing to the numbers here); removing the read-after-write check by handing data off in memory; feeding Cypher errors back to the agent for a retry; and one line of schema guidance about the state field. One change, filtering bot and noise comments before extraction, raised cost without improving anything and was reverted. Three embedding-related hypotheses were skipped for lack of a resource budget.
 
 The combined result on the development corpus, averaged over three runs: deterministic accuracy from 94.3% to 100%, Neo4j queries from 698 to 255.
 
@@ -141,7 +141,7 @@ It also showed two question types failing in every version, including the shippe
 
 Before writing the fix, pylint was chosen as the sealed test repository because it is the only SWE-bench repository with mixed-case labels, so it is the only one that can exercise the defect. Its corpus and questions were generated by the unchanged generator and checksummed before scoring. The two schema lines were then added and every corpus re-scored.
 
-Development questions: 94% to 100%. Sealed pylint: 96% to 100%. Twelve questions gained, none lost, in any stratum on any repository.
+Development questions: 94% to 100%. Sealed pylint: 96% to 100%. Twelve questions gained, none lost, in any stratum on any repository. Across the whole path from baseline to final, 28 gained and none lost.
 
 ### Where it stands
 
@@ -178,7 +178,7 @@ bun verification_bench/verify-all.ts        # oracles, graders, fingerprints, v1
 bun verification_bench/analyze.ts           # recompute every table above from stored reports
 ```
 
-Scored runs cost money. The full matrix that produced section 1 is about $27 in `gpt-4o` calls and roughly six hours sequential:
+Scored runs cost money. The 27 runs that produced section 1 cost $33.32 in `gpt-4o` calls in total and took about two hours of wall-clock time, run back to back on one machine:
 
 ```
 bash verification_bench/run-v2-matrix.sh    # four versions, four corpora
