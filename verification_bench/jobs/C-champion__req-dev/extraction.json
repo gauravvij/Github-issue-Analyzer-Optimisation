@@ -1,0 +1,3076 @@
+{
+  "split": "req-dev",
+  "job": "C-champion__req-dev",
+  "at": "2026-09-05T10:33:39.402Z",
+  "issuesWithExtraction": 60,
+  "corpusIssues": 60,
+  "extractedStrings": 687,
+  "groundingPrecision": 0.8806404657933042,
+  "patchModuleRecall": 0.05263157894736842,
+  "patchGradeableIssues": 19,
+  "patchLinkedIssues": 30,
+  "ungroundedExamples": [
+    "#649 Category: Contributor Friendly",
+    "#649 Category: Bug",
+    "#649 Keyword: lowercase",
+    "#697 Category: Contributor Friendly",
+    "#697 Keyword: invalid URLs"
+  ],
+  "missedExamples": [
+    "#697 expected one of [models]",
+    "#649 expected one of [structures]",
+    "#1688 expected one of [models]",
+    "#1723 expected one of [sessions]",
+    "#1939 expected one of [adapters, sessions]"
+  ],
+  "extraction": [
+    {
+      "number": 649,
+      "items": [
+        {
+          "label": "Solution",
+          "text": "Modify the __setitem__ method in CaseInsensitiveDict to store keys in lowercase to ensure consistent behavior with differing-case keys."
+        },
+        {
+          "label": "Category",
+          "text": "Contributor Friendly"
+        },
+        {
+          "label": "Category",
+          "text": "Bug"
+        },
+        {
+          "label": "Competitor",
+          "text": "urllib3"
+        },
+        {
+          "label": "Keyword",
+          "text": "__setitem__"
+        },
+        {
+          "label": "Keyword",
+          "text": "consistent behavior"
+        },
+        {
+          "label": "Keyword",
+          "text": "lowercase"
+        },
+        {
+          "label": "Keyword",
+          "text": "CaseInsensitiveDict"
+        },
+        {
+          "label": "Keyword",
+          "text": "keys"
+        }
+      ]
+    },
+    {
+      "number": 697,
+      "items": [
+        {
+          "label": "Solution",
+          "text": "Replace the UnicodeError with requests.exceptions.InvalidURL to address the actual problem of invalid URLs."
+        },
+        {
+          "label": "Category",
+          "text": "Bug"
+        },
+        {
+          "label": "Category",
+          "text": "Contributor Friendly"
+        },
+        {
+          "label": "Keyword",
+          "text": "invalid URLs"
+        },
+        {
+          "label": "Keyword",
+          "text": "requests.exceptions.InvalidURL"
+        },
+        {
+          "label": "Keyword",
+          "text": "UnicodeError"
+        }
+      ]
+    },
+    {
+      "number": 1051,
+      "items": [
+        {
+          "label": "Solution",
+          "text": "Implement conditional addition of the Content-Length header for GET requests to avoid unnecessary headers."
+        },
+        {
+          "label": "Workaround",
+          "text": "Use careful-requests to handle requests that need sensitive headers by monkeypatching requests, although it currently doesn't include Content-Length on GET requests."
+        },
+        {
+          "label": "Category",
+          "text": "Content-Length"
+        },
+        {
+          "label": "Category",
+          "text": "HTTP Headers"
+        },
+        {
+          "label": "Category",
+          "text": "GET Requests"
+        },
+        {
+          "label": "Category",
+          "text": "Requests Library"
+        },
+        {
+          "label": "Competitor",
+          "text": "careful-requests"
+        },
+        {
+          "label": "Keyword",
+          "text": "careful-requests"
+        },
+        {
+          "label": "Keyword",
+          "text": "sensitive headers"
+        },
+        {
+          "label": "Keyword",
+          "text": "monkeypatching"
+        },
+        {
+          "label": "Keyword",
+          "text": "GET requests"
+        },
+        {
+          "label": "Keyword",
+          "text": "Content-Length"
+        },
+        {
+          "label": "Keyword",
+          "text": "conditional addition"
+        }
+      ]
+    },
+    {
+      "number": 1367,
+      "items": [
+        {
+          "label": "Workaround",
+          "text": "Close the connection of the Response object before pickling to avoid issues with the connection pool."
+        },
+        {
+          "label": "Workaround",
+          "text": "Set the raw attribute of the Response object to None before pickling to avoid serialization issues."
+        },
+        {
+          "label": "Category",
+          "text": "serialization"
+        },
+        {
+          "label": "Category",
+          "text": "Python"
+        },
+        {
+          "label": "Category",
+          "text": "requests library"
+        },
+        {
+          "label": "Category",
+          "text": "pickling"
+        },
+        {
+          "label": "Competitor",
+          "text": "Betamax"
+        },
+        {
+          "label": "Keyword",
+          "text": "raw attribute"
+        },
+        {
+          "label": "Keyword",
+          "text": "serialization"
+        },
+        {
+          "label": "Keyword",
+          "text": "pickling"
+        },
+        {
+          "label": "Keyword",
+          "text": "Response object"
+        },
+        {
+          "label": "Keyword",
+          "text": "connection pool"
+        },
+        {
+          "label": "Keyword",
+          "text": "close connection"
+        }
+      ]
+    },
+    {
+      "number": 1572,
+      "items": [
+        {
+          "label": "Solution",
+          "text": "Wrap urllib3's LocationParseError in InvalidURL to prevent it from leaking."
+        },
+        {
+          "label": "Solution",
+          "text": "Rewrap ClosedPoolError to prevent it from leaking through requests."
+        },
+        {
+          "label": "Solution",
+          "text": "Add a new clause to catch TimeoutError in HTTPConnectionPool.urlopen() or HTTPConnection.putrequest()."
+        },
+        {
+          "label": "Category",
+          "text": "Bug"
+        },
+        {
+          "label": "Category",
+          "text": "Requests Library"
+        },
+        {
+          "label": "Category",
+          "text": "urllib3"
+        },
+        {
+          "label": "Category",
+          "text": "Exception Handling"
+        },
+        {
+          "label": "Keyword",
+          "text": "LocationParseError"
+        },
+        {
+          "label": "Keyword",
+          "text": "InvalidURL"
+        },
+        {
+          "label": "Keyword",
+          "text": "wrap"
+        },
+        {
+          "label": "Keyword",
+          "text": "ClosedPoolError"
+        },
+        {
+          "label": "Keyword",
+          "text": "rewrap"
+        },
+        {
+          "label": "Keyword",
+          "text": "requests"
+        },
+        {
+          "label": "Keyword",
+          "text": "HTTPConnection.putrequest()"
+        },
+        {
+          "label": "Keyword",
+          "text": "clause"
+        },
+        {
+          "label": "Keyword",
+          "text": "HTTPConnectionPool.urlopen()"
+        },
+        {
+          "label": "Keyword",
+          "text": "TimeoutError"
+        }
+      ]
+    },
+    {
+      "number": 1655,
+      "items": [
+        {
+          "label": "Solution",
+          "text": "Use a different function, such as merge_hooks or merge_lists, to create a merged list of session and request hooks."
+        },
+        {
+          "label": "Workaround",
+          "text": "Avoid duplication by using set(session_setting).merge(request_setting)."
+        },
+        {
+          "label": "Category",
+          "text": "Bug"
+        },
+        {
+          "label": "Category",
+          "text": "Fixed"
+        },
+        {
+          "label": "Category",
+          "text": "Contributor Friendly"
+        },
+        {
+          "label": "Keyword",
+          "text": "request_setting"
+        },
+        {
+          "label": "Keyword",
+          "text": "merge"
+        },
+        {
+          "label": "Keyword",
+          "text": "set"
+        },
+        {
+          "label": "Keyword",
+          "text": "duplication"
+        },
+        {
+          "label": "Keyword",
+          "text": "session_setting"
+        },
+        {
+          "label": "Keyword",
+          "text": "function"
+        },
+        {
+          "label": "Keyword",
+          "text": "session hooks"
+        },
+        {
+          "label": "Keyword",
+          "text": "merged list"
+        },
+        {
+          "label": "Keyword",
+          "text": "merge_hooks"
+        },
+        {
+          "label": "Keyword",
+          "text": "merge_lists"
+        },
+        {
+          "label": "Keyword",
+          "text": "request hooks"
+        }
+      ]
+    },
+    {
+      "number": 1688,
+      "items": [
+        {
+          "label": "Category",
+          "text": "Python Requests"
+        },
+        {
+          "label": "Category",
+          "text": "HTTP POST"
+        },
+        {
+          "label": "Category",
+          "text": "UnicodeError"
+        }
+      ]
+    },
+    {
+      "number": 1723,
+      "items": [
+        {
+          "label": "Solution",
+          "text": "Use the to_native_string method to handle Unicode method names in requests."
+        },
+        {
+          "label": "Category",
+          "text": "Unicode"
+        },
+        {
+          "label": "Category",
+          "text": "Error Handling"
+        },
+        {
+          "label": "Category",
+          "text": "Requests Library"
+        },
+        {
+          "label": "Category",
+          "text": "Python"
+        },
+        {
+          "label": "Keyword",
+          "text": "to_native_string"
+        },
+        {
+          "label": "Keyword",
+          "text": "method names"
+        },
+        {
+          "label": "Keyword",
+          "text": "Unicode"
+        },
+        {
+          "label": "Keyword",
+          "text": "requests"
+        }
+      ]
+    },
+    {
+      "number": 1737,
+      "items": [
+        {
+          "label": "Solution",
+          "text": "Move the ISO-8859-1 default to Response.text and out of get_encoding_from_headers."
+        },
+        {
+          "label": "Solution",
+          "text": "Remove automatic character set detection (charade) from the library and have response.encoding represent the charset from the Content-Type header."
+        },
+        {
+          "label": "Category",
+          "text": "Charset Handling"
+        },
+        {
+          "label": "Category",
+          "text": "Library Design"
+        },
+        {
+          "label": "Category",
+          "text": "Documentation"
+        },
+        {
+          "label": "Keyword",
+          "text": "get_encoding_from_headers"
+        },
+        {
+          "label": "Keyword",
+          "text": "ISO-8859-1 default"
+        },
+        {
+          "label": "Keyword",
+          "text": "Response.text"
+        },
+        {
+          "label": "Keyword",
+          "text": "response.encoding"
+        },
+        {
+          "label": "Keyword",
+          "text": "automatic character set detection"
+        },
+        {
+          "label": "Keyword",
+          "text": "Content-Type header"
+        }
+      ]
+    },
+    {
+      "number": 1767,
+      "items": [
+        {
+          "label": "Workaround",
+          "text": "Manually extract credentials using urlsplit and pass them to the auth parameter as a tuple to avoid %-encoding issues."
+        },
+        {
+          "label": "Category",
+          "text": "HTTP Authentication"
+        },
+        {
+          "label": "Category",
+          "text": "Bug"
+        },
+        {
+          "label": "Category",
+          "text": "URL Encoding"
+        },
+        {
+          "label": "Keyword",
+          "text": "manually extract"
+        },
+        {
+          "label": "Keyword",
+          "text": "auth parameter"
+        },
+        {
+          "label": "Keyword",
+          "text": "urlsplit"
+        },
+        {
+          "label": "Keyword",
+          "text": "%-encoding"
+        },
+        {
+          "label": "Keyword",
+          "text": "tuple"
+        }
+      ]
+    },
+    {
+      "number": 1887,
+      "items": [
+        {
+          "label": "Category",
+          "text": "Python"
+        },
+        {
+          "label": "Category",
+          "text": "Networking"
+        },
+        {
+          "label": "Category",
+          "text": "HTTPS"
+        },
+        {
+          "label": "Category",
+          "text": "Redirects"
+        },
+        {
+          "label": "Category",
+          "text": "pyOpenSSL"
+        }
+      ]
+    },
+    {
+      "number": 1920,
+      "items": [
+        {
+          "label": "Solution",
+          "text": "A fix will be proposed via a pull request to address the bug in how headers are merged before a request is sent."
+        },
+        {
+          "label": "Workaround",
+          "text": "To prevent sending a session header, delete the header using 'del session.headers['Accept-Encoding']'."
+        },
+        {
+          "label": "Category",
+          "text": "Session Management"
+        },
+        {
+          "label": "Category",
+          "text": "HTTP Headers"
+        },
+        {
+          "label": "Category",
+          "text": "Bug"
+        },
+        {
+          "label": "Keyword",
+          "text": "delete"
+        },
+        {
+          "label": "Keyword",
+          "text": "session"
+        },
+        {
+          "label": "Keyword",
+          "text": "prevent"
+        },
+        {
+          "label": "Keyword",
+          "text": "header"
+        },
+        {
+          "label": "Keyword",
+          "text": "del"
+        },
+        {
+          "label": "Keyword",
+          "text": "request"
+        },
+        {
+          "label": "Keyword",
+          "text": "headers"
+        },
+        {
+          "label": "Keyword",
+          "text": "merge"
+        },
+        {
+          "label": "Keyword",
+          "text": "bug"
+        },
+        {
+          "label": "Keyword",
+          "text": "fix"
+        }
+      ]
+    },
+    {
+      "number": 1939,
+      "items": [
+        {
+          "label": "Solution",
+          "text": "Catch the decoding error in the resolve_redirects function to prevent it from stopping the redirect process."
+        },
+        {
+          "label": "Category",
+          "text": "HTTP Redirects"
+        },
+        {
+          "label": "Category",
+          "text": "Error Handling"
+        },
+        {
+          "label": "Category",
+          "text": "Content Decoding"
+        },
+        {
+          "label": "Competitor",
+          "text": "Chromium"
+        },
+        {
+          "label": "Competitor",
+          "text": "Firefox"
+        },
+        {
+          "label": "Competitor",
+          "text": "curl"
+        },
+        {
+          "label": "Keyword",
+          "text": "redirect process"
+        },
+        {
+          "label": "Keyword",
+          "text": "decoding error"
+        },
+        {
+          "label": "Keyword",
+          "text": "resolve_redirects"
+        }
+      ]
+    },
+    {
+      "number": 2018,
+      "items": [
+        {
+          "label": "Solution",
+          "text": "Fix the bugs where trust_env and the original proxies dict are ignored in SessionRedirectMixin.resolve_redirects, ensuring that the correct proxy settings are used."
+        },
+        {
+          "label": "Workaround",
+          "text": "Overwrite the environment variable with saltstack's env_var to ensure the correct proxy is used."
+        },
+        {
+          "label": "Category",
+          "text": "Bug"
+        },
+        {
+          "label": "Category",
+          "text": "Proxy Precedence"
+        },
+        {
+          "label": "Category",
+          "text": "Environment Variables"
+        },
+        {
+          "label": "Category",
+          "text": "Session Management"
+        },
+        {
+          "label": "Keyword",
+          "text": "saltstack"
+        },
+        {
+          "label": "Keyword",
+          "text": "env_var"
+        },
+        {
+          "label": "Keyword",
+          "text": "proxy"
+        },
+        {
+          "label": "Keyword",
+          "text": "environment variable"
+        },
+        {
+          "label": "Keyword",
+          "text": "proxies"
+        },
+        {
+          "label": "Keyword",
+          "text": "trust_env"
+        },
+        {
+          "label": "Keyword",
+          "text": "resolve_redirects"
+        },
+        {
+          "label": "Keyword",
+          "text": "proxy settings"
+        },
+        {
+          "label": "Keyword",
+          "text": "SessionRedirectMixin"
+        }
+      ]
+    },
+    {
+      "number": 2086,
+      "items": [
+        {
+          "label": "Solution",
+          "text": "Remove the ISO-8859-1 fallback as it is no longer valid, and consider writing a module for appropriate fallback encodings for other text/* content."
+        },
+        {
+          "label": "Solution",
+          "text": "Begin checking HTML content for meta tags to appropriately fall back, though this is controversial and requires careful consideration."
+        },
+        {
+          "label": "Workaround",
+          "text": "Set response.encoding manually to avoid the ISO-8859-1 fallback, as it is optional and can be overridden by the user."
+        },
+        {
+          "label": "Category",
+          "text": "Planned"
+        },
+        {
+          "label": "Category",
+          "text": "Breaking API Change"
+        },
+        {
+          "label": "Category",
+          "text": "Bug"
+        },
+        {
+          "label": "Keyword",
+          "text": "fallback"
+        },
+        {
+          "label": "Keyword",
+          "text": "text/*"
+        },
+        {
+          "label": "Keyword",
+          "text": "encodings"
+        },
+        {
+          "label": "Keyword",
+          "text": "module"
+        },
+        {
+          "label": "Keyword",
+          "text": "ISO-8859-1"
+        },
+        {
+          "label": "Keyword",
+          "text": "meta tags"
+        },
+        {
+          "label": "Keyword",
+          "text": "HTML"
+        },
+        {
+          "label": "Keyword",
+          "text": "controversial"
+        },
+        {
+          "label": "Keyword",
+          "text": "optional"
+        },
+        {
+          "label": "Keyword",
+          "text": "response.encoding"
+        },
+        {
+          "label": "Keyword",
+          "text": "override"
+        }
+      ]
+    },
+    {
+      "number": 2109,
+      "items": [
+        {
+          "label": "Solution",
+          "text": "Create a constant or singleton in requests to allow users to specify when they want to prevent requests from handling settings automatically."
+        },
+        {
+          "label": "Solution",
+          "text": "Split the responsibility of merging settings to ensure per-request settings have priority and allow request preparation to remove Nones, though it may break backwards compatibility."
+        },
+        {
+          "label": "Category",
+          "text": "API Design"
+        },
+        {
+          "label": "Category",
+          "text": "HTTP Headers"
+        },
+        {
+          "label": "Category",
+          "text": "Library Configuration"
+        },
+        {
+          "label": "Keyword",
+          "text": "constant"
+        },
+        {
+          "label": "Keyword",
+          "text": "singleton"
+        },
+        {
+          "label": "Keyword",
+          "text": "prevent requests"
+        },
+        {
+          "label": "Keyword",
+          "text": "autogenerate"
+        },
+        {
+          "label": "Keyword",
+          "text": "request preparation"
+        },
+        {
+          "label": "Keyword",
+          "text": "merging settings"
+        },
+        {
+          "label": "Keyword",
+          "text": "backwards compatibility"
+        },
+        {
+          "label": "Keyword",
+          "text": "per-request settings"
+        }
+      ]
+    },
+    {
+      "number": 2144,
+      "items": [
+        {
+          "label": "Category",
+          "text": "Bug"
+        },
+        {
+          "label": "Category",
+          "text": "Contributor Friendly"
+        }
+      ]
+    },
+    {
+      "number": 2192,
+      "items": [
+        {
+          "label": "Solution",
+          "text": "A provisional fix is ready in pull request #2193."
+        },
+        {
+          "label": "Category",
+          "text": "urllib3"
+        },
+        {
+          "label": "Category",
+          "text": "ProtocolError"
+        },
+        {
+          "label": "Category",
+          "text": "requests"
+        },
+        {
+          "label": "Category",
+          "text": "regression"
+        },
+        {
+          "label": "Keyword",
+          "text": "provisional fix"
+        },
+        {
+          "label": "Keyword",
+          "text": "pull request #2193"
+        }
+      ]
+    },
+    {
+      "number": 2316,
+      "items": [
+        {
+          "label": "Category",
+          "text": "Requests Library"
+        },
+        {
+          "label": "Category",
+          "text": "HTTP"
+        },
+        {
+          "label": "Category",
+          "text": "Python"
+        },
+        {
+          "label": "Category",
+          "text": "String Conversion"
+        }
+      ]
+    },
+    {
+      "number": 2356,
+      "items": [
+        {
+          "label": "Solution",
+          "text": "Update the requote_uri function to attempt to unquote the URL, and if it fails due to invalid percent-escape sequences, use the URL unchanged."
+        },
+        {
+          "label": "Category",
+          "text": "URL Handling"
+        },
+        {
+          "label": "Category",
+          "text": "Requests Library"
+        },
+        {
+          "label": "Category",
+          "text": "HTTP"
+        },
+        {
+          "label": "Keyword",
+          "text": "unquote"
+        },
+        {
+          "label": "Keyword",
+          "text": "URL"
+        },
+        {
+          "label": "Keyword",
+          "text": "percent-escape sequences"
+        },
+        {
+          "label": "Keyword",
+          "text": "requote_uri"
+        }
+      ]
+    },
+    {
+      "number": 2392,
+      "items": [
+        {
+          "label": "Category",
+          "text": "Breaking API Change"
+        },
+        {
+          "label": "Category",
+          "text": "Bug"
+        },
+        {
+          "label": "Category",
+          "text": "Planned"
+        }
+      ]
+    },
+    {
+      "number": 2411,
+      "items": [
+        {
+          "label": "Solution",
+          "text": "Use to_native_str for handling filenames in Requests 2.5.x to maintain compatibility."
+        },
+        {
+          "label": "Workaround",
+          "text": "Encode the filename before opening the file or provide the filename explicitly when using Requests to upload files."
+        },
+        {
+          "label": "Category",
+          "text": "Unicode Handling"
+        },
+        {
+          "label": "Category",
+          "text": "Python"
+        },
+        {
+          "label": "Category",
+          "text": "File Upload"
+        },
+        {
+          "label": "Category",
+          "text": "Requests Library"
+        },
+        {
+          "label": "Keyword",
+          "text": "Requests"
+        },
+        {
+          "label": "Keyword",
+          "text": "filename"
+        },
+        {
+          "label": "Keyword",
+          "text": "upload"
+        },
+        {
+          "label": "Keyword",
+          "text": "encode"
+        },
+        {
+          "label": "Keyword",
+          "text": "to_native_str"
+        },
+        {
+          "label": "Keyword",
+          "text": "compatibility"
+        },
+        {
+          "label": "Keyword",
+          "text": "Requests 2.5.x"
+        }
+      ]
+    },
+    {
+      "number": 2465,
+      "items": [
+        {
+          "label": "Solution",
+          "text": "A fix is implemented in pull request #2533, which resolves the issue by changing the behavior of how import hooks are registered in sys.meta_path."
+        },
+        {
+          "label": "Solution",
+          "text": "A candidate fix is available in pull request #2466."
+        },
+        {
+          "label": "Workaround",
+          "text": "Force install requests version 2.5.1 to avoid the ImportError when compiling with PyInstaller."
+        },
+        {
+          "label": "Workaround",
+          "text": "Add 'from __future__ import absolute_import' to the top of the file to avoid import issues with Python 2."
+        },
+        {
+          "label": "Workaround",
+          "text": "Modify the spec file to include the requests package directory using Tree to ensure it is copied and found during the build process."
+        },
+        {
+          "label": "Category",
+          "text": "ImportError"
+        },
+        {
+          "label": "Category",
+          "text": "requests library"
+        },
+        {
+          "label": "Category",
+          "text": "Python"
+        },
+        {
+          "label": "Category",
+          "text": "PyInstaller"
+        },
+        {
+          "label": "Keyword",
+          "text": "build process"
+        },
+        {
+          "label": "Keyword",
+          "text": "Tree"
+        },
+        {
+          "label": "Keyword",
+          "text": "requests package"
+        },
+        {
+          "label": "Keyword",
+          "text": "spec file"
+        },
+        {
+          "label": "Keyword",
+          "text": "from __future__ import absolute_import"
+        },
+        {
+          "label": "Keyword",
+          "text": "import issues"
+        },
+        {
+          "label": "Keyword",
+          "text": "Python 2"
+        },
+        {
+          "label": "Keyword",
+          "text": "PyInstaller"
+        },
+        {
+          "label": "Keyword",
+          "text": "ImportError"
+        },
+        {
+          "label": "Keyword",
+          "text": "force install"
+        },
+        {
+          "label": "Keyword",
+          "text": "requests version 2.5.1"
+        },
+        {
+          "label": "Keyword",
+          "text": "import hooks"
+        },
+        {
+          "label": "Keyword",
+          "text": "pull request"
+        },
+        {
+          "label": "Keyword",
+          "text": "fix"
+        },
+        {
+          "label": "Keyword",
+          "text": "sys.meta_path"
+        },
+        {
+          "label": "Keyword",
+          "text": "candidate fix"
+        }
+      ]
+    },
+    {
+      "number": 2470,
+      "items": [
+        {
+          "label": "Category",
+          "text": "Travis CI"
+        },
+        {
+          "label": "Category",
+          "text": "Python"
+        },
+        {
+          "label": "Category",
+          "text": "requests library"
+        },
+        {
+          "label": "Category",
+          "text": "regression"
+        }
+      ]
+    },
+    {
+      "number": 2585,
+      "items": [
+        {
+          "label": "Solution",
+          "text": "The fix should involve splitting the URL into components and using that tuple as a key in the self.adapters dictionary, with changes to mount() and get_adapter()."
+        },
+        {
+          "label": "Category",
+          "text": "Session Management"
+        },
+        {
+          "label": "Category",
+          "text": "URL Handling"
+        },
+        {
+          "label": "Category",
+          "text": "Case Sensitivity"
+        },
+        {
+          "label": "Keyword",
+          "text": "components"
+        },
+        {
+          "label": "Keyword",
+          "text": "self.adapters"
+        },
+        {
+          "label": "Keyword",
+          "text": "URL"
+        },
+        {
+          "label": "Keyword",
+          "text": "key"
+        },
+        {
+          "label": "Keyword",
+          "text": "get_adapter()"
+        },
+        {
+          "label": "Keyword",
+          "text": "dictionary"
+        },
+        {
+          "label": "Keyword",
+          "text": "mount()"
+        }
+      ]
+    },
+    {
+      "number": 2613,
+      "items": [
+        {
+          "label": "Solution",
+          "text": "Use the to_native_string function to ensure the request method is in the correct format, such as converting 'PUT' to a native string."
+        },
+        {
+          "label": "Workaround",
+          "text": "Pass bytestrings to requests to avoid the UnicodeDecodeError caused by httplib limitations."
+        },
+        {
+          "label": "Category",
+          "text": "Requests Library"
+        },
+        {
+          "label": "Category",
+          "text": "Unicode"
+        },
+        {
+          "label": "Category",
+          "text": "HTTP"
+        },
+        {
+          "label": "Category",
+          "text": "Python"
+        },
+        {
+          "label": "Keyword",
+          "text": "httplib"
+        },
+        {
+          "label": "Keyword",
+          "text": "UnicodeDecodeError"
+        },
+        {
+          "label": "Keyword",
+          "text": "bytestrings"
+        },
+        {
+          "label": "Keyword",
+          "text": "correct format"
+        },
+        {
+          "label": "Keyword",
+          "text": "request method"
+        },
+        {
+          "label": "Keyword",
+          "text": "to_native_string"
+        }
+      ]
+    },
+    {
+      "number": 2653,
+      "items": [
+        {
+          "label": "Solution",
+          "text": "A fix for the issue is proposed in pull request #2754, which addresses the encoding inconsistency in Python's standard library."
+        },
+        {
+          "label": "Workaround",
+          "text": "Using Python 2 instead of Python 3 resolves the redirect issue as Python 2 handles the bytestring Location header correctly."
+        },
+        {
+          "label": "Category",
+          "text": "Python"
+        },
+        {
+          "label": "Category",
+          "text": "Encoding"
+        },
+        {
+          "label": "Category",
+          "text": "Redirects"
+        },
+        {
+          "label": "Category",
+          "text": "Apache"
+        },
+        {
+          "label": "Keyword",
+          "text": "bytestring"
+        },
+        {
+          "label": "Keyword",
+          "text": "redirect"
+        },
+        {
+          "label": "Keyword",
+          "text": "Location header"
+        },
+        {
+          "label": "Keyword",
+          "text": "issue"
+        },
+        {
+          "label": "Keyword",
+          "text": "Python 2"
+        },
+        {
+          "label": "Keyword",
+          "text": "fix"
+        },
+        {
+          "label": "Keyword",
+          "text": "standard library"
+        },
+        {
+          "label": "Keyword",
+          "text": "inconsistency"
+        },
+        {
+          "label": "Keyword",
+          "text": "Python"
+        },
+        {
+          "label": "Keyword",
+          "text": "encoding"
+        },
+        {
+          "label": "Keyword",
+          "text": "pull request"
+        },
+        {
+          "label": "Keyword",
+          "text": "proposed"
+        }
+      ]
+    },
+    {
+      "number": 2818,
+      "items": [
+        {
+          "label": "Solution",
+          "text": "A fix for the regression is proposed in pull request #2821."
+        },
+        {
+          "label": "Workaround",
+          "text": "Downgrading to requests 2.7.0 resolves the TypeError issue."
+        },
+        {
+          "label": "Workaround",
+          "text": "Removing ndg-httpsclient-0.4.0 resolves the issue with unicode strings in requests 2.8.1."
+        },
+        {
+          "label": "Workaround",
+          "text": "Encoding data manually before sending it in requests avoids the TypeError."
+        },
+        {
+          "label": "Category",
+          "text": "version upgrade"
+        },
+        {
+          "label": "Category",
+          "text": "requests library"
+        },
+        {
+          "label": "Category",
+          "text": "unicode handling"
+        },
+        {
+          "label": "Category",
+          "text": "TypeError"
+        },
+        {
+          "label": "Keyword",
+          "text": "encoding"
+        },
+        {
+          "label": "Keyword",
+          "text": "data"
+        },
+        {
+          "label": "Keyword",
+          "text": "TypeError"
+        },
+        {
+          "label": "Keyword",
+          "text": "unicode strings"
+        },
+        {
+          "label": "Keyword",
+          "text": "ndg-httpsclient-0.4.0"
+        },
+        {
+          "label": "Keyword",
+          "text": "removing"
+        },
+        {
+          "label": "Keyword",
+          "text": "requests 2.7.0"
+        },
+        {
+          "label": "Keyword",
+          "text": "downgrading"
+        },
+        {
+          "label": "Keyword",
+          "text": "pull request"
+        },
+        {
+          "label": "Keyword",
+          "text": "fix"
+        },
+        {
+          "label": "Keyword",
+          "text": "regression"
+        }
+      ]
+    },
+    {
+      "number": 3296,
+      "items": [
+        {
+          "label": "Solution",
+          "text": "A third option is to store the original proxies kwarg value and pass it to Session.send to resolve_redirects."
+        },
+        {
+          "label": "Solution",
+          "text": "Another option is to suggest that the NO_PROXY environment variable overrides the user proxies argument for redirects."
+        },
+        {
+          "label": "Solution",
+          "text": "One option is to hang the original proxies kwarg off the Request object to allow rebuild_proxies to re-calculate the proxies argument."
+        },
+        {
+          "label": "Category",
+          "text": "Redirect"
+        },
+        {
+          "label": "Category",
+          "text": "Proxy"
+        },
+        {
+          "label": "Category",
+          "text": "HTTP"
+        },
+        {
+          "label": "Category",
+          "text": "Bug"
+        },
+        {
+          "label": "Keyword",
+          "text": "original proxies kwarg"
+        },
+        {
+          "label": "Keyword",
+          "text": "resolve_redirects"
+        },
+        {
+          "label": "Keyword",
+          "text": "Session.send"
+        },
+        {
+          "label": "Keyword",
+          "text": "user proxies argument"
+        },
+        {
+          "label": "Keyword",
+          "text": "redirects"
+        },
+        {
+          "label": "Keyword",
+          "text": "NO_PROXY environment variable"
+        },
+        {
+          "label": "Keyword",
+          "text": "proxies argument"
+        },
+        {
+          "label": "Keyword",
+          "text": "rebuild_proxies"
+        },
+        {
+          "label": "Keyword",
+          "text": "Request object"
+        }
+      ]
+    },
+    {
+      "number": 3359,
+      "items": [
+        {
+          "label": "Solution",
+          "text": "A pull request #3362 was added to include the same check used in text() to set the encoding type if there is none, solving the raw bytes issue."
+        },
+        {
+          "label": "Workaround",
+          "text": "For streaming responses, documentation should suggest setting encoding before using iter_content, and if not set, return bytes for users to decode."
+        },
+        {
+          "label": "Category",
+          "text": "Requests Library"
+        },
+        {
+          "label": "Category",
+          "text": "Python"
+        },
+        {
+          "label": "Category",
+          "text": "Unicode Handling"
+        },
+        {
+          "label": "Category",
+          "text": "Bug"
+        },
+        {
+          "label": "Keyword",
+          "text": "setting encoding"
+        },
+        {
+          "label": "Keyword",
+          "text": "return bytes"
+        },
+        {
+          "label": "Keyword",
+          "text": "documentation"
+        },
+        {
+          "label": "Keyword",
+          "text": "iter_content"
+        },
+        {
+          "label": "Keyword",
+          "text": "streaming responses"
+        },
+        {
+          "label": "Keyword",
+          "text": "pull request"
+        },
+        {
+          "label": "Keyword",
+          "text": "raw bytes issue"
+        },
+        {
+          "label": "Keyword",
+          "text": "encoding type"
+        },
+        {
+          "label": "Keyword",
+          "text": "check"
+        }
+      ]
+    },
+    {
+      "number": 3698,
+      "items": [
+        {
+          "label": "Solution",
+          "text": "Set Response.raw to io.BytesIO() or a similar file-like object to avoid the AttributeError when using requests 2.12."
+        },
+        {
+          "label": "Workaround",
+          "text": "Update to requests_mock 1.x to ensure compatibility with new requests releases and avoid issues with custom matchers."
+        },
+        {
+          "label": "Category",
+          "text": "requests_mock"
+        },
+        {
+          "label": "Category",
+          "text": "error handling"
+        },
+        {
+          "label": "Category",
+          "text": "requests"
+        },
+        {
+          "label": "Category",
+          "text": "testing"
+        },
+        {
+          "label": "Category",
+          "text": "Python"
+        },
+        {
+          "label": "Keyword",
+          "text": "compatibility"
+        },
+        {
+          "label": "Keyword",
+          "text": "custom matchers"
+        },
+        {
+          "label": "Keyword",
+          "text": "requests_mock 1.x"
+        },
+        {
+          "label": "Keyword",
+          "text": "AttributeError"
+        },
+        {
+          "label": "Keyword",
+          "text": "io.BytesIO"
+        },
+        {
+          "label": "Keyword",
+          "text": "requests 2.12"
+        },
+        {
+          "label": "Keyword",
+          "text": "Response.raw"
+        }
+      ]
+    },
+    {
+      "number": 3735,
+      "items": [
+        {
+          "label": "Solution",
+          "text": "Consider whether Session objects should have a registry for URL preparation based on scheme, allowing opt-in HTTP-like processing and custom scheme registration."
+        },
+        {
+          "label": "Workaround",
+          "text": "Back out the breakage caused by v2.12.2 to maintain compatibility with docker-py's usage of Requests."
+        },
+        {
+          "label": "Category",
+          "text": "Feature Request"
+        },
+        {
+          "label": "Competitor",
+          "text": "docker-py"
+        },
+        {
+          "label": "Keyword",
+          "text": "breakage"
+        },
+        {
+          "label": "Keyword",
+          "text": "compatibility"
+        },
+        {
+          "label": "Keyword",
+          "text": "Requests"
+        },
+        {
+          "label": "Keyword",
+          "text": "docker-py"
+        },
+        {
+          "label": "Keyword",
+          "text": "back out"
+        },
+        {
+          "label": "Keyword",
+          "text": "Session objects"
+        },
+        {
+          "label": "Keyword",
+          "text": "HTTP-like processing"
+        },
+        {
+          "label": "Keyword",
+          "text": "scheme"
+        },
+        {
+          "label": "Keyword",
+          "text": "custom scheme registration"
+        },
+        {
+          "label": "Keyword",
+          "text": "URL preparation"
+        },
+        {
+          "label": "Keyword",
+          "text": "registry"
+        }
+      ]
+    },
+    {
+      "number": 3929,
+      "items": [
+        {
+          "label": "Solution",
+          "text": "If the user sets an Authorization header themselves, either via the request or on the Session, the library should not look at the netrc file. If they didn't, it should look at the netrc file for basic auth."
+        },
+        {
+          "label": "Workaround",
+          "text": "Set trust_env to False in a requests.Session to prevent the .netrc file from overriding the Authorization header."
+        },
+        {
+          "label": "Workaround",
+          "text": "Disable trust_env in a requests.Session to avoid .netrc overriding the Authorization header, using code: s=requests.Session(); s.trust_env=False; response = s.get(CUSTOMER_LOCATIONS_ENDPOINT, headers=hdr, data=data2, verify=None)."
+        },
+        {
+          "label": "Category",
+          "text": ".netrc File"
+        },
+        {
+          "label": "Category",
+          "text": "Requests Library"
+        },
+        {
+          "label": "Category",
+          "text": "HTTP Headers"
+        },
+        {
+          "label": "Category",
+          "text": "Authentication"
+        },
+        {
+          "label": "Keyword",
+          "text": "requests.Session"
+        },
+        {
+          "label": "Keyword",
+          "text": "Authorization header"
+        },
+        {
+          "label": "Keyword",
+          "text": ".netrc file"
+        },
+        {
+          "label": "Keyword",
+          "text": "trust_env"
+        },
+        {
+          "label": "Keyword",
+          "text": "basic auth"
+        },
+        {
+          "label": "Keyword",
+          "text": "netrc file"
+        }
+      ]
+    },
+    {
+      "number": 4104,
+      "items": [
+        {
+          "label": "Solution",
+          "text": "The issue was resolved in requests version 2.17.3."
+        },
+        {
+          "label": "Category",
+          "text": "Bug"
+        },
+        {
+          "label": "Category",
+          "text": "Requests Library"
+        },
+        {
+          "label": "Category",
+          "text": "Python"
+        },
+        {
+          "label": "Keyword",
+          "text": "requests"
+        },
+        {
+          "label": "Keyword",
+          "text": "version"
+        },
+        {
+          "label": "Keyword",
+          "text": "resolved"
+        },
+        {
+          "label": "Keyword",
+          "text": "2.17.3"
+        }
+      ]
+    },
+    {
+      "number": 4323,
+      "items": [
+        {
+          "label": "Solution",
+          "text": "Document the risk of using Session in a multi-process environment and suggest handling it at the application scope by creating sessions after forking or wrapping them in a data structure that understands the forking paradigm."
+        },
+        {
+          "label": "Workaround",
+          "text": "Uncommenting the line 's.mount(\"http://\", requests.adapters.HTTPAdapter())' in the provided code can fix the issue of mixed-up responses in a multi-process environment."
+        },
+        {
+          "label": "Category",
+          "text": "Session Management"
+        },
+        {
+          "label": "Category",
+          "text": "Python"
+        },
+        {
+          "label": "Category",
+          "text": "Celery"
+        },
+        {
+          "label": "Category",
+          "text": "Multi-process Environment"
+        },
+        {
+          "label": "Category",
+          "text": "Concurrency"
+        },
+        {
+          "label": "Keyword",
+          "text": "fix"
+        },
+        {
+          "label": "Keyword",
+          "text": "uncomment"
+        },
+        {
+          "label": "Keyword",
+          "text": "HTTPAdapter"
+        },
+        {
+          "label": "Keyword",
+          "text": "multi-process"
+        },
+        {
+          "label": "Keyword",
+          "text": "mixed-up responses"
+        },
+        {
+          "label": "Keyword",
+          "text": "forking"
+        },
+        {
+          "label": "Keyword",
+          "text": "application scope"
+        },
+        {
+          "label": "Keyword",
+          "text": "document"
+        },
+        {
+          "label": "Keyword",
+          "text": "risk"
+        },
+        {
+          "label": "Keyword",
+          "text": "Session"
+        },
+        {
+          "label": "Keyword",
+          "text": "data structure"
+        }
+      ]
+    },
+    {
+      "number": 4353,
+      "items": [
+        {
+          "label": "Solution",
+          "text": "Use ProxyError to handle cases where the proxy value is invalid, as suggested in the open PR #4356."
+        },
+        {
+          "label": "Solution",
+          "text": "Implement a check for a non-None host value and raise a more understandable exception when the proxy URI is invalid."
+        },
+        {
+          "label": "Workaround",
+          "text": "Catch the AttributeError and raise a ProxyError if the error message matches 'NoneType' object has no attribute 'startswith'."
+        },
+        {
+          "label": "Category",
+          "text": "Proxy Configuration"
+        },
+        {
+          "label": "Category",
+          "text": "Exception Handling"
+        },
+        {
+          "label": "Category",
+          "text": "Error Messages"
+        },
+        {
+          "label": "Keyword",
+          "text": "raise"
+        },
+        {
+          "label": "Keyword",
+          "text": "catch"
+        },
+        {
+          "label": "Keyword",
+          "text": "error message"
+        },
+        {
+          "label": "Keyword",
+          "text": "ProxyError"
+        },
+        {
+          "label": "Keyword",
+          "text": "AttributeError"
+        },
+        {
+          "label": "Keyword",
+          "text": "handle"
+        },
+        {
+          "label": "Keyword",
+          "text": "open PR"
+        },
+        {
+          "label": "Keyword",
+          "text": "invalid"
+        },
+        {
+          "label": "Keyword",
+          "text": "proxy value"
+        },
+        {
+          "label": "Keyword",
+          "text": "understandable exception"
+        },
+        {
+          "label": "Keyword",
+          "text": "proxy URI"
+        },
+        {
+          "label": "Keyword",
+          "text": "non-None host value"
+        },
+        {
+          "label": "Keyword",
+          "text": "check"
+        }
+      ]
+    },
+    {
+      "number": 4486,
+      "items": [
+        {
+          "label": "Solution",
+          "text": "Implement a kwarg to prevent redirects from SSL to non-SSL URLs, although it is unlikely to be added soon due to a feature freeze."
+        },
+        {
+          "label": "Workaround",
+          "text": "Use requests-toolbelt to create a session that doesn't follow redirects from HTTPS to HTTP URLs."
+        },
+        {
+          "label": "Category",
+          "text": "Feature Request"
+        },
+        {
+          "label": "Category",
+          "text": "Breaking API Change"
+        },
+        {
+          "label": "Category",
+          "text": "3.0"
+        },
+        {
+          "label": "Keyword",
+          "text": "HTTPS"
+        },
+        {
+          "label": "Keyword",
+          "text": "redirects"
+        },
+        {
+          "label": "Keyword",
+          "text": "HTTP"
+        },
+        {
+          "label": "Keyword",
+          "text": "session"
+        },
+        {
+          "label": "Keyword",
+          "text": "requests-toolbelt"
+        },
+        {
+          "label": "Keyword",
+          "text": "prevent redirects"
+        },
+        {
+          "label": "Keyword",
+          "text": "kwarg"
+        },
+        {
+          "label": "Keyword",
+          "text": "non-SSL"
+        },
+        {
+          "label": "Keyword",
+          "text": "feature freeze"
+        },
+        {
+          "label": "Keyword",
+          "text": "SSL"
+        }
+      ]
+    },
+    {
+      "number": 4590,
+      "items": [
+        {
+          "label": "Solution",
+          "text": "Raise an issue with the urllib3 project for clearer handling of timeout exceptions during SSL handshakes."
+        },
+        {
+          "label": "Category",
+          "text": "Python Libraries"
+        },
+        {
+          "label": "Category",
+          "text": "Timeout Handling"
+        },
+        {
+          "label": "Category",
+          "text": "SSL/TLS"
+        },
+        {
+          "label": "Keyword",
+          "text": "handshakes"
+        },
+        {
+          "label": "Keyword",
+          "text": "issue"
+        },
+        {
+          "label": "Keyword",
+          "text": "timeout"
+        },
+        {
+          "label": "Keyword",
+          "text": "exceptions"
+        },
+        {
+          "label": "Keyword",
+          "text": "SSL"
+        },
+        {
+          "label": "Keyword",
+          "text": "urllib3"
+        }
+      ]
+    },
+    {
+      "number": 4716,
+      "items": [
+        {
+          "label": "Solution",
+          "text": "Modify rebuild_auth to strip the Authorization header when the scheme changes from HTTPS to HTTP."
+        },
+        {
+          "label": "Category",
+          "text": "Authorization"
+        },
+        {
+          "label": "Category",
+          "text": "Bug"
+        },
+        {
+          "label": "Category",
+          "text": "HTTP/HTTPS"
+        },
+        {
+          "label": "Category",
+          "text": "Security"
+        },
+        {
+          "label": "Keyword",
+          "text": "Authorization header"
+        },
+        {
+          "label": "Keyword",
+          "text": "HTTPS"
+        },
+        {
+          "label": "Keyword",
+          "text": "scheme"
+        },
+        {
+          "label": "Keyword",
+          "text": "HTTP"
+        },
+        {
+          "label": "Keyword",
+          "text": "rebuild_auth"
+        }
+      ]
+    },
+    {
+      "number": 4730,
+      "items": [
+        {
+          "label": "Category",
+          "text": "Python Libraries"
+        },
+        {
+          "label": "Category",
+          "text": "SSL/TLS"
+        },
+        {
+          "label": "Category",
+          "text": "Networking"
+        }
+      ]
+    },
+    {
+      "number": 4965,
+      "items": [
+        {
+          "label": "Solution",
+          "text": "Fix the caching mechanism for response.content to preserve the error state after the first read by caching the error and raising it on subsequent accesses."
+        },
+        {
+          "label": "Category",
+          "text": "Error Handling"
+        },
+        {
+          "label": "Category",
+          "text": "Bug"
+        },
+        {
+          "label": "Category",
+          "text": "HTTP Response Handling"
+        },
+        {
+          "label": "Keyword",
+          "text": "subsequent accesses"
+        },
+        {
+          "label": "Keyword",
+          "text": "error state"
+        },
+        {
+          "label": "Keyword",
+          "text": "caching"
+        },
+        {
+          "label": "Keyword",
+          "text": "response.content"
+        }
+      ]
+    },
+    {
+      "number": 5000,
+      "items": [
+        {
+          "label": "Workaround",
+          "text": "Using HTTPX with the `no_proxy` environment variable set allows bypassing proxies for specific URLs, although it doesn't fully support `no_proxy` keys yet."
+        },
+        {
+          "label": "Category",
+          "text": "Networking"
+        },
+        {
+          "label": "Category",
+          "text": "Python Requests"
+        },
+        {
+          "label": "Category",
+          "text": "Proxy Settings"
+        },
+        {
+          "label": "Competitor",
+          "text": "HTTPX"
+        },
+        {
+          "label": "Keyword",
+          "text": "environment variable"
+        },
+        {
+          "label": "Keyword",
+          "text": "HTTPX"
+        },
+        {
+          "label": "Keyword",
+          "text": "bypassing proxies"
+        },
+        {
+          "label": "Keyword",
+          "text": "no_proxy"
+        }
+      ]
+    },
+    {
+      "number": 5031,
+      "items": [
+        {
+          "label": "Category",
+          "text": "Content-Disposition Header"
+        },
+        {
+          "label": "Category",
+          "text": "Python"
+        },
+        {
+          "label": "Category",
+          "text": "Package Maintenance"
+        }
+      ]
+    },
+    {
+      "number": 5178,
+      "items": [
+        {
+          "label": "Category",
+          "text": "Home Assistant"
+        },
+        {
+          "label": "Category",
+          "text": "Threading"
+        },
+        {
+          "label": "Category",
+          "text": "HTTP Authentication"
+        }
+      ]
+    },
+    {
+      "number": 5185,
+      "items": [
+        {
+          "label": "Category",
+          "text": "Python"
+        },
+        {
+          "label": "Category",
+          "text": "Error Handling"
+        },
+        {
+          "label": "Category",
+          "text": "Requests Library"
+        },
+        {
+          "label": "Category",
+          "text": "Timeout Handling"
+        }
+      ]
+    },
+    {
+      "number": 5255,
+      "items": [
+        {
+          "label": "Solution",
+          "text": "Allow the setting of the cert option on the request object to be propagated up to send."
+        },
+        {
+          "label": "Category",
+          "text": "Authentication"
+        },
+        {
+          "label": "Category",
+          "text": "Request Options"
+        },
+        {
+          "label": "Category",
+          "text": "Client Certificates"
+        },
+        {
+          "label": "Keyword",
+          "text": "cert option"
+        },
+        {
+          "label": "Keyword",
+          "text": "request object"
+        },
+        {
+          "label": "Keyword",
+          "text": "setting"
+        },
+        {
+          "label": "Keyword",
+          "text": "send"
+        },
+        {
+          "label": "Keyword",
+          "text": "propagated"
+        }
+      ]
+    },
+    {
+      "number": 5263,
+      "items": [
+        {
+          "label": "Workaround",
+          "text": "A workaround is to stop using a tuple for timeout, effectively having only a total send request timeout, which allows for more fine-grained control over low bandwidth cases."
+        },
+        {
+          "label": "Workaround",
+          "text": "Enable TCP Keep-Alive on the host to prevent timeouts due to slow server responses by setting socket options before creating the session."
+        },
+        {
+          "label": "Category",
+          "text": "Timeout Handling"
+        },
+        {
+          "label": "Category",
+          "text": "Python Libraries"
+        },
+        {
+          "label": "Category",
+          "text": "Documentation"
+        },
+        {
+          "label": "Competitor",
+          "text": "requests-toolbelt"
+        },
+        {
+          "label": "Keyword",
+          "text": "socket options"
+        },
+        {
+          "label": "Keyword",
+          "text": "TCP Keep-Alive"
+        },
+        {
+          "label": "Keyword",
+          "text": "session"
+        },
+        {
+          "label": "Keyword",
+          "text": "server responses"
+        },
+        {
+          "label": "Keyword",
+          "text": "timeouts"
+        },
+        {
+          "label": "Keyword",
+          "text": "tuple"
+        },
+        {
+          "label": "Keyword",
+          "text": "fine-grained control"
+        },
+        {
+          "label": "Keyword",
+          "text": "low bandwidth"
+        },
+        {
+          "label": "Keyword",
+          "text": "total send request timeout"
+        },
+        {
+          "label": "Keyword",
+          "text": "timeout"
+        }
+      ]
+    },
+    {
+      "number": 5367,
+      "items": [
+        {
+          "label": "Solution",
+          "text": "Change the error handling to raise an InvalidUrl exception instead of a UnicodeError when encountering a URL with an invalid label."
+        },
+        {
+          "label": "Category",
+          "text": "Python Requests"
+        },
+        {
+          "label": "Category",
+          "text": "URL Parsing"
+        },
+        {
+          "label": "Category",
+          "text": "Error Handling"
+        },
+        {
+          "label": "Keyword",
+          "text": "invalid label"
+        },
+        {
+          "label": "Keyword",
+          "text": "URL"
+        },
+        {
+          "label": "Keyword",
+          "text": "error handling"
+        },
+        {
+          "label": "Keyword",
+          "text": "InvalidUrl"
+        },
+        {
+          "label": "Keyword",
+          "text": "UnicodeError"
+        }
+      ]
+    },
+    {
+      "number": 5641,
+      "items": [
+        {
+          "label": "Workaround",
+          "text": "Percent-escape the percent sign in filenames to make encoding reversible, resulting in %22%2522 instead of %22%22."
+        },
+        {
+          "label": "Category",
+          "text": "Requests Library"
+        },
+        {
+          "label": "Category",
+          "text": "Encoding"
+        },
+        {
+          "label": "Category",
+          "text": "File Upload"
+        },
+        {
+          "label": "Category",
+          "text": "HTTP"
+        },
+        {
+          "label": "Competitor",
+          "text": "Firefox"
+        },
+        {
+          "label": "Competitor",
+          "text": "curl"
+        },
+        {
+          "label": "Competitor",
+          "text": "Chrome"
+        },
+        {
+          "label": "Keyword",
+          "text": "percent-escape"
+        },
+        {
+          "label": "Keyword",
+          "text": "reversible"
+        },
+        {
+          "label": "Keyword",
+          "text": "encoding"
+        }
+      ]
+    },
+    {
+      "number": 5671,
+      "items": [
+        {
+          "label": "Solution",
+          "text": "Pyrequest should adopt easy means of deactivating 'User-Agent' headers by utilizing the 'urllib3.util.SKIP_HEADER' function."
+        },
+        {
+          "label": "Workaround",
+          "text": "To exclude the User-Agent header, use 'urllib3.util.SKIP_HEADER' in the headers dictionary when preparing a request with the Requests library."
+        },
+        {
+          "label": "Category",
+          "text": "Urllib3"
+        },
+        {
+          "label": "Category",
+          "text": "HTTP Headers"
+        },
+        {
+          "label": "Category",
+          "text": "Python Libraries"
+        },
+        {
+          "label": "Category",
+          "text": "Requests Library"
+        },
+        {
+          "label": "Keyword",
+          "text": "User-Agent"
+        },
+        {
+          "label": "Keyword",
+          "text": "headers"
+        },
+        {
+          "label": "Keyword",
+          "text": "urllib3.util.SKIP_HEADER"
+        },
+        {
+          "label": "Keyword",
+          "text": "Requests library"
+        },
+        {
+          "label": "Keyword",
+          "text": "deactivating"
+        },
+        {
+          "label": "Keyword",
+          "text": "Pyrequest"
+        }
+      ]
+    },
+    {
+      "number": 5950,
+      "items": [
+        {
+          "label": "Solution",
+          "text": "Modify the _find_no_duplicates method in cookies.py to check if toReturn is not None to handle cookies without values."
+        },
+        {
+          "label": "Category",
+          "text": "Error Handling"
+        },
+        {
+          "label": "Category",
+          "text": "Python"
+        },
+        {
+          "label": "Category",
+          "text": "HTTP"
+        },
+        {
+          "label": "Category",
+          "text": "Cookies"
+        },
+        {
+          "label": "Keyword",
+          "text": "cookies.py"
+        },
+        {
+          "label": "Keyword",
+          "text": "toReturn"
+        },
+        {
+          "label": "Keyword",
+          "text": "_find_no_duplicates"
+        },
+        {
+          "label": "Keyword",
+          "text": "cookies without values"
+        }
+      ]
+    },
+    {
+      "number": 6008,
+      "items": [
+        {
+          "label": "Solution",
+          "text": "Changing calls like some_string.encode('utf-8') to some_string.encode('utf-8', 'surrogatepass') in requests/models.py to handle surrogate characters."
+        },
+        {
+          "label": "Category",
+          "text": "Unicode"
+        },
+        {
+          "label": "Category",
+          "text": "POST data"
+        },
+        {
+          "label": "Category",
+          "text": "Requests library"
+        },
+        {
+          "label": "Category",
+          "text": "Exception handling"
+        },
+        {
+          "label": "Category",
+          "text": "Python"
+        },
+        {
+          "label": "Keyword",
+          "text": "utf-8"
+        },
+        {
+          "label": "Keyword",
+          "text": "encode"
+        },
+        {
+          "label": "Keyword",
+          "text": "surrogatepass"
+        },
+        {
+          "label": "Keyword",
+          "text": "surrogate characters"
+        },
+        {
+          "label": "Keyword",
+          "text": "requests/models.py"
+        }
+      ]
+    },
+    {
+      "number": 6027,
+      "items": [
+        {
+          "label": "Solution",
+          "text": "A fix has been merged into the main branch and will be released in version 2.27.1."
+        },
+        {
+          "label": "Workaround",
+          "text": "Use Requests version 2.26.0 as a temporary solution to avoid the proxy authentication error."
+        },
+        {
+          "label": "Workaround",
+          "text": "Modify the prepend_scheme_if_needed function to include authentication in the netloc when using proxies."
+        },
+        {
+          "label": "Category",
+          "text": "Bug"
+        },
+        {
+          "label": "Category",
+          "text": "Python"
+        },
+        {
+          "label": "Category",
+          "text": "Requests"
+        },
+        {
+          "label": "Category",
+          "text": "Proxy"
+        },
+        {
+          "label": "Competitor",
+          "text": "QuotaGuard"
+        },
+        {
+          "label": "Keyword",
+          "text": "function"
+        },
+        {
+          "label": "Keyword",
+          "text": "netloc"
+        },
+        {
+          "label": "Keyword",
+          "text": "proxies"
+        },
+        {
+          "label": "Keyword",
+          "text": "authentication"
+        },
+        {
+          "label": "Keyword",
+          "text": "modify"
+        },
+        {
+          "label": "Keyword",
+          "text": "prepend_scheme_if_needed"
+        },
+        {
+          "label": "Keyword",
+          "text": "error"
+        },
+        {
+          "label": "Keyword",
+          "text": "solution"
+        },
+        {
+          "label": "Keyword",
+          "text": "2.26.0"
+        },
+        {
+          "label": "Keyword",
+          "text": "temporary"
+        },
+        {
+          "label": "Keyword",
+          "text": "Requests"
+        },
+        {
+          "label": "Keyword",
+          "text": "version"
+        },
+        {
+          "label": "Keyword",
+          "text": "proxy"
+        },
+        {
+          "label": "Keyword",
+          "text": "release"
+        },
+        {
+          "label": "Keyword",
+          "text": "main"
+        },
+        {
+          "label": "Keyword",
+          "text": "2.27.1"
+        },
+        {
+          "label": "Keyword",
+          "text": "fix"
+        },
+        {
+          "label": "Keyword",
+          "text": "merged"
+        }
+      ]
+    },
+    {
+      "number": 6102,
+      "items": [
+        {
+          "label": "Solution",
+          "text": "Build A1 octets explicitly instead of formatting credentials into a string, using UTF-8 encoding for str credentials."
+        },
+        {
+          "label": "Solution",
+          "text": "Add an encoding keyword argument to _basic_auth_str() to allow UTF-8 encoding for passwords."
+        },
+        {
+          "label": "Solution",
+          "text": "Normalize credentials to str and use UTF-8 encoding for non-latin characters in HTTPDigestAuth, following RFC 7616 / RFC 5987."
+        },
+        {
+          "label": "Workaround",
+          "text": "Encode credentials to UTF-8 bytes before passing them to HTTPDigestAuth."
+        },
+        {
+          "label": "Category",
+          "text": "Authentication"
+        },
+        {
+          "label": "Category",
+          "text": "Bug"
+        },
+        {
+          "label": "Category",
+          "text": "Encoding"
+        },
+        {
+          "label": "Keyword",
+          "text": "encode"
+        },
+        {
+          "label": "Keyword",
+          "text": "HTTPDigestAuth"
+        },
+        {
+          "label": "Keyword",
+          "text": "UTF-8"
+        },
+        {
+          "label": "Keyword",
+          "text": "credentials"
+        },
+        {
+          "label": "Keyword",
+          "text": "formatting"
+        },
+        {
+          "label": "Keyword",
+          "text": "str credentials"
+        },
+        {
+          "label": "Keyword",
+          "text": "A1 octets"
+        },
+        {
+          "label": "Keyword",
+          "text": "passwords"
+        },
+        {
+          "label": "Keyword",
+          "text": "argument"
+        },
+        {
+          "label": "Keyword",
+          "text": "keyword"
+        },
+        {
+          "label": "Keyword",
+          "text": "encoding"
+        },
+        {
+          "label": "Keyword",
+          "text": "RFC 7616"
+        },
+        {
+          "label": "Keyword",
+          "text": "normalize"
+        },
+        {
+          "label": "Keyword",
+          "text": "non-latin"
+        },
+        {
+          "label": "Keyword",
+          "text": "RFC 5987"
+        }
+      ]
+    },
+    {
+      "number": 6190,
+      "items": [
+        {
+          "label": "Solution",
+          "text": "Fix the popitem method in RequestsCookieJar to work correctly with inherited methods."
+        },
+        {
+          "label": "Category",
+          "text": "Python"
+        },
+        {
+          "label": "Category",
+          "text": "Cookies"
+        },
+        {
+          "label": "Category",
+          "text": "Bug"
+        },
+        {
+          "label": "Category",
+          "text": "Requests Library"
+        },
+        {
+          "label": "Keyword",
+          "text": "inherited methods"
+        },
+        {
+          "label": "Keyword",
+          "text": "popitem"
+        },
+        {
+          "label": "Keyword",
+          "text": "RequestsCookieJar"
+        }
+      ]
+    },
+    {
+      "number": 6205,
+      "items": [
+        {
+          "label": "Workaround",
+          "text": "Using httpie or urllib3 instead of requests allows the use of a SOCKS proxy with TLS 1.2 successfully."
+        },
+        {
+          "label": "Category",
+          "text": "Networking"
+        },
+        {
+          "label": "Category",
+          "text": "Proxies"
+        },
+        {
+          "label": "Category",
+          "text": "TLS/SSL"
+        },
+        {
+          "label": "Category",
+          "text": "Requests Library"
+        },
+        {
+          "label": "Category",
+          "text": "Python"
+        },
+        {
+          "label": "Keyword",
+          "text": "urllib3"
+        },
+        {
+          "label": "Keyword",
+          "text": "SOCKS proxy"
+        },
+        {
+          "label": "Keyword",
+          "text": "TLS 1.2"
+        },
+        {
+          "label": "Keyword",
+          "text": "httpie"
+        }
+      ]
+    },
+    {
+      "number": 6734,
+      "items": [
+        {
+          "label": "Solution",
+          "text": "Requests should explicitly encode string bodies to UTF-8 to compute the Content-Length correctly."
+        },
+        {
+          "label": "Solution",
+          "text": "Revert the commit that introduced the change in Content-Length calculation to fix the issue."
+        },
+        {
+          "label": "Workaround",
+          "text": "Use urllib3 version 2.0.2 or higher to avoid the hanging issue with requests.put."
+        },
+        {
+          "label": "Category",
+          "text": "Python"
+        },
+        {
+          "label": "Category",
+          "text": "Content-Length Calculation"
+        },
+        {
+          "label": "Category",
+          "text": "Unicode Handling"
+        },
+        {
+          "label": "Category",
+          "text": "HTTP Requests"
+        },
+        {
+          "label": "Keyword",
+          "text": "avoid"
+        },
+        {
+          "label": "Keyword",
+          "text": "hanging"
+        },
+        {
+          "label": "Keyword",
+          "text": "urllib3"
+        },
+        {
+          "label": "Keyword",
+          "text": "version"
+        },
+        {
+          "label": "Keyword",
+          "text": "encode"
+        },
+        {
+          "label": "Keyword",
+          "text": "requests"
+        },
+        {
+          "label": "Keyword",
+          "text": "Content-Length"
+        },
+        {
+          "label": "Keyword",
+          "text": "UTF-8"
+        },
+        {
+          "label": "Keyword",
+          "text": "revert"
+        },
+        {
+          "label": "Keyword",
+          "text": "commit"
+        },
+        {
+          "label": "Keyword",
+          "text": "fix"
+        }
+      ]
+    },
+    {
+      "number": 6992,
+      "items": [
+        {
+          "label": "Solution",
+          "text": "Issue a warning message to inform the developer of their possible error when Content-Type is predefined at the session level."
+        },
+        {
+          "label": "Solution",
+          "text": "Modify the implementation of POST Multiple Multipart-Encoded Files to overwrite the Content-Type header even if it has been defined at the session level."
+        },
+        {
+          "label": "Category",
+          "text": "Multipart-Encoding"
+        },
+        {
+          "label": "Category",
+          "text": "HTTP"
+        },
+        {
+          "label": "Category",
+          "text": "API"
+        },
+        {
+          "label": "Keyword",
+          "text": "Content-Type"
+        },
+        {
+          "label": "Keyword",
+          "text": "session level"
+        },
+        {
+          "label": "Keyword",
+          "text": "warning message"
+        },
+        {
+          "label": "Keyword",
+          "text": "developer"
+        },
+        {
+          "label": "Keyword",
+          "text": "Content-Type header"
+        },
+        {
+          "label": "Keyword",
+          "text": "POST"
+        },
+        {
+          "label": "Keyword",
+          "text": "Multipart-Encoded Files"
+        }
+      ]
+    },
+    {
+      "number": 7399,
+      "items": [
+        {
+          "label": "Solution",
+          "text": "Update the verify parameter docstring in Session.request() to clarify that it defaults to the Session's verify value, which itself defaults to True."
+        },
+        {
+          "label": "Category",
+          "text": "Requests Library"
+        },
+        {
+          "label": "Category",
+          "text": "Documentation"
+        },
+        {
+          "label": "Category",
+          "text": "Python"
+        },
+        {
+          "label": "Category",
+          "text": "TLS Verification"
+        },
+        {
+          "label": "Keyword",
+          "text": "defaults"
+        },
+        {
+          "label": "Keyword",
+          "text": "docstring"
+        },
+        {
+          "label": "Keyword",
+          "text": "Session's verify value"
+        },
+        {
+          "label": "Keyword",
+          "text": "Session.request()"
+        },
+        {
+          "label": "Keyword",
+          "text": "verify parameter"
+        }
+      ]
+    },
+    {
+      "number": 7564,
+      "items": [
+        {
+          "label": "Solution",
+          "text": "Add path existence validation in adapters.py before passing certificate and key file paths to SSLContext.load_cert_chain, raising FileNotFoundError when specified files do not exist."
+        },
+        {
+          "label": "Solution",
+          "text": "Change the exception raised for missing TLS material from OSError to FileNotFoundError, including the use of errno.ENOENT and the original path in the .filename attribute."
+        },
+        {
+          "label": "Category",
+          "text": "Requests Library"
+        },
+        {
+          "label": "Category",
+          "text": "Python"
+        },
+        {
+          "label": "Category",
+          "text": "Exception Handling"
+        },
+        {
+          "label": "Category",
+          "text": "TLS"
+        },
+        {
+          "label": "Keyword",
+          "text": "FileNotFoundError"
+        },
+        {
+          "label": "Keyword",
+          "text": "path existence validation"
+        },
+        {
+          "label": "Keyword",
+          "text": "SSLContext.load_cert_chain"
+        },
+        {
+          "label": "Keyword",
+          "text": "adapters.py"
+        },
+        {
+          "label": "Keyword",
+          "text": "OSError"
+        },
+        {
+          "label": "Keyword",
+          "text": "filename"
+        },
+        {
+          "label": "Keyword",
+          "text": "errno.ENOENT"
+        },
+        {
+          "label": "Keyword",
+          "text": "exception"
+        }
+      ]
+    }
+  ]
+}

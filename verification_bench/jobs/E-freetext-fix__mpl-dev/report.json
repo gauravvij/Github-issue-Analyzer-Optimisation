@@ -1,0 +1,3865 @@
+{
+  "job": "E-freetext-fix__mpl-dev",
+  "split": "mpl-dev",
+  "startedAt": "2026-09-05T12:17:45.251Z",
+  "valid": true,
+  "invalidReason": null,
+  "config": {
+    "split": "mpl-dev",
+    "job": "E-freetext-fix__mpl-dev",
+    "stage": "qa",
+    "attempts": 3,
+    "latencyMs": 120,
+    "qaConcurrency": 6,
+    "keepGraph": true,
+    "noTypecheck": false,
+    "model": "openai/gpt-4o",
+    "judgeModel": "gpt-4o",
+    "corpusIssues": 60,
+    "tasks": 50
+  },
+  "sut": {
+    "hash": "f02bde21fe4ed0fd",
+    "files": 19
+  },
+  "preflight": [
+    {
+      "name": "sut_present",
+      "pass": true,
+      "detail": "/home/azureuser/githubIssue/github_issue"
+    },
+    {
+      "name": "sut_deps_installed",
+      "pass": true,
+      "detail": "node_modules present"
+    },
+    {
+      "name": "corpus_present",
+      "pass": true,
+      "detail": "/home/azureuser/githubIssue/verification_bench/corpus/mpl-dev.json"
+    },
+    {
+      "name": "tasks_present",
+      "pass": true,
+      "detail": "/home/azureuser/githubIssue/verification_bench/tasks/mpl-dev.jsonl"
+    },
+    {
+      "name": "splits_frozen",
+      "pass": true,
+      "detail": "60 issues, 50 tasks, corpus built 2026-09-05T10:16:09.022Z"
+    },
+    {
+      "name": "canaries_present",
+      "pass": true,
+      "detail": "2 canary task(s)"
+    },
+    {
+      "name": "splits_unmodified",
+      "pass": true,
+      "detail": "checksums match"
+    },
+    {
+      "name": "seam_github_api_url",
+      "pass": true,
+      "detail": "github.ts honours GITHUB_API_URL"
+    },
+    {
+      "name": "seam_agent_config",
+      "pass": true,
+      "detail": "agent/config.ts present"
+    },
+    {
+      "name": "openai_key_set",
+      "pass": true,
+      "detail": "set"
+    },
+    {
+      "name": "openai_key_live",
+      "pass": true,
+      "detail": "model=gpt-4o-mini-2024-07-18 usage=9"
+    },
+    {
+      "name": "meter_sees_openai",
+      "pass": true,
+      "detail": "1 request(s) intercepted"
+    },
+    {
+      "name": "meter_reads_usage",
+      "pass": true,
+      "detail": "prompt=8 completion=1 model=gpt-4o-mini-2024-07-18"
+    },
+    {
+      "name": "meter_can_price_models",
+      "pass": true,
+      "detail": "all models priced"
+    },
+    {
+      "name": "docker_running",
+      "pass": true,
+      "detail": "29.1.3"
+    },
+    {
+      "name": "neo4j_image",
+      "pass": true,
+      "detail": "neo4j:5 present"
+    },
+    {
+      "name": "ports_free",
+      "pass": true,
+      "detail": "7690/7475 available"
+    },
+    {
+      "name": "sut_typechecks",
+      "pass": true,
+      "detail": "clean"
+    }
+  ],
+  "graphProvenance": {
+    "sutHash": "9eeb557db3e87c2d",
+    "split": "mpl-dev",
+    "job": "_regraph-champion-mpl-dev",
+    "at": "2026-09-05T12:17:44.936Z"
+  },
+  "integrity": [
+    {
+      "name": "issue_count",
+      "pass": true,
+      "expected": "60",
+      "actual": "60",
+      "info": false
+    },
+    {
+      "name": "comment_count",
+      "pass": true,
+      "expected": "281",
+      "actual": "281",
+      "info": false
+    },
+    {
+      "name": "user_count",
+      "pass": true,
+      "expected": "78",
+      "actual": "78",
+      "info": false
+    },
+    {
+      "name": "label_count",
+      "pass": true,
+      "expected": "39",
+      "actual": "39",
+      "info": false
+    },
+    {
+      "name": "reaction_count",
+      "pass": true,
+      "expected": "59",
+      "actual": "59",
+      "info": false
+    },
+    {
+      "name": "no_duplicate_issue_number",
+      "pass": true,
+      "expected": "0",
+      "actual": "0",
+      "info": false
+    },
+    {
+      "name": "no_duplicate_issue_id",
+      "pass": true,
+      "expected": "0",
+      "actual": "0",
+      "info": false
+    },
+    {
+      "name": "no_duplicate_comment_id",
+      "pass": true,
+      "expected": "0",
+      "actual": "0",
+      "info": false
+    },
+    {
+      "name": "no_duplicate_user_login",
+      "pass": true,
+      "expected": "0",
+      "actual": "0",
+      "info": false
+    },
+    {
+      "name": "no_duplicate_label_name",
+      "pass": true,
+      "expected": "0",
+      "actual": "0",
+      "info": false
+    },
+    {
+      "name": "issue_author_edges",
+      "pass": true,
+      "expected": "60",
+      "actual": "60",
+      "info": false
+    },
+    {
+      "name": "issue_comment_edges",
+      "pass": true,
+      "expected": "281",
+      "actual": "281",
+      "info": false
+    },
+    {
+      "name": "issue_label_edges",
+      "pass": true,
+      "expected": "77",
+      "actual": "77",
+      "info": false
+    },
+    {
+      "name": "no_orphan_comments",
+      "pass": true,
+      "expected": "0",
+      "actual": "0",
+      "info": false
+    },
+    {
+      "name": "issue_numbers_match",
+      "pass": true,
+      "expected": "60 exact numbers",
+      "actual": "60 present"
+    },
+    {
+      "name": "per_issue_comment_counts",
+      "pass": true,
+      "expected": "every issue has its corpus comment count",
+      "actual": "all match"
+    },
+    {
+      "name": "constraints_defined",
+      "pass": true,
+      "expected": "(informational)",
+      "actual": "10",
+      "info": true
+    },
+    {
+      "name": "indexes_defined",
+      "pass": true,
+      "expected": "(informational)",
+      "actual": "12",
+      "info": true
+    },
+    {
+      "name": "solution_nodes",
+      "pass": true,
+      "expected": "(informational)",
+      "actual": "41",
+      "info": true
+    },
+    {
+      "name": "workaround_nodes",
+      "pass": true,
+      "expected": "(informational)",
+      "actual": "28",
+      "info": true
+    },
+    {
+      "name": "category_nodes",
+      "pass": true,
+      "expected": "(informational)",
+      "actual": "99",
+      "info": true
+    },
+    {
+      "name": "competitor_nodes",
+      "pass": true,
+      "expected": "(informational)",
+      "actual": "2",
+      "info": true
+    },
+    {
+      "name": "keyword_nodes",
+      "pass": true,
+      "expected": "(informational)",
+      "actual": "274",
+      "info": true
+    },
+    {
+      "name": "issues_with_category",
+      "pass": true,
+      "expected": "(informational)",
+      "actual": "60",
+      "info": true
+    },
+    {
+      "name": "vector_indexes",
+      "pass": true,
+      "expected": "(informational)",
+      "actual": "0",
+      "info": true
+    },
+    {
+      "name": "nodes_with_embedding",
+      "pass": true,
+      "expected": "(informational)",
+      "actual": "0",
+      "info": true
+    }
+  ],
+  "qa": {
+    "tasks": [
+      {
+        "id": "mpl-dev-001",
+        "template": "total_issues",
+        "kind": "structural",
+        "canary": true,
+        "question": "How many issues are in the knowledge graph in total?",
+        "oracle": "60",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 60",
+            "answer": "There are a total of 60 issues in the knowledge graph.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) RETURN count(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2220,
+              "output": 45
+            },
+            "ms": 2639
+          },
+          {
+            "pass": true,
+            "reason": "found 60",
+            "answer": "There are a total of 60 issues in the knowledge graph.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) RETURN count(i) as totalIssues LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2223,
+              "output": 48
+            },
+            "ms": 2718
+          },
+          {
+            "pass": true,
+            "reason": "found 60",
+            "answer": "There are a total of 60 issues in the knowledge graph.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) RETURN count(i) as totalIssues"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2220,
+              "output": 45
+            },
+            "ms": 3144
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "mpl-dev-002",
+        "template": "total_comments",
+        "kind": "structural",
+        "canary": true,
+        "question": "How many comments are stored across all issues in total?",
+        "oracle": "281",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 281",
+            "answer": "There are a total of **281 comments** stored across all issues.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment) RETURN count(c) AS totalComments"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2229,
+              "output": 55
+            },
+            "ms": 2921
+          },
+          {
+            "pass": true,
+            "reason": "found 281",
+            "answer": "There are a total of 281 comments stored across all issues.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (c:Comment) RETURN count(c) AS totalComments"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2220,
+              "output": 45
+            },
+            "ms": 8151
+          },
+          {
+            "pass": true,
+            "reason": "found 281",
+            "answer": "There are a total of 281 comments stored across all issues.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (c:Comment) RETURN count(c) AS totalComments"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2220,
+              "output": 45
+            },
+            "ms": 3342
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "mpl-dev-003",
+        "template": "open_count",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many issues are currently open?",
+        "oracle": "24",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 24",
+            "answer": "There are currently 24 open issues.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.state = 'OPEN' RETURN count(i) as openIssuesCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2221,
+              "output": 48
+            },
+            "ms": 2390
+          },
+          {
+            "pass": true,
+            "reason": "found 24",
+            "answer": "There are currently 24 open issues.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.state = 'OPEN' RETURN count(i) AS openIssueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2221,
+              "output": 48
+            },
+            "ms": 7865
+          },
+          {
+            "pass": true,
+            "reason": "found 24",
+            "answer": "There are currently 24 open issues.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.state = 'OPEN' RETURN COUNT(i) AS openIssuesCount LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2224,
+              "output": 51
+            },
+            "ms": 2172
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "mpl-dev-004",
+        "template": "closed_count",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many issues are closed?",
+        "oracle": "36",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 36",
+            "answer": "There are 36 closed issues.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.state = 'CLOSED' RETURN count(i) AS closedIssues"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2218,
+              "output": 47
+            },
+            "ms": 2464
+          },
+          {
+            "pass": true,
+            "reason": "found 36",
+            "answer": "There are 36 closed issues.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.state = 'CLOSED' RETURN count(i) AS closedIssues"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2218,
+              "output": 47
+            },
+            "ms": 2677
+          },
+          {
+            "pass": true,
+            "reason": "found 36",
+            "answer": "There are 36 closed issues.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.state = 'CLOSED' RETURN count(i) AS closedIssues"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2218,
+              "output": 47
+            },
+            "ms": 2119
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "mpl-dev-005",
+        "template": "state_of_issue",
+        "kind": "retrieval",
+        "canary": false,
+        "question": "Is issue #4067 open or closed?",
+        "oracle": "CLOSED",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "Issue [#4067](https://github.com/issues/4067) is closed.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 4067}) RETURN i.state LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2222,
+              "output": 55
+            },
+            "ms": 2539
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "Issue [#4067](https://github.com/issues/4067) is closed.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 4067}) RETURN i.state LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2222,
+              "output": 55
+            },
+            "ms": 3150
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "Issue [#4067](https://github.com/your-repo/your-project/issues/4067) is closed.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 4067}) RETURN i.state LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2222,
+              "output": 62
+            },
+            "ms": 2675
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "mpl-dev-006",
+        "template": "open_label_count",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many OPEN issues carry the label \"New feature\"?",
+        "oracle": "10",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 10",
+            "answer": "There are 10 open issues carrying the label \"New feature\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE toLower(l.name) = 'new feature' AND i.state = 'OPEN' RETURN COUNT(i) AS openIssueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2249,
+              "output": 73
+            },
+            "ms": 2728
+          },
+          {
+            "pass": true,
+            "reason": "found 10",
+            "answer": "There are 10 open issues labeled as \"New feature\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE i.state = 'OPEN' AND toLower(l.name) = toLower('New feature') RETURN count(i) as openNewFeatureIssues"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2253,
+              "output": 75
+            },
+            "ms": 4662
+          },
+          {
+            "pass": true,
+            "reason": "found 10",
+            "answer": "There are 10 open issues labeled as \"New feature\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label)\nWHERE i.state = 'OPEN' AND toLower(l.name) = toLower('New feature')\nRETURN count(i) AS openNewFeatureIssues"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2256,
+              "output": 78
+            },
+            "ms": 2487
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "mpl-dev-007",
+        "template": "open_label_count",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many OPEN issues carry the label \"status: confirmed bug\"?",
+        "oracle": "1",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 1",
+            "answer": "There is 1 open issue with the label \"status: confirmed bug\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE i.state = 'OPEN' AND toLower(l.name) = toLower('status: confirmed bug') RETURN COUNT(i) as openConfirmedBugIssues"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2259,
+              "output": 80
+            },
+            "ms": 2498
+          },
+          {
+            "pass": true,
+            "reason": "found 1",
+            "answer": "There is 1 open issue with the label \"status: confirmed bug\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) \nWHERE toLower(l.name) = toLower('status: confirmed bug') AND i.state = 'OPEN' \nRETURN COUNT(i) AS open_issues_count"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2263,
+              "output": 84
+            },
+            "ms": 3121
+          },
+          {
+            "pass": true,
+            "reason": "found 1",
+            "answer": "There is 1 open issue with the label \"status: confirmed bug\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE i.state = 'OPEN' AND toLower(l.name) = toLower('status: confirmed bug') RETURN COUNT(i) AS openConfirmedBugIssues LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2262,
+              "output": 83
+            },
+            "ms": 2451
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "mpl-dev-008",
+        "template": "open_with_label",
+        "kind": "structural",
+        "canary": false,
+        "question": "List the issue numbers of every OPEN issue labelled \"keep\".",
+        "oracle": "#5876, #19081, #19199, #25015",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "cited 5876,19081,19199,25015",
+            "answer": "Here are the issue numbers of OPEN issues labelled \"keep\":\n\n- [#5876](https://github.com/org/repo/issues/5876)\n- [#19081](https://github.com/org/repo/issues/19081)\n- [#19199](https://github.com/org/repo/issues/19199)\n- [#25015](https://github.com/org/repo/issues/25015)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE toLower(l.name) = \"keep\" AND i.state = \"OPEN\" RETURN i.number LIMIT 100"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2266,
+              "output": 141
+            },
+            "ms": 2819
+          },
+          {
+            "pass": true,
+            "reason": "cited 5876,19081,19199,25015",
+            "answer": "Here are the issue numbers of every OPEN issue labeled \"keep\":\n\n- [#5876](https://github.com/your-repo/issues/5876)\n- [#19081](https://github.com/your-repo/issues/19081)\n- [#19199](https://github.com/your-repo/issues/19199)\n- [#25015](https://github.com/your-repo/issues/25015)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE toLower(l.name) = 'keep' AND i.state = 'OPEN' RETURN i.number LIMIT 50"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2266,
+              "output": 146
+            },
+            "ms": 3569
+          },
+          {
+            "pass": true,
+            "reason": "cited 5876,19081,19199,25015",
+            "answer": "Here are the issue numbers of every OPEN issue labelled \"keep\":\n\n- [#5876](https://github.com/org/repo/issues/5876)\n- [#19081](https://github.com/org/repo/issues/19081)\n- [#19199](https://github.com/org/repo/issues/19199)\n- [#25015](https://github.com/org/repo/issues/25015)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) \nWHERE toLower(l.name) = 'keep' AND i.state = 'OPEN' \nRETURN i.number LIMIT 25"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2270,
+              "output": 146
+            },
+            "ms": 2984
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "mpl-dev-009",
+        "template": "open_with_label",
+        "kind": "structural",
+        "canary": false,
+        "question": "List the issue numbers of every OPEN issue labelled \"Maintenance\".",
+        "oracle": "#19081, #24797, #31120",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "cited 19081,24797,31120",
+            "answer": "The issue numbers of open issues labeled \"Maintenance\" are:\n\n- [#19081](https://github.com/user/repo/issues/19081)\n- [#24797](https://github.com/user/repo/issues/24797)\n- [#31120](https://github.com/user/repo/issues/31120)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) \nWHERE toLower(l.name) = toLower('Maintenance') AND i.state = 'OPEN' \nRETURN i.number \nLIMIT 50"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2268,
+              "output": 131
+            },
+            "ms": 2877
+          },
+          {
+            "pass": true,
+            "reason": "cited 19081,24797,31120",
+            "answer": "The open issues labeled \"Maintenance\" are:\n\n- [#19081](https://github.com/your-repo/issues/19081)\n- [#24797](https://github.com/your-repo/issues/24797)\n- [#31120](https://github.com/your-repo/issues/31120)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) \nWHERE toLower(l.name) = 'maintenance' AND i.state = 'OPEN' \nRETURN i.number LIMIT 50"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2264,
+              "output": 127
+            },
+            "ms": 3824
+          },
+          {
+            "pass": true,
+            "reason": "cited 19081,24797,31120",
+            "answer": "The issue numbers of OPEN issues labelled \"Maintenance\" are:\n\n- [#19081](https://github.com/owner/repo/issues/19081)\n- [#24797](https://github.com/owner/repo/issues/24797)\n- [#31120](https://github.com/owner/repo/issues/31120)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) \nWHERE i.state = 'OPEN' AND toLower(l.name) = 'maintenance'\nRETURN i.number \nLIMIT 100"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2265,
+              "output": 131
+            },
+            "ms": 2810
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "mpl-dev-010",
+        "template": "distinct_labels",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many distinct labels exist in the knowledge graph?",
+        "oracle": "39",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 39",
+            "answer": "There are 39 distinct labels in the knowledge graph.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (l:Label) RETURN COUNT(DISTINCT l.name) AS labelCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2222,
+              "output": 47
+            },
+            "ms": 2605
+          },
+          {
+            "pass": true,
+            "reason": "found 39",
+            "answer": "There are 39 distinct labels in the knowledge graph.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (l:Label) RETURN COUNT(DISTINCT l.name) AS distinctLabelCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2224,
+              "output": 48
+            },
+            "ms": 2759
+          },
+          {
+            "pass": true,
+            "reason": "found 39",
+            "answer": "There are 39 distinct labels in the knowledge graph.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (l:Label) RETURN count(DISTINCT l.name) as labelCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2222,
+              "output": 47
+            },
+            "ms": 2798
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "mpl-dev-011",
+        "template": "label_count",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many issues carry the label \"New feature\"?",
+        "oracle": "18",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 18",
+            "answer": "There are 18 issues labeled as \"New feature.\"",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE toLower(l.name) = toLower('New feature') RETURN COUNT(i) AS newFeatureIssuesCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2244,
+              "output": 67
+            },
+            "ms": 2550
+          },
+          {
+            "pass": true,
+            "reason": "found 18",
+            "answer": "There are 18 issues with the label \"New feature\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE toLower(l.name) = toLower('New feature') RETURN COUNT(i) AS newFeatureIssueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2244,
+              "output": 68
+            },
+            "ms": 2540
+          },
+          {
+            "pass": true,
+            "reason": "found 18",
+            "answer": "There are 18 issues with the label \"New feature\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE toLower(l.name) = toLower('New feature') RETURN count(i) AS newFeatureCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2242,
+              "output": 67
+            },
+            "ms": 2598
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "mpl-dev-012",
+        "template": "label_natural_casing",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many issues are tagged \"new feature\"?",
+        "oracle": "18 (stored as \"New feature\")",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 18",
+            "answer": "There are 18 issues tagged as \"new feature\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE toLower(l.name) = 'new feature' RETURN count(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2236,
+              "output": 63
+            },
+            "ms": 2327
+          },
+          {
+            "pass": true,
+            "reason": "found 18",
+            "answer": "There are 18 issues tagged as \"new feature\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE toLower(l.name) = 'new feature' RETURN count(i) as newFeatureIssues"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2238,
+              "output": 64
+            },
+            "ms": 2977
+          },
+          {
+            "pass": true,
+            "reason": "found 18",
+            "answer": "There are 18 issues tagged as \"new feature.\"",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE toLower(l.name) = toLower('new feature') RETURN count(i) as newFeatureCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2240,
+              "output": 66
+            },
+            "ms": 3224
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "mpl-dev-013",
+        "template": "label_count",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many issues carry the label \"status: confirmed bug\"?",
+        "oracle": "5",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 5",
+            "answer": "There are 5 issues that carry the label \"status: confirmed bug\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE toLower(l.name) = 'status: confirmed bug' RETURN COUNT(i) as issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2244,
+              "output": 69
+            },
+            "ms": 3266
+          },
+          {
+            "pass": true,
+            "reason": "found 5",
+            "answer": "There are 5 issues labeled as \"status: confirmed bug\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE toLower(l.name) = toLower('status: confirmed bug') RETURN COUNT(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2246,
+              "output": 69
+            },
+            "ms": 2159
+          },
+          {
+            "pass": true,
+            "reason": "found 5",
+            "answer": "There are 5 issues labeled as \"status: confirmed bug\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE toLower(l.name) = toLower('status: confirmed bug') RETURN COUNT(i) AS count LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2247,
+              "output": 71
+            },
+            "ms": 2458
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "mpl-dev-014",
+        "template": "label_members",
+        "kind": "structural",
+        "canary": false,
+        "question": "List the issue numbers of every issue labelled \"status: confirmed bug\".",
+        "oracle": "#19029, #19376, #20721, #25124, #25199",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "cited 19029,19376,20721,25124,25199",
+            "answer": "Here are the issue numbers labelled \"status: confirmed bug\":\n\n- [#25199](https://github.com/org/repo/issues/25199)\n- [#20721](https://github.com/org/repo/issues/20721)\n- [#19029](https://github.com/org/repo/issues/19029)\n- [#19376](https://github.com/org/repo/issues/19376)\n- [#25124](https://github.com/org/repo/issues/25124)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE toLower(l.name) = 'status: confirmed bug' RETURN i.number LIMIT 100"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2272,
+              "output": 155
+            },
+            "ms": 2878
+          },
+          {
+            "pass": true,
+            "reason": "cited 19029,19376,20721,25124,25199",
+            "answer": "Here are the issue numbers of issues labeled \"status: confirmed bug\":\n\n- [#25199](https://github.com/your-repo/issues/25199)\n- [#20721](https://github.com/your-repo/issues/20721)\n- [#19029](https://github.com/your-repo/issues/19029)\n- [#19376](https://github.com/your-repo/issues/19376)\n- [#25124](https://github.com/your-repo/issues/25124)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE toLower(l.name) = toLower('status: confirmed bug') RETURN i.number LIMIT 100"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2274,
+              "output": 164
+            },
+            "ms": 4401
+          },
+          {
+            "pass": true,
+            "reason": "cited 19029,19376,20721,25124,25199",
+            "answer": "Here are the issue numbers labeled \"status: confirmed bug\":\n\n- [#25199](https://github.com/org/repo/issues/25199)\n- [#20721](https://github.com/org/repo/issues/20721)\n- [#19029](https://github.com/org/repo/issues/19029)\n- [#19376](https://github.com/org/repo/issues/19376)\n- [#25124](https://github.com/org/repo/issues/25124)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE toLower(l.name) = toLower('status: confirmed bug') RETURN i.number LIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2274,
+              "output": 157
+            },
+            "ms": 3168
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "mpl-dev-015",
+        "template": "distinct_authors",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many distinct users have authored issues in the knowledge graph?",
+        "oracle": "44",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 44",
+            "answer": "There are 44 distinct users who have authored issues in the knowledge graph.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User) RETURN COUNT(DISTINCT u.login) AS distinctAuthors"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2237,
+              "output": 62
+            },
+            "ms": 2409
+          },
+          {
+            "pass": true,
+            "reason": "found 44",
+            "answer": "There are 44 distinct users who have authored issues in the knowledge graph.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User) RETURN COUNT(DISTINCT u.login) AS distinctUserCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2239,
+              "output": 63
+            },
+            "ms": 2635
+          },
+          {
+            "pass": true,
+            "reason": "found 44",
+            "answer": "There are 44 distinct users who have authored issues in the knowledge graph.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User) RETURN COUNT(DISTINCT u.login) AS distinctUserCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2239,
+              "output": 63
+            },
+            "ms": 2495
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "mpl-dev-016",
+        "template": "author_issues",
+        "kind": "structural",
+        "canary": false,
+        "question": "Which issues were opened by the user \"timhoffm\"? Give their issue numbers.",
+        "oracle": "#12735, #24373, #30515",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "cited 12735,24373,30515",
+            "answer": "The issues opened by the user \"timhoffm\" are:\n\n- [#12735](https://github.com/org/repo/issues/12735)\n- [#24373](https://github.com/org/repo/issues/24373)\n- [#30515](https://github.com/org/repo/issues/30515)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User)\nWHERE toLower(u.login) = toLower('timhoffm')\nRETURN i.number LIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2272,
+              "output": 126
+            },
+            "ms": 3790
+          },
+          {
+            "pass": true,
+            "reason": "cited 12735,24373,30515",
+            "answer": "The issues opened by the user \"timhoffm\" are:\n\n- [#24373](https://github.com/user/repository/issues/24373)\n- [#30515](https://github.com/user/repository/issues/30515)\n- [#12735](https://github.com/user/repository/issues/12735)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User) WHERE u.login = 'timhoffm' RETURN i.number LIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2264,
+              "output": 118
+            },
+            "ms": 2376
+          },
+          {
+            "pass": true,
+            "reason": "cited 12735,24373,30515",
+            "answer": "The issues opened by the user \"timhoffm\" are:\n\n- [#12735](https://github.com/issue/12735)\n- [#24373](https://github.com/issue/24373)\n- [#30515](https://github.com/issue/30515)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User) WHERE toLower(u.login) = 'timhoffm' RETURN i.number LIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2267,
+              "output": 115
+            },
+            "ms": 2812
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "mpl-dev-017",
+        "template": "issue_author",
+        "kind": "retrieval",
+        "canary": false,
+        "question": "Who opened issue #4067?",
+        "oracle": "oliverw1",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "Issue [#4067](https://github.com/issue/4067) was opened by the user **oliverw1**.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 4067})-[:AUTHORED_BY]->(u:User) RETURN u.login LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2232,
+              "output": 77
+            },
+            "ms": 3146
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "Issue [#4067](https://github.com/your-repo/issue/4067) was opened by the user **oliverw1**.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 4067})-[:AUTHORED_BY]->(u:User) RETURN u.login LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2232,
+              "output": 81
+            },
+            "ms": 2894
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "Issue [#4067](https://github.com/your-repo/issues/4067) was opened by the user **oliverw1**.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 4067})-[:AUTHORED_BY]->(u:User) RETURN u.login LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2232,
+              "output": 80
+            },
+            "ms": 2724
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "mpl-dev-018",
+        "template": "commenter_count",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many distinct users have commented on issue #4067?",
+        "oracle": "11",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 11",
+            "answer": "There are 11 distinct users who have commented on issue [#4067](https://github.com/owner/repo/issues/4067).",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 4067})-[:HAS_COMMENT]->(c:Comment)-[:AUTHORED_BY]->(u:User)\nRETURN COUNT(DISTINCT u.login) AS distinctUserCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2256,
+              "output": 94
+            },
+            "ms": 2568
+          },
+          {
+            "pass": true,
+            "reason": "found 11",
+            "answer": "There are 11 distinct users who have commented on issue [#4067](https://github.com/issues/4067).",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 4067})-[:HAS_COMMENT]->(c:Comment)\nRETURN COUNT(DISTINCT c.authorLogin) AS distinctUserCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2246,
+              "output": 80
+            },
+            "ms": 2430
+          },
+          {
+            "pass": true,
+            "reason": "found 11",
+            "answer": "There are 11 distinct users who have commented on issue [#4067](https://github.com/issues/4067).",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 4067})-[:HAS_COMMENT]->(c:Comment)-[:AUTHORED_BY]->(u:User)\nRETURN COUNT(DISTINCT u.login) AS distinctUserCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2256,
+              "output": 90
+            },
+            "ms": 2711
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "mpl-dev-019",
+        "template": "month_count",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many issues were created in 2023-02?",
+        "oracle": "5",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 5",
+            "answer": "In February 2023, a total of 5 issues were created.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.createdAt STARTS WITH \"2023-02\" RETURN COUNT(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2235,
+              "output": 60
+            },
+            "ms": 2299
+          },
+          {
+            "pass": true,
+            "reason": "found 5",
+            "answer": "In February 2023, 5 issues were created.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.createdAt STARTS WITH '2023-02' RETURN COUNT(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2235,
+              "output": 57
+            },
+            "ms": 3062
+          },
+          {
+            "pass": true,
+            "reason": "found 5",
+            "answer": "In February 2023, **5 issues** were created.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.createdAt STARTS WITH '2023-02' RETURN COUNT(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2235,
+              "output": 58
+            },
+            "ms": 2403
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "mpl-dev-020",
+        "template": "created_before",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many issues were created before 2020-12-30?",
+        "oracle": "16",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 16",
+            "answer": "There were 16 issues created before 2020-12-30.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE date(i.createdAt) < date('2020-12-30') RETURN count(i) AS issueCount"
+                }
+              },
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE datetime(i.createdAt) < datetime('2020-12-30T00:00:00Z') RETURN count(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 3519,
+              "output": 116
+            },
+            "ms": 3761
+          },
+          {
+            "pass": true,
+            "reason": "found 16",
+            "answer": "There were 16 issues created before 2020-12-30.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.createdAt < '2020-12-30' RETURN count(i) as count"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2237,
+              "output": 59
+            },
+            "ms": 2084
+          },
+          {
+            "pass": true,
+            "reason": "found 16",
+            "answer": "There were 16 issues created before 2020-12-30.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE date(i.createdAt) < date('2020-12-30') RETURN count(i) AS issueCount"
+                }
+              },
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE datetime(i.createdAt) < datetime('2020-12-30T00:00:00Z') RETURN count(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 3519,
+              "output": 116
+            },
+            "ms": 4236
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "mpl-dev-021",
+        "template": "created_after",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many issues were created after 2020-12-30?",
+        "oracle": "44",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 44",
+            "answer": "A total of 44 issues were created after 2020-12-30.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.createdAt > '2020-12-30' RETURN count(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2239,
+              "output": 62
+            },
+            "ms": 2500
+          },
+          {
+            "pass": true,
+            "reason": "found 44",
+            "answer": "There were 44 issues created after 2020-12-30.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.createdAt > '2020-12-30' RETURN COUNT(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2239,
+              "output": 60
+            },
+            "ms": 2434
+          },
+          {
+            "pass": true,
+            "reason": "found 44",
+            "answer": "There were 44 issues created after 2020-12-30.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.createdAt > '2020-12-30' RETURN count(i) AS issue_count"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2239,
+              "output": 60
+            },
+            "ms": 2246
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "mpl-dev-022",
+        "template": "created_after",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many issues were created after 2022-10-09?",
+        "oracle": "29",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 29",
+            "answer": "There were 29 issues created after 2022-10-09.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE date(i.createdAt) > date('2022-10-09') RETURN count(i) AS issueCount"
+                }
+              },
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE datetime(i.createdAt) > datetime('2022-10-09T00:00:00Z') RETURN count(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 3519,
+              "output": 116
+            },
+            "ms": 3856
+          },
+          {
+            "pass": true,
+            "reason": "found 29",
+            "answer": "There were 29 issues created after 2022-10-09.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE date(i.createdAt) > date('2022-10-09') RETURN count(i) AS issueCount"
+                }
+              },
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE datetime(i.createdAt) > datetime('2022-10-09T00:00:00Z') RETURN count(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 3519,
+              "output": 116
+            },
+            "ms": 4028
+          },
+          {
+            "pass": true,
+            "reason": "found 29",
+            "answer": "There were 29 issues created after 2022-10-09.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.createdAt > '2022-10-09' RETURN COUNT(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2239,
+              "output": 60
+            },
+            "ms": 3084
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "mpl-dev-023",
+        "template": "created_between",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many issues were created between 2020-12-30 and 2023-06-06?",
+        "oracle": "30",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 30",
+            "answer": "There were 30 issues created between 2020-12-30 and 2023-06-06.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE date(i.createdAt) >= date('2020-12-30') AND date(i.createdAt) <= date('2023-06-06') RETURN count(i) AS issueCount"
+                }
+              },
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE datetime(i.createdAt) >= datetime('2020-12-30T00:00:00Z') AND datetime(i.createdAt) <= datetime('2023-06-06T23:59:59Z') RETURN count(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 3598,
+              "output": 163
+            },
+            "ms": 5222
+          },
+          {
+            "pass": true,
+            "reason": "found 30",
+            "answer": "Between 2020-12-30 and 2023-06-06, a total of 30 issues were created.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE date(i.createdAt) >= date('2020-12-30') AND date(i.createdAt) <= date('2023-06-06') RETURN count(i) AS issueCount"
+                }
+              },
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE datetime(i.createdAt) >= datetime('2020-12-30T00:00:00Z') AND datetime(i.createdAt) <= datetime('2023-06-06T23:59:59Z') RETURN count(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 3598,
+              "output": 166
+            },
+            "ms": 4683
+          },
+          {
+            "pass": true,
+            "reason": "found 30",
+            "answer": "Between 2020-12-30 and 2023-06-06, there were **30 issues** created.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)\nWHERE date(i.createdAt) >= date('2020-12-30') AND date(i.createdAt) <= date('2023-06-06')\nRETURN COUNT(i) AS issueCount"
+                }
+              },
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)\nWHERE datetime(i.createdAt) >= datetime('2020-12-30T00:00:00Z') AND datetime(i.createdAt) <= datetime('2023-06-06T23:59:59Z')\nRETURN COUNT(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 3607,
+              "output": 171
+            },
+            "ms": 4545
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "mpl-dev-024",
+        "template": "zero_comment_count",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many issues have no comments at all?",
+        "oracle": "17",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 17",
+            "answer": "There are 17 issues with no comments at all.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE NOT (i)-[:HAS_COMMENT]->(:Comment) RETURN count(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2228,
+              "output": 55
+            },
+            "ms": 2505
+          },
+          {
+            "pass": true,
+            "reason": "found 17",
+            "answer": "There are 17 issues with no comments at all.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE NOT (i)-[:HAS_COMMENT]->(:Comment) RETURN COUNT(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2228,
+              "output": 55
+            },
+            "ms": 3454
+          },
+          {
+            "pass": true,
+            "reason": "found 17",
+            "answer": "There are 17 issues that have no comments at all.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE NOT (i)-[:HAS_COMMENT]->(:Comment) RETURN count(i) AS noCommentIssues"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2230,
+              "output": 57
+            },
+            "ms": 3104
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "mpl-dev-025",
+        "template": "most_reactions",
+        "kind": "structural",
+        "canary": false,
+        "question": "Which issue has received the most reactions? Give its issue number.",
+        "oracle": "#24127 (5 reactions)",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "cited 24127",
+            "answer": "The issue that has received the most reactions is [#24127](https://github.com/issues/24127).",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_REACTION]->(r:Reaction)\nRETURN i.number AS issueNumber, COUNT(r) AS reactionCount\nORDER BY reactionCount DESC\nLIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2257,
+              "output": 82
+            },
+            "ms": 2468
+          },
+          {
+            "pass": true,
+            "reason": "cited 24127",
+            "answer": "The issue with the most reactions is [#24127](https://github.com/org/repo/issues/24127) with 5 reactions.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_REACTION]->(r:Reaction)\nRETURN i.number AS issueNumber, COUNT(r) AS reactionCount\nORDER BY reactionCount DESC\nLIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2257,
+              "output": 88
+            },
+            "ms": 2556
+          },
+          {
+            "pass": true,
+            "reason": "cited 24127",
+            "answer": "The issue that has received the most reactions is [#24127](https://github.com/user/repo/issues/24127).",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_REACTION]->(r:Reaction)\nRETURN i.number AS issueNumber, COUNT(r) AS reactionCount\nORDER BY reactionCount DESC\nLIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2257,
+              "output": 85
+            },
+            "ms": 2888
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "mpl-dev-026",
+        "template": "issues_with_ge_n_comments",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many issues have at least 3 comments?",
+        "oracle": "37",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 37",
+            "answer": "There are 37 issues that have at least 3 comments.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment)\nWITH i, COUNT(c) as commentCount\nWHERE commentCount >= 3\nRETURN COUNT(i) as issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2245,
+              "output": 72
+            },
+            "ms": 2447
+          },
+          {
+            "pass": true,
+            "reason": "found 37",
+            "answer": "There are 37 issues with at least 3 comments.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment)\nWITH i, COUNT(c) AS commentCount\nWHERE commentCount >= 3\nRETURN COUNT(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2245,
+              "output": 71
+            },
+            "ms": 2472
+          },
+          {
+            "pass": true,
+            "reason": "found 37",
+            "answer": "There are 37 issues with at least 3 comments.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment)\nWITH i, COUNT(c) AS commentCount\nWHERE commentCount >= 3\nRETURN COUNT(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2245,
+              "output": 71
+            },
+            "ms": 2461
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "mpl-dev-027",
+        "template": "issue_comment_count",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many comments does issue #4067 have?",
+        "oracle": "15",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 15",
+            "answer": "Issue [#4067](https://github.com/issues/4067) has 15 comments.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 4067})-[:HAS_COMMENT]->(c:Comment) RETURN COUNT(c) AS commentCount LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2237,
+              "output": 71
+            },
+            "ms": 3002
+          },
+          {
+            "pass": true,
+            "reason": "found 15",
+            "answer": "Issue [#4067](https://github.com/org/repo/issues/4067) has 15 comments.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 4067})-[:HAS_COMMENT]->(c:Comment) RETURN count(c) AS comment_count LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2237,
+              "output": 74
+            },
+            "ms": 3049
+          },
+          {
+            "pass": true,
+            "reason": "found 15",
+            "answer": "Issue [#4067](https://github.com/your-repo/issues/4067) has 15 comments.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment) WHERE i.number = 4067 RETURN COUNT(c) as commentCount LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2237,
+              "output": 75
+            },
+            "ms": 2869
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "mpl-dev-028",
+        "template": "issue_comment_count",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many comments does issue #5876 have?",
+        "oracle": "4",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 4",
+            "answer": "Issue [#5876](https://github.com/org/repo/issues/5876) has 4 comments.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 5876})-[:HAS_COMMENT]->(c:Comment) RETURN count(c) as commentCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2234,
+              "output": 71
+            },
+            "ms": 2867
+          },
+          {
+            "pass": true,
+            "reason": "found 4",
+            "answer": "Issue [#5876](https://github.com/owner/repo/issues/5876) has 4 comments.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 5876})-[:HAS_COMMENT]->(c:Comment) RETURN count(c) as commentCount LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2237,
+              "output": 75
+            },
+            "ms": 3676
+          },
+          {
+            "pass": true,
+            "reason": "found 4",
+            "answer": "Issue [#5876](https://github.com/issues/5876) has 4 comments.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment) WHERE i.number = 5876 RETURN COUNT(c) AS commentCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2234,
+              "output": 68
+            },
+            "ms": 3170
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "mpl-dev-029",
+        "template": "issue_title",
+        "kind": "retrieval",
+        "canary": false,
+        "question": "What is the title of issue #4067?",
+        "oracle": "'Poly3DCollection' object has no attribute '_facecolors2d'",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "The title of issue [#4067](https://github.com/your-repo/issues/4067) is \"'Poly3DCollection' object has no attribute '_facecolors2d'\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 4067}) RETURN i.title LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2237,
+              "output": 77
+            },
+            "ms": 2922
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "The title of issue [#4067](https://github.com/issue/4067) is \"'Poly3DCollection' object has no attribute '_facecolors2d'\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 4067}) RETURN i.title LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2237,
+              "output": 74
+            },
+            "ms": 2873
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "The title of issue [#4067](https://github.com/issues/4067) is \"'Poly3DCollection' object has no attribute '_facecolors2d'\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 4067}) RETURN i.title LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2237,
+              "output": 73
+            },
+            "ms": 2448
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "mpl-dev-030",
+        "template": "issue_title",
+        "kind": "retrieval",
+        "canary": false,
+        "question": "What is the title of issue #5876?",
+        "oracle": "Sharing tick spacing across axes",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "The title of issue [#5876](https://github.com/issues/5876) is \"Sharing tick spacing across axes\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 5876}) RETURN i.title LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2227,
+              "output": 63
+            },
+            "ms": 2120
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "The title of issue [#5876](https://github.com/issues/5876) is \"Sharing tick spacing across axes.\"",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 5876}) RETURN i.title LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2227,
+              "output": 63
+            },
+            "ms": 2301
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "The title of issue [#5876](https://github.com/issues/5876) is \"Sharing tick spacing across axes.\"",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 5876}) RETURN i.title LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2227,
+              "output": 63
+            },
+            "ms": 2270
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "mpl-dev-031",
+        "template": "mentions_term",
+        "kind": "retrieval",
+        "canary": false,
+        "question": "Which issues mention \"after\" in their title or body? Give their issue numbers.",
+        "oracle": "#23042, #23298, #24797, #25124, #25168, #26081",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "cited 23042,23298,24797,25124,25168,26081",
+            "answer": "The following issues mention \"after\" in their title or body:\n\n- [#23042](https://github.com/user/repo/issues/23042)\n- [#23298](https://github.com/user/repo/issues/23298)\n- [#24797](https://github.com/user/repo/issues/24797)\n- [#25124](https://github.com/user/repo/issues/25124)\n- [#25168](https://github.com/user/repo/issues/25168)\n- [#26081](https://github.com/user/repo/issues/26081)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)\nWHERE toLower(i.title) CONTAINS 'after' OR toLower(i.bodyText) CONTAINS 'after'\nRETURN i.number AS issueNumber\nLIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2293,
+              "output": 183
+            },
+            "ms": 3791
+          },
+          {
+            "pass": true,
+            "reason": "cited 23042,23298,24797,25124,25168,26081",
+            "answer": "Here are the issue numbers of issues that mention \"after\" in their title or body:\n\n- [#23042](https://github.com/user/repo/issues/23042)\n- [#23298](https://github.com/user/repo/issues/23298)\n- [#24797](https://github.com/user/repo/issues/24797)\n- [#25124](https://github.com/user/repo/issues/25124)\n- [#25168](https://github.com/user/repo/issues/25168)\n- [#26081](https://github.com/user/repo/issues/26081)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE toLower(i.title) CONTAINS 'after' OR toLower(i.bodyText) CONTAINS 'after' RETURN i.number LIMIT 20"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2287,
+              "output": 182
+            },
+            "ms": 3592
+          },
+          {
+            "pass": true,
+            "reason": "cited 23042,23298,24797,25124,25168,26081",
+            "answer": "Here are the issue numbers that mention \"after\" in their title or body:\n\n- [#23042](https://github.com/issue/23042)\n- [#23298](https://github.com/issue/23298)\n- [#24797](https://github.com/issue/24797)\n- [#25124](https://github.com/issue/25124)\n- [#25168](https://github.com/issue/25168)\n- [#26081](https://github.com/issue/26081)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE toLower(i.title) CONTAINS toLower('after') OR toLower(i.bodyText) CONTAINS toLower('after') RETURN i.number LIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2291,
+              "output": 172
+            },
+            "ms": 2909
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "mpl-dev-032",
+        "template": "labels_cooccurring",
+        "kind": "retrieval",
+        "canary": false,
+        "question": "Which other labels appear on issues that also carry the label \"status: confirmed bug\"?",
+        "oracle": "Difficulty: Medium, New feature, Release critical, topic: widgets/UI (not: API: argument checking, API: consistency, Documentation, Documentation: build, Documentation: tags, GUI: MacOSX, GUI: Qt, GUI: gtk, GUI: nbagg, GUI: tk, GUI: webagg, GUI: wx, Maintenance, OS: Apple, backend: agg, backend: pdf, backend: ps, backend: svg, keep, status: needs comment/discussion, topic: animation, topic: color/alpha, topic: color/colorbar, topic: color/cycle, topic: geometry manager, topic: hatch, topic: legend, topic: mplot3d, topic: polar, topic: sphinx extension, topic: text, topic: ticks axis labels, topic: units and array ducktypes, 🌱 Good first issue)",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "Here are some other labels that appear on issues carrying the label \"status: confirmed bug\":\n\n- **topic: widgets/UI**\n- **Difficulty: Medium**\n- **New feature**\n- **Release critical**",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l1:Label) \nWHERE toLower(l1.name) = toLower('status: confirmed bug')\nMATCH (i)-[:HAS_LABEL]->(l2:Label) \nWHERE l1 <> l2\nRETURN DISTINCT l2.name AS label\nLIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2307,
+              "output": 130
+            },
+            "ms": 2903
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "The issues labeled as \"status: confirmed bug\" also carry the following labels:\n\n- topic: widgets/UI\n- Difficulty: Medium\n- New feature\n- Release critical",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label)\nWHERE toLower(l.name) = toLower('status: confirmed bug')\nWITH DISTINCT i\nMATCH (i)-[:HAS_LABEL]->(otherLabel:Label)\nWHERE otherLabel.name <> 'status: confirmed bug'\nRETURN DISTINCT otherLabel.name AS label\nLIMIT 20"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2312,
+              "output": 128
+            },
+            "ms": 2900
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "Issues with the label \"status: confirmed bug\" also frequently have the following labels:\n\n- Difficulty: Medium\n- New feature\n- topic: widgets/UI\n- Release critical",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label)\nWHERE toLower(l.name) = 'status: confirmed bug'\nWITH i\nMATCH (i)-[:HAS_LABEL]->(otherLabel:Label)\nWHERE toLower(otherLabel.name) <> 'status: confirmed bug'\nRETURN DISTINCT otherLabel.name AS label\nLIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2311,
+              "output": 128
+            },
+            "ms": 2832
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "mpl-dev-033",
+        "template": "commenters_on_label",
+        "kind": "retrieval",
+        "canary": false,
+        "question": "Which users have commented on issues labelled \"API: argument checking\"? Give their usernames.",
+        "oracle": "anntzer, efiring, jklymak, timhoffm",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "The following users have commented on issues labeled \"API: argument checking\":\n\n- timhoffm\n- efiring\n- jklymak\n- anntzer",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label), (i)-[:HAS_COMMENT]->(c:Comment), (c)-[:AUTHORED_BY]->(u:User)\nWHERE toLower(l.name) = toLower('API: argument checking')\nRETURN DISTINCT u.login AS username\nLIMIT 100"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2305,
+              "output": 120
+            },
+            "ms": 2634
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "The following users have commented on issues labelled \"API: argument checking\":\n\n- **timhoffm**\n- **efiring**\n- **jklymak**\n- **anntzer**",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label), (i)-[:HAS_COMMENT]->(c:Comment)\nWHERE toLower(l.name) = toLower('API: argument checking')\nRETURN DISTINCT c.authorLogin AS username LIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2291,
+              "output": 110
+            },
+            "ms": 2623
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "The following users have commented on issues labeled \"API: argument checking\":\n\n- timhoffm\n- efiring\n- jklymak\n- anntzer",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label), (i)-[:HAS_COMMENT]->(c:Comment), (c)-[:AUTHORED_BY]->(u:User)\nWHERE toLower(l.name) = toLower(\"API: argument checking\")\nRETURN DISTINCT u.login LIMIT 100"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2306,
+              "output": 117
+            },
+            "ms": 4357
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "mpl-dev-034",
+        "template": "commenters_on_label",
+        "kind": "retrieval",
+        "canary": false,
+        "question": "Which users have commented on issues labelled \"topic: color/colorbar\"? Give their usernames.",
+        "oracle": "anntzer, github-actions, greglucas, jklymak, kfbz9246, timhoffm",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "The following users have commented on issues labeled \"topic: color/colorbar\":\n\n- kfbz9246\n- jklymak\n- greglucas\n- timhoffm\n- anntzer\n- github-actions",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label), (i)-[:HAS_COMMENT]->(c:Comment)-[:AUTHORED_BY]->(u:User)\nWHERE toLower(l.name) = toLower('topic: color/colorbar')\nRETURN DISTINCT u.login AS username LIMIT 100"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2318,
+              "output": 130
+            },
+            "ms": 3440
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "The users who have commented on issues labeled \"topic: color/colorbar\" are:\n\n- kfbz9246\n- jklymak\n- greglucas\n- timhoffm\n- anntzer\n- github-actions",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label), (i)-[:HAS_COMMENT]->(c:Comment), (c)-[:AUTHORED_BY]->(u:User)\nWHERE toLower(l.name) = \"topic: color/colorbar\"\nRETURN DISTINCT u.login AS username LIMIT 100"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2318,
+              "output": 132
+            },
+            "ms": 3831
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "The following users have commented on issues labeled \"topic: color/colorbar\":\n\n- kfbz9246\n- jklymak\n- greglucas\n- timhoffm\n- anntzer\n- github-actions",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label)\nWHERE toLower(l.name) = \"topic: color/colorbar\"\nMATCH (i)-[:HAS_COMMENT]->(c:Comment)-[:AUTHORED_BY]->(u:User)\nRETURN DISTINCT u.login LIMIT 50"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2321,
+              "output": 127
+            },
+            "ms": 3000
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "mpl-dev-035",
+        "template": "author_of_most_reacted",
+        "kind": "retrieval",
+        "canary": false,
+        "question": "Who opened the issue with the most reactions?",
+        "oracle": "mwaskom (#24127)",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "The issue with the most reactions is [#24127](https://github.com/mwaskom/seaborn/issues/24127), and it was opened by the user \"mwaskom\" with a total of 5 reactions.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_REACTION]->(r:Reaction)\nRETURN i.issueId, i.number, i.authorLogin, COUNT(r) AS reactionsCount\nORDER BY reactionsCount DESC\nLIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2278,
+              "output": 112
+            },
+            "ms": 3242
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "The issue with the most reactions is [#24127](https://github.com/user/repo/issues/24127), opened by **mwaskom**, with 5 reactions.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_REACTION]->(r:Reaction) \nRETURN i.number AS issueNumber, i.authorLogin AS author, COUNT(r) AS reactionCount \nORDER BY reactionCount DESC \nLIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2264,
+              "output": 104
+            },
+            "ms": 2547
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "The issue with the most reactions is [#24127](https://github.com/your-repo/issues/24127) titled \"[Bug]: ax.bar raises for all-nan data on matplotlib 3.6.1.\" It was opened by the user **mwaskom** and has received 5 reactions.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_REACTION]->(:Reaction)\nWITH i, COUNT(*) as reactionCount\nORDER BY reactionCount DESC\nLIMIT 1\nMATCH (i)-[:AUTHORED_BY]->(u:User)\nRETURN i.number AS issueNumber, i.title AS issueTitle, reactionCount, u.login AS authorLogin"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2310,
+              "output": 154
+            },
+            "ms": 4131
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "mpl-dev-036",
+        "template": "absent_label_count",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many issues carry the label \"Blocker\"?",
+        "oracle": "0 (no such label in this repo)",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "stated absence",
+            "answer": "There are no issues labeled as \"Blocker.\"",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE toLower(l.name) = 'blocker' RETURN COUNT(i) AS blockerIssueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2241,
+              "output": 63
+            },
+            "ms": 4327
+          },
+          {
+            "pass": true,
+            "reason": "stated absence",
+            "answer": "There are no issues labeled \"Blocker\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE toLower(l.name) = 'blocker' RETURN count(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2238,
+              "output": 61
+            },
+            "ms": 2981
+          },
+          {
+            "pass": true,
+            "reason": "stated absence",
+            "answer": "There are no issues labeled as \"Blocker.\"",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE toLower(l.name) = toLower(\"Blocker\") RETURN count(i) AS blockerCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2241,
+              "output": 64
+            },
+            "ms": 2588
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "mpl-dev-037",
+        "template": "absent_label_members",
+        "kind": "structural",
+        "canary": false,
+        "question": "List the issue numbers of every issue labelled \"Blocker\".",
+        "oracle": "none",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "cited ",
+            "answer": "There are currently no issues labelled \"Blocker\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE toLower(l.name) = 'blocker' RETURN i.number LIMIT 20"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2235,
+              "output": 61
+            },
+            "ms": 2386
+          },
+          {
+            "pass": true,
+            "reason": "cited ",
+            "answer": "There are no issues currently labeled as \"Blocker\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE toLower(l.name) = toLower('Blocker') RETURN i.number LIMIT 100"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2237,
+              "output": 64
+            },
+            "ms": 2356
+          },
+          {
+            "pass": true,
+            "reason": "cited ",
+            "answer": "There are currently no issues labeled \"Blocker\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE toLower(l.name) = toLower('Blocker') RETURN i.number LIMIT 25"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2237,
+              "output": 63
+            },
+            "ms": 2428
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "mpl-dev-038",
+        "template": "absent_term",
+        "kind": "retrieval",
+        "canary": false,
+        "question": "Which issues mention \"CPython\" in their title or body? Give their issue numbers.",
+        "oracle": "none",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "cited ",
+            "answer": "There are no issues that mention \"CPython\" in their title or body.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE toLower(i.title) CONTAINS 'cpython' OR toLower(i.bodyText) CONTAINS 'cpython' RETURN i.number LIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2254,
+              "output": 74
+            },
+            "ms": 2944
+          },
+          {
+            "pass": true,
+            "reason": "cited ",
+            "answer": "There are no issues that mention \"CPython\" in their title or body.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE toLower(i.title) CONTAINS toLower('CPython') OR toLower(i.bodyText) CONTAINS toLower('CPython') RETURN i.number LIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2258,
+              "output": 78
+            },
+            "ms": 2710
+          },
+          {
+            "pass": true,
+            "reason": "cited ",
+            "answer": "No issues mention \"CPython\" in their title or body.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE toLower(i.title) CONTAINS 'cpython' OR toLower(i.bodyText) CONTAINS 'cpython' RETURN i.number LIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2254,
+              "output": 71
+            },
+            "ms": 2695
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "mpl-dev-039",
+        "template": "absent_author_issues",
+        "kind": "structural",
+        "canary": false,
+        "question": "Which issues were opened by the user \"ARF1\"? Give their issue numbers.",
+        "oracle": "none",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "cited ",
+            "answer": "It seems there are no issues opened by the user \"ARF1.\"",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User) WHERE toLower(u.login) = 'arf1' RETURN i.number LIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2247,
+              "output": 68
+            },
+            "ms": 3555
+          },
+          {
+            "pass": true,
+            "reason": "cited ",
+            "answer": "It seems there are no issues opened by the user \"ARF1\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User) WHERE toLower(u.login) = 'arf1' RETURN i.number LIMIT 25"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2247,
+              "output": 68
+            },
+            "ms": 2507
+          },
+          {
+            "pass": true,
+            "reason": "cited ",
+            "answer": "There are no issues opened by the user \"ARF1\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {authorLogin: 'ARF1'}) RETURN i.number LIMIT 25"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2233,
+              "output": 52
+            },
+            "ms": 3468
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "mpl-dev-040",
+        "template": "absent_month_count",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many issues were created in 2015-03?",
+        "oracle": "0",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "stated absence",
+            "answer": "No issues were created in March 2015.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.createdAt STARTS WITH '2015-03' RETURN COUNT(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2235,
+              "output": 55
+            },
+            "ms": 3219
+          },
+          {
+            "pass": true,
+            "reason": "stated absence",
+            "answer": "No issues were created in March 2015.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.createdAt STARTS WITH '2015-03' RETURN count(i) AS issue_count"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2235,
+              "output": 55
+            },
+            "ms": 2313
+          },
+          {
+            "pass": true,
+            "reason": "stated absence",
+            "answer": "No issues were created in March 2015.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.createdAt STARTS WITH '2015-03' RETURN COUNT(i) as issue_count"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2235,
+              "output": 55
+            },
+            "ms": 2379
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "mpl-dev-041",
+        "template": "closed_count_paraphrase",
+        "kind": "structural",
+        "canary": false,
+        "question": "What is the number of issues in a closed state?",
+        "oracle": "36",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 36",
+            "answer": "There are 36 issues in a closed state.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.state = 'CLOSED' RETURN count(i) AS closedIssuesCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2230,
+              "output": 51
+            },
+            "ms": 2614
+          },
+          {
+            "pass": true,
+            "reason": "found 36",
+            "answer": "There are 36 issues in a closed state.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.state = 'CLOSED' RETURN count(i) AS closedIssuesCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2230,
+              "output": 51
+            },
+            "ms": 2437
+          },
+          {
+            "pass": true,
+            "reason": "found 36",
+            "answer": "There are 36 issues in a closed state.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.state = 'CLOSED' RETURN COUNT(i) AS closedIssuesCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2230,
+              "output": 51
+            },
+            "ms": 2357
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "mpl-dev-042",
+        "template": "closed_count_paraphrase",
+        "kind": "structural",
+        "canary": false,
+        "question": "Count the issues in this repository that have been closed.",
+        "oracle": "36",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 36",
+            "answer": "There are 36 issues that have been closed in this repository.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.state = 'CLOSED' RETURN COUNT(i) AS closedIssueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2230,
+              "output": 54
+            },
+            "ms": 2146
+          },
+          {
+            "pass": true,
+            "reason": "found 36",
+            "answer": "There are 36 issues in this repository that have been closed.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.state = \"CLOSED\" RETURN count(i) as closedIssuesCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2230,
+              "output": 54
+            },
+            "ms": 2296
+          },
+          {
+            "pass": true,
+            "reason": "found 36",
+            "answer": "There are 36 closed issues in this repository.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.state = 'CLOSED' RETURN COUNT(i) AS closedIssueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2230,
+              "output": 51
+            },
+            "ms": 2712
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "mpl-dev-043",
+        "template": "distinct_authors_paraphrase",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many different people opened issues?",
+        "oracle": "44",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 44",
+            "answer": "A total of 44 different people have opened issues.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) RETURN COUNT(DISTINCT i.authorLogin) AS uniqueAuthors"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2217,
+              "output": 48
+            },
+            "ms": 2670
+          },
+          {
+            "pass": true,
+            "reason": "found 44",
+            "answer": "There are 44 different people who have opened issues.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User) RETURN COUNT(DISTINCT u.login) AS uniqueAuthors"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2227,
+              "output": 58
+            },
+            "ms": 2664
+          },
+          {
+            "pass": true,
+            "reason": "found 44",
+            "answer": "There are 44 different people who have opened issues.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) RETURN COUNT(DISTINCT i.authorLogin) AS uniqueAuthors"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2217,
+              "output": 48
+            },
+            "ms": 2189
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "mpl-dev-044",
+        "template": "distinct_authors_paraphrase",
+        "kind": "structural",
+        "canary": false,
+        "question": "What is the number of unique issue authors?",
+        "oracle": "44",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 44",
+            "answer": "There are 44 unique issue authors.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) RETURN count(DISTINCT i.authorLogin) as uniqueAuthors"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2221,
+              "output": 45
+            },
+            "ms": 2700
+          },
+          {
+            "pass": true,
+            "reason": "found 44",
+            "answer": "There are 44 unique issue authors.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) RETURN count(DISTINCT i.authorLogin) AS uniqueAuthors"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2221,
+              "output": 45
+            },
+            "ms": 3997
+          },
+          {
+            "pass": true,
+            "reason": "found 44",
+            "answer": "There are 44 unique issue authors.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) RETURN COUNT(DISTINCT i.authorLogin) AS unique_author_count"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2223,
+              "output": 46
+            },
+            "ms": 2084
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "mpl-dev-045",
+        "template": "summarize_issue",
+        "kind": "semantic",
+        "canary": false,
+        "question": "Summarize the discussion on issue #4067. What is the problem and what did people say about it?",
+        "oracle": "'Poly3DCollection' object has no attribute '_facecolors2d'",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue #4067, addressing the core problem and discussions without contradicting any reference facts.",
+            "answer": "### Problem Summary\n\nThe issue #4067 deals with challenges in handling 3D plots using matplotlib, specifically:\n\n- Converting 2D PolyCollections into 3D PolyCollections.\n- Adding legends to 3D surface plots.\n- Managing `facecolors` and `edgecolors` in 3D plots.\n\n### Key Discussions\n\n- **Workflows and Use Cases:**\n  - Users are trying to implement advanced 3D plotting features such as converting 2D to 3D PolyCollections and adding legends to 3D surface plots.\n\n- **Workarounds:**\n  - Users found several workarounds, such as setting `_facecolors2d` and `_edgecolors2d` to `_facecolors3d` and `_edgecolors3d`.\n  - Adjustments for newer versions of matplotlib were discussed, such as using `fig.draw_without_rendering()` to properly update states.\n\n- **Proposed Solutions:**\n  - Suggestions include forcing the evaluation of the norm and colormap in `get_facecolors`.\n  - Another proposal is to detect and update missing attributes in `get_facecolors`.\n  - The issue was described as a \"good first issue\" due to its clarity and lack of complex API design choices.\n\n### Emotional Tone\n\n- The tone is mostly neutral with a hint of frustration over the issue's persistence and reliance on workarounds. Users are looking for a permanent solution.\n\nYou can find more details by exploring the [issue #4067](https://github.com/issues/4067) on GitHub.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 4067,
+                  "userQuery": null
+                }
+              }
+            ],
+            "usage": {
+              "input": 2519,
+              "output": 342
+            },
+            "ms": 6769
+          },
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue, its core problem, and the discussions around it without contradicting any reference facts.",
+            "answer": "### Issue Summary for [#4067](https://github.com/org/repo/issues/4067)\n\n**Problem:**\n- The issue involves a problem with the `Poly3DCollection` object in Matplotlib. \n- Attributes like `_facecolors2d` and `_edgecolors2d` are not set properly, leading to `AttributeError`.\n- The error occurs when converting 2D PolyCollections to 3D or adding legends to 3D plots.\n- The root cause is that these attributes are initialized only during the draw process, causing errors if accessed beforehand.\n- This problem affects several Matplotlib versions.\n\n**Feedback and Workarounds:**\n- Initial solutions proposed setting attributes upon initialization, which did not solve the draw-time initialization problem.\n- A suggested fix was forcing the evaluation of the norm and colormap in `get_facecolors`.\n- Users have devised temporary workarounds, such as manually setting 2D attributes to their 3D counterparts post-plotting.\n- Workarounds have varying effectiveness, depending on Matplotlib versions.\n- Recent suggestions include using `fig.draw_without_rendering()` to update attributes before access.\n  \n**Conclusion:**\n- The issue is unresolved, with ongoing discussions aiming for a permanent fix.\n- Recognized as a suitable issue for new contributors due to its clear example and significant impact, despite requiring an understanding of complex 3D artist mechanisms in Matplotlib.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 4067,
+                  "userQuery": "Summarize the discussion on the issue, focusing on the problem and feedback."
+                }
+              }
+            ],
+            "usage": {
+              "input": 2625,
+              "output": 329
+            },
+            "ms": 8383
+          },
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue, mentioning the core problem, workarounds, and proposed solutions without contradicting any reference facts.",
+            "answer": "### Summary of Discussion on Issue [#4067](https://github.com/issues/4067)\n\n#### Problem\nThe issue involves difficulties with converting 2D PolyCollections to 3D and adding legends to 3D surface plots in matplotlib.\n\n#### Key Points Discussed\n\n- **Workflows and Use Cases:**\n  - Users reported challenges with converting 2D collections to 3D.\n  - There were also issues with adding legends to 3D plots.\n\n- **Workarounds Shared:**\n  - Some users found success by explicitly setting `_facecolors2d` and `_edgecolors2d` parameters.\n  - Adapting workarounds for newer versions of matplotlib by using `_facecolors` and `_edgecolors`.\n  - Utilizing `fig.draw_without_rendering()` to update during the draw process.\n\n- **Proposed Solutions:**\n  - Suggested forcing evaluation in `get_facecolors`.\n  - Recommended detecting and updating missing attributes.\n  - Labeled as a \"good first issue\" due to a clear example and straightforward reproduction.\n\n- **Overall Emotional Tone:**\n  - Mostly neutral but with some frustration over persistent issues.\n  - Collaborative, with users eagerly sharing potential fixes and solutions.\n\nThis maintains a focus on improving functionality and sharing knowledge among users.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 4067,
+                  "userQuery": null
+                }
+              }
+            ],
+            "usage": {
+              "input": 2542,
+              "output": 287
+            },
+            "ms": 7979
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "mpl-dev-046",
+        "template": "summarize_issue",
+        "kind": "semantic",
+        "canary": false,
+        "question": "Summarize the discussion on issue #14221. What is the problem and what did people say about it?",
+        "oracle": "`ax.set_prop_cycle` does not allow 'CN' colors",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue #14221, addressing the core problem of using 'CN' colors in `set_prop_cycle`, and does not contradict any reference facts.",
+            "answer": "### Issue Summary: [#14221](https://github.com/user/repo/issues/14221)\n\nThe discussion in this issue centers on the difficulty of using color cycle references like 'C0', 'C1', etc., within Matplotlib's `set_prop_cycle` method. The core problem is that these color cycles are resolved at execution time, which can lead to inconsistencies.\n\n### Key Discussion Points:\n\n1. **Initial Problem**:\n   - Users want convenience and consistency when referencing color cycles in the `set_prop_cycle` method.\n   - Errors occur because colors are resolved during plotting, not at cycler instantiation.\n\n2. **Technical Explanation**:\n   - Colors are evaluated in the plotting function.\n   - Users need to explicitly extract colors with `cycler.by_key()['color']` to use existing cycle colors.\n\n3. **Proposed Solutions**:\n   - **Eager Color Evaluation**: Resolve colors early against the default cycle for simplicity.\n   - **Color Class**: Introduce a `Color` class for flexible color management across methods.\n\n4. **Challenges**:\n   - Eager evaluation might create discrepancies in color settings.\n   - A `Color` class could cause API changes and requires handling multiple colors carefully.\n\n5. **User Feedback**:\n   - Current workarounds, like using `mcolors.to_rgba_array`, feel inconsistent and hackish.\n\n6. **Current Status**:\n   - Some specific issues, like those with `stackplot`, have been resolved.\n   - There's no active consensus or work on the broader problem.\n\nOverall, the discussion underlines the need for more intuitive and consistent color management in Matplotlib.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 14221,
+                  "userQuery": "What is the problem and what did people say about it?"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2723,
+              "output": 375
+            },
+            "ms": 9704
+          },
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue #14221, addressing the core problem, user concerns, technical discussions, proposed solutions, and ongoing challenges without contradicting the reference facts.",
+            "answer": "The discussion on [issue #14221](https://github.com/matplotlib/matplotlib/issues/14221) revolves around a problem with using color cycle references ('CN') in Matplotlib's `set_prop_cycle` function. Here's a summary of the key points:\n\n### Problem\n- The issue arises because 'CN' indexes into the default property cycle at execution time. This can lead to unreliable behavior if the cycler doesn't accept 'CN', as color resolution occurs in the plotting function rather than at the cycler's instantiation.\n\n### User Concerns\n- Users, like `u55`, find it cumbersome to use workarounds involving `matplotlib.colors` for color resolution before passing them to `set_prop_cycle`.\n- There's inconsistency, with other color specifications working but 'CN' not.\n\n### Technical Discussion\n- Contributors like `tacaswell` and `timhoffm` suggest eager color evaluation to resolve colors against the default cycle before validation.\n- This approach may complicate internal color handling and potentially break existing APIs.\n\n### Proposed Solutions\n- A suggestion includes creating a `Color` class for better color normalization and comparison, potentially storing both human-readable and RGBA representations.\n\n### Implementation Challenges\n- No consensus on the best solution due to potential complexities in maintaining backward compatibility and meeting user expectations.\n\n### Ongoing Issues\n- The problem with `set_prop_cycle` persists, though similar issues with `stackplot` have been resolved. The issue remains open for further exploration and contributions.\n\nThis discussion highlights the complexities of handling color cycles in Matplotlib and the need for a consistent solution, though a definitive resolution has not been achieved yet.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 14221,
+                  "userQuery": "What is the problem and what did people say about it?"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2646,
+              "output": 370
+            },
+            "ms": 8654
+          },
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue #14221, focusing on the problem with 'CN' color cycle references in Matplotlib, and aligns with the reference facts.",
+            "answer": "### Issue Summary: [#14221](#)\n\nThe discussion on issue #14221 focuses on a problem in Matplotlib related to using 'CN' color cycle references within the `cycler` function for property cycles.\n\n#### Problem\nThe main issue is that 'CN' references, which are meant to serve as shorthand for colors in Matplotlib's default color cycle, cannot be resolved at the time of instantiation within the `cycler` function. Instead, they are resolved when plotting functions are executed, leading to inconsistencies and unexpected behavior.\n\n#### Key Discussion Points\n\n1. **Technical Limitation**: \n    - 'CN' references are resolved during plotting function execution, not when cyclers are instantiated, making direct usage impractical.\n\n2. **User Experience**: \n    - Users are frustrated because 'CN' references do not work like other color specifications, which can be used directly in property cycles.\n\n3. **Potential Solutions**: \n    - Suggestions include resolving colors early or creating a `Color` class for better flexibility, though these may cause complexity or API changes.\n\n4. **Implementation Challenges**: \n    - Lack of consensus on solutions, with concerns about maintaining consistency and avoiding breaking changes.\n\n5. **Use Cases and Workarounds**: \n    - Users want easier use of 'CN' references without manual color conversion to RGBA.\n\n6. **Current Status**: \n    - The issue persists, though some specific problems (like with `stackplot`) have been resolved in newer Matplotlib versions.\n\nOverall, resolving this issue requires balancing technical constraints with user expectations for color handling. There is interest in finding a solution, but no clear resolution has been established yet.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 14221,
+                  "userQuery": "summarize the discussion, identify the problem and main points"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2647,
+              "output": 380
+            },
+            "ms": 8620
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "mpl-dev-047",
+        "template": "summarize_issue",
+        "kind": "semantic",
+        "canary": false,
+        "question": "Summarize the discussion on issue #25345. What is the problem and what did people say about it?",
+        "oracle": "[Bug]: using clf and pyplot.draw in range slider on_changed callback blocks input to widgets",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue, discussions, and solutions without contradicting the reference facts.",
+            "answer": "### Summary of Issue #25345\n\n**Problem:**\nThe issue involves handling events in graphical user interfaces where widgets like sliders and buttons trigger callbacks. Users have been facing challenges with managing these callbacks effectively, particularly in scenarios involving redrawing UI elements.\n\n**Key Discussions:**\n\n- **Workflows:**\n  - Users are employing UI toolkits including sliders and buttons.\n  - The task involves using callbacks for event handling and redrawing elements.\n\n- **Workarounds Suggested:**\n  - Redrawing everything with a button to prevent slider destruction was proposed.\n  - Another suggestion was to prevent callbacks from triggering while the mouse is in use, thus avoiding input blocking.\n\n- **Proposed Solutions:**\n  - Implementing an idle callback for handling destructive work on widgets.\n  - Making the timer a global variable to prevent it from being garbage collected.\n  - Disabling the redraw callback during mouse activity.\n\n- **Emotional Tone:**\n  - The discussion was neutral, with collaborative troubleshooting.\n  - Users displayed an understanding of some behaviors being due to improper tool usage, showing contentment with the solutions provided.\n\n**Comment Count:** 13\n\nThis discussion highlights the collaborative efforts of the community to solve technical challenges and improve user experience with UI interactions.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 25345,
+                  "userQuery": null
+                }
+              }
+            ],
+            "usage": {
+              "input": 2500,
+              "output": 278
+            },
+            "ms": 10398
+          },
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue, key discussion points, and proposed solutions without contradicting the reference facts.",
+            "answer": "Here's a summary of the discussion on [issue #25345](https://github.com/issues/25345):\n\n### Problem\n- Users are experiencing unexpected behavior when using sliders and buttons to trigger callback functions for redrawing elements in a plot. The issue involves updating UI elements dynamically, leading to problems without destroying and recreating them.\n\n### Key Discussion Points\n- **Workflows and Use Cases**:\n  - The main challenge is updating UI components in a dynamic and non-destructive way.\n  - Users want to ensure smooth interaction between UI elements like sliders and buttons.\n\n- **Workarounds**:\n  - A workaround involves using a button to initiate a redraw instead of relying solely on slider callbacks.\n  - Another solution is to ensure the timer callback doesn't interfere with the slider's callback by checking mouse activity before execution.\n\n- **Proposed Solutions**:\n  - Implementing an idle callback for safe widget operations.\n  - Keeping the timer stored globally to avoid it being garbage collected.\n  - Disabling redraw callbacks when the mouse is in use to prevent unintended behavior with the Axes.\n\n### Emotional Tone\n- The discussion is generally neutral. Users express some frustration due to limitations and unexpected behavior but appreciate the proposed solutions and workarounds.\n\nThis summary captures the essence of the conversation and the collaborative efforts to address the issue.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 25345,
+                  "userQuery": null
+                }
+              }
+            ],
+            "usage": {
+              "input": 2516,
+              "output": 293
+            },
+            "ms": 7227
+          },
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue, its discussion, and resolution without contradicting the reference facts.",
+            "answer": "The discussion on issue [#25345](https://github.com/example/repo/issues/25345) focuses on a problem with callbacks in a UI toolkit, specifically when sliders and timers are used in a plotting library. Here's a summary of the key points:\n\n### Problem\nThe issue arises when a slider's `onchanged` callback and a timer's `redraw` callback are triggered at the same time, blocking all user interactions and preventing new inputs to the widgets.\n\n### Discussion Highlights\n\n1. **Initial Problem Identification**\n   - **tacaswell** questions the need to destroy and recreate objects with callbacks, emphasizing that it's an edge case.\n   - **schneichr** acknowledges the problem and mentions a workaround using a button for redrawing.\n\n2. **Proposed Solutions and Issues**\n   - **QuLogic** proposes using an idle callback for widget operations and provides a code snippet, which initially doesn't work due to implementation errors.\n   - After corrections, the original problem of overlapping callbacks persists.\n\n3. **Further Analysis and Clarifications**\n   - **tacaswell** and **schneichr** discuss that the core issue is input blocking, not state reset.\n   - **QuLogic** finds that input blocking is caused by the redraw callback activating while the mouse is down.\n\n4. **Final Resolution**\n   - **QuLogic** recommends checking if the mouse is in use before proceeding with the redraw function. This resolves the issue, and **schneichr** confirms the solution works.\n\nThe discussion illustrates the complexities of managing callback states in a UI toolkit and concludes with a solution that prevents input blocking by controlling callback conditions.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 25345,
+                  "userQuery": "What is the problem and what did people say about it?"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2688,
+              "output": 371
+            },
+            "ms": 7871
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "mpl-dev-048",
+        "template": "summarize_issue",
+        "kind": "semantic",
+        "canary": false,
+        "question": "Summarize the discussion on issue #30515. What is the problem and what did people say about it?",
+        "oracle": "[ENH]: Built-in crosshair tool through gui-native crosshair cursor",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue #30515, addressing the same core problem of rendering inefficiencies with interactive elements like crosshair cursors. It does not contradict any reference facts and provides a coherent overview of the discussion and proposed solutions.",
+            "answer": "The discussion on [issue #30515](https://github.com/matplotlib/matplotlib/issues/30515) addresses the efficiency of rendering interactive elements like crosshair cursors in Matplotlib. Here’s a summary of the problem and the key points from the discussion:\n\n### Problem\nInteractive elements currently trigger a full redraw of the figure, leading to inefficiencies and noticeable lag, especially during high-frequency updates.\n\n### Key Points from the Discussion\n\n- **Approaches Explored**:\n  1. **GUI-native overlay primitives**: Utilizes the GUI toolkit's native drawing capabilities for faster updates. This would require backend-specific implementations and could cause inconsistencies.\n  2. **Matplotlib-managed overlay layer**: Proposes a separate rendering layer within Matplotlib. This approach could lead to a layered rendering architecture but might face performance issues with full-frame alpha compositing.\n\n- **Contributors**:\n  - **Ayush Kumar, Sireesha, and Kathan**: Participants interested in tackling this issue as part of Google Summer of Code (GSoC).\n  - **Kathan**: Conducted benchmarks showing that NumPy's full-canvas alpha compositing is slow, indicating possible efficiency in GUI-native rendering.\n  - **Sireesha**: Suggested a hybrid approach with a general overlay API, allowing for backend-specific efficient rendering methods.\n  \n- **Timhoffm (Maintainer)**: Clarified that rendering strategy and rendering organization are separate issues. Advocated for a logical layer model where only affected layers are re-rendered.\n\n- **Proposed Solutions**:\n  - **Kathan**: Suggested a `LayerManager` to handle layer caching and invalidation, potentially avoiding manual blitting hacks.\n  - **Sireesha**: Shared a prototype using blitting to efficiently update a crosshair cursor in a pull request.\n\n### Conclusion\nThe discussion emphasizes the complexity of improving rendering efficiency in Matplotlib, highlighting potential benefits from a layered rendering approach.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 30515,
+                  "userQuery": "What is the problem and what did people say about it?"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2663,
+              "output": 437
+            },
+            "ms": 9175
+          },
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue, its problem, and the discussion points without contradicting the reference facts.",
+            "answer": "### Issue #30515 Summary\n\n**Problem:**\nThe discussion revolves around enhancing performance for interactive elements in graphical interfaces by implementing overlays that update independently of the full draw cycle.\n\n**Key Points from the Discussion:**\n\n- **Workflows or Use Cases:**\n  - Enhancing overlays for separate updates from the main draw cycle.\n  - Improving performance for interactive elements like crosshair cursors.\n  - Considering a layered rendering system for static and dynamic elements.\n\n- **Competitor Tools Mentioned:**\n  - PyQt6 for hardware compositing.\n  - GUI toolkits like Qt, GTK, or Tk for native drawing primitives.\n\n- **Workarounds:**\n  - Using Matplotlib’s blitting mechanism for updating crosshair cursors without a full redraw.\n  - Comparing performance between NumPy compositing and Qt’s hardware compositing.\n\n- **Proposed Solutions:**\n  1. Fast updates via GUI-native overlay primitives.\n  2. A backend-independent overlay layer managed by Matplotlib.\n  3. A hybrid approach with a general overlay API, allowing backends to implement the most efficient rendering.\n  4. Introducing a LayerManager to manage caching and rendering of specific regions.\n\n**Overall Tone:**\nThe conversation is positive and collaborative, with contributors keen to explore architectural enhancements and share insights, focusing on constructive problem-solving and experimentation.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 30515,
+                  "userQuery": null
+                }
+              }
+            ],
+            "usage": {
+              "input": 2536,
+              "output": 301
+            },
+            "ms": 6538
+          },
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue #30515, addressing the same core problem and proposed solutions without contradicting any reference facts.",
+            "answer": "### Problem and Discussion on Issue [#30515](https://github.com/matplotlib/matplotlib/issues/30515)\n\nThe issue addresses the need for improving the rendering of interactive elements, such as crosshair cursors in Matplotlib, by allowing them to update independently from the full draw cycle. This is essential to enhance performance and reduce lag, especially for elements that update frequently.\n\n### Key Points Discussed\n\n1. **Identified Problem:**\n   - Interactive elements currently partake in the entire rendering process, leading to inefficiency and noticeable lag.\n\n2. **Proposed Solutions:**\n   - **Overlay System Approaches:**\n     - *GUI-native Overlay Primitives:* Use native GUI toolkit drawing capabilities for faster overlays, despite requiring separate backend implementations.\n     - *Matplotlib-managed Overlay Layer:* Create a dedicated layer within Matplotlib for overlays, which could introduce performance issues due to alpha compositing overhead.\n   \n3. **Performance Concerns:**\n   - Benchmarks indicated that full-canvas alpha compositing is slow, suggesting GUI-native rendering might be more effective.\n   - A hybrid approach was proposed, where Matplotlib defines a general overlay API, and each backend employs the most efficient rendering method.\n\n4. **Layered Rendering Architecture:**\n   - Discussed the potential for a system with separate layers for various elements, allowing for only dynamic components to be updated during interactions.\n\n5. **Experimental Prototypes:**\n   - Contributors are exploring redraw and blitting mechanisms to better understand and implement efficient cursor updates.\n   - Prototyping involves experimenting with blitting and small region updates.\n\n6. **Use of AI Tools:**\n   - AI tools are mentioned as aids for understanding the codebase and brainstorming design ideas, with a caution to validate AI suggestions.\n\nThe discussion is collaborative, focusing on exploring the best approach for an efficient overlay system in Matplotlib, with contributors sharing ideas, benchmarks, and prototypes.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 30515,
+                  "userQuery": "summarize the discussion about the problem and people's opinions"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2738,
+              "output": 425
+            },
+            "ms": 11350
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "mpl-dev-049",
+        "template": "summarize_issue",
+        "kind": "semantic",
+        "canary": false,
+        "question": "Summarize the discussion on issue #13023. What is the problem and what did people say about it?",
+        "oracle": "constrained_layout support for figure.legend",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue, its discussion, and proposed solutions without contradicting the reference facts.",
+            "answer": "The discussion on [issue #13023](https://github.com/matplotlib/matplotlib/issues/13023) revolves around integrating legends into plots using Matplotlib's `constrained_layout` feature. Here's a summary of the key points:\n\n### Problem Statement\n- **Initial Problem**: The issue raised by `dcherian` is about expecting `figure.legend` to position a legend on the right side of a plot, similar to Seaborn. However, `jklymak` explains that `constrained_layout` can't automatically determine which subplots should allocate space for the legend since it's not tied to specific axes.\n\n### Proposed Solutions and Challenges\n- **Suggestions**:\n  - `jklymak` suggests attaching the legend to one of the rightmost axes.\n  - `dcherian` compares it to the behavior of colorbars, which have defined space allocation mechanisms.\n  - `jklymak` acknowledges that while there are clear conventions for `figure.suptitle` and `figure.colorbar`, legends are more arbitrary.\n\n### Discussion on Implementation\n- **Proposals**:\n  - `timhoffm` suggests initially supporting certain legend configurations, excluding those with `bbox_to_anchor` or specific `loc` values.\n  - `jklymak` proposes developing a new method attached to `gridspec` to handle the issue, allowing for specifying legend placement.\n  - A proof of concept by `jklymak` is mentioned, which works well but requires specification on legend location and arrangement (horizontal or vertical).\n\n### Consensus and Next Steps\n- **Next Steps**:\n  - The discussion leans toward a separate method for handling legends in `constrained_layout`, which could be invoked by `figure.legend` under suitable conditions.\n  - A suggestion for a keyword argument like `arrange=vertical` or `arrange=horizontal` is made, which `dcherian` prefers for simplicity over more complex location strings.\n\n### Summary\nParticipants agree on creating a flexible and intuitive API to handle legends in `constrained_layout`, highlighting the complexity of the problem while suggesting practical solutions.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 13023,
+                  "userQuery": "Summarize the discussion about the problem and people's comments"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2736,
+              "output": 465
+            },
+            "ms": 10379
+          },
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue, its challenges, and the proposed solutions without contradicting the reference facts.",
+            "answer": "### Issue #13023 Discussion Summary\n\n**Problem Statement:**\nThe issue focuses on integrating legends into Matplotlib figures when using constrained layouts. The main challenge is accommodating a figure legend that isn't tied to a specific axis, unlike colorbars, which have a defined `ax` argument. The current workaround, which involves attaching the legend to one of the axes, can lead to uneven spacing in the layout.\n\n**Discussion Highlights:**\n- **Proposed Solutions:** Participants suggest creating a new API or method to handle legends more effectively with gridspec layouts. A potential solution includes allowing `figure.legend` to call a separate method under specific conditions.\n  \n- **Challenges:** Concerns arise about the complexity of implementing these solutions and documenting them clearly.\n  \n- **Proof of Concept:** A proof of concept exists that performs well but creates challenges in specifying legend placement and arrangement within gridspec. \n\n- **Suggestions:** There's discussion on specifying arrangement direction (horizontal or vertical) using extra keyword arguments like `arrange=vertical` or `arrange=horizontal`.\n\nOverall, the participants are leaning toward solutions that simplify the process and address the current limitations effectively.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 13023,
+                  "userQuery": "Summarize the discussion and problem statement."
+                }
+              }
+            ],
+            "usage": {
+              "input": 2468,
+              "output": 263
+            },
+            "ms": 7297
+          },
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue, its complexity, and the proposed solutions without contradicting the reference facts.",
+            "answer": "The discussion on [issue #13023](https://github.com/issues/13023) focuses on the challenge of integrating legends into plots while using Matplotlib's `constrained_layout` feature. Here's a summary of the problem and the contributions from participants:\n\n### Problem\n- **Integration of Legends:** The main issue is making space for a figure legend that isn't tied to a specific axis, as legends can be placed arbitrarily. This presents a challenge for `constrained_layout` to adjust subplots accordingly.\n\n### Key Points Discussed\n- **Complexity:** Legends, unlike suptitles or colorbars, can have multiple instances and arbitrary placements, complicating layout management.\n- **Potential Solutions:** \n  - `dcherian` suggests mimicking the behavior of colorbars but acknowledges the complexity.\n  - `jklymak` proposes creating a new method, possibly attached to `gridspec`, for handling legends more flexibly.\n  - `timhoffm` proposes initially supporting only certain legend configurations but faces concerns about confusion and documentation challenges.\n\n### Proposed Ideas\n- **New API:** `jklymak` suggests a new API to specify legend placement and arrangement relative to the gridspec.\n- **Keyword Argument:** `dcherian` prefers using an additional keyword argument for the arrangement direction.\n\n### Conclusion\nThe conversation reveals the complexities involved in integrating legends into `constrained_layout` and explores various strategies, with participants actively discussing usability and implementation challenges.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 13023,
+                  "userQuery": "Provide a summary focusing on the problem discussed and people's reactions and suggestions."
+                }
+              }
+            ],
+            "usage": {
+              "input": 2605,
+              "output": 335
+            },
+            "ms": 7702
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "mpl-dev-050",
+        "template": "summarize_issue",
+        "kind": "semantic",
+        "canary": false,
+        "question": "Summarize the discussion on issue #19121. What is the problem and what did people say about it?",
+        "oracle": "Handle and label not created for Text with label",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue, its main problem, and key discussion points without contradicting the reference facts.",
+            "answer": "### Issue Summary\n\nThe discussion on issue [#19121](https://github.com/matplotlib/matplotlib/issues/19121) addresses problems related to the handling of labels and legend entries for different types of Artists in Matplotlib, with a focus on the Text Artist.\n\n### Main Problem\n\nThe primary issue is the confusion arising from the fact that although every Artist can have a label, not all of them have a legend handler necessary for displaying in a legend. This issue is particularly evident with Text objects, which do not have a default legend handler, leading to unexpected behavior where they do not appear in legends.\n\n### Key Discussion Points\n\n1. **Imprecision in API**: The API design allows setting labels for all Artists, but only those with legend handlers appear in legends. This is perceived as an imprecision in the API.\n\n2. **Expectation vs. Reality**: Users expect labeled Text objects to appear in legends, akin to other Artists like Patches. This expectation not being met leads to confusion.\n\n3. **Custom Handlers**: A suggested workaround is creating custom legend handlers for Text objects. Though effective, it may not be ideal for every user or situation.\n\n4. **Proposal for Warnings**: There's a suggestion to implement warnings when Artists without handlers are included in legends. This would help users be aware that their labeled Text objects won't appear unless a custom handler is added.\n\n5. **Implementation Considerations**: Discussion includes potential implementation of warnings and scenarios where they might be beneficial or annoying. The general consensus is in favor of implementing warnings as the label parameter is primarily for legend use.\n\n6. **User Contributions**: A user expressed willingness to work on the implementation of these warnings or handlers, highlighting community involvement.\n\nOverall, the issue underscores the need for clearer API communication regarding which Artists can appear in legends and suggests improvements to prevent user confusion.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 19121,
+                  "userQuery": "What is the problem and what are the main points discussed?"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2643,
+              "output": 415
+            },
+            "ms": 8953
+          },
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue, focusing on the problem of Text objects not appearing in legends due to lack of handlers, and discusses the proposed solutions and user expectations, aligning with the reference facts.",
+            "answer": "The discussion on [issue #19121](https://github.com/matplotlib/matplotlib/issues/19121) focuses on the handling of Text objects in Matplotlib legends. Here's a summary:\n\n### Main Problem\n- **Lack of Legend Handlers:** While every Artist in Matplotlib can have a label, not all have a legend handler. This is a problem for Text objects, which do not appear in legends unless a handler is provided.\n\n### Key Discussion Points\n1. **User Expectations:** Users expect Text objects to appear in legends when a label is set, similar to how Patches appear as Rectangles.\n   \n2. **Custom Solutions:** A user proposed a custom class, `HandlerText`, to serve as a handler for Text objects.\n\n3. **Warning System Proposal:** There's a proposal to implement warnings when objects are missing a handler, to inform users that they won't appear in legends.\n\n4. **Implementation Considerations:** Implementing a general legend handler for Text is challenging due to varied use cases, so custom solutions are encouraged. The warning system for missing handlers is supported to enhance user experience.\n\n5. **User Involvement:** A contributor has shown interest in working on the warning system, seeking further guidance.\n\n### Conclusion\nThe consensus leans towards developing a warning system to address confusion about missing legend handlers, while allowing users to create custom handlers for Text objects.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 19121,
+                  "userQuery": "Summarize the overall discussion, identify the main problem discussed, and highlight any proposed solutions or workarounds."
+                }
+              }
+            ],
+            "usage": {
+              "input": 2655,
+              "output": 328
+            },
+            "ms": 8031
+          },
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue, focusing on the problem with Text objects not appearing in legends due to lack of handlers, and discusses the community's suggestions and solutions, aligning with the reference facts.",
+            "answer": "The discussion on [issue #19121](https://github.com/matplotlib/matplotlib/issues/19121) focuses on the handling of labels and legend entries for `Artist` objects in Matplotlib, particularly `Text` objects.\n\n### Main Problem\n- **Labeling and Legends**: While `Artist` objects can have labels, not all appear in legends due to the lack of a default legend handler for `Text` objects. This discrepancy confuses users who expect `Text` objects to show up in legends when labeled.\n\n### Key Points from the Discussion\n1. **Imprecision in API**: The API design allows labeling for all `Artist` objects but lacks corresponding legend handlers, revealing an oversight.\n\n2. **User Expectations**: Users, like `kdpenner`, expect `Text` objects to appear in legends as markers, leading to confusion when they don't.\n\n3. **Custom Handlers Workaround**: Users can implement custom legend handlers. `kdpenner` shared a custom class `HandlerText` as a solution.\n\n4. **Proposal for Warnings**: A suggestion was made to implement warnings when an `Artist` has a label but no handler, alerting users to this issue.\n\n5. **Discussion on Implementation**: The discussion weighed the utility of such warnings. A consensus leaned towards implementing them since labels are mainly for legend participation.\n\n6. **Offer to Contribute**: `kdpenner` expressed readiness to implement warnings or handlers with guidance.\n\n### Conclusion\nThis issue highlights a gap in Matplotlib's handling of `Text` objects in legends. The community suggests enhancing the API with custom handlers and potential warnings for improved clarity.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 19121,
+                  "userQuery": "What is the problem and what did people say about it?"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2668,
+              "output": 377
+            },
+            "ms": 7403
+          }
+        ],
+        "passRate": 1
+      }
+    ],
+    "openai": {
+      "requests": 325,
+      "byModel": {
+        "gpt-4o-2024-08-06": {
+          "requests": 325,
+          "promptTokens": 391581,
+          "completionTokens": 23680,
+          "unmetered": 0
+        }
+      },
+      "byEndpoint": {
+        "/responses": 307,
+        "/chat/completions": 18
+      },
+      "byHost": {
+        "api.openai.com": 325
+      },
+      "unpricedModels": [],
+      "unmetered": 0,
+      "usageSource": "wire",
+      "reportedTokens": {
+        "input": 352840,
+        "output": 17186
+      },
+      "costUsd": 1.2157525
+    },
+    "neo4j": {
+      "queries": 157,
+      "sessions": 157,
+      "transactions": 0,
+      "samples": [
+        "MATCH (i:Issue) RETURN count(i) AS issueCount",
+        "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment) RETURN count(c) ",
+        "MATCH (c:Comment) RETURN count(c) AS totalComments",
+        "MATCH (i:Issue) RETURN count(i) as totalIssues LIMIT 1",
+        "MATCH (c:Comment) RETURN count(c) AS totalComments",
+        "MATCH (i:Issue) RETURN count(i) as totalIssues",
+        "MATCH (i:Issue) WHERE i.state = 'OPEN' RETURN count(i) as op",
+        "MATCH (i:Issue) WHERE i.state = 'OPEN' RETURN COUNT(i) AS op",
+        "MATCH (i:Issue) WHERE i.state = 'CLOSED' RETURN count(i) AS ",
+        "MATCH (i:Issue) WHERE i.state = 'CLOSED' RETURN count(i) AS ",
+        "MATCH (i:Issue) WHERE i.state = 'CLOSED' RETURN count(i) AS ",
+        "MATCH (i:Issue {number: 4067}) RETURN i.state LIMIT 1",
+        "MATCH (i:Issue {number: 4067}) RETURN i.state LIMIT 1",
+        "MATCH (i:Issue {number: 4067}) RETURN i.state LIMIT 1",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE toLower(l.name",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE i.state = 'OPE",
+        "MATCH (i:Issue) WHERE i.state = 'OPEN' RETURN count(i) AS op",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE i.state = 'OPE",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE i.state = 'OPE",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE toLower(l.name",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE i.state = 'OPE",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE toLower(l.name",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE toLower(l.name",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE toLower(l.name",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE toLower(l.name",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE i.state = 'OPE",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE toLower(l.name",
+        "MATCH (l:Label) RETURN COUNT(DISTINCT l.name) AS labelCount",
+        "MATCH (l:Label) RETURN COUNT(DISTINCT l.name) AS distinctLab",
+        "MATCH (l:Label) RETURN count(DISTINCT l.name) as labelCount",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE toLower(l.name",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE toLower(l.name",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE toLower(l.name",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE toLower(l.name",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE toLower(l.name",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE toLower(l.name",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE toLower(l.name",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE toLower(l.name",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE toLower(l.name",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE toLower(l.name",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE toLower(l.name",
+        "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User) RETURN COUNT(DISTIN",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE toLower(l.name",
+        "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User) RETURN COUNT(DISTIN",
+        "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User) RETURN COUNT(DISTIN",
+        "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User) WHERE toLower(u.log",
+        "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User) WHERE u.login = 'ti",
+        "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User) WHERE toLower(u.log",
+        "MATCH (i:Issue {number: 4067})-[:AUTHORED_BY]->(u:User) RETU",
+        "MATCH (i:Issue {number: 4067})-[:AUTHORED_BY]->(u:User) RETU",
+        "MATCH (i:Issue {number: 4067})-[:AUTHORED_BY]->(u:User) RETU",
+        "MATCH (i:Issue {number: 4067})-[:HAS_COMMENT]->(c:Comment)-[",
+        "MATCH (i:Issue {number: 4067})-[:HAS_COMMENT]->(c:Comment) R",
+        "MATCH (i:Issue {number: 4067})-[:HAS_COMMENT]->(c:Comment)-[",
+        "MATCH (i:Issue) WHERE i.createdAt STARTS WITH \"2023-02\" RETU",
+        "MATCH (i:Issue) WHERE i.createdAt STARTS WITH '2023-02' RETU",
+        "MATCH (i:Issue) WHERE i.createdAt STARTS WITH '2023-02' RETU",
+        "MATCH (i:Issue) WHERE date(i.createdAt) < date('2020-12-30')",
+        "MATCH (i:Issue) WHERE i.createdAt < '2020-12-30' RETURN coun",
+        "MATCH (i:Issue) WHERE i.createdAt > '2020-12-30' RETURN coun",
+        "MATCH (i:Issue) WHERE datetime(i.createdAt) < datetime('2020",
+        "MATCH (i:Issue) WHERE date(i.createdAt) < date('2020-12-30')",
+        "MATCH (i:Issue) WHERE i.createdAt > '2020-12-30' RETURN COUN",
+        "MATCH (i:Issue) WHERE i.createdAt > '2020-12-30' RETURN coun",
+        "MATCH (i:Issue) WHERE date(i.createdAt) > date('2022-10-09')",
+        "MATCH (i:Issue) WHERE datetime(i.createdAt) < datetime('2020",
+        "MATCH (i:Issue) WHERE date(i.createdAt) > date('2022-10-09')",
+        "MATCH (i:Issue) WHERE i.createdAt > '2022-10-09' RETURN COUN",
+        "MATCH (i:Issue) WHERE datetime(i.createdAt) > datetime('2022",
+        "MATCH (i:Issue) WHERE date(i.createdAt) >= date('2020-12-30'",
+        "MATCH (i:Issue) WHERE date(i.createdAt) >= date('2020-12-30'",
+        "MATCH (i:Issue) WHERE datetime(i.createdAt) > datetime('2022",
+        "MATCH (i:Issue) WHERE date(i.createdAt) >= date('2020-12-30'",
+        "MATCH (i:Issue) WHERE NOT (i)-[:HAS_COMMENT]->(:Comment) RET",
+        "MATCH (i:Issue) WHERE datetime(i.createdAt) >= datetime('202",
+        "MATCH (i:Issue) WHERE datetime(i.createdAt) >= datetime('202",
+        "MATCH (i:Issue) WHERE datetime(i.createdAt) >= datetime('202",
+        "MATCH (i:Issue) WHERE NOT (i)-[:HAS_COMMENT]->(:Comment) RET",
+        "MATCH (i:Issue) WHERE NOT (i)-[:HAS_COMMENT]->(:Comment) RET",
+        "MATCH (i:Issue)-[:HAS_REACTION]->(r:Reaction) RETURN i.numbe",
+        "MATCH (i:Issue)-[:HAS_REACTION]->(r:Reaction) RETURN i.numbe",
+        "MATCH (i:Issue)-[:HAS_REACTION]->(r:Reaction) RETURN i.numbe",
+        "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment) WITH i, COUNT(c)",
+        "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment) WITH i, COUNT(c)",
+        "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment) WITH i, COUNT(c)",
+        "MATCH (i:Issue {number: 4067})-[:HAS_COMMENT]->(c:Comment) R",
+        "MATCH (i:Issue {number: 4067})-[:HAS_COMMENT]->(c:Comment) R",
+        "MATCH (i:Issue {number: 5876})-[:HAS_COMMENT]->(c:Comment) R",
+        "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment) WHERE i.number =",
+        "MATCH (i:Issue {number: 5876})-[:HAS_COMMENT]->(c:Comment) R",
+        "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment) WHERE i.number =",
+        "MATCH (i:Issue {number: 4067}) RETURN i.title LIMIT 1",
+        "MATCH (i:Issue {number: 4067}) RETURN i.title LIMIT 1",
+        "MATCH (i:Issue {number: 5876}) RETURN i.title LIMIT 1",
+        "MATCH (i:Issue {number: 4067}) RETURN i.title LIMIT 1",
+        "MATCH (i:Issue {number: 5876}) RETURN i.title LIMIT 1",
+        "MATCH (i:Issue {number: 5876}) RETURN i.title LIMIT 1",
+        "MATCH (i:Issue) WHERE toLower(i.title) CONTAINS 'after' OR t",
+        "MATCH (i:Issue) WHERE toLower(i.title) CONTAINS toLower('aft",
+        "MATCH (i:Issue) WHERE toLower(i.title) CONTAINS 'after' OR t",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l1:Label) WHERE toLower(l1.na",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE toLower(l.name",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE toLower(l.name",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label), (i)-[:HAS_COMMENT]-",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label), (i)-[:HAS_COMMENT]-",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label), (i)-[:HAS_COMMENT]-",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE toLower(l.name",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label), (i)-[:HAS_COMMENT]-",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label), (i)-[:HAS_COMMENT]-",
+        "MATCH (i:Issue)-[:HAS_REACTION]->(r:Reaction) RETURN i.numbe",
+        "MATCH (i:Issue)-[:HAS_REACTION]->(r:Reaction) RETURN i.issue",
+        "MATCH (i:Issue)-[:HAS_REACTION]->(:Reaction) WITH i, COUNT(*",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE toLower(l.name",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE toLower(l.name",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE toLower(l.name",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE toLower(l.name",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE toLower(l.name",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE toLower(l.name",
+        "MATCH (i:Issue) WHERE toLower(i.title) CONTAINS toLower('CPy",
+        "MATCH (i:Issue) WHERE toLower(i.title) CONTAINS 'cpython' OR",
+        "MATCH (i:Issue) WHERE toLower(i.title) CONTAINS 'cpython' OR",
+        "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User) WHERE toLower(u.log",
+        "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User) WHERE toLower(u.log",
+        "MATCH (i:Issue) WHERE i.createdAt STARTS WITH '2015-03' RETU",
+        "MATCH (i:Issue) WHERE i.createdAt STARTS WITH '2015-03' RETU",
+        "MATCH (i:Issue {authorLogin: 'ARF1'}) RETURN i.number LIMIT ",
+        "MATCH (i:Issue) WHERE i.state = 'CLOSED' RETURN count(i) AS ",
+        "MATCH (i:Issue) WHERE i.createdAt STARTS WITH '2015-03' RETU",
+        "MATCH (i:Issue) WHERE i.state = 'CLOSED' RETURN count(i) AS ",
+        "MATCH (i:Issue) WHERE i.state = 'CLOSED' RETURN COUNT(i) AS ",
+        "MATCH (i:Issue) WHERE i.state = 'CLOSED' RETURN COUNT(i) AS ",
+        "MATCH (i:Issue) WHERE i.state = \"CLOSED\" RETURN count(i) as ",
+        "MATCH (i:Issue) RETURN COUNT(DISTINCT i.authorLogin) AS uniq",
+        "MATCH (i:Issue) WHERE i.state = 'CLOSED' RETURN COUNT(i) AS ",
+        "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User) RETURN COUNT(DISTIN",
+        "MATCH (i:Issue) RETURN COUNT(DISTINCT i.authorLogin) AS uniq",
+        "MATCH (i:Issue) RETURN count(DISTINCT i.authorLogin) as uniq",
+        "MATCH (i:Issue) RETURN count(DISTINCT i.authorLogin) AS uniq",
+        "MATCH (i:Issue) RETURN COUNT(DISTINCT i.authorLogin) AS uniq",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT"
+      ]
+    },
+    "judgeCostUsd": 0.11743250000000001
+  },
+  "score": {
+    "overall": 1,
+    "deterministic": 1,
+    "semantic": 1,
+    "byKind": {
+      "structural": 1,
+      "retrieval": 1,
+      "semantic": 1
+    },
+    "solvedAllAttempts": 50,
+    "solvedAnyAttempt": 50,
+    "totalTasks": 50,
+    "canaryPass": true,
+    "toolUseRate": 1,
+    "agentErrorRate": 0
+  },
+  "cost": {
+    "ingestUsd": 0,
+    "qaUsd": 1.2157525,
+    "judgeUsd": 0.11743250000000001,
+    "sutTotalUsd": 1.2157525
+  },
+  "finishedAt": "2026-09-05T12:19:43.668Z",
+  "trace": {
+    "files": [
+      "github-issue-analyzer-2026-09-05T12-17-48-181Z-1851142.jsonl"
+    ],
+    "spans": 648,
+    "byName": {
+      "gen_ai.request": {
+        "count": 307,
+        "totalMs": 474651,
+        "maxMs": 6908,
+        "errors": 0
+      },
+      "tool.summarizeComments": {
+        "count": 18,
+        "totalMs": 66055,
+        "maxMs": 6155,
+        "errors": 0
+      },
+      "neo4j.query": {
+        "count": 184,
+        "totalMs": 2644,
+        "maxMs": 46,
+        "errors": 7
+      },
+      "tool.queryNeo4j": {
+        "count": 139,
+        "totalMs": 2480,
+        "maxMs": 46,
+        "errors": 0
+      }
+    }
+  }
+}

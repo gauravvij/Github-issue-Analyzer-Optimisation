@@ -17,7 +17,7 @@
  * Stops at the first failure. A non-zero exit means do not trust any score.
  */
 
-import { existsSync } from 'node:fs';
+import { existsSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 
 const HERE = import.meta.dirname;
@@ -51,11 +51,29 @@ interface Step {
 const BASELINE = '.worktrees/baseline/github_issue';
 const haveBaseline = existsSync(join(ROOT, BASELINE, 'package.json'));
 
+/** The v2 splits, discovered rather than listed so adding a corpus gates it. */
+const V2_SPLITS = process.argv.includes('--no-v2')
+  ? []
+  : readdirSync(join(HERE, 'tasks'))
+      .filter((f) => f.endsWith('.jsonl') && !['dev.jsonl', 'holdout.jsonl'].includes(f))
+      .map((f) => f.replace(/\.jsonl$/, ''))
+      .sort();
+
 const steps: Step[] = [
   {
     name: 'derived',
     cmd: ['bun', join(HERE, 'derive.ts'), '--check'],
     why: 'the files copied from bench/ have not drifted',
+  },
+  {
+    name: 'grade-v2',
+    cmd: ['bun', 'test', join(HERE, 'grade-v2.test.ts')],
+    why: 'the four repairs to the frozen grader, and that nothing else moved',
+  },
+  {
+    name: 'analyze',
+    cmd: ['bun', 'test', join(HERE, 'analyze.test.ts')],
+    why: "McNemar, Wilson and the paired bootstrap against values you can check by hand",
   },
   {
     name: 'sut-pinning',
@@ -114,6 +132,23 @@ const steps: Step[] = [
     why: 'every frozen answer re-derives from the graph it built',
     env: { SUT_DIR: '../github_issue' },
   },
+  // Each v2 split needs its own graph loaded, so smoke and oracles alternate.
+  // verify-oracles-v2 throws on a template it has no Cypher for, so this also
+  // proves no question type slipped in unchecked.
+  ...V2_SPLITS.flatMap((s): Step[] => [
+    {
+      name: `smoke:${s}`,
+      cmd: ['bun', join(HERE, 'smoke.ts'), '--split', s],
+      why: `${s} ingests correctly — leaves it ingested`,
+      env: { SUT_DIR: '../github_issue' },
+    },
+    {
+      name: `oracles-v2:${s}`,
+      cmd: ['bun', join(HERE, 'verify-oracles-v2.ts'), '--split', s],
+      why: `every ${s} oracle re-derives from independently written Cypher`,
+      env: { SUT_DIR: '../github_issue' },
+    },
+  ]),
 ];
 
 if (job) {

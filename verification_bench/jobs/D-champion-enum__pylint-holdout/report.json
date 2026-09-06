@@ -1,0 +1,4164 @@
+{
+  "job": "D-champion-enum__pylint-holdout",
+  "split": "pylint-holdout",
+  "startedAt": "2026-09-05T11:58:11.303Z",
+  "valid": true,
+  "invalidReason": null,
+  "config": {
+    "split": "pylint-holdout",
+    "job": "D-champion-enum__pylint-holdout",
+    "stage": "all",
+    "attempts": 3,
+    "latencyMs": 120,
+    "qaConcurrency": 6,
+    "keepGraph": false,
+    "noTypecheck": false,
+    "model": "openai/gpt-4o",
+    "judgeModel": "gpt-4o",
+    "corpusIssues": 60,
+    "tasks": 50
+  },
+  "sut": {
+    "hash": "73acfdc375576226",
+    "files": 19
+  },
+  "preflight": [
+    {
+      "name": "sut_present",
+      "pass": true,
+      "detail": "/home/azureuser/githubIssue/.worktrees/champion-enum/github_issue"
+    },
+    {
+      "name": "sut_deps_installed",
+      "pass": true,
+      "detail": "node_modules present"
+    },
+    {
+      "name": "corpus_present",
+      "pass": true,
+      "detail": "/home/azureuser/githubIssue/verification_bench/corpus/pylint-holdout.json"
+    },
+    {
+      "name": "tasks_present",
+      "pass": true,
+      "detail": "/home/azureuser/githubIssue/verification_bench/tasks/pylint-holdout.jsonl"
+    },
+    {
+      "name": "splits_frozen",
+      "pass": true,
+      "detail": "60 issues, 50 tasks, corpus built 2026-09-05T11:51:59.979Z"
+    },
+    {
+      "name": "canaries_present",
+      "pass": true,
+      "detail": "2 canary task(s)"
+    },
+    {
+      "name": "splits_unmodified",
+      "pass": true,
+      "detail": "checksums match"
+    },
+    {
+      "name": "seam_github_api_url",
+      "pass": true,
+      "detail": "github.ts honours GITHUB_API_URL"
+    },
+    {
+      "name": "seam_agent_config",
+      "pass": true,
+      "detail": "agent/config.ts present"
+    },
+    {
+      "name": "openai_key_set",
+      "pass": true,
+      "detail": "set"
+    },
+    {
+      "name": "openai_key_live",
+      "pass": true,
+      "detail": "model=gpt-4o-mini-2024-07-18 usage=9"
+    },
+    {
+      "name": "meter_sees_openai",
+      "pass": true,
+      "detail": "1 request(s) intercepted"
+    },
+    {
+      "name": "meter_reads_usage",
+      "pass": true,
+      "detail": "prompt=8 completion=1 model=gpt-4o-mini-2024-07-18"
+    },
+    {
+      "name": "meter_can_price_models",
+      "pass": true,
+      "detail": "all models priced"
+    },
+    {
+      "name": "docker_running",
+      "pass": true,
+      "detail": "29.1.3"
+    },
+    {
+      "name": "neo4j_image",
+      "pass": true,
+      "detail": "neo4j:5 present"
+    },
+    {
+      "name": "ports_free",
+      "pass": true,
+      "detail": "7690/7475 available"
+    },
+    {
+      "name": "sut_typechecks",
+      "pass": true,
+      "detail": "clean"
+    }
+  ],
+  "ingest": {
+    "durationMs": 146795,
+    "pipeline": {
+      "issuesFetched": 60,
+      "issuesIngested": 60,
+      "issuesAnalyzed": 60,
+      "issuesSkipped": 0,
+      "errors": [],
+      "durationMs": 146791,
+      "incremental": false
+    },
+    "github": {
+      "requests": 121,
+      "listingRequests": 1,
+      "issueRequests": 120,
+      "maxConcurrent": 1,
+      "busyMs": 14833
+    },
+    "neo4j": {
+      "queries": 280,
+      "sessions": 4,
+      "transactions": 1,
+      "samples": [
+        "CREATE CONSTRAINT issue_id_unique IF NOT EXISTS FOR (i:Issue",
+        "CREATE CONSTRAINT issue_number_unique IF NOT EXISTS FOR (i:I",
+        "CREATE CONSTRAINT comment_id_unique IF NOT EXISTS FOR (c:Com",
+        "CREATE CONSTRAINT user_login_unique IF NOT EXISTS FOR (u:Use",
+        "CREATE CONSTRAINT label_name_unique IF NOT EXISTS FOR (l:Lab",
+        "CREATE CONSTRAINT category_name_unique IF NOT EXISTS FOR (c:",
+        "CREATE CONSTRAINT competitor_name_unique IF NOT EXISTS FOR (",
+        "CREATE CONSTRAINT solution_text_unique IF NOT EXISTS FOR (s:",
+        "CREATE CONSTRAINT workaround_text_unique IF NOT EXISTS FOR (",
+        "CREATE CONSTRAINT keyword_name_unique IF NOT EXISTS FOR (k:K",
+        "CREATE INDEX issue_state_lookup IF NOT EXISTS FOR (i:Issue) ",
+        "CREATE INDEX issue_updated_at_lookup IF NOT EXISTS FOR (i:Is",
+        "UNWIND $issues AS item MERGE (i:Issue {issueId: item.issueId",
+        "UNWIND $issues AS item UNWIND item.users AS user MERGE (u:Us",
+        "UNWIND $issues AS item WITH item WHERE item.authorLogin IS N",
+        "UNWIND $issues AS item UNWIND item.labels AS label MERGE (l:",
+        "UNWIND $issues AS item UNWIND item.issueReactions AS reactio",
+        "UNWIND $issues AS item UNWIND item.comments AS c MERGE (comm",
+        "UNWIND $issues AS item UNWIND item.comments AS c WITH c WHER",
+        "UNWIND $issues AS item UNWIND item.comments AS c UNWIND c.re",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MERGE (w:Workaround {workaroundText: $text}) SET w.embedding",
+        "MERGE (w:Workaround {workaroundText: $text}) SET w.embedding",
+        "MATCH (i:Issue {number: $n}) UNWIND $competitors AS comp MER",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MERGE (w:Workaround {workaroundText: $text}) SET w.embedding",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (w:Workaround {workaroundText: $text}) SET w.embedding",
+        "MERGE (w:Workaround {workaroundText: $text}) SET w.embedding",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (w:Workaround {workaroundText: $text}) SET w.embedding",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MATCH (i:Issue {number: $n}) UNWIND $competitors AS comp MER",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MATCH (i:Issue {number: $n}) UNWIND $competitors AS comp MER",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MERGE (w:Workaround {workaroundText: $text}) SET w.embedding",
+        "MATCH (i:Issue {number: $n}) UNWIND $competitors AS comp MER",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MERGE (w:Workaround {workaroundText: $text}) SET w.embedding",
+        "MATCH (i:Issue {number: $n}) UNWIND $competitors AS comp MER",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MERGE (w:Workaround {workaroundText: $text}) SET w.embedding",
+        "MERGE (w:Workaround {workaroundText: $text}) SET w.embedding",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MERGE (w:Workaround {workaroundText: $text}) SET w.embedding",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MERGE (w:Workaround {workaroundText: $text}) SET w.embedding",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MERGE (w:Workaround {workaroundText: $text}) SET w.embedding",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (w:Workaround {workaroundText: $text}) SET w.embedding",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MERGE (w:Workaround {workaroundText: $text}) SET w.embedding",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (w:Workaround {workaroundText: $text}) SET w.embedding",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (w:Workaround {workaroundText: $text}) SET w.embedding",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = [",
+        "MATCH (i:Issue {number: $n}) UNWIND $categories AS name MERG",
+        "MATCH (i:Issue {number: $n}) OPTIONAL MATCH (i)-[:HAS_SOLUTI",
+        "MATCH (i:Issue {number: $n}) CALL { WITH i OPTIONAL MATCH (i",
+        "MERGE (s:Solution {solutionText: $text}) SET s.embedding = ["
+      ]
+    },
+    "openai": {
+      "requests": 60,
+      "byModel": {
+        "gpt-4o-2024-08-06": {
+          "requests": 60,
+          "promptTokens": 115195,
+          "completionTokens": 8360,
+          "unmetered": 0
+        }
+      },
+      "byEndpoint": {
+        "/chat/completions": 60
+      },
+      "byHost": {
+        "api.openai.com": 60
+      },
+      "unpricedModels": [],
+      "costUsd": 0.3715875
+    }
+  },
+  "graphProvenance": {
+    "sutHash": "73acfdc375576226",
+    "split": "pylint-holdout",
+    "job": "D-champion-enum__pylint-holdout",
+    "at": "2026-09-05T12:00:41.342Z"
+  },
+  "integrity": [
+    {
+      "name": "issue_count",
+      "pass": true,
+      "expected": "60",
+      "actual": "60",
+      "info": false
+    },
+    {
+      "name": "comment_count",
+      "pass": true,
+      "expected": "434",
+      "actual": "434",
+      "info": false
+    },
+    {
+      "name": "user_count",
+      "pass": true,
+      "expected": "151",
+      "actual": "151",
+      "info": false
+    },
+    {
+      "name": "label_count",
+      "pass": true,
+      "expected": "37",
+      "actual": "37",
+      "info": false
+    },
+    {
+      "name": "reaction_count",
+      "pass": true,
+      "expected": "635",
+      "actual": "635",
+      "info": false
+    },
+    {
+      "name": "no_duplicate_issue_number",
+      "pass": true,
+      "expected": "0",
+      "actual": "0",
+      "info": false
+    },
+    {
+      "name": "no_duplicate_issue_id",
+      "pass": true,
+      "expected": "0",
+      "actual": "0",
+      "info": false
+    },
+    {
+      "name": "no_duplicate_comment_id",
+      "pass": true,
+      "expected": "0",
+      "actual": "0",
+      "info": false
+    },
+    {
+      "name": "no_duplicate_user_login",
+      "pass": true,
+      "expected": "0",
+      "actual": "0",
+      "info": false
+    },
+    {
+      "name": "no_duplicate_label_name",
+      "pass": true,
+      "expected": "0",
+      "actual": "0",
+      "info": false
+    },
+    {
+      "name": "issue_author_edges",
+      "pass": true,
+      "expected": "60",
+      "actual": "60",
+      "info": false
+    },
+    {
+      "name": "issue_comment_edges",
+      "pass": true,
+      "expected": "434",
+      "actual": "434",
+      "info": false
+    },
+    {
+      "name": "issue_label_edges",
+      "pass": true,
+      "expected": "156",
+      "actual": "156",
+      "info": false
+    },
+    {
+      "name": "no_orphan_comments",
+      "pass": true,
+      "expected": "0",
+      "actual": "0",
+      "info": false
+    },
+    {
+      "name": "issue_numbers_match",
+      "pass": true,
+      "expected": "60 exact numbers",
+      "actual": "60 present"
+    },
+    {
+      "name": "per_issue_comment_counts",
+      "pass": true,
+      "expected": "every issue has its corpus comment count",
+      "actual": "all match"
+    },
+    {
+      "name": "constraints_defined",
+      "pass": true,
+      "expected": "(informational)",
+      "actual": "10",
+      "info": true
+    },
+    {
+      "name": "indexes_defined",
+      "pass": true,
+      "expected": "(informational)",
+      "actual": "12",
+      "info": true
+    },
+    {
+      "name": "solution_nodes",
+      "pass": true,
+      "expected": "(informational)",
+      "actual": "47",
+      "info": true
+    },
+    {
+      "name": "workaround_nodes",
+      "pass": true,
+      "expected": "(informational)",
+      "actual": "25",
+      "info": true
+    },
+    {
+      "name": "category_nodes",
+      "pass": true,
+      "expected": "(informational)",
+      "actual": "73",
+      "info": true
+    },
+    {
+      "name": "competitor_nodes",
+      "pass": true,
+      "expected": "(informational)",
+      "actual": "15",
+      "info": true
+    },
+    {
+      "name": "keyword_nodes",
+      "pass": true,
+      "expected": "(informational)",
+      "actual": "274",
+      "info": true
+    },
+    {
+      "name": "issues_with_category",
+      "pass": true,
+      "expected": "(informational)",
+      "actual": "60",
+      "info": true
+    },
+    {
+      "name": "vector_indexes",
+      "pass": true,
+      "expected": "(informational)",
+      "actual": "0",
+      "info": true
+    },
+    {
+      "name": "nodes_with_embedding",
+      "pass": true,
+      "expected": "(informational)",
+      "actual": "0",
+      "info": true
+    }
+  ],
+  "qa": {
+    "tasks": [
+      {
+        "id": "pylint-holdout-001",
+        "template": "total_issues",
+        "kind": "structural",
+        "canary": true,
+        "question": "How many issues are in the knowledge graph in total?",
+        "oracle": "60",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 60",
+            "answer": "There are a total of 60 issues in the knowledge graph.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) RETURN count(i) AS totalIssues"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1822,
+              "output": 45
+            },
+            "ms": 2395
+          },
+          {
+            "pass": true,
+            "reason": "found 60",
+            "answer": "There are a total of 60 issues in the knowledge graph.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) RETURN count(i) AS totalIssues"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1822,
+              "output": 45
+            },
+            "ms": 2857
+          },
+          {
+            "pass": true,
+            "reason": "found 60",
+            "answer": "There are a total of 60 issues in the knowledge graph.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) RETURN count(i) AS totalIssues"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1822,
+              "output": 45
+            },
+            "ms": 2844
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "pylint-holdout-002",
+        "template": "total_comments",
+        "kind": "structural",
+        "canary": true,
+        "question": "How many comments are stored across all issues in total?",
+        "oracle": "434",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 434",
+            "answer": "There are a total of 434 comments stored across all issues.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (c:Comment) RETURN count(c) AS totalComments"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1822,
+              "output": 45
+            },
+            "ms": 2570
+          },
+          {
+            "pass": true,
+            "reason": "found 434",
+            "answer": "There are a total of 434 comments stored across all issues.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH ()-[:HAS_COMMENT]->(c:Comment) RETURN count(c) AS totalComments"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1828,
+              "output": 51
+            },
+            "ms": 2602
+          },
+          {
+            "pass": true,
+            "reason": "found 434",
+            "answer": "There are a total of 434 comments stored across all issues.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (c:Comment) RETURN count(c) as totalComments"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1822,
+              "output": 45
+            },
+            "ms": 3485
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "pylint-holdout-003",
+        "template": "open_count",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many issues are currently open?",
+        "oracle": "24",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 24",
+            "answer": "There are currently 24 open issues.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {state: \"OPEN\"}) RETURN COUNT(i) AS openIssueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1822,
+              "output": 47
+            },
+            "ms": 3227
+          },
+          {
+            "pass": true,
+            "reason": "found 24",
+            "answer": "There are currently 24 open issues.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {state: \"OPEN\"}) RETURN count(i) AS openIssueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1822,
+              "output": 47
+            },
+            "ms": 2369
+          },
+          {
+            "pass": true,
+            "reason": "found 24",
+            "answer": "There are currently **24 open issues** in the repository.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {state: 'OPEN'}) RETURN count(i) as openIssues"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1819,
+              "output": 49
+            },
+            "ms": 2922
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "pylint-holdout-004",
+        "template": "closed_count",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many issues are closed?",
+        "oracle": "36",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 36",
+            "answer": "There are 36 closed issues.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {state: 'CLOSED'}) RETURN count(i) AS closedIssuesCount LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1823,
+              "output": 49
+            },
+            "ms": 2559
+          },
+          {
+            "pass": true,
+            "reason": "found 36",
+            "answer": "There are 36 closed issues in the repository.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {state: 'CLOSED'}) RETURN count(i) AS closedIssues"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1818,
+              "output": 48
+            },
+            "ms": 2455
+          },
+          {
+            "pass": true,
+            "reason": "found 36",
+            "answer": "There are 36 closed issues.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {state: 'CLOSED'}) RETURN count(i) AS closedIssuesCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1820,
+              "output": 46
+            },
+            "ms": 2436
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "pylint-holdout-005",
+        "template": "state_of_issue",
+        "kind": "retrieval",
+        "canary": false,
+        "question": "Is issue #214 open or closed?",
+        "oracle": "CLOSED",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "Issue [#214](https://github.com/user/repo/issues/214) is closed.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 214}) RETURN i.state LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1821,
+              "output": 55
+            },
+            "ms": 3860
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "Issue [#214](https://github.com/issues/214) is closed.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 214}) RETURN i.state LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1821,
+              "output": 52
+            },
+            "ms": 2523
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "Issue [#214](https://github.com/org/repo/issues/214) is closed.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 214}) RETURN i.state LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1821,
+              "output": 55
+            },
+            "ms": 2679
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "pylint-holdout-006",
+        "template": "open_label_count",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many OPEN issues carry the label \"Enhancement ✨\"?",
+        "oracle": "6",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 6",
+            "answer": "There are 6 open issues with the label \"Enhancement ✨\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"Enhancement ✨\"}) WHERE i.state = \"OPEN\" RETURN count(i) as openEnhancementIssues"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1855,
+              "output": 74
+            },
+            "ms": 2577
+          },
+          {
+            "pass": true,
+            "reason": "found 6",
+            "answer": "There are 6 open issues with the label \"Enhancement ✨\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE i.state = 'OPEN' AND l.name = 'Enhancement ✨' RETURN count(i) AS openEnhancementIssues"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1856,
+              "output": 75
+            },
+            "ms": 2440
+          },
+          {
+            "pass": true,
+            "reason": "found 6",
+            "answer": "There are 6 open issues labeled \"Enhancement ✨\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE i.state = 'OPEN' AND l.name = 'Enhancement ✨' RETURN COUNT(i) AS openEnhancementIssues"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1856,
+              "output": 73
+            },
+            "ms": 3587
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "pylint-holdout-007",
+        "template": "open_with_label",
+        "kind": "structural",
+        "canary": false,
+        "question": "List the issue numbers of every OPEN issue labelled \"Enhancement ✨\".",
+        "oracle": "#3732, #3853, #3903, #3995, #5898, #6495",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "cited 3732,3853,3903,3995,5898,6495",
+            "answer": "Here are the issue numbers for OPEN issues labelled \"Enhancement ✨\":\n\n- [#3853](https://github.com/user/repo/issues/3853)\n- [#5898](https://github.com/user/repo/issues/5898)\n- [#3732](https://github.com/user/repo/issues/3732)\n- [#3903](https://github.com/user/repo/issues/3903)\n- [#6495](https://github.com/user/repo/issues/6495)\n- [#3995](https://github.com/user/repo/issues/3995)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: 'Enhancement ✨'}) WHERE i.state = 'OPEN' RETURN i.number LIMIT 25"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1884,
+              "output": 178
+            },
+            "ms": 3399
+          },
+          {
+            "pass": true,
+            "reason": "cited 3732,3853,3903,3995,5898,6495",
+            "answer": "Here are the issue numbers of all open issues labelled \"Enhancement ✨\":\n\n- [#3853](https://github.com/your-repo/issues/3853)\n- [#5898](https://github.com/your-repo/issues/5898)\n- [#3732](https://github.com/your-repo/issues/3732)\n- [#3903](https://github.com/your-repo/issues/3903)\n- [#6495](https://github.com/your-repo/issues/6495)\n- [#3995](https://github.com/your-repo/issues/3995)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE l.name = 'Enhancement ✨' AND i.state = 'OPEN' RETURN i.number LIMIT 50"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1886,
+              "output": 187
+            },
+            "ms": 4370
+          },
+          {
+            "pass": true,
+            "reason": "cited 3732,3853,3903,3995,5898,6495",
+            "answer": "Here are the issue numbers for OPEN issues labeled \"Enhancement ✨\":\n\n- [#3853](https://github.com/org/repo/issues/3853)\n- [#5898](https://github.com/org/repo/issues/5898)\n- [#3732](https://github.com/org/repo/issues/3732)\n- [#3903](https://github.com/org/repo/issues/3903)\n- [#6495](https://github.com/org/repo/issues/6495)\n- [#3995](https://github.com/org/repo/issues/3995)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (issue:Issue)-[:HAS_LABEL]->(label:Label {name: \"Enhancement ✨\"}) WHERE issue.state = \"OPEN\" RETURN issue.number LIMIT 100"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1885,
+              "output": 179
+            },
+            "ms": 4846
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "pylint-holdout-008",
+        "template": "open_label_count",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many OPEN issues carry the label \"Needs PR\"?",
+        "oracle": "12",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 12",
+            "answer": "There are 12 open issues labeled \"Needs PR\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE i.state = 'OPEN' AND l.name = \"Needs PR\" RETURN COUNT(i) AS openIssuesWithLabel"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1850,
+              "output": 69
+            },
+            "ms": 2698
+          },
+          {
+            "pass": true,
+            "reason": "found 12",
+            "answer": "There are 12 open issues with the label \"Needs PR\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE i.state = 'OPEN' AND l.name = 'Needs PR' RETURN COUNT(i) AS openIssuesWithLabel"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1850,
+              "output": 71
+            },
+            "ms": 2600
+          },
+          {
+            "pass": true,
+            "reason": "found 12",
+            "answer": "There are 12 open issues labeled \"Needs PR.\"",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE i.state = 'OPEN' AND l.name = 'Needs PR' RETURN COUNT(i) AS openNeedsPRCount LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1853,
+              "output": 72
+            },
+            "ms": 3215
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "pylint-holdout-009",
+        "template": "open_with_label",
+        "kind": "structural",
+        "canary": false,
+        "question": "List the issue numbers of every OPEN issue labelled \"Bug :beetle:\".",
+        "oracle": "#2966, #5251, #9950",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "cited 2966,5251,9950",
+            "answer": "Here are the issue numbers of OPEN issues labeled \"Bug :beetle:\":\n\n- [#5251](https://github.com/your-repo/issues/5251)\n- [#2966](https://github.com/your-repo/issues/2966)\n- [#9950](https://github.com/your-repo/issues/9950)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE i.state = 'OPEN' AND l.name = 'Bug :beetle:' RETURN i.number LIMIT 50"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1873,
+              "output": 132
+            },
+            "ms": 2853
+          },
+          {
+            "pass": true,
+            "reason": "cited 2966,5251,9950",
+            "answer": "Here are the issue numbers for open issues labeled \"Bug :beetle:\":\n\n- [#5251](https://github.com/org/repo/issues/5251)\n- [#2966](https://github.com/org/repo/issues/2966)\n- [#9950](https://github.com/org/repo/issues/9950)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE i.state = 'OPEN' AND l.name = 'Bug :beetle:' RETURN i.number LIMIT 50"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1873,
+              "output": 129
+            },
+            "ms": 2795
+          },
+          {
+            "pass": true,
+            "reason": "cited 2966,5251,9950",
+            "answer": "Here are the open issues labeled \"Bug :beetle:\":\n\n- [#5251](https://github.com/issue/5251)\n- [#2966](https://github.com/issue/2966)\n- [#9950](https://github.com/issue/9950)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE i.state = 'OPEN' AND l.name = 'Bug :beetle:' RETURN i.number AS issueNumber LIMIT 100"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1876,
+              "output": 123
+            },
+            "ms": 3150
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "pylint-holdout-010",
+        "template": "distinct_labels",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many distinct labels exist in the knowledge graph?",
+        "oracle": "37",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 37",
+            "answer": "There are 37 distinct labels in the knowledge graph.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (l:Label) RETURN COUNT(DISTINCT l.name) AS labelCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1824,
+              "output": 47
+            },
+            "ms": 2791
+          },
+          {
+            "pass": true,
+            "reason": "found 37",
+            "answer": "There are 37 distinct labels in the knowledge graph.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (l:Label) RETURN COUNT(DISTINCT l.name) AS labelCount LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1827,
+              "output": 50
+            },
+            "ms": 2766
+          },
+          {
+            "pass": true,
+            "reason": "found 37",
+            "answer": "There are 37 distinct labels in the knowledge graph.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (l:Label) RETURN COUNT(DISTINCT l.name) AS labelCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1824,
+              "output": 47
+            },
+            "ms": 3120
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "pylint-holdout-011",
+        "template": "label_count",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many issues carry the label \"Enhancement ✨\"?",
+        "oracle": "18",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 18",
+            "answer": "There are 18 issues labeled with \"Enhancement ✨\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: 'Enhancement ✨'}) RETURN COUNT(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1841,
+              "output": 62
+            },
+            "ms": 2551
+          },
+          {
+            "pass": true,
+            "reason": "found 18",
+            "answer": "There are 18 issues with the label \"Enhancement ✨\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: 'Enhancement ✨'}) RETURN count(i) AS enhancementIssuesCount LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1847,
+              "output": 67
+            },
+            "ms": 3351
+          },
+          {
+            "pass": true,
+            "reason": "found 18",
+            "answer": "There are 18 issues labeled with \"Enhancement ✨\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: 'Enhancement ✨'}) RETURN count(i) AS enhancementIssueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1844,
+              "output": 63
+            },
+            "ms": 2473
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "pylint-holdout-012",
+        "template": "label_natural_casing",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many issues are tagged \"enhancement ✨\"?",
+        "oracle": "18 (stored as \"Enhancement ✨\")",
+        "attempts": [
+          {
+            "pass": false,
+            "reason": "expected 18, not present in answer",
+            "answer": "There are no issues currently tagged with \"enhancement ✨\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"enhancement ✨\"}) RETURN COUNT(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1840,
+              "output": 63
+            },
+            "ms": 3028
+          },
+          {
+            "pass": false,
+            "reason": "expected 18, not present in answer",
+            "answer": "There are no issues currently tagged with \"enhancement ✨\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"enhancement ✨\"}) RETURN COUNT(i) AS enhancement_issues"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1843,
+              "output": 64
+            },
+            "ms": 3177
+          },
+          {
+            "pass": false,
+            "reason": "expected 18, not present in answer",
+            "answer": "There are no issues currently tagged with \"enhancement ✨\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: 'enhancement ✨'}) RETURN COUNT(i) AS count"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1837,
+              "output": 61
+            },
+            "ms": 2269
+          }
+        ],
+        "passRate": 0
+      },
+      {
+        "id": "pylint-holdout-013",
+        "template": "label_count",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many issues carry the label \"Needs PR\"?",
+        "oracle": "17",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 17",
+            "answer": "There are 17 issues labeled with \"Needs PR\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"Needs PR\"}) RETURN count(i) as issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1836,
+              "output": 59
+            },
+            "ms": 3641
+          },
+          {
+            "pass": true,
+            "reason": "found 17",
+            "answer": "There are 17 issues with the label \"Needs PR\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"Needs PR\"}) RETURN count(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1836,
+              "output": 60
+            },
+            "ms": 2513
+          },
+          {
+            "pass": true,
+            "reason": "found 17",
+            "answer": "There are 17 issues labeled with \"Needs PR.\"",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"Needs PR\"}) RETURN COUNT(i) AS count"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1834,
+              "output": 58
+            },
+            "ms": 2365
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "pylint-holdout-014",
+        "template": "label_members",
+        "kind": "structural",
+        "canary": false,
+        "question": "List the issue numbers of every issue labelled \"Help wanted 🙏\".",
+        "oracle": "#214, #1070, #1548, #3525, #3839, #5898, #6352",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "cited 214,1070,1548,3525,3839,5898,6352",
+            "answer": "Here are the issue numbers labeled \"Help wanted 🙏\":\n\n- [#3525](https://github.com/org/repo/issues/3525)\n- [#1070](https://github.com/org/repo/issues/1070)\n- [#1548](https://github.com/org/repo/issues/1548)\n- [#214](https://github.com/org/repo/issues/214)\n- [#5898](https://github.com/org/repo/issues/5898)\n- [#3839](https://github.com/org/repo/issues/3839)\n- [#6352](https://github.com/org/repo/issues/6352)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"Help wanted 🙏\"}) RETURN i.number LIMIT 100"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1881,
+              "output": 185
+            },
+            "ms": 3184
+          },
+          {
+            "pass": true,
+            "reason": "cited 214,1070,1548,3525,3839,5898,6352",
+            "answer": "Here are the issue numbers with the label \"Help wanted 🙏\":\n\n- [#3525](https://github.com/user/repo/issues/3525)\n- [#1070](https://github.com/user/repo/issues/1070)\n- [#1548](https://github.com/user/repo/issues/1548)\n- [#214](https://github.com/user/repo/issues/214)\n- [#5898](https://github.com/user/repo/issues/5898)\n- [#3839](https://github.com/user/repo/issues/3839)\n- [#6352](https://github.com/user/repo/issues/6352)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"Help wanted 🙏\"}) RETURN i.number LIMIT 25"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1881,
+              "output": 187
+            },
+            "ms": 4572
+          },
+          {
+            "pass": true,
+            "reason": "cited 214,1070,1548,3525,3839,5898,6352",
+            "answer": "Here are the issue numbers labelled \"Help wanted 🙏\":\n\n- [#214](https://github.com/issues/214)\n- [#1070](https://github.com/issues/1070)\n- [#1548](https://github.com/issues/1548)\n- [#3525](https://github.com/issues/3525)\n- [#3839](https://github.com/issues/3839)\n- [#5898](https://github.com/issues/5898)\n- [#6352](https://github.com/issues/6352)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"Help wanted 🙏\"}) RETURN i.number LIMIT 50"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1881,
+              "output": 164
+            },
+            "ms": 3386
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "pylint-holdout-015",
+        "template": "distinct_authors",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many distinct users have authored issues in the knowledge graph?",
+        "oracle": "55",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 55",
+            "answer": "There are 55 distinct users who have authored issues in the knowledge graph.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User) RETURN COUNT(DISTINCT u.login) AS distinctUserCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1841,
+              "output": 63
+            },
+            "ms": 2653
+          },
+          {
+            "pass": true,
+            "reason": "found 55",
+            "answer": "There are 55 distinct users who have authored issues in the knowledge graph.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User) RETURN COUNT(DISTINCT u.login) AS distinctUserCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1841,
+              "output": 63
+            },
+            "ms": 4132
+          },
+          {
+            "pass": true,
+            "reason": "found 55",
+            "answer": "There are 55 distinct users who have authored issues in the knowledge graph.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User) RETURN COUNT(DISTINCT u.login) as userCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1839,
+              "output": 62
+            },
+            "ms": 2794
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "pylint-holdout-016",
+        "template": "author_issues",
+        "kind": "structural",
+        "canary": false,
+        "question": "Which issues were opened by the user \"NeilGirdhar\"? Give their issue numbers.",
+        "oracle": "#3525, #5320, #6495",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "cited 3525,5320,6495",
+            "answer": "Here are the issue numbers opened by the user \"NeilGirdhar\":\n\n- [#6495](https://github.com/issues/6495)\n- [#5320](https://github.com/issues/5320)\n- [#3525](https://github.com/issues/3525)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User {login: \"NeilGirdhar\"}) RETURN i.number LIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1868,
+              "output": 111
+            },
+            "ms": 2866
+          },
+          {
+            "pass": true,
+            "reason": "cited 3525,5320,6495",
+            "answer": "Issues opened by the user \"NeilGirdhar\" are:\n\n- [#6495](https://github.com/your-repo/issues/6495)\n- [#5320](https://github.com/your-repo/issues/5320)\n- [#3525](https://github.com/your-repo/issues/3525)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User {login: \"NeilGirdhar\"}) RETURN i.number LIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1868,
+              "output": 121
+            },
+            "ms": 3236
+          },
+          {
+            "pass": true,
+            "reason": "cited 3525,5320,6495",
+            "answer": "Here are the issue numbers opened by the user \"NeilGirdhar\":\n\n- [#6495](https://github.com/issue/6495)\n- [#5320](https://github.com/issue/5320)\n- [#3525](https://github.com/issue/3525)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User {login: \"NeilGirdhar\"}) RETURN i.number LIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1868,
+              "output": 114
+            },
+            "ms": 2439
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "pylint-holdout-017",
+        "template": "issue_author",
+        "kind": "retrieval",
+        "canary": false,
+        "question": "Who opened issue #214?",
+        "oracle": "pylint-bot",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "Issue [#214](https://github.com/issues/214) was opened by the user **pylint-bot**.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 214})-[:AUTHORED_BY]->(u:User) RETURN u.login AS author LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1833,
+              "output": 76
+            },
+            "ms": 2641
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "Issue [#214](https://github.com/issues/214) was opened by the user \"pylint-bot.\"",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 214})-[:AUTHORED_BY]->(u:User) RETURN u.login AS author LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1833,
+              "output": 75
+            },
+            "ms": 2604
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "Issue [#214](https://github.com/your-repo/issues/214) was opened by the user `pylint-bot`.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 214})-[:AUTHORED_BY]->(u:User) RETURN u.login AS author LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1833,
+              "output": 79
+            },
+            "ms": 2499
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "pylint-holdout-018",
+        "template": "commenter_count",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many distinct users have commented on issue #214?",
+        "oracle": "37",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 37",
+            "answer": "On [issue #214](https://github.com/repository/issues/214), **37 distinct users** have commented.\n\n### Summary of Discussions:\n- **Workflows/Use Cases**: Users face issues with Pylint flagging similar import blocks and setup.py files as duplicate code.\n- **Competitors Mentioned**: \n  - Ruff: Suggested as a fast alternative for large projects.\n  - Vulture: Used with Ruff for specific rule checks.\n- **Workarounds**: \n  - Custom patches such as in PR #1055.\n  - Adjusting `min-similarity-lines` in pylintrc.\n  - Unique comments to avoid duplication warning.\n  - Using `pylint: disable=duplicate-code` with mixed success.\n- **Proposed Solutions**: \n  - Two-phase design for future Pylint versions.\n  - Ignoring import statements and multiline calls.\n  - A merged pull request with release plans.\n- **Overall Tone**: Generally frustrating, with some positivity around resolved solutions.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 214})-[:HAS_COMMENT]->(c:Comment)-[:AUTHORED_BY]->(u:User)\nRETURN COUNT(DISTINCT u.login) as userCount"
+                }
+              },
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 214,
+                  "userQuery": null
+                }
+              }
+            ],
+            "usage": {
+              "input": 2221,
+              "output": 312
+            },
+            "ms": 10884
+          },
+          {
+            "pass": true,
+            "reason": "found 37",
+            "answer": "Issue [#214](https://github.com/your-repository/issues/214) has comments from 37 distinct users.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 214})-[:HAS_COMMENT]->(c:Comment)-[:AUTHORED_BY]->(u:User)\nRETURN COUNT(DISTINCT u.login) AS distinctUserCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1855,
+              "output": 89
+            },
+            "ms": 2696
+          },
+          {
+            "pass": true,
+            "reason": "found 37",
+            "answer": "There are 37 distinct users who have commented on [issue #214](https://github.com/user/repo/issues/214).",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 214})-[:HAS_COMMENT]->(c:Comment)-[:AUTHORED_BY]->(u:User) RETURN COUNT(DISTINCT u.login) AS distinctUserCount LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1857,
+              "output": 92
+            },
+            "ms": 2718
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "pylint-holdout-019",
+        "template": "month_count",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many issues were created in 2022-04?",
+        "oracle": "4",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 4",
+            "answer": "In April 2022, a total of 4 issues were created.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.createdAt STARTS WITH '2022-04' RETURN count(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1837,
+              "output": 60
+            },
+            "ms": 2457
+          },
+          {
+            "pass": true,
+            "reason": "found 4",
+            "answer": "In April 2022, a total of 4 issues were created.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)\nWHERE i.createdAt STARTS WITH '2022-04'\nRETURN COUNT(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1839,
+              "output": 62
+            },
+            "ms": 2704
+          },
+          {
+            "pass": true,
+            "reason": "found 4",
+            "answer": "In April 2022, a total of 4 issues were created.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)\nWHERE i.createdAt STARTS WITH '2022-04'\nRETURN COUNT(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1839,
+              "output": 62
+            },
+            "ms": 2923
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "pylint-holdout-020",
+        "template": "created_before",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many issues were created before 2020-09-25?",
+        "oracle": "17",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 17",
+            "answer": "There were 17 issues created before 2020-09-25.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE date(i.createdAt) < date('2020-09-25') RETURN count(i) AS issueCount"
+                }
+              },
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE datetime(i.createdAt) < datetime('2020-09-25T00:00:00Z') RETURN count(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2922,
+              "output": 116
+            },
+            "ms": 4363
+          },
+          {
+            "pass": true,
+            "reason": "found 17",
+            "answer": "There were 17 issues created before September 25, 2020.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE date(i.createdAt) < date('2020-09-25') RETURN count(i) as issueCount"
+                }
+              },
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE datetime(i.createdAt) < datetime('2020-09-25T00:00:00') RETURN count(i) as issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2921,
+              "output": 115
+            },
+            "ms": 3881
+          },
+          {
+            "pass": true,
+            "reason": "found 17",
+            "answer": "There were 17 issues created before 2020-09-25.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.createdAt < '2020-09-25' RETURN count(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1841,
+              "output": 60
+            },
+            "ms": 3258
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "pylint-holdout-021",
+        "template": "created_after",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many issues were created after 2020-09-25?",
+        "oracle": "43",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 43",
+            "answer": "There were 43 issues created after 2020-09-25.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.createdAt > '2020-09-25' RETURN COUNT(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1841,
+              "output": 60
+            },
+            "ms": 2431
+          },
+          {
+            "pass": true,
+            "reason": "found 43",
+            "answer": "A total of 43 issues were created after 2020-09-25.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE date(i.createdAt) > date('2020-09-25') RETURN count(i) as issueCount"
+                }
+              },
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE datetime(i.createdAt) > datetime('2020-09-25T00:00:00Z') RETURN count(i) as issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2922,
+              "output": 118
+            },
+            "ms": 3398
+          },
+          {
+            "pass": true,
+            "reason": "found 43",
+            "answer": "There were 43 issues created after 2020-09-25.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.createdAt > '2020-09-25' RETURN count(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1841,
+              "output": 60
+            },
+            "ms": 2474
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "pylint-holdout-022",
+        "template": "created_after",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many issues were created after 2021-10-28?",
+        "oracle": "29",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 29",
+            "answer": "There were 29 issues created after 2021-10-28.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.createdAt > '2021-10-28' RETURN count(i) as issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1841,
+              "output": 60
+            },
+            "ms": 2309
+          },
+          {
+            "pass": true,
+            "reason": "found 29",
+            "answer": "There were 29 issues created after 2021-10-28.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE date(i.createdAt) > date('2021-10-28') RETURN count(i) AS issueCount"
+                }
+              },
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE datetime(i.createdAt) > datetime('2021-10-28T00:00:00Z') RETURN count(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2922,
+              "output": 116
+            },
+            "ms": 3854
+          },
+          {
+            "pass": true,
+            "reason": "found 29",
+            "answer": "There were 29 issues created after 2021-10-28.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.createdAt > '2021-10-28' RETURN count(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1841,
+              "output": 60
+            },
+            "ms": 2251
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "pylint-holdout-023",
+        "template": "created_between",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many issues were created between 2020-09-25 and 2022-06-09?",
+        "oracle": "29",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 29",
+            "answer": "A total of 29 issues were created between 2020-09-25 and 2022-06-09.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.createdAt >= '2020-09-25' AND i.createdAt <= '2022-06-09' RETURN count(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1870,
+              "output": 83
+            },
+            "ms": 3196
+          },
+          {
+            "pass": true,
+            "reason": "found 29",
+            "answer": "There were 29 issues created between 2020-09-25 and 2022-06-09.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE date(i.createdAt) >= date('2020-09-25') AND date(i.createdAt) <= date('2022-06-09') RETURN count(i) AS issueCount"
+                }
+              },
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE datetime(i.createdAt) >= datetime('2020-09-25T00:00:00') AND datetime(i.createdAt) <= datetime('2022-06-09T23:59:59') RETURN count(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2999,
+              "output": 161
+            },
+            "ms": 4662
+          },
+          {
+            "pass": true,
+            "reason": "found 29",
+            "answer": "29 issues were created between 2020-09-25 and 2022-06-09.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.createdAt >= '2020-09-25' AND i.createdAt <= '2022-06-09' RETURN count(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1870,
+              "output": 79
+            },
+            "ms": 3052
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "pylint-holdout-024",
+        "template": "zero_comment_count",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many issues have no comments at all?",
+        "oracle": "11",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 11",
+            "answer": "There are 11 issues with no comments at all.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE NOT (i)-[:HAS_COMMENT]->(:Comment) RETURN COUNT(i) AS numIssues"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1830,
+              "output": 55
+            },
+            "ms": 2734
+          },
+          {
+            "pass": true,
+            "reason": "found 11",
+            "answer": "There are 11 issues without any comments.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE NOT (i)-[:HAS_COMMENT]->() RETURN count(i) AS issuesWithoutComments"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1830,
+              "output": 52
+            },
+            "ms": 2377
+          },
+          {
+            "pass": true,
+            "reason": "found 11",
+            "answer": "There are 11 issues with no comments at all.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)\nWHERE NOT (i)-[:HAS_COMMENT]->(:Comment)\nRETURN COUNT(i) AS noCommentCount LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1837,
+              "output": 61
+            },
+            "ms": 3682
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "pylint-holdout-025",
+        "template": "most_comments",
+        "kind": "structural",
+        "canary": false,
+        "question": "Which issue has the most comments? Give its issue number.",
+        "oracle": "#214 (55 comments)",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "cited 214",
+            "answer": "The issue with the most comments is [#214](https://github.com/your-repo/your-project/issues/214).",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment)\nRETURN i.number, COUNT(c) as commentCount\nORDER BY commentCount DESC\nLIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1852,
+              "output": 81
+            },
+            "ms": 3607
+          },
+          {
+            "pass": true,
+            "reason": "cited 214",
+            "answer": "The issue with the most comments is [#214](https://github.com/username/repository/issues/214).",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment) RETURN i.number AS issueNumber, COUNT(c) AS commentCount ORDER BY commentCount DESC LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1852,
+              "output": 78
+            },
+            "ms": 2975
+          },
+          {
+            "pass": true,
+            "reason": "cited 214",
+            "answer": "The issue with the most comments is [issue #214](https://github.com/your-repo/issues/214).",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment)\nRETURN i.number AS issueNumber, COUNT(c) AS commentCount\nORDER BY commentCount DESC\nLIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1855,
+              "output": 82
+            },
+            "ms": 2524
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "pylint-holdout-026",
+        "template": "most_reactions",
+        "kind": "structural",
+        "canary": false,
+        "question": "Which issue has received the most reactions? Give its issue number.",
+        "oracle": "#214 (100 reactions)",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "cited 214",
+            "answer": "The issue with the most reactions is [#214](https://github.com/owner/repo/issues/214).",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_REACTION]->(r:Reaction)\nRETURN i.number, COUNT(r) AS reaction_count\nORDER BY reaction_count DESC\nLIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1855,
+              "output": 79
+            },
+            "ms": 2383
+          },
+          {
+            "pass": true,
+            "reason": "cited 214",
+            "answer": "The issue with the most reactions is [#214](https://github.com/org/repo/issues/214).",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_REACTION]->(r:Reaction)\nRETURN i.number, COUNT(r) AS reactionCount\nORDER BY reactionCount DESC\nLIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1855,
+              "output": 78
+            },
+            "ms": 2168
+          },
+          {
+            "pass": true,
+            "reason": "cited 214",
+            "answer": "The issue that has received the most reactions is [#214](https://github.com/your-repo/issues/214).",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_REACTION]->(r:Reaction)\nRETURN i.number AS issueNumber, COUNT(r) AS reactionCount\nORDER BY reactionCount DESC\nLIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1858,
+              "output": 84
+            },
+            "ms": 4086
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "pylint-holdout-027",
+        "template": "issues_with_ge_n_comments",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many issues have at least 3 comments?",
+        "oracle": "37",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 37",
+            "answer": "There are 37 issues that have at least 3 comments.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment)\nWITH i, count(c) AS commentCount\nWHERE commentCount >= 3\nRETURN count(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1847,
+              "output": 72
+            },
+            "ms": 2556
+          },
+          {
+            "pass": true,
+            "reason": "found 37",
+            "answer": "There are 37 issues with at least 3 comments.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment)\nWITH i, COUNT(c) AS commentCount\nWHERE commentCount >= 3\nRETURN COUNT(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1847,
+              "output": 71
+            },
+            "ms": 2470
+          },
+          {
+            "pass": true,
+            "reason": "found 37",
+            "answer": "There are 37 issues with at least 3 comments.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment)\nWITH i, COUNT(c) AS comment_count\nWHERE comment_count >= 3\nRETURN COUNT(i) AS issue_count"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1847,
+              "output": 71
+            },
+            "ms": 2705
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "pylint-holdout-028",
+        "template": "issue_comment_count",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many comments does issue #214 have?",
+        "oracle": "55",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 55",
+            "answer": "Issue [#214](https://github.com/user/repo/issues/214) has 55 comments.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 214})-[:HAS_COMMENT]->(c:Comment) RETURN COUNT(c) as commentCount LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1836,
+              "output": 71
+            },
+            "ms": 2880
+          },
+          {
+            "pass": true,
+            "reason": "found 55",
+            "answer": "Issue [#214](https://github.com/user/repo/issues/214) has 55 comments.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment) WHERE i.number = 214 RETURN COUNT(c) AS commentCount LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1836,
+              "output": 71
+            },
+            "ms": 2752
+          },
+          {
+            "pass": true,
+            "reason": "found 55",
+            "answer": "Issue [#214](https://github.com/user/repo/issues/214) has 55 comments.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 214})-[:HAS_COMMENT]->(c:Comment)\nRETURN count(c) AS commentCount LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1837,
+              "output": 72
+            },
+            "ms": 2371
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "pylint-holdout-029",
+        "template": "issue_title",
+        "kind": "retrieval",
+        "canary": false,
+        "question": "What is the title of issue #214?",
+        "oracle": "The duplicate-code (R0801) can't be disabled",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "The title of issue [#214](https://github.com/username/repository/issues/214) is \"The duplicate-code (R0801) can't be disabled\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 214}) RETURN i.title LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1832,
+              "output": 70
+            },
+            "ms": 3305
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "The title of issue [#214](https://github.com) is \"The duplicate-code (R0801) can't be disabled.\"",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 214}) RETURN i.title LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1832,
+              "output": 63
+            },
+            "ms": 2808
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "The title of issue [#214](https://github.com) is \"The duplicate-code (R0801) can't be disabled\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 214}) RETURN i.title LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1832,
+              "output": 63
+            },
+            "ms": 2590
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "pylint-holdout-030",
+        "template": "issue_title",
+        "kind": "retrieval",
+        "canary": false,
+        "question": "What is the title of issue #1070?",
+        "oracle": "Support output to a file to support tox on CI servers",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "The title of issue [#1070](https://github.com/issue/1070) is \"Support output to a file to support tox on CI servers\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 1070}) RETURN i.title LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1835,
+              "output": 70
+            },
+            "ms": 2700
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "The title of issue [#1070](https://github.com/org/repo/issues/1070) is \"Support output to a file to support tox on CI servers.\"",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 1070}) RETURN i.title LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1835,
+              "output": 72
+            },
+            "ms": 2640
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "The title of issue [#1070](https://github.com/issues/1070) is \"Support output to a file to support tox on CI servers.\"",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {number: 1070}) RETURN i.title LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1835,
+              "output": 69
+            },
+            "ms": 2570
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "pylint-holdout-031",
+        "template": "mentions_term",
+        "kind": "retrieval",
+        "canary": false,
+        "question": "Which issues mention \"added\" in their title or body? Give their issue numbers.",
+        "oracle": "#1070, #2966, #4741, #5108, #5194, #6060",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "cited 1070,2966,4741,5108,5194,6060",
+            "answer": "Here are the issue numbers that mention \"added\" in their title or body:\n\n- [#1070](https://github.com/your-repo/issues/1070)\n- [#2966](https://github.com/your-repo/issues/2966)\n- [#4741](https://github.com/your-repo/issues/4741)\n- [#5108](https://github.com/your-repo/issues/5108)\n- [#5194](https://github.com/your-repo/issues/5194)\n- [#6060](https://github.com/your-repo/issues/6060)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)\nWHERE i.title CONTAINS 'added' OR i.bodyText CONTAINS 'added'\nRETURN i.number AS issueNumber\nLIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1889,
+              "output": 186
+            },
+            "ms": 3021
+          },
+          {
+            "pass": true,
+            "reason": "cited 1070,2966,4741,5108,5194,6060",
+            "answer": "Here are the issue numbers that mention \"added\" in their title or body:\n\n- [#1070](https://github.com/org/repo/issues/1070)\n- [#2966](https://github.com/org/repo/issues/2966)\n- [#4741](https://github.com/org/repo/issues/4741)\n- [#5108](https://github.com/org/repo/issues/5108)\n- [#5194](https://github.com/org/repo/issues/5194)\n- [#6060](https://github.com/org/repo/issues/6060)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.title CONTAINS 'added' OR i.bodyText CONTAINS 'added' RETURN i.number LIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1883,
+              "output": 174
+            },
+            "ms": 4458
+          },
+          {
+            "pass": true,
+            "reason": "cited 1070,2966,4741,5108,5194,6060",
+            "answer": "Here are the issues that mention \"added\" in their title or body:\n\n- [#1070](https://github.com/org/repo/issues/1070)\n- [#2966](https://github.com/org/repo/issues/2966)\n- [#4741](https://github.com/org/repo/issues/4741)\n- [#5108](https://github.com/org/repo/issues/5108)\n- [#5194](https://github.com/org/repo/issues/5194)\n- [#6060](https://github.com/org/repo/issues/6060)",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.title CONTAINS \"added\" OR i.bodyText CONTAINS \"added\" RETURN i.number LIMIT 20"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1883,
+              "output": 173
+            },
+            "ms": 3774
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "pylint-holdout-032",
+        "template": "labels_cooccurring",
+        "kind": "retrieval",
+        "canary": false,
+        "question": "Which other labels appear on issues that also carry the label \"pyreverse\"?",
+        "oracle": "Enhancement ✨, Good first issue, Help wanted 🙏, Minor 💅, Needs design proposal :lock: (not: Accessibility, Astroid, Beta-Blocker 🙅🩸, Breaking changes for 3.0 🦤, Bug :beetle:, C: invalid-name, Checkers, Configuration, Control flow, Crash 💥, Decorators, Discussion 🤔, False Negative 🦋, False Positive 🦟, Hacktoberfest, High effort 🏋, High priority, Import system, Lib specific 💅, Maintenance, Needs PR, Needs astroid Brain 🧠, Needs decision :lock:, Needs investigation 🔬, Proposal 📨, Regression, Unreleased, duplicate-code, multiprocessing, performance, typing)",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "Issues labeled with \"pyreverse\" also commonly have the following labels:\n\n- Needs design proposal :lock:\n- Enhancement ✨\n- Help wanted 🙏\n- Good first issue\n- Minor 💅",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (l:Label {name: \"pyreverse\"})<-[:HAS_LABEL]-(i:Issue)-[:HAS_LABEL]->(otherLabel:Label)\nWHERE otherLabel.name <> \"pyreverse\"\nRETURN DISTINCT otherLabel.name AS labelName LIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1907,
+              "output": 115
+            },
+            "ms": 3356
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "The following labels appear on issues that also have the \"pyreverse\" label:\n\n- Needs design proposal :lock:\n- Enhancement ✨\n- Help wanted 🙏\n- Good first issue\n- Minor 💅",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (l:Label {name: \"pyreverse\"})<-[:HAS_LABEL]-(i:Issue)-[:HAS_LABEL]->(otherLabel:Label)\nWHERE otherLabel.name <> \"pyreverse\"\nRETURN DISTINCT otherLabel.name AS labelName LIMIT 25"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1907,
+              "output": 117
+            },
+            "ms": 3859
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "The label \"pyreverse\" appears alongside the following other labels on issues:\n\n- Needs design proposal :lock:\n- Enhancement ✨\n- Help wanted 🙏\n- Good first issue\n- Minor 💅",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (label:Label {name: \"pyreverse\"})<-[:HAS_LABEL]-(issue:Issue)-[:HAS_LABEL]->(otherLabel:Label)\nRETURN DISTINCT otherLabel.name\nLIMIT 20"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1900,
+              "output": 104
+            },
+            "ms": 2999
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "pylint-holdout-033",
+        "template": "commenters_on_label",
+        "kind": "retrieval",
+        "canary": false,
+        "question": "Which users have commented on issues labelled \"False Negative 🦋\"? Give their usernames.",
+        "oracle": "DanielNoord, Pierre-Sassoulas, dbrookman",
+        "attempts": [
+          {
+            "pass": false,
+            "reason": "missing: DanielNoord, Pierre-Sassoulas, dbrookman",
+            "answer": "It seems there are no users who have commented on issues labeled \"False Negative 🦋\". If there's anything else you'd like to explore, feel free to ask!",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"False Negative 🦋\"})-[:HAS_COMMENT]->(c:Comment)-[:AUTHORED_BY]->(u:User)\nRETURN DISTINCT u.login AS username LIMIT 100"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1873,
+              "output": 108
+            },
+            "ms": 2976
+          },
+          {
+            "pass": false,
+            "reason": "missing: DanielNoord, Pierre-Sassoulas, dbrookman",
+            "answer": "No users have commented on issues labelled \"False Negative 🦋\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"False Negative 🦋\"})-[:HAS_COMMENT]->(c:Comment)-[:AUTHORED_BY]->(u:User)\nRETURN DISTINCT u.login LIMIT 50"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1871,
+              "output": 87
+            },
+            "ms": 2908
+          },
+          {
+            "pass": false,
+            "reason": "missing: DanielNoord, Pierre-Sassoulas, dbrookman",
+            "answer": "It seems there are no users who have commented on issues labeled \"False Negative 🦋\". If you're expecting results, there might be an issue with the data labeling or comments in the database.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"False Negative 🦋\"})-[:HAS_COMMENT]->(c:Comment)-[:AUTHORED_BY]->(u:User) RETURN DISTINCT u.login LIMIT 25"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1870,
+              "output": 111
+            },
+            "ms": 3896
+          }
+        ],
+        "passRate": 0
+      },
+      {
+        "id": "pylint-holdout-034",
+        "template": "author_of_most_commented",
+        "kind": "retrieval",
+        "canary": false,
+        "question": "Who opened the issue that has the most comments?",
+        "oracle": "pylint-bot (#214)",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "The issue with the most comments, totaling 55, was opened by the user [pylint-bot](https://github.com/pylint-bot). You can view the issue [here](https://github.com/org/repo/issues/214).",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment)\nRETURN i.number AS issueNumber, i.authorLogin AS author, COUNT(c) AS commentCount\nORDER BY commentCount DESC\nLIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1865,
+              "output": 116
+            },
+            "ms": 3018
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "The issue with the most comments was opened by **pylint-bot** and has 55 comments. The issue number is [#214](https://github.com/owner/repo/issues/214).",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment) \nRETURN i.number AS issueNumber, i.authorLogin AS author, COUNT(c) AS commentCount \nORDER BY commentCount DESC \nLIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1868,
+              "output": 109
+            },
+            "ms": 3986
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "The issue with the most comments was opened by the user **pylint-bot** and the issue number is [#214](https://github.com/repository/issues/214). It has 55 comments.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment)\nRETURN i.number AS issueNumber, i.authorLogin AS author, COUNT(c) AS commentCount\nORDER BY commentCount DESC\nLIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1865,
+              "output": 107
+            },
+            "ms": 2621
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "pylint-holdout-035",
+        "template": "author_of_most_reacted",
+        "kind": "retrieval",
+        "canary": false,
+        "question": "Who opened the issue with the most reactions?",
+        "oracle": "pylint-bot (#214)",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "The issue with the most reactions was opened by **pylint-bot**: [Issue #214](https://github.com/org/repo/issues/214), with 100 reactions.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_REACTION]->(r:Reaction) RETURN i.number AS issueNumber, i.authorLogin AS author, count(r) AS reactionCount ORDER BY reactionCount DESC LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1861,
+              "output": 100
+            },
+            "ms": 3585
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "The issue with the most reactions was opened by **pylint-bot**. It's [issue #214](https://github.com/your-repo/issues/214) with a total of 100 reactions.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_REACTION]->(r:Reaction)\nRETURN i.number AS issueNumber, i.authorLogin AS author, COUNT(r) AS reactionCount\nORDER BY reactionCount DESC\nLIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1864,
+              "output": 108
+            },
+            "ms": 2857
+          },
+          {
+            "pass": true,
+            "reason": "all required strings present",
+            "answer": "The issue with the most reactions was opened by **pylint-bot**, and it is issue number [#214](https://github.com/your-repo/issues/214), with a total of 100 reactions.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_REACTION]->(r:Reaction) \nRETURN i.number AS issueNumber, i.authorLogin AS author, COUNT(r) AS reactionCount \nORDER BY reactionCount DESC \nLIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1867,
+              "output": 113
+            },
+            "ms": 2884
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "pylint-holdout-036",
+        "template": "absent_label_count",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many issues carry the label \"API: argument checking\"?",
+        "oracle": "0 (no such label in this repo)",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "stated absence",
+            "answer": "There are no issues with the label \"API: argument checking.\"",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"API: argument checking\"}) RETURN COUNT(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1842,
+              "output": 63
+            },
+            "ms": 2319
+          },
+          {
+            "pass": true,
+            "reason": "stated absence",
+            "answer": "There are no issues with the label \"API: argument checking\" currently.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"API: argument checking\"}) RETURN count(i) AS issueCount LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1845,
+              "output": 68
+            },
+            "ms": 2436
+          },
+          {
+            "pass": true,
+            "reason": "stated absence",
+            "answer": "There are no issues labeled \"API: argument checking\" in the repository.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"API: argument checking\"}) RETURN COUNT(i) as issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1842,
+              "output": 65
+            },
+            "ms": 2805
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "pylint-holdout-037",
+        "template": "absent_label_members",
+        "kind": "structural",
+        "canary": false,
+        "question": "List the issue numbers of every issue labelled \"API: argument checking\".",
+        "oracle": "none",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "cited ",
+            "answer": "There are currently no issues labeled \"API: argument checking.\" If you need information on a different label or topic, feel free to ask!",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"API: argument checking\"}) RETURN i.number LIMIT 25"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1839,
+              "output": 77
+            },
+            "ms": 2868
+          },
+          {
+            "pass": true,
+            "reason": "cited ",
+            "answer": "It seems there are no issues currently labeled as \"API: argument checking.\"",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"API: argument checking\"}) RETURN i.number LIMIT 100"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1839,
+              "output": 64
+            },
+            "ms": 2680
+          },
+          {
+            "pass": true,
+            "reason": "cited ",
+            "answer": "There are currently no issues labeled \"API: argument checking.\"",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"API: argument checking\"}) RETURN i.number LIMIT 100"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1839,
+              "output": 61
+            },
+            "ms": 2824
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "pylint-holdout-038",
+        "template": "absent_term",
+        "kind": "retrieval",
+        "canary": false,
+        "question": "Which issues mention \"CPython\" in their title or body? Give their issue numbers.",
+        "oracle": "none",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "cited ",
+            "answer": "No issues mention \"CPython\" in their title or body.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE toLower(i.title) CONTAINS 'cpython' OR toLower(i.bodyText) CONTAINS 'cpython' RETURN i.number LIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1856,
+              "output": 71
+            },
+            "ms": 2385
+          },
+          {
+            "pass": true,
+            "reason": "cited ",
+            "answer": "There are no issues mentioning \"CPython\" in their title or body.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)\nWHERE i.title CONTAINS 'CPython' OR i.bodyText CONTAINS 'CPython'\nRETURN i.number LIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1852,
+              "output": 69
+            },
+            "ms": 2635
+          },
+          {
+            "pass": true,
+            "reason": "cited ",
+            "answer": "There are no issues mentioning \"CPython\" in their title or body.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)\nWHERE i.title CONTAINS \"CPython\" OR i.bodyText CONTAINS \"CPython\"\nRETURN i.number LIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1852,
+              "output": 69
+            },
+            "ms": 2601
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "pylint-holdout-039",
+        "template": "absent_author_issues",
+        "kind": "structural",
+        "canary": false,
+        "question": "Which issues were opened by the user \"08walkersj\"? Give their issue numbers.",
+        "oracle": "none",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "cited ",
+            "answer": "There are no issues opened by the user \"08walkersj\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User {login: \"08walkersj\"}) RETURN i.number LIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1849,
+              "output": 65
+            },
+            "ms": 2583
+          },
+          {
+            "pass": true,
+            "reason": "cited ",
+            "answer": "There are no issues opened by the user \"08walkersj\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User {login: \"08walkersj\"}) RETURN i.number LIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1849,
+              "output": 65
+            },
+            "ms": 2497
+          },
+          {
+            "pass": true,
+            "reason": "cited ",
+            "answer": "It seems there are no issues opened by the user \"08walkersj\".",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User {login: \"08walkersj\"}) RETURN i.number LIMIT 10"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1849,
+              "output": 67
+            },
+            "ms": 3203
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "pylint-holdout-040",
+        "template": "absent_month_count",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many issues were created in 2014-05?",
+        "oracle": "0",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "stated absence",
+            "answer": "No issues were created in May 2014.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.createdAt STARTS WITH \"2014-05\" RETURN COUNT(i) as count"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1835,
+              "output": 54
+            },
+            "ms": 3127
+          },
+          {
+            "pass": true,
+            "reason": "stated absence",
+            "answer": "No issues were created in May 2014.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)\nWHERE i.createdAt STARTS WITH '2014-05'\nRETURN COUNT(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1839,
+              "output": 57
+            },
+            "ms": 2443
+          },
+          {
+            "pass": true,
+            "reason": "stated absence",
+            "answer": "No issues were created in May 2014.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.createdAt >= '2014-05-01' AND i.createdAt < '2014-06-01' RETURN COUNT(i) AS issueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1850,
+              "output": 68
+            },
+            "ms": 2330
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "pylint-holdout-041",
+        "template": "closed_count_paraphrase",
+        "kind": "structural",
+        "canary": false,
+        "question": "What is the number of issues in a closed state?",
+        "oracle": "36",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 36",
+            "answer": "There are 36 issues in a closed state.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {state: 'CLOSED'}) RETURN count(i) as closedIssuesCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1830,
+              "output": 49
+            },
+            "ms": 2367
+          },
+          {
+            "pass": true,
+            "reason": "found 36",
+            "answer": "There are 36 issues in a closed state.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {state: 'CLOSED'}) RETURN count(i) AS closed_issues_count"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1832,
+              "output": 50
+            },
+            "ms": 2410
+          },
+          {
+            "pass": true,
+            "reason": "found 36",
+            "answer": "The number of issues in a closed state is 36.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {state: 'CLOSED'}) RETURN count(i) AS closedIssuesCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1830,
+              "output": 51
+            },
+            "ms": 2183
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "pylint-holdout-042",
+        "template": "closed_count_paraphrase",
+        "kind": "structural",
+        "canary": false,
+        "question": "Count the issues in this repository that have been closed.",
+        "oracle": "36",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 36",
+            "answer": "There are 36 closed issues in this repository.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) WHERE i.state = 'CLOSED' RETURN count(i) as closedIssueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1832,
+              "output": 51
+            },
+            "ms": 2868
+          },
+          {
+            "pass": true,
+            "reason": "found 36",
+            "answer": "There are 36 issues in this repository that have been closed.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {state: 'CLOSED'}) RETURN count(i) AS closedIssueCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1830,
+              "output": 52
+            },
+            "ms": 3232
+          },
+          {
+            "pass": true,
+            "reason": "found 36",
+            "answer": "There are 36 issues in the repository that have been closed.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue {state: 'CLOSED'}) RETURN COUNT(i) as closedIssuesCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1830,
+              "output": 52
+            },
+            "ms": 2646
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "pylint-holdout-043",
+        "template": "distinct_authors_paraphrase",
+        "kind": "structural",
+        "canary": false,
+        "question": "How many different people opened issues?",
+        "oracle": "55",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 55",
+            "answer": "There are 55 different people who have opened issues.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User)\nRETURN COUNT(DISTINCT u.login) AS issueAuthorsCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1832,
+              "output": 60
+            },
+            "ms": 2582
+          },
+          {
+            "pass": true,
+            "reason": "found 55",
+            "answer": "There are 55 different people who have opened issues.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue) RETURN COUNT(DISTINCT i.authorLogin) AS numberOfAuthors LIMIT 1"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1824,
+              "output": 52
+            },
+            "ms": 2621
+          },
+          {
+            "pass": true,
+            "reason": "found 55",
+            "answer": "A total of 55 different people have opened issues.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User) RETURN COUNT(DISTINCT u.login) AS unique_issue_authors"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1833,
+              "output": 60
+            },
+            "ms": 2722
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "pylint-holdout-044",
+        "template": "distinct_authors_paraphrase",
+        "kind": "structural",
+        "canary": false,
+        "question": "What is the number of unique issue authors?",
+        "oracle": "55",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "found 55",
+            "answer": "There are 55 unique issue authors.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User) RETURN count(DISTINCT u.login) AS uniqueAuthors"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1833,
+              "output": 55
+            },
+            "ms": 2904
+          },
+          {
+            "pass": true,
+            "reason": "found 55",
+            "answer": "There are 55 unique issue authors.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User) RETURN COUNT(DISTINCT u.login) AS uniqueAuthorsCount"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1835,
+              "output": 56
+            },
+            "ms": 2626
+          },
+          {
+            "pass": true,
+            "reason": "found 55",
+            "answer": "There are 55 unique issue authors in the repository.",
+            "toolCalls": [
+              {
+                "tool": "queryNeo4j",
+                "input": {
+                  "cypher": "MATCH (u:User)<-[:AUTHORED_BY]-(i:Issue) RETURN COUNT(DISTINCT u.login) AS uniqueAuthors"
+                }
+              }
+            ],
+            "usage": {
+              "input": 1834,
+              "output": 59
+            },
+            "ms": 2223
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "pylint-holdout-045",
+        "template": "summarize_issue",
+        "kind": "semantic",
+        "canary": false,
+        "question": "Summarize the discussion on issue #214. What is the problem and what did people say about it?",
+        "oracle": "The duplicate-code (R0801) can't be disabled",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue, aligns with the core problem, and does not contradict any reference facts.",
+            "answer": "### Issue Summary\n\nThe issue discussed in [#214](https://github.com/organization/repo/issues/214) revolves around a problem with Pylint's duplicate code detection. Users reported that the feature to disable \"duplicate-code\" warnings for specific blocks using the `# pylint: disable=duplicate-code` comment does not work as intended.\n\n### Key Points from the Discussion\n\n- **Problem Identified:** Users experienced frustration with the inability to selectively disable duplicate code warnings using inline comments. This issue affected several Pylint versions (2.1.1, 2.3.1, 2.4.0, 2.4.4, and others).\n  \n- **Community Feedback:** Participants shared their experiences and the persistence of the issue across Pylint updates. Multiple attempts to utilize workarounds, like altering the `pylintrc` file or applying custom patches, were mentioned but found unsatisfactory by some users.\n\n- **Proposed Solutions:** Contributors submitted a pull request to address the problem, which was eventually merged into the main branch. However, the effectiveness and timely release of this fix were concerns.\n\n- **Ongoing Challenges:** Despite the merged fix, users continued to face challenges in selectively disabling warnings. Alternatives like Ruff and Vulture were suggested, although these did not fully support the specific rule needed.\n\n### Additional Notes\n\nThe discussion highlights the community's proactive engagement in proposing and testing solutions, alongside exploring alternative tools to bypass specific limitations within Pylint's functionality.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 214,
+                  "userQuery": "What is the problem discussed and what did people say about it?"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2139,
+              "output": 342
+            },
+            "ms": 7366
+          },
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue #214, focusing on the problem with Pylint's duplicate code detection and the difficulties in disabling it. It aligns with the core problem and user frustrations described in the reference, without contradicting any facts.",
+            "answer": "The discussion on [issue #214](https://github.com/user/repo/issues/214) centers around a problem with Pylint, which incorrectly flags import blocks and other code segments as duplicate code. Users report difficulty in disabling this with the directive `# pylint: disable=duplicate-code`.\n\n### Key Points from the Discussion:\n\n- **Problem Description**: Pylint's duplicate code warnings are often false positives and not easily disabled, causing some users to disable the duplicate code checker altogether.\n  \n- **User Frustrations**: Users express long-standing frustration, as the directive to disable duplicate-code warnings doesn't work as intended.\n\n- **Workarounds and Suggestions**:\n  - Modifying the `pylintrc` file to adjust similarity thresholds.\n  - Using patches to tackle the issue; however, these aren't universally effective.\n  - Suggestions for Pylint to ignore imports, docstrings, and method declarations to reduce false positives.\n\n- **Attempts to Resolve**: Despite some patches and pull requests, many users still face the issue, although a few report success with later Pylint versions.\n\n- **Alternative Tools**: Some users recommend trying tools like Ruff and Vulture, though they may not fully replace Pylint's functionality.\n\nOverall, the issue reflects an ongoing challenge in optimizing code quality checks without compromising on development needs.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 214,
+                  "userQuery": "What is the problem and what did people say about it?"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2106,
+              "output": 308
+            },
+            "ms": 8233
+          },
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the core problem and discussion points of issue #214 without contradicting any reference facts.",
+            "answer": "### Issue Summary\n\n**Problem:**  \nThe main problem discussed in [issue #214](#) is Pylint incorrectly flagging import blocks and similar code segments as duplicate code. Users find it challenging to selectively disable these warnings using `# pylint: disable=duplicate-code`. This forces them to either disable the entire checker or search for workarounds.\n\n### Key Discussion Points\n\n- **Initial Reports:**  \n  Users like Radek Holý and Buck Evan initially reported issues with Pylint marking similar import blocks and setup files as duplicates, which are often unrefactorable.\n\n- **Workarounds and Suggestions:**  \n  Moylop260 and others suggested adjusting `min-similarity-lines` in the configuration as a workaround, but it wasn't effective for all cases. Users also explored alternative tools like Ruff and Vulture, though they have their own limitations.\n\n- **Attempts at Solutions:**  \n  Contributors, including Daniel Noord, attempted to address the problem through patches and pull requests. Despite efforts, challenges persist, and the issue remains unresolved for many users, affecting multiple Pylint versions.\n\n- **Frustrations and Wishes:**  \n  The inability to selectively disable duplicate warnings through the directive is a primary source of frustration for many users, indicating a desire for a more flexible solution.\n\nThe discussion on this issue reflects a mixture of frustration, attempted solutions, and ongoing challenges in resolving the problem.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 214,
+                  "userQuery": "Summarize the discussion, focusing on the main problem and comments"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2116,
+              "output": 320
+            },
+            "ms": 7705
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "pylint-holdout-046",
+        "template": "summarize_issue",
+        "kind": "semantic",
+        "canary": false,
+        "question": "Summarize the discussion on issue #4741. What is the problem and what did people say about it?",
+        "oracle": "Improve JSON output format with score",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue, its problem, and the discussion around it without contradicting any reference facts.",
+            "answer": "### Summary of Issue #4741\n\n- **Problem:**\n  The issue involves adding a score to the JSONReporter output in a way that maintains backward compatibility. There is also a discussion around transitioning to a new JSON reporter format (referred to as json2) to improve upon existing methods while keeping compatibility with existing systems.\n\n- **Discussion Highlights:**\n  - Users discussed how to handle JSON output in CI/CD setups to programmatically extract pylint scores.\n  - Visual Studio Code (VSCode) was mentioned in the context of accessing information provided by pylint.\n  - Code snippets were shared for extracting pylint scores using shell commands and Python scripts in CI/CD environments.\n  \n- **Proposed Solutions:**\n  - Introduce a new JSONScoreReporter to include scores without impacting existing tools.\n  - Develop a new json-v2 or json2 reporter format and consider deprecating the old one while keeping users informed via UserWarnings instead of DeprecationWarnings.\n  - Highlight the benefits of the new format in documentation without relying solely on code warnings.\n\n- **Emotional Tone:**\n  The discussion was generally neutral. There was some frustration about maintaining backward compatibility and managing multiple reporter formats, but overall, participants engaged constructively to find solutions.\n\nThe discussion is evidenced by 33 comments, reflecting a collaborative effort to enhance pylint's functionality.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 4741,
+                  "userQuery": null
+                }
+              }
+            ],
+            "usage": {
+              "input": 2117,
+              "output": 296
+            },
+            "ms": 9457
+          },
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue, mentioning the core problem of JSON output format improvement, the proposed solutions, and the discussion around backward compatibility. It does not contradict any reference facts.",
+            "answer": "### Summary of Issue #4741\n\n- **Problem:** \n  - The discussion revolves around implementing a new JSON reporter (`JSONScoreReporter`) to enhance functionality by including scores, while ensuring backward compatibility isn't affected.\n\n- **Key Workflows or Use Cases:**\n  - Transitioning to a new JSON format (`json2`) for improved output.\n  - Programmatically extracting scores from the JSON output for use in CI/CD pipelines.\n\n- **Competitor Tools/Services:**\n  - Visual Studio Code (VSCode) is referenced in relation to handling output from the reporter.\n\n- **Workarounds:**\n  - Users have shared code snippets using shell and Python scripts to extract scores from JSON outputs in CI/CD environments.\n\n- **Proposed Solutions:**\n  - Introducing a new JSON reporter (`json2`) maintaining backward compatibility.\n  - Using warnings like `PendingDeprecationWarning` or `UserWarning` to notify users about a new preferred format.\n  - Advocating the benefits of the new JSON format in the documentation rather than using in-code warnings.\n\n- **Overall Emotional Tone:**\n  - The tone is neutral. There are moments of frustration over compatibility and maintenance issues, but discussions are mostly collaborative and constructive.\n\nYou can view more details on the [GitHub Issue #4741](https://github.com/path/to/repository/issues/4741).",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 4741,
+                  "userQuery": null
+                }
+              }
+            ],
+            "usage": {
+              "input": 2108,
+              "output": 302
+            },
+            "ms": 6775
+          },
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue, focusing on the JSON output format and backward compatibility concerns, without contradicting any reference facts.",
+            "answer": "The discussion in [issue #4741](https://github.com/<repository>/issues/4741) focuses on incorporating a scoring feature into the `JSONReporter` of pylint without compromising backward compatibility.\n\n### Key Points Discussed:\n\n1. **Backward Compatibility Concerns**\n   - Emphasis on maintaining compatibility by proposing a new reporter, such as `JSONScoreReporter` or `json2`.\n   - The challenge is between avoiding changes that break existing tools and managing project complexity with multiple reporters.\n\n2. **Breaking Changes and Deprecation**\n   - Consideration of introducing breaking changes in a future major release, with suggestions for a long deprecation period.\n   - Possibility of using warnings to inform users about the new reporter and encourage migration.\n\n3. **Future Plans and Migration**\n   - Discussion on eventually removing the old JSON reporter with a clear migration path and documentation.\n   - General consensus that `json2` should be the preferred option but keeping the old reporter available to prevent user disruption.\n\n4. **User Contributions**\n   - Users contributed code snippets for extracting scores with `json2`, helping integrate the feature into CI/CD pipelines.\n\nThe discussion reflects careful consideration of compatibility, user impact, and the need for clear communication and documentation when implementing new features or changes.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 4741,
+                  "userQuery": "What is the problem and what did people say about it?"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2239,
+              "output": 293
+            },
+            "ms": 7802
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "pylint-holdout-047",
+        "template": "summarize_issue",
+        "kind": "semantic",
+        "canary": false,
+        "question": "Summarize the discussion on issue #2686. What is the problem and what did people say about it?",
+        "oracle": "Ignore clause not ignoring directories",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue, its problem, and the discussions around it without contradicting any reference facts.",
+            "answer": "**Issue #2686 Summary**\n\n- **Problem:** Users are experiencing difficulties with configuring Pylint to ignore specific directories during TravisCI PR builds, especially those brought in using git-submodules. This leads to unnecessary and redundant checks on code already covered by other CI systems.\n\n- **Key Workflows:**\n  - Users need to exclude certain directories from Pylint scans.\n  \n- **Mentioned Competitor:**\n  - Pre-commit, which has its own exclude system.\n\n- **Workarounds:**\n  - A custom script `pylint_ignore.py` to patch Pylint's functionality.\n  - Using the `find` command to exclude directories by filtering paths.\n  - Adjusting configuration files to apply the new `ignore-paths` option available in Pylint 2.9.\n\n- **Proposed Solutions:**\n  - Fixing Pylint to support ignoring directories via `--ignore` and `--ignore-patterns`.\n  - Merging PR #3266 for native directory ignoring support.\n  - Using the `ignore-paths` option in Pylint 2.9.\n\n- **Emotional Tone:**\n  - Initially frustrated due to the prolonged nature of the issue. However, users express appreciation for the fix and community-shared solutions. \n\nFor more details, see [Issue #2686](https://github.com/your-repo-here/issues/2686).",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 2686,
+                  "userQuery": null
+                }
+              }
+            ],
+            "usage": {
+              "input": 2183,
+              "output": 316
+            },
+            "ms": 9967
+          },
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue, its discussion, and resolution without contradicting any reference facts.",
+            "answer": "The discussion on [issue #2686](https://github.com/org/repo/issues/2686) highlights a problem with the `pylint` tool, specifically its inability to ignore directories when linting Python code. Here's a summary of the main points:\n\n### Problem Identified\n- **Initial Report**: `jack-jjm` noted that `pylint`'s `utils.expand_modules()` function removed directory information, preventing the option to ignore directories.\n\n### Community Responses\n- **Acknowledgment**: `PCManticore` accepted this behavior was likely unintended and recognized the need for `pylint` to support directory ignoring.\n  \n- **Workarounds**: Users like `bgehman` and `jw-lilly` shared workarounds. `jw-lilly` even provided a monkey-patch script for `pylint`.\n\n- **Issues with Workarounds**: Over time, changes in `pylint` broke these workarounds as noted by `fdamken`.\n\n### Solution Implementation\n- **Pull Requests**: The conversation moved towards addressing the issue natively. `Pierre-Sassoulas` and `fdamken` discussed a pull request (#3266), leading to a relaunch with PR #4516.\n\n- **New Feature**: The new `ignore-paths` option was introduced, allowing specification of paths to ignore in the `.pylintrc` and `pyproject.toml` files.\n\n- **Confirmation**: `jamesbraza` confirmed that the solution worked with `pylint` version 2.9.\n\n### Overall Insights\nThe issue underscored a community-driven effort to fix a known limitation in `pylint`, revealing the collaborative nature of open-source development.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 2686,
+                  "userQuery": "What is the problem discussed and what are the main points in the comments?"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2292,
+              "output": 400
+            },
+            "ms": 10421
+          },
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue #2686, including the core problem, key discussion points, and resolution, without contradicting any reference facts.",
+            "answer": "### Problem Overview\n\nThe issue in [#2686](https://github.com/PyCQA/pylint/issues/2686) concerned a problem with Pylint's `utils.expand_modules()` function, which could not ignore directories during checks. This function stripped directory info from file paths, preventing users from excluding whole directories.\n\n### Key Discussion Points\n\n1. **Initial Identification:**\n   - The problem was identified by `jack-jjm`, with confirmation by `PCManticore`. It was recognized as unintended behavior needing a fix.\n\n2. **User Workarounds and Needs:**\n   - Users such as `bgehman` and `shidenggui` requested solutions to ignore directories, highlighting the need for this feature in environments like CI/CD pipelines.\n   - `jw-lilly` provided a workaround by monkey-patching, appreciated by other community members like `digitaldavenyc`.\n\n3. **Progress and Development:**\n   - `PCManticore` suggested a pull request (PR) as a potential solution.\n   - `fdamken` discussed how a change in the codebase affected this workaround, highlighting the importance of native support for ignoring directories.\n\n4. **Resolution:**\n   - `Pierre-Sassoulas` and `fdamken` submitted a PR (#4516) to address the issue, leading to the implementation of the `ignore-paths` option starting from Pylint 2.9. This allowed excluding directories using regex patterns in configuration files.\n\n5. **Feedback and Outcome:**\n   - Users like `jamesbraza` tested the new feature and confirmed its effectiveness, expressing gratitude for the successful implementation.\n\nThe issue was effectively resolved by enabling users to use the `ignore-paths` option to exclude directories, thereby enhancing Pylint's functionality.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 2686,
+                  "userQuery": "What is the problem and what did people say about it?"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2381,
+              "output": 405
+            },
+            "ms": 10378
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "pylint-holdout-048",
+        "template": "summarize_issue",
+        "kind": "semantic",
+        "canary": false,
+        "question": "Summarize the discussion on issue #3232. What is the problem and what did people say about it?",
+        "oracle": "fail/warn on using parallel execution with custom plugins",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue, its core problem, and the discussion points without contradicting the reference facts.",
+            "answer": "The discussion on [issue #3232](https://github.com/user/repo/issues/3232) focuses on a problem with running Pylint in parallel mode when custom plugins are involved, leading to inconsistent linting results. Here are the main points from the discussion:\n\n### Problem Summary\n- **Issue**: Running Pylint in parallel mode with custom plugins causes inconsistent linting outcomes compared to single-process mode.\n\n### Key Points from the Discussion\n\n1. **Initial Identification**:\n   - The issue was raised by @stanislavlevin who noted the inconsistency when using custom plugins in parallel mode.\n\n2. **Proposed Solutions**:\n   - @PCManticore recommended adding runtime warnings or errors when custom plugins are used in parallel mode.\n   - @clavedeluna worked on implementing a warning and considered crashing Pylint in such scenarios.\n\n3. **Opinions on Crashing vs. Warning**:\n   - There was a debate, led by @Pierre-Sassoulas, on whether to crash Pylint or just issue a warning. The consensus leaned towards crashing if results would be incorrect but only warning if results were still usable.\n   - @cdce8p suggested updating the documentation to recommend lower parallel job numbers instead of adding warnings.\n\n4. **Concerns About Impact**:\n   - Concerns were raised by @DanielNoord regarding the negative impact of crashing on CI processes and adoption of new Pylint versions, especially for projects using basic plugins.\n\n5. **Alternative Approaches**:\n   - Suggestions included detecting specific plugin types and addressing multiprocessing and shared Manager instances that could be causing broader issues.\n\n6. **Conclusion**:\n   - The discussion ended without a consensus on raising exceptions. The preference was for issuing warnings and considering more profound fixes for underlying multiprocessing issues.\n\nThe conversation reflects a need to balance ensuring accurate linting results with minimizing disruption for users relying on custom plugins in parallel mode.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 3232,
+                  "userQuery": "What is the problem and what are the main points made in the discussion?"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2271,
+              "output": 432
+            },
+            "ms": 10052
+          },
+          {
+            "pass": true,
+            "reason": "The summary accurately captures the core problem of issue #3232, the discussions around it, and the proposed solutions, without contradicting any reference facts.",
+            "answer": "### Summary of Issue #3232 Discussion\n\nThe issue revolves around challenges when running Pylint in parallel mode with custom plugins. Here's a breakdown of the problem and discussions:\n\n#### Problem\n- **Unpredictable Linting Outcomes**: When using custom plugins with Pylint's parallel mode, results differ from single-process mode, leading to unreliable outcomes.\n- **Lack of Warnings**: Pylint doesn't warn users about potential discrepancies in outcomes when using custom plugins.\n\n#### Proposed Solutions\n1. **Warnings and Errors**\n   - Suggestion to add runtime warnings or errors when custom plugins are detected.\n   - Initial implementation to issue warnings or crash if such conditions are met.\n\n2. **Documentation and Configuration**\n   - Suggested updates to documentation to recommend fewer parallel jobs or limiting default jobs.\n\n#### Divergent Opinions\n- **Crashing vs. Warning**\n  - Some proposed crashing if incorrect results are detected, while others warned about impact on CI systems.\n  \n- **Plugin Type Detection**\n  - Proposed detecting plugin types to decide on warnings or crashes, focusing on \\\"transform plugins\\\" which might cause issues.\n\n#### Consensus and Next Steps\n- **No Consensus on Exceptions**: Final agreement leaned towards issuing warnings without exceptions.\n- **Maintainers' Role**: Decision to close current pull request, leaving maintainers to redefine issue scope.\n\nOverall, the discussion was robust with diverse views but moved towards a practical consensus on using warnings to highlight potential issues.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 3232,
+                  "userQuery": "What is the problem and what did people say about it?"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2321,
+              "output": 333
+            },
+            "ms": 9003
+          },
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue, its core problem, and the discussion highlights without contradicting any reference facts.",
+            "answer": "### Issue Summary: GitHub Issue [#3232](https://github.com/user/repo/issues/3232)\n\n**Problem:**\nThe issue revolves around the unpredictability of Pylint's results when running in parallel mode with custom plugins. Users experience differing linting results compared to single-process execution, and this is not well communicated to them.\n\n**Discussion Highlights:**\n\n1. **Initial Problem Identification:**\n   - Raised by @stanislavlevin, highlighting incompatibility with custom plugins.\n   - Confirmed by @adamtheturtle, who noted the lack of clear warnings.\n\n2. **Proposed Solutions:**\n   - *Warning or Crash*: Suggestions included adding a warning or causing a crash if custom plugins are detected in parallel mode.\n   - *Documentation Update*: Proposals to update documentation or limit default parallel jobs to manage potential issues.\n   - *Plugin Detection*: A nuanced approach to detect specific types of plugins, avoiding unnecessary disruptions.\n\n3. **Divergent Opinions:**\n   - Debate over implementing a warning versus a crash, considering the impact on CI processes.\n   - Discussion about addressing underlying multiprocessing problems rather than adding simple warnings.\n\n4. **Conclusion:**\n   - Consensus leaned towards issuing a warning over an exception.\n   - Recognition of the broader scope of multiprocessing issues led to the closure of the current pull request, with a call for further investigation and redefinition of requirements by maintainers.\n\n**Engagement:**\nThe discussion involved 22 comments and revealed varying perspectives on how to address the problem effectively.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 3232,
+                  "userQuery": "What is the problem and what did people say about it?"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2251,
+              "output": 347
+            },
+            "ms": 9770
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "pylint-holdout-049",
+        "template": "summarize_issue",
+        "kind": "semantic",
+        "canary": false,
+        "question": "Summarize the discussion on issue #6060. What is the problem and what did people say about it?",
+        "oracle": "Use, misuse and confusion of ``@check_messages`` decorator",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue, aligns with the core problem, and does not contradict any reference facts.",
+            "answer": "**Issue #6060 Discussion Summary**\n\n### Problem\nThe issue revolves around the use of decorators in callback methods within checker classes, specifically to manage message emissions and avoid side effects such as false positives, false negatives, and crashes in pylint.\n\n### Key Workflows or Use Cases\n- Utilization of decorators like `@check_messages` and the proposed `@only_required_for` to control message checking and emissions.\n- Performance concerns when running pylint with certain message categories enabled or disabled.\n\n### Workarounds\n- Users have been employing the `@check_messages` decorator, which has caused issues due to misunderstandings.\n- A script was created to measure the performance impacts of disabling message categories.\n\n### Proposed Solutions\n- Rename `@check_messages` to `@only_required_for` to better explain its function.\n- Retain `@check_messages` as an alias initially for backward compatibility, issuing a `DeprecationWarning`.\n- Improve the documentation to clarify how the decorators should be used.\n- Consider adding a `must_always_be_checked` decorator for functions with side effects.\n- Split checks into subfunctions to enhance maintainability and apply decorators specifically to these subfunctions.\n\n### Emotional Tone\nThe discussion maintains a neutral to positive tone, with constructive dialogue and collaborative problem-solving. Some frustration is noted regarding the complexity and potential misuse of the current decorator system, but the focus is on effective solutions.\n\n### Comment Count\nThe issue has 20 comments.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 6060,
+                  "userQuery": null
+                }
+              }
+            ],
+            "usage": {
+              "input": 2203,
+              "output": 319
+            },
+            "ms": 8204
+          },
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue #6060, addressing the core problem, proposed solutions, and key points discussed without contradicting the reference facts.",
+            "answer": "The discussion on [issue #6060](https://github.com/organization/repo/issues/6060) revolves around the problematic use of the `@check_messages` decorator in a linter. The primary concern is that using this decorator with functions that do more than emit messages can cause side effects, like false positives/negatives or crashes. This happens because the decorator might skip these functions if none of the messages they handle are enabled, leaving some attributes uninitialized.\n\n### Key Points Discussed:\n\n- **Problem Identification:** The initial issue was flagged by the user DudeNr33, pointing out potential errors from uninitialized attributes when the decorator skips certain functions.\n\n- **Proposed Solution:** DudeNr33 suggested renaming the decorator to `only_required_for` for clarity, with a phased plan for its rename, documentation update, and deprecation of the old name.\n\n- **Performance Considerations:** DanielNoord questioned the performance benefits of the decorator, which were shown to be marginal by DudeNr33's measurements, potentially suggesting deprecation.\n\n- **Alternative Suggestions:** Suggestions included:\n  - Pierre-Sassoulas proposed an internal checker to ensure proper decorator usage.\n  - DanielNoord suggested a `must_always_be_checked` decorator to prevent misuse in functions with side effects.\n\n- **Code Structure:** Participants discussed the complexity of combining checks in a single function and the advantages of separating them.\n\n- **Public API Concerns:** A lack of documentation about the public API footprint was noted, complicating deprecation decisions.\n\n- **Consensus:** The team leaned towards renaming to `only_required_for`, correcting usage, and issuing deprecation warnings for `check_messages`, as a descriptive name was seen as more beneficial.\n\nOverall, the discussion exhibited a thoughtful approach to addressing technical, performance, and user impact issues in modifying this aspect of the codebase.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 6060,
+                  "userQuery": "What is the problem and what did people say about it?"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2384,
+              "output": 410
+            },
+            "ms": 11045
+          },
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue #6060, addressing the core problem, proposed solutions, and the nature of the discussion without contradicting any reference facts.",
+            "answer": "### Summary of Issue #6060 Discussion\n\n- **Problem Identified:**\n  - The issue revolves around the use of the `@check_messages` decorator in callback functions within checker classes. Concerns include its impact on message handling and potential side effects, as well as ensuring messages are correctly handled when certain messages are disabled.\n\n- **Key Workflows Discussed:**\n  - Discussion focused on the decorator’s role and the process of handling messages in checker classes, including performance considerations.\n\n- **Workarounds Identified:**\n  - It was observed that the performance benefits of using `@check_messages` are minimal. Optimizing specific subfunctions was suggested as a more effective approach.\n  - A script was shared to measure the performance impact of disabling certain messages, showing that entire checkers can be ignored if none of their messages are enabled.\n\n- **Proposed Solutions:**\n  - Rename `check_messages` to `only_required_for` to better clarify its function and avoid misuse.\n  - Introduce a `must_always_be_checked` decorator for functions with side effects.\n  - Split checks into subfunctions for better maintainability and apply decorators to these subfunctions.\n  - Document the public API footprint more clearly to avoid unintended deprecations.\n\n- **Emotional Tone:**\n  - The discussion is generally neutral, with some frustration over the complexity and the potential for hard-to-debug issues. Participants are collaboratively working towards a more intuitive solution.\n\n- **Comments Count:**\n  - Total comments: 20\n\nOverall, the issue centers around improving the maintainability and usability of decorators in checker classes, with an emphasis on collaborative problem-solving.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 6060,
+                  "userQuery": null
+                }
+              }
+            ],
+            "usage": {
+              "input": 2171,
+              "output": 360
+            },
+            "ms": 8434
+          }
+        ],
+        "passRate": 1
+      },
+      {
+        "id": "pylint-holdout-050",
+        "template": "summarize_issue",
+        "kind": "semantic",
+        "canary": false,
+        "question": "Summarize the discussion on issue #6301. What is the problem and what did people say about it?",
+        "oracle": "Crash ``Parsing Python code failed: expected an indented block after function definition``",
+        "attempts": [
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue, its causes, and the discussion around it without contradicting any reference facts.",
+            "answer": "The discussion on [GitHub issue #6301](https://github.com/yourrepository/issues/6301) focuses on a problem with Pylint, specifically an `AstroidSyntaxError` when using the `--ignore-imports=y` option. Here's a summary of the key points:\n\n### Problem Identification\n- **Error Details**: An `AstroidSyntaxError` arises when Pylint processes code with certain configurations, particularly with `--ignore-imports=y`.\n- **Current Status**: The error has been fixed in recent updates of Pylint, as it's not present in the latest development version.\n\n### Reproduction and Fix\n- Multiple users, such as `mbyrnepr2` and `evgeni`, confirmed the error in specific versions.\n- **Solution**: Upgrading to the latest version of Pylint resolves the issue.\n\n### Discussion on Causes\n- **Code Parsing**: Speculation about issues related to transitioning from `optparse` to `argparse`.\n- **Configuration Complexity**: The interaction between the `Similar` checker and configuration parsing is noted as problematic.\n\n### Further Investigation\n- **Bisection Analysis**: `jacobtylerwalls` identified two separate bugs: one causing a crash and another not correctly applying the `ignore-imports` option.\n- **Action Taken**: A separate issue was opened to address the second bug.\n\n### Proposed Solutions\n- **Enhancements**: Suggestions to modify code handling in Pylint, such as inserting placeholders to avoid crashes and duplicate code warnings.\n\nOverall, the discussion highlights complexities in Pylint's configuration and code parsing, with active efforts towards resolution through updates and patches.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 6301,
+                  "userQuery": "What is the problem discussed, and what did people say about it?"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2229,
+              "output": 382
+            },
+            "ms": 8321
+          },
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue #6301, including the core problem, discussion highlights, and future actions, without contradicting any reference facts.",
+            "answer": "### Problem Summary\n\nThe issue discussed in [#6301](https://github.com/org/repo/issues/6301) involves an `AstroidSyntaxError` in Pylint when using the `--ignore-imports=y` option. This error surfaced due to particular configurations and versions of Pylint and Astroid.\n\n### Discussion Highlights\n\n1. **Identification**:\n   - Users experienced a syntax error related to the `--ignore-imports=y` option.\n   - Initially non-reproducible, it was later confirmed by multiple contributors.\n\n2. **Analysis**:\n   - The problem stems from configuration parsing changes after Pylint switched from `optparse` to `argparse`.\n   - It was noted that newer development versions of Pylint and Astroid don't show this error, suggesting a resolution in upcoming updates.\n\n3. **Resolution Attempts**:\n   - Users considered pinning to previous Pylint versions as a temporary fix.\n   - Contributor Jacob Tyler Walls identified two bugs affecting the crash, proposing a code patch to handle syntax parsing more robustly.\n\n4. **Future Actions**:\n   - The issue will stay open until Pylint 2.14 is released, expected to fix the main problem.\n   - A related issue, [#6350](https://github.com/org/repo/issues/6350), was created to address the `ignore-imports` bug.\n   - Plans include updating release documentation to inform users of the fixes and ongoing patches.\n\n### Summary\n\nThe discussion reflects a collaborative effort among users and contributors to diagnose and resolve a complex Pylint issue, with active development and documentation updates in progress.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 6301,
+                  "userQuery": "What is the problem and what did people say about it?"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2319,
+              "output": 373
+            },
+            "ms": 9213
+          },
+          {
+            "pass": true,
+            "reason": "The answer accurately summarizes the issue, its cause, and the discussion around it without contradicting any reference facts.",
+            "answer": "Here's a summary of the discussion on [issue #6301](https://github.com/foo/bar/issues/6301):\n\n### Problem\nThe issue centers around an `AstroidSyntaxError` in Pylint, triggered by the `--ignore-imports=y` option. This error is associated with certain versions of Pylint and Astroid.\n\n### Key Comments\n\n1. **Reproduction and Resolution**: \n   - Initially, the error wasn't reproducible, but other users confirmed it with specific versions.\n   - Upgrading to the latest version on the main branch resolves the issue.\n\n2. **Potential Cause**:\n   - The transition from `optparse` to `argparse` in command-line configuration is suspected to cause the problem.\n   - Numerous PRs related to this transition complicate identifying the exact cause.\n\n3. **Configuration File Impact**:\n   - The issue still appears when a configuration file is used, indicating deeper issues in configuration handling.\n\n4. **Bug Identification**:\n   - Jacobtylerwalls identified two bugs: one involving block disables on function definitions, leading to crashes, and another that mutes errors by ignoring `ignore-imports=y`.\n\n5. **Future Fixes**:\n   - Potential solutions involve modifying how lines are handled when disables are encountered.\n   - A patch is being tested that inserts placeholders in the code to fix the issue.\n\n6. **Version Management**:\n   - Users are advised to use Pylint versions before 2.13 until a fix is available in version 2.14.\n\nThe discussion highlights complexities in configuration management and efforts to fix the issue in future Pylint releases.",
+            "toolCalls": [
+              {
+                "tool": "summarizeComments",
+                "input": {
+                  "issueNumber": 6301,
+                  "userQuery": "What is the problem discussed and what are the key comments?"
+                }
+              }
+            ],
+            "usage": {
+              "input": 2242,
+              "output": 371
+            },
+            "ms": 14352
+          }
+        ],
+        "passRate": 1
+      }
+    ],
+    "openai": {
+      "requests": 324,
+      "byModel": {
+        "gpt-4o-2024-08-06": {
+          "requests": 324,
+          "promptTokens": 347772,
+          "completionTokens": 24046,
+          "unmetered": 0
+        }
+      },
+      "byEndpoint": {
+        "/responses": 305,
+        "/chat/completions": 19
+      },
+      "byHost": {
+        "api.openai.com": 324
+      },
+      "unpricedModels": [],
+      "unmetered": 0,
+      "usageSource": "wire",
+      "reportedTokens": {
+        "input": 289673,
+        "output": 17104
+      },
+      "costUsd": 1.10989
+    },
+    "neo4j": {
+      "queries": 156,
+      "sessions": 156,
+      "transactions": 0,
+      "samples": [
+        "MATCH (i:Issue) RETURN count(i) AS totalIssues",
+        "MATCH (c:Comment) RETURN count(c) AS totalComments",
+        "MATCH (i:Issue) RETURN count(i) AS totalIssues",
+        "MATCH ()-[:HAS_COMMENT]->(c:Comment) RETURN count(c) AS tota",
+        "MATCH (c:Comment) RETURN count(c) as totalComments",
+        "MATCH (i:Issue) RETURN count(i) AS totalIssues",
+        "MATCH (i:Issue {state: \"OPEN\"}) RETURN count(i) AS openIssue",
+        "MATCH (i:Issue {state: 'CLOSED'}) RETURN count(i) AS closedI",
+        "MATCH (i:Issue {state: 'CLOSED'}) RETURN count(i) AS closedI",
+        "MATCH (i:Issue {state: \"OPEN\"}) RETURN COUNT(i) AS openIssue",
+        "MATCH (i:Issue {state: 'OPEN'}) RETURN count(i) as openIssue",
+        "MATCH (i:Issue {state: 'CLOSED'}) RETURN count(i) AS closedI",
+        "MATCH (i:Issue {number: 214}) RETURN i.state LIMIT 1",
+        "MATCH (i:Issue {number: 214}) RETURN i.state LIMIT 1",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE i.state = 'OPE",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"Enhancement ✨",
+        "MATCH (i:Issue {number: 214}) RETURN i.state LIMIT 1",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE i.state = 'OPE",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: 'Enhancement ✨",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE i.state = 'OPE",
+        "MATCH (issue:Issue)-[:HAS_LABEL]->(label:Label {name: \"Enhan",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE l.name = 'Enha",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE i.state = 'OPE",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE i.state = 'OPE",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE i.state = 'OPE",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE i.state = 'OPE",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label) WHERE i.state = 'OPE",
+        "MATCH (l:Label) RETURN COUNT(DISTINCT l.name) AS labelCount",
+        "MATCH (l:Label) RETURN COUNT(DISTINCT l.name) AS labelCount ",
+        "MATCH (l:Label) RETURN COUNT(DISTINCT l.name) AS labelCount",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: 'Enhancement ✨",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: 'Enhancement ✨",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: 'Enhancement ✨",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"enhancement ✨",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"enhancement ✨",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: 'enhancement ✨",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"Needs PR\"}) R",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"Needs PR\"}) R",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"Needs PR\"}) R",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"Help wanted \ud83d",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"Help wanted \ud83d",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"Help wanted \ud83d",
+        "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User) RETURN COUNT(DISTIN",
+        "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User) RETURN COUNT(DISTIN",
+        "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User) RETURN COUNT(DISTIN",
+        "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User {login: \"NeilGirdhar",
+        "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User {login: \"NeilGirdhar",
+        "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User {login: \"NeilGirdhar",
+        "MATCH (i:Issue {number: 214})-[:AUTHORED_BY]->(u:User) RETUR",
+        "MATCH (i:Issue {number: 214})-[:AUTHORED_BY]->(u:User) RETUR",
+        "MATCH (i:Issue {number: 214})-[:AUTHORED_BY]->(u:User) RETUR",
+        "MATCH (i:Issue {number: 214})-[:HAS_COMMENT]->(c:Comment)-[:",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: 214})-[:HAS_COMMENT]->(c:Comment)-[:",
+        "MATCH (i:Issue) WHERE i.createdAt STARTS WITH '2022-04' RETU",
+        "MATCH (i:Issue {number: 214})-[:HAS_COMMENT]->(c:Comment)-[:",
+        "MATCH (i:Issue) WHERE i.createdAt STARTS WITH '2022-04' RETU",
+        "MATCH (i:Issue) WHERE i.createdAt STARTS WITH '2022-04' RETU",
+        "MATCH (i:Issue) WHERE date(i.createdAt) < date('2020-09-25')",
+        "MATCH (i:Issue) WHERE date(i.createdAt) < date('2020-09-25')",
+        "MATCH (i:Issue) WHERE i.createdAt > '2020-09-25' RETURN COUN",
+        "MATCH (i:Issue) WHERE i.createdAt < '2020-09-25' RETURN coun",
+        "MATCH (i:Issue) WHERE datetime(i.createdAt) < datetime('2020",
+        "MATCH (i:Issue) WHERE datetime(i.createdAt) < datetime('2020",
+        "MATCH (i:Issue) WHERE date(i.createdAt) > date('2020-09-25')",
+        "MATCH (i:Issue) WHERE datetime(i.createdAt) > datetime('2020",
+        "MATCH (i:Issue) WHERE i.createdAt > '2020-09-25' RETURN coun",
+        "MATCH (i:Issue) WHERE i.createdAt > '2021-10-28' RETURN coun",
+        "MATCH (i:Issue) WHERE date(i.createdAt) > date('2021-10-28')",
+        "MATCH (i:Issue) WHERE i.createdAt > '2021-10-28' RETURN coun",
+        "MATCH (i:Issue) WHERE i.createdAt >= '2020-09-25' AND i.crea",
+        "MATCH (i:Issue) WHERE datetime(i.createdAt) > datetime('2021",
+        "MATCH (i:Issue) WHERE date(i.createdAt) >= date('2020-09-25'",
+        "MATCH (i:Issue) WHERE i.createdAt >= '2020-09-25' AND i.crea",
+        "MATCH (i:Issue) WHERE NOT (i)-[:HAS_COMMENT]->(:Comment) RET",
+        "MATCH (i:Issue) WHERE NOT (i)-[:HAS_COMMENT]->() RETURN coun",
+        "MATCH (i:Issue) WHERE datetime(i.createdAt) >= datetime('202",
+        "MATCH (i:Issue) WHERE NOT (i)-[:HAS_COMMENT]->(:Comment) RET",
+        "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment) RETURN i.number,",
+        "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment) RETURN i.number ",
+        "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment) RETURN i.number ",
+        "MATCH (i:Issue)-[:HAS_REACTION]->(r:Reaction) RETURN i.numbe",
+        "MATCH (i:Issue)-[:HAS_REACTION]->(r:Reaction) RETURN i.numbe",
+        "MATCH (i:Issue)-[:HAS_REACTION]->(r:Reaction) RETURN i.numbe",
+        "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment) WITH i, count(c)",
+        "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment) WITH i, COUNT(c)",
+        "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment) WHERE i.number =",
+        "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment) WITH i, COUNT(c)",
+        "MATCH (i:Issue {number: 214})-[:HAS_COMMENT]->(c:Comment) RE",
+        "MATCH (i:Issue {number: 214})-[:HAS_COMMENT]->(c:Comment) RE",
+        "MATCH (i:Issue {number: 214}) RETURN i.title LIMIT 1",
+        "MATCH (i:Issue {number: 214}) RETURN i.title LIMIT 1",
+        "MATCH (i:Issue {number: 214}) RETURN i.title LIMIT 1",
+        "MATCH (i:Issue {number: 1070}) RETURN i.title LIMIT 1",
+        "MATCH (i:Issue {number: 1070}) RETURN i.title LIMIT 1",
+        "MATCH (i:Issue {number: 1070}) RETURN i.title LIMIT 1",
+        "MATCH (i:Issue) WHERE i.title CONTAINS 'added' OR i.bodyText",
+        "MATCH (i:Issue) WHERE i.title CONTAINS 'added' OR i.bodyText",
+        "MATCH (i:Issue) WHERE i.title CONTAINS \"added\" OR i.bodyText",
+        "MATCH (l:Label {name: \"pyreverse\"})<-[:HAS_LABEL]-(i:Issue)-",
+        "MATCH (l:Label {name: \"pyreverse\"})<-[:HAS_LABEL]-(i:Issue)-",
+        "MATCH (label:Label {name: \"pyreverse\"})<-[:HAS_LABEL]-(issue",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"False Negativ",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"False Negativ",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"False Negativ",
+        "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment) RETURN i.number ",
+        "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment) RETURN i.number ",
+        "MATCH (i:Issue)-[:HAS_COMMENT]->(c:Comment) RETURN i.number ",
+        "MATCH (i:Issue)-[:HAS_REACTION]->(r:Reaction) RETURN i.numbe",
+        "MATCH (i:Issue)-[:HAS_REACTION]->(r:Reaction) RETURN i.numbe",
+        "MATCH (i:Issue)-[:HAS_REACTION]->(r:Reaction) RETURN i.numbe",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"API: argument",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"API: argument",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"API: argument",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"API: argument",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"API: argument",
+        "MATCH (i:Issue) WHERE toLower(i.title) CONTAINS 'cpython' OR",
+        "MATCH (i:Issue)-[:HAS_LABEL]->(l:Label {name: \"API: argument",
+        "MATCH (i:Issue) WHERE i.title CONTAINS 'CPython' OR i.bodyTe",
+        "MATCH (i:Issue) WHERE i.title CONTAINS \"CPython\" OR i.bodyTe",
+        "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User {login: \"08walkersj\"",
+        "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User {login: \"08walkersj\"",
+        "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User {login: \"08walkersj\"",
+        "MATCH (i:Issue) WHERE i.createdAt STARTS WITH \"2014-05\" RETU",
+        "MATCH (i:Issue) WHERE i.createdAt STARTS WITH '2014-05' RETU",
+        "MATCH (i:Issue) WHERE i.createdAt >= '2014-05-01' AND i.crea",
+        "MATCH (i:Issue {state: 'CLOSED'}) RETURN count(i) as closedI",
+        "MATCH (i:Issue {state: 'CLOSED'}) RETURN count(i) AS closed_",
+        "MATCH (i:Issue {state: 'CLOSED'}) RETURN count(i) AS closedI",
+        "MATCH (i:Issue {state: 'CLOSED'}) RETURN count(i) AS closedI",
+        "MATCH (i:Issue) WHERE i.state = 'CLOSED' RETURN count(i) as ",
+        "MATCH (i:Issue {state: 'CLOSED'}) RETURN COUNT(i) as closedI",
+        "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User) RETURN COUNT(DISTIN",
+        "MATCH (i:Issue) RETURN COUNT(DISTINCT i.authorLogin) AS numb",
+        "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User) RETURN COUNT(DISTIN",
+        "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User) RETURN count(DISTIN",
+        "MATCH (u:User)<-[:AUTHORED_BY]-(i:Issue) RETURN COUNT(DISTIN",
+        "MATCH (i:Issue)-[:AUTHORED_BY]->(u:User) RETURN COUNT(DISTIN",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT",
+        "MATCH (i:Issue {number: $n})-[:HAS_COMMENT]->(c:Comment) OPT"
+      ]
+    },
+    "judgeCostUsd": 0.15467999999999998
+  },
+  "score": {
+    "overall": 0.96,
+    "deterministic": 0.9545454545454546,
+    "semantic": 1,
+    "byKind": {
+      "structural": 0.9705882352941176,
+      "retrieval": 0.9,
+      "semantic": 1
+    },
+    "solvedAllAttempts": 48,
+    "solvedAnyAttempt": 48,
+    "totalTasks": 50,
+    "canaryPass": true,
+    "toolUseRate": 1,
+    "agentErrorRate": 0
+  },
+  "cost": {
+    "ingestUsd": 0.3715875,
+    "qaUsd": 1.10989,
+    "judgeUsd": 0.15467999999999998,
+    "sutTotalUsd": 1.4814775
+  },
+  "finishedAt": "2026-09-05T12:02:42.356Z",
+  "trace": {
+    "files": [
+      "github-issue-analyzer-2026-09-05T11-58-14-418Z-1843361.jsonl"
+    ],
+    "spans": 1296,
+    "byName": {
+      "gen_ai.request": {
+        "count": 305,
+        "totalMs": 479098,
+        "maxMs": 5489,
+        "errors": 0
+      },
+      "pipeline.run": {
+        "count": 1,
+        "totalMs": 146792,
+        "maxMs": 146792,
+        "errors": 0
+      },
+      "pipeline.analyzeIssue": {
+        "count": 60,
+        "totalMs": 128582,
+        "maxMs": 5752,
+        "errors": 0
+      },
+      "openai.chat": {
+        "count": 60,
+        "totalMs": 128548,
+        "maxMs": 5751,
+        "errors": 0
+      },
+      "tool.summarizeComments": {
+        "count": 19,
+        "totalMs": 76469,
+        "maxMs": 9397,
+        "errors": 0
+      },
+      "github.graphql": {
+        "count": 121,
+        "totalMs": 14935,
+        "maxMs": 129,
+        "errors": 0
+      },
+      "pipeline.fetch": {
+        "count": 1,
+        "totalMs": 14865,
+        "maxMs": 14865,
+        "errors": 0
+      },
+      "github.fetchCompleteIssue": {
+        "count": 60,
+        "totalMs": 14851,
+        "maxMs": 250,
+        "errors": 0
+      },
+      "neo4j.query": {
+        "count": 469,
+        "totalMs": 5792,
+        "maxMs": 173,
+        "errors": 5
+      },
+      "tool.queryNeo4j": {
+        "count": 137,
+        "totalMs": 2364,
+        "maxMs": 56,
+        "errors": 0
+      },
+      "pipeline.persistAnalysis": {
+        "count": 1,
+        "totalMs": 1938,
+        "maxMs": 1938,
+        "errors": 0
+      },
+      "analysis.persistIssue": {
+        "count": 60,
+        "totalMs": 1929,
+        "maxMs": 473,
+        "errors": 0
+      },
+      "pipeline.ingest": {
+        "count": 1,
+        "totalMs": 825,
+        "maxMs": 825,
+        "errors": 0
+      },
+      "pipeline.discover": {
+        "count": 1,
+        "totalMs": 133,
+        "maxMs": 133,
+        "errors": 0
+      }
+    }
+  }
+}

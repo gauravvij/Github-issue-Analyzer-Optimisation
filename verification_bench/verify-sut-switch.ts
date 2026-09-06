@@ -32,9 +32,19 @@ const ROOT = join(import.meta.dirname, '..');
  * ones you intend to score.
  */
 const PINNED: { dir: string; hash: string; files: number; what: string }[] = [
-  { dir: 'github_issue', hash: '73acfdc375576226', files: 19, what: 'HEAD — champion + documented Issue.state enum' },
+  { dir: 'github_issue', hash: 'f02bde21fe4ed0fd', files: 19, what: 'HEAD — enum + free-text casing + path anchoring (v2 arm E)' },
+  // Arm D, the tree HEAD was before the v2 question set found two more instances
+  // of the same defect. Preserved so the fix has something to be measured against:
+  //   git worktree add .worktrees/champion-enum <the commit before the fix>
+  { dir: '.worktrees/champion-enum/github_issue', hash: '73acfdc375576226', files: 19, what: 'champion + documented Issue.state enum (v2 arm D)' },
   { dir: '.worktrees/baseline/github_issue', hash: '71c696b48a9da953', files: 18, what: 'baseline (baseline-n3 anchor)' },
   { dir: '.worktrees/champion/github_issue', hash: '9eeb557db3e87c2d', files: 19, what: 'campaign champion (h9-confirm, sealed holdout)' },
+  // The v2 ablation's missing cell: baseline with ONLY the Issue.state enum
+  // documented, so the fix can be attributed on its own rather than inferred
+  // from the champion. Created with:
+  //   git worktree add .worktrees/baseline-enum f5b3184
+  // then the one-line schema change from f195ffb applied to agent/config.ts.
+  { dir: '.worktrees/baseline-enum/github_issue', hash: '50bf9c564c4d8a20', files: 18, what: 'baseline + documented Issue.state enum (v2 arm B)' },
 ];
 
 function fingerprint(sut: string): { hash: string; files: number } {

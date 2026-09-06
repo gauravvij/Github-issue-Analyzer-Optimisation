@@ -33,8 +33,15 @@ comparison from zero.
 The improvement held. Re-measuring also sharpened it: the original 100% came from a single
 run, and averaging three runs per version settled the gain at a firmer, better-supported
 figure. The re-check also traced the whole accuracy gain to one root cause, which the first
-pass had addressed with a hint rather than a fix. Fixing it properly is the last change in
-this repository.
+pass had addressed with a hint rather than a fix.
+
+A later pass widened the measurement itself — from 35 exact-answer questions on one
+repository to **300 across six** — because a benchmark that narrow cannot say which change
+earned the result, and cannot see a kind of mistake it never asks about. It settled the
+first question and answered the second by finding the same defect alive in two more places.
+Both are now fixed: **86.00% → 100.00%** on 200 held-out questions, validated on a
+repository chosen before the fix was written. That work is
+[`RESULTS-V2.md`](RESULTS-V2.md).
 
 ---
 
@@ -89,11 +96,71 @@ have, because it looks like an answer. Measured over 80 targeted trials:
 
 **Every miss in the targeted probe was a lowercase query. The final enum documentation removed those misses in the follow-up probe.**
 
+### The same defect, twice more
+
+Thirty-five exact-answer questions on one repository cannot say which of eight changes
+earned the result, and cannot see a mistake they never ask about. So the question set was
+rebuilt: **300 questions across six repositories**, each labelled with what it tests —
+state fields, labels, authors, date ranges, aggregates, text search, two-hop traversals,
+questions whose correct answer really is zero, and the same question asked three ways.
+
+**Which change earned it.** Four versions on the same 200 held-out questions:
+
+![Which change earned the accuracy gain](assets/which-change-earned-it.svg)
+
+| version | accuracy | vs. baseline |
+|---|---:|---|
+| baseline | 86.00% | — |
+| baseline **+ the one enum line, nothing else** | 94.00% | +8.00pp, 16 gained / 0 lost, McNemar p = 3.05e-5 |
+| the eight retained changes, **without** that line | 94.50% | +8.50pp, 17 gained / 0 lost |
+| both | 94.00% | — |
+
+The one line fixes **16 of the 17** questions the entire champion fixes. Adding the other
+eight on top of it moves a single judge-graded question (p = 1.0000) — the metric already
+shown to swing 20 points on identical code. On answer accuracy the rest is not
+distinguishable from nothing; its 63% database saving is a separate result and stands.
+
+**What it found.** Two kinds of question sat unmoved in every version, including the one
+that shipped — both the same failure as above, on data the schema block never described:
+
+```
+"How many issues are tagged \"bug\"?"        graph stores `Bug`  ->  "there are currently
+                                                                     no issues tagged bug"
+                                                                     (there were 19)
+
+"Which users commented on issues labelled X?"  wrote (:Label)-[:HAS_COMMENT]->(:Comment),
+                                               a relationship that does not exist
+                                               ->  "there are no users"  (there were six)
+```
+
+![Which kinds of question actually moved](assets/which-questions-moved.svg)
+
+**The fix**, one prompt change stating two rules the schema never had: match free text
+case-insensitively, and come back to the issue rather than chaining onward from a label.
+Tested on `pylint-dev/pylint`, chosen **before the fix was written** because across all
+twelve SWE-bench repositories it is the only one with mixed-case labels (`Bug :beetle:`,
+`Enhancement ✨`) and so the only one that can exercise the defect. Its corpus and questions
+came from the unchanged generator and were checksummed before anything was scored.
+
+| | 200 held-out questions | sealed `pylint` (n=50) |
+|---|---:|---:|
+| before the campaign | 86.00% | 88.00% |
+| after the campaign + the enum line | 94.00% | 96.00% |
+| **after this fix** | **100.00%** | **100.00%** |
+
+Twelve questions gained, none lost, on any corpus in any stratum. A question counts as
+solved when the majority of its three attempts are correct. 100% is a ceiling, not a
+finish: these 300 questions no longer tell the last two versions apart — the next result
+needs harder questions, not another run.
+
 ### In one sentence
 
 > NEO took the analyzer from 94% to 100% on the repeated development comparison, cut
 > database work by 63%, and re-tested the reconstructed baseline and campaign champion on
-> a separate SWE-bench-selected corpus.
+> a separate SWE-bench-selected corpus. A later pass widened that measurement to 300
+> questions across six repositories, proved the accuracy gain was one line of schema
+> documentation rather than eight changes compounding, found the same defect alive in two
+> more places, and fixed it — 86% to 100% on held-out questions.
 
 ---
 
@@ -181,11 +248,18 @@ relationship traversals (`(User)-[:AUTHORED_BY]->(Issue)`, backwards, 10 times i
 queries), while `gpt-4.1-mini` failed exact-set retrieval — 8 of its 10 lost tasks were
 "list every issue that…" questions.
 
-One honest gap remains: **extraction cost, the dominant cost in production, cannot be
-optimised safely yet** because nothing grades extraction quality. No benchmark question
-reads the extracted nodes, so a cheaper extraction model would show "cost down, score
-unchanged" whether or not it got worse. That is recorded as an open measurement gap, not
-attempted.
+That left one honest gap: **extraction cost, the dominant cost in production, could not be
+optimised safely** because nothing graded extraction quality. No benchmark question read
+the extracted nodes, so a cheaper extraction model would show "cost down, score unchanged"
+whether or not it got worse.
+
+**That gap is now closed.** `verification_bench/score-extraction.ts` dumps the extracted
+nodes — which no artifact in this repository previously contained, because extraction text
+reaches Neo4j as a Cypher parameter the harness does not record — and scores two proxies
+against SWE-bench's gold patches at no API cost: whether extracted strings actually occur
+in the issue, and whether they name the module the fix turned out to touch. On the v2
+corpora the campaign champion extracts **13.6% more** than the baseline at unchanged
+grounding precision. Details and caveats in [`RESULTS-V2.md`](RESULTS-V2.md) §7.
 
 ---
 
@@ -218,6 +292,19 @@ Full evidence, including every figure that did and did not reproduce, is in
 [`VERIFICATION.md`](VERIFICATION.md). The campaign's own report is
 [`RESULTS.md`](RESULTS.md), and the per-hypothesis changelog is [`ledger.md`](ledger.md).
 
+**That attribution has since been tested rather than inferred.** A four-arm
+ablation over 250 stratified questions on five repos —
+[`RESULTS-V2.md`](RESULTS-V2.md), harness in
+[`verification_bench/BENCH-V2.md`](verification_bench/BENCH-V2.md) — confirms it:
+the baseline with *only* the enum line added fixes 16 of the 17 questions the
+whole champion fixes (+8.00pp, McNemar p = 3.05e-5), and adding the other eight
+changes on top moves one judge-graded question (p = 1.0000). It also found two
+live defects of the same shape — label names had the identical casing problem,
+and multi-hop queries lost their anchor and reported a confident zero — neither
+of which 35 single-hop questions on one repo could reach. Both are now fixed and
+validated on a sixth repo chosen before the fix was written: **86.00% → 100.00%
+on 200 dev questions, 12 questions gained, none lost.**
+
 ---
 
 ## Repository layout
@@ -225,9 +312,11 @@ Full evidence, including every figure that did and did not reproduce, is in
 ```
 github_issue/        the system — one folder, versioned by the history below
 bench/               benchmark 1 — 100 frozen huggingface/datasets issues
-verification_bench/  benchmark 2 — 100 real sympy/sympy issues via SWE-bench
+verification_bench/  benchmark 2 — 100 real sympy/sympy issues via SWE-bench,
+                     plus benchmark v2: 250 stratified questions on five repos
 RESULTS.md           the optimisation campaign's own report
 VERIFICATION.md      the re-measurement: what held, what did not
+RESULTS-V2.md        the four-arm ablation: which change actually did it
 ledger.md            per-hypothesis changelog
 ```
 
@@ -250,13 +339,17 @@ bc1c455  H10  Cypher error feedback                5a171342ee9c4e1a
 2da9432  H5   body/comment provenance              3640acee24f75ce4
 931fd01  H8   bounded concurrent fetch             f2f20f1072b41bd5
 ee48387  H9   drop the Neo4j read-after-write      9eeb557db3e87c2d
-f195ffb  fix  document the Issue.state enum        73acfdc375576226  <- best version
+f195ffb  fix  document the Issue.state enum        73acfdc375576226
+377b81a  fix  free-text casing + path anchoring     f02bde21fe4ed0fd  <- best version
 ```
 
 ```bash
 git worktree add .worktrees/baseline f5b3184
 git worktree add .worktrees/champion ee48387
-bun verification_bench/verify-sut-switch.ts   # recomputes and compares the fingerprints
+git worktree add .worktrees/champion-enum f195ffb
+# a fresh worktree needs the node_modules symlink the others have:
+ln -s ../../../github_issue/node_modules .worktrees/champion-enum/github_issue/node_modules
+bun verification_bench/verify-sut-switch.ts   # recomputes and compares all five fingerprints
 ```
 
 H6 is absent on purpose: it was tried, measured, rejected and reverted. The remaining
@@ -316,11 +409,13 @@ See [`github_issue/README.md`](github_issue/README.md).
 
 ```bash
 bun bench/verify-all.ts                  # benchmark 1 gate
-bun verification_bench/verify-all.ts     # benchmark 2 gate
+bun verification_bench/verify-all.ts     # benchmark 2 gate + all six v2 splits (24 checks)
 ```
 
 Both reset the benchmark graph and stop at the first failure. A red gate means no score
-from that cycle is trustworthy.
+from that cycle is trustworthy. The second gate re-derives all 300 v2 oracles from
+independently written Cypher; it fails on a question template it has no Cypher for, so a
+new kind of question cannot be added and silently left unchecked.
 
 ### Scored runs — these cost money
 
@@ -332,6 +427,27 @@ bun bench/summarize.ts jobs/base-dev jobs/my-run      # before/after diff
 ```
 
 A dev run at three attempts is roughly $1.10–$1.20 of `gpt-4o`.
+
+The v2 question set runs the same way — `--split` is just the name of a frozen corpus and
+question file, so the four dev splits, `astropy-holdout` and `pylint-holdout` all work with
+the runner unchanged:
+
+```bash
+bash verification_bench/run-v2-matrix.sh              # the 2x2 ablation across four repos
+bash verification_bench/run-v2-sealed.sh              # three arms on the sealed pylint set
+bash verification_bench/run-v2-regression.sh          # does a fix cost anything elsewhere?
+
+bun verification_bench/analyze.ts                     # per-stratum accuracy, McNemar,
+                                                      # paired bootstrap, which questions flipped
+bun verification_bench/analyze.ts --splits pylint-holdout
+bun verification_bench/analyze.ts --regrade bench/jobs/repro-champion   # free, no re-run
+bun verification_bench/score-extraction.ts --split skl-dev --job A-baseline__skl-dev
+```
+
+Jobs are named `<arm>__<split>`; `analyze.ts` matches on that and checks each run's graph
+provenance rather than trusting the job name. The whole v2 exercise — 27 runs, six repos,
+five versions — cost **$37.10**. `analyze.ts --regrade` re-scores any stored report with
+the current grader for free, so a grader repair never requires paying for the run again.
 
 ### Comparing against an earlier version
 
@@ -359,10 +475,22 @@ model actually wrote. Far cheaper than a full run when that path is all you care
 
 ## Rebuilding the corpora
 
-Both corpora are frozen and pinned by `SPLITS.sha256`, checked on every run. Rebuilding
-invalidates every score recorded against the old splits, so the builders are one-shot and
-deliberately not wired into any workflow. `verification_bench`'s builder needs a
-`GITHUB_TOKEN`; scored runs never touch the network.
+All ten corpora — four from the original campaign, six from v2 — are frozen and pinned by
+`SPLITS.sha256` (4 files in `bench/`, 16 in `verification_bench/`), checked on every run. Rebuilding invalidates every score recorded against
+the old splits, so the builders are one-shot and deliberately not wired into any workflow.
+They need a `GITHUB_TOKEN`; scored runs never touch the network.
+
+```bash
+GITHUB_TOKEN=... bun verification_bench/scripts/build-corpus-v2.ts \
+  --repo scikit-learn/scikit-learn --split skl-dev
+bun verification_bench/scripts/build-tasks-v2.ts        # regenerates every v2 question set
+```
+
+A v2 corpus is ~60% issues SWE-bench links to a merged pull request, which is what the
+extraction grader scores against, plus ~40% open issues sampled from the same repository.
+That mix is not cosmetic: SWE-bench contains only issues that were resolved, so a corpus
+drawn from it alone is ~100% closed and the open/closed question — the one this whole
+project is about — becomes untestable.
 
 ---
 
@@ -373,9 +501,16 @@ benchmark construction, the twelve-hypothesis optimisation loop, the independent
 re-verification on a second corpus, and the cost campaign that followed — including the
 negative results, which are reported here in full.
 
+The benchmark has since been widened to 300 questions across six repositories, which
+settled which change earned the accuracy gain and surfaced two more instances of the same
+defect — both now fixed and validated on a repository chosen beforehand. That work is in
+[`RESULTS-V2.md`](RESULTS-V2.md), with the harness and method in
+[`verification_bench/BENCH-V2.md`](verification_bench/BENCH-V2.md).
+
 A narrative walkthrough of the whole run is in [`blog.md`](blog.md).
 
 [**NEO — Your Autonomous AI Engineering Agent**](https://heyneo.com) ·
 [VS Code](https://marketplace.visualstudio.com/items?itemName=NeoResearchInc.heyneo) ·
 [Cursor](https://marketplace.cursorapi.com/items/?itemName=NeoResearchInc.heyneo) ·
 [Neo MCP docs](https://docs.heyneo.com/neo-mcp)
+

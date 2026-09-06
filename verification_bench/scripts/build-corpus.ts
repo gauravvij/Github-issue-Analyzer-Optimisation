@@ -19,6 +19,11 @@
  * invalidates every score recorded against the old splits.
  *
  *   GITHUB_TOKEN=... bun verification_bench/scripts/build-corpus.ts
+ *
+ * The GitHub plumbing below is additionally EXPORTED for build-corpus-v2.ts,
+ * which builds the multi-repo v2 corpora. That is the only reason anything here
+ * is exported or takes an owner/repo argument; `main()` and the sympy corpus it
+ * produced are unchanged, and corpus/{dev,holdout}.json still match SPLITS.sha256.
  */
 
 import { mkdirSync, writeFileSync } from 'node:fs';
@@ -38,8 +43,8 @@ const HOLDOUT_SIZE = 40;
 const SEED = 20260904;
 
 /** Same bounds as bench/: too big blows the per-run budget, too small has nothing to extract. */
-const MAX_CHARS = 30_000;
-const MIN_CHARS = 200;
+export const MAX_CHARS = 30_000;
+export const MIN_CHARS = 200;
 
 // ---------------------------------------------------------------------------
 // SWE-bench selection
@@ -68,7 +73,7 @@ async function swebenchPrNumbers(): Promise<number[]> {
   return [...new Set(prs)].sort((a, b) => a - b);
 }
 
-async function fetchRetry(url: string): Promise<Response> {
+export async function fetchRetry(url: string): Promise<Response> {
   for (let attempt = 0; attempt < 5; attempt++) {
     const res = await fetch(url);
     if (res.ok) return res;
@@ -94,9 +99,9 @@ async function fetchRetry(url: string): Promise<Response> {
  * Batched with aliases — resolution asks only for numbers, so 25 PRs fit in one
  * request; the full issue fetch is heavier and goes 10 at a time.
  */
-const CLOSING_KEYWORD = /\b(?:close[sd]?|fix(?:e[sd])?|resolve[sd]?)\s*:?\s*#(\d{3,6})/gi;
+export const CLOSING_KEYWORD = /\b(?:close[sd]?|fix(?:e[sd])?|resolve[sd]?)\s*:?\s*#(\d{3,6})/gi;
 
-const ISSUE_FIELDS = `
+export const ISSUE_FIELDS = `
   id
   number
   title
@@ -119,7 +124,7 @@ const ISSUE_FIELDS = `
     }
   }`;
 
-interface GqlIssue {
+export interface GqlIssue {
   id: string;
   number: number;
   title: string;
@@ -143,7 +148,7 @@ interface GqlIssue {
   };
 }
 
-async function graphql<T>(query: string): Promise<T> {
+export async function graphql<T>(query: string): Promise<T> {
   const token = process.env.GITHUB_TOKEN;
   if (!token) throw new Error('GITHUB_TOKEN is required to build the corpus (GitHub GraphQL needs auth)');
   for (let attempt = 0; attempt < 5; attempt++) {
@@ -168,11 +173,15 @@ async function graphql<T>(query: string): Promise<T> {
   throw new Error('GitHub GraphQL: max retries exceeded');
 }
 
-const chunk = <T>(xs: T[], n: number): T[][] =>
+export const chunk = <T>(xs: T[], n: number): T[][] =>
   Array.from({ length: Math.ceil(xs.length / n) }, (_, i) => xs.slice(i * n, i * n + n));
 
 /** For each PR, the issue numbers it closed. */
-async function resolveIssueNumbers(prs: number[]): Promise<{ pr: number; issue: number }[]> {
+export async function resolveIssueNumbers(
+  prs: number[],
+  owner = OWNER,
+  repo = REPO,
+): Promise<{ pr: number; issue: number }[]> {
   const pairs: { pr: number; issue: number }[] = [];
   let done = 0;
   for (const batch of chunk(prs, 25)) {
@@ -181,7 +190,7 @@ async function resolveIssueNumbers(prs: number[]): Promise<{ pr: number; issue: 
       .join('\n      ');
     const data = await graphql<{
       repository: Record<string, { bodyText: string | null; closingIssuesReferences: { nodes: { number: number }[] } } | null>;
-    }>(`query { repository(owner: "${OWNER}", name: "${REPO}") { ${parts} } }`);
+    }>(`query { repository(owner: "${owner}", name: "${repo}") { ${parts} } }`);
 
     for (const n of batch) {
       const node = data.repository?.[`p${n}`];
@@ -200,13 +209,17 @@ async function resolveIssueNumbers(prs: number[]): Promise<{ pr: number; issue: 
 }
 
 /** Fetch each issue in the shape src/services/github.ts returns. */
-async function fetchIssues(numbers: number[]): Promise<Map<number, GqlIssue>> {
+export async function fetchIssues(
+  numbers: number[],
+  owner = OWNER,
+  repo = REPO,
+): Promise<Map<number, GqlIssue>> {
   const out = new Map<number, GqlIssue>();
   let done = 0;
   for (const batch of chunk(numbers, 10)) {
     const parts = batch.map((n) => `i${n}: issue(number: ${n}) { ${ISSUE_FIELDS} }`).join('\n      ');
     const data = await graphql<{ repository: Record<string, GqlIssue | null> }>(
-      `query { repository(owner: "${OWNER}", name: "${REPO}") { ${parts} } }`,
+      `query { repository(owner: "${owner}", name: "${repo}") { ${parts} } }`,
     );
     for (const n of batch) {
       const g = data.repository?.[`i${n}`];
@@ -220,7 +233,7 @@ async function fetchIssues(numbers: number[]): Promise<Map<number, GqlIssue>> {
   return out;
 }
 
-function toCorpusIssue(g: GqlIssue): CorpusIssue {
+export function toCorpusIssue(g: GqlIssue): CorpusIssue {
   const comments: CorpusComment[] = g.comments.nodes.map((c) => ({
     id: c.id,
     bodyText: c.bodyText,
@@ -264,7 +277,7 @@ function toCorpusIssue(g: GqlIssue): CorpusIssue {
 // Splitting — same discipline as bench/scripts/build-corpus.ts
 // ---------------------------------------------------------------------------
 
-function lcg(seed: number): () => number {
+export function lcg(seed: number): () => number {
   let s = seed >>> 0;
   return () => {
     s = (Math.imul(s, 1664525) + 1013904223) >>> 0;
@@ -272,7 +285,7 @@ function lcg(seed: number): () => number {
   };
 }
 
-function stratify(issues: CorpusIssue[], rand: () => number): CorpusIssue[] {
+export function stratify(issues: CorpusIssue[], rand: () => number): CorpusIssue[] {
   const key = (i: CorpusIssue) =>
     `${i.state}|${i.labels.nodes.length > 0 ? 'lbl' : 'nolbl'}|${
       i.totalComments === 0 ? 'q' : i.totalComments < 6 ? 'm' : 'busy'
@@ -307,11 +320,11 @@ function stratify(issues: CorpusIssue[], rand: () => number): CorpusIssue[] {
   return out;
 }
 
-function issueChars(i: CorpusIssue): number {
+export function issueChars(i: CorpusIssue): number {
   return i.bodyText.length + i.comments.reduce((s, c) => s + c.bodyText.length, 0);
 }
 
-function describe(split: string, issues: CorpusIssue[]): string {
+export function describe(split: string, issues: CorpusIssue[]): string {
   const open = issues.filter((i) => i.state === 'OPEN').length;
   const labelled = issues.filter((i) => i.labels.nodes.length > 0).length;
   const comments = issues.reduce((s, i) => s + i.totalComments, 0);
@@ -428,4 +441,4 @@ async function main() {
   }
 }
 
-main();
+if (import.meta.main) await main();
