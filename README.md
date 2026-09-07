@@ -10,23 +10,23 @@ The work was carried out autonomously by [NEO](https://heyneo.com), an AI engine
 
 ## 1. Final outcome
 
-This is the largest comparison that was run. It covers 300 questions across six real repositories (sympy, requests, scikit-learn, matplotlib, astropy, pylint), 60 issues per repository, every question asked three times. "Baseline" is the code as it was before any work started, reconstructed from its recorded source fingerprint. "Final" is the current HEAD of this branch.
+The benchmark question bank contains 300 questions across six real repositories (sympy, requests, scikit-learn, matplotlib, astropy, pylint), with 60 issues per repository and three attempts per question. The recorded direct evaluation of the current `Final` version covers 250 questions: 200 development questions across four repositories (a regression check) and 50 sealed pylint questions. "Baseline" is the code as it was before any work started, reconstructed from its recorded source fingerprint. "Final" is the current HEAD of this branch.
 
 | Measure | Baseline | Final | What changed |
 |---|---:|---:|---|
-| Accuracy, 200 development questions (4 repos) | 86.0% | 100.0% | +14 points. 28 questions gained, 0 lost. |
+| Accuracy, 200 development questions (4 repos; post-fix regression check) | 86.0% | 100.0% | +14 points. 28 questions gained, 0 lost. |
 | Accuracy, 50 sealed pylint questions (never seen during any fix) | 88.0% | 100.0% | +12 points. Repo chosen before the fix was written. |
 | Neo4j queries per ingestion of 60 issues (mean of 5 repos) | 779 | 281 | 64% fewer. |
 | Neo4j sessions per ingestion | 122 | 4 | 97% fewer. |
 | Ingestion wall-clock time, 60 issues (mean of 5 repos) | 140 s | 146 s | No improvement. Within run-to-run noise. |
 | Answer latency per question attempt (mean) | 3.56 s | 3.71 s | No improvement. Slightly up. |
-| LLM cost per 50-question benchmark run, including ingestion | $1.34 | $1.60 | 19% higher. |
+| System-under-test LLM cost per 50-question benchmark run, including ingestion | $1.34 | $1.60 | 19% higher; excludes judge/evaluator calls. |
 
 Three things to take from this table before reading further.
 
-The accuracy gain is real, large, and holds on a repository the fix never saw. The database work reduction is real and holds on every repository. Neither of those two improvements caused the other. And two things did not improve: the system is not faster, and it costs more to run. Those are reported here rather than left out.
+The accuracy gain is real, large, and holds on a repository the fix never saw. The 200-question development comparison is a post-fix regression check, not an independent effect estimate; the sealed pylint result is the generalisation evidence for the final fix. The database work reduction is real and holds on every repository. Neither of those two improvements caused the other. And two things did not improve: the system is not faster, and it costs more to run. Those are reported here rather than left out.
 
-A question counts as solved when at least two of its three attempts match the oracle answer. Each repository's 50 questions include 6 that are judge-graded; those are excluded from every accuracy figure here because that metric was shown to move by 20 points on identical code. The 200 development questions are the 4 × 50 with the judge-graded ones still counted in the denominator, scored by the repaired grader described in section 3, step 5. The stored raw grader reports the baseline at 85.0% rather than 86.0%, because it rejected the answer "No issues were created in July 2012" as not stating zero; the repaired grader accepts it. `bun verification_bench/analyze.ts` reproduces every figure in this table.
+A question counts as solved when at least two of its three attempts match the oracle answer. Each repository's 50 questions include 6 that are judge-graded. They are included in the reported overall accuracy after the repaired grader described in section 3, step 5, but should be interpreted separately: the judge metric was shown to move by 20 points on identical code. Exact-match-only deterministic analyses exclude those questions. The 200 development questions are the 4 × 50 with the judge-graded questions included in the denominator. The stored raw grader reports the baseline at 85.0% rather than 86.0%, because it rejected the answer "No issues were created in July 2012" as not stating zero; the repaired grader accepts it. `bun verification_bench/analyze.ts` reproduces every figure in this table.
 
 ---
 
@@ -145,7 +145,7 @@ Development questions: 94% to 100%. Sealed pylint: 96% to 100%. Twelve questions
 
 ### Where it stands
 
-The benchmark is now saturated. The last two versions both score 100% on all 300 questions, so it can no longer tell them apart. The next improvement needs harder questions, not another run.
+The 250 questions directly evaluated on the final version are now at ceiling. That does not establish a 300-question final-version result: the 300-question bank includes a 50-question corpus used in earlier arms but not in the recorded final evaluation. The next improvement needs harder questions and a fresh, directly recorded evaluation.
 
 The remaining caveats are these. The large run used one run per version per repository with three attempts per question, not the three full runs the small benchmark used, so run-to-run variance at scale is not characterised. The 200 development questions are where the two later defects were discovered, so the honest generalisation number for the final fix is the pylint result alone. And all of this was carried out and written up by the same agent that built the system; the sealed corpora and computed oracles are the guard against that, not a substitute for outside review.
 
@@ -178,7 +178,7 @@ bun verification_bench/verify-all.ts        # oracles, graders, fingerprints, v1
 bun verification_bench/analyze.ts           # recompute every table above from stored reports
 ```
 
-Scored runs cost money. The 27 runs that produced section 1 cost $33.32 in `gpt-4o` calls in total and took about two hours of wall-clock time, run back to back on one machine:
+Scored runs cost money. The 27 runs that produced section 1 cost **$33.32 in system-under-test `gpt-4o` calls, excluding judge/evaluator calls**. The **total experimental spend was $37.10**, including those judge/evaluator calls. They took about two hours of wall-clock time, run back to back on one machine:
 
 ```
 bash verification_bench/run-v2-matrix.sh    # four versions, four corpora
