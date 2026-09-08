@@ -56,22 +56,22 @@ The third gap was traversal direction. Asked which users commented on issues wit
 
 The fix for all three is documentation. The schema block in `agent/config.ts` now states the enum values, says that free-text matches should be case-insensitive, and says that traversals from a label must return to the issue before continuing. That is the whole change. No model was swapped, no retrieval was added, no query rewriting was introduced.
 
-This was established by ablation, not inference. Four versions were scored on the same 200 questions:
+This was established by ablation, not inference. Four versions were scored on the same 200 questions. Two details matter for reading the table. The eight changes from the optimization loop include one prompt change: a general rule telling the agent to check enum casing and property names before treating an empty result as a real zero. The explicit line `state (STRING, one of: OPEN, CLOSED)` is a separate, later change.
 
 | Version | 200 development questions | 50 sealed astropy questions |
 |---|---:|---:|
 | Baseline | 86.0% | 86.0% |
-| Baseline plus only the enum line | 94.0% | 94.0% |
-| All eight optimization changes, without the enum line | 94.5% | 94.0% |
-| All eight changes plus the enum line | 94.0% | 98.0% |
+| Baseline plus only the explicit enum line | 94.0% | 94.0% |
+| All eight loop changes (seven code changes plus the general casing rule), without the explicit line | 94.5% | 94.0% |
+| All eight loop changes plus the explicit line | 94.0% | 98.0% |
 
-The astropy column is the sealed check for this ablation. It was scored once per version and shows the same shape as the development set: the enum line alone accounts for the gain, and the other seven changes add nothing to accuracy. The final version was not scored on astropy, because by the time the final fix existed pylint had been chosen as its sealed check instead (section 3, step 7). The astropy run is small, so its version-to-version differences are not individually significant (McNemar p = 0.125 for baseline versus champion plus enum); its role is to confirm the development-set pattern on issues no fix was tuned against.
+Read across the rows: the explicit line alone gives +8 points. The general rule alone, together with all seven code changes, gives +8.5. Both together give no more than either. The seven code changes therefore contribute nothing to accuracy; whichever way the agent is told about casing, that is the whole gain. The astropy column is the sealed check for this ablation and shows the same pattern on issues no fix was tuned against. The final version was not scored on astropy, because by then pylint had been chosen as the sealed check for the final fix (section 3). The astropy run is small, so its differences are not individually significant (McNemar p = 0.125 for the first row against the last).
 
 ![Which change earned the accuracy gain](assets/which-change-earned-it.svg)
 
 *The same four versions as the table, on the 200 development questions across four repositories.*
 
-Adding the eight optimization changes on top of the enum line moved one judge-graded question and nothing else (McNemar p = 1.0). The eight changes did not make the system more accurate. Adding the two remaining schema lines then took 94% to 100%.
+Adding the seven code changes on top of a prompt that already explains casing moved one judge-graded question and nothing else (McNemar p = 1.0). Adding the two remaining schema lines then took 94% to 100%.
 
 One check that mattered: the benchmark includes questions whose correct answer really is zero. Under the repaired grader those pass at 100% in every version including the baseline. The fix moved wrong zeros to right answers without teaching the model to distrust zeros in general.
 
@@ -107,59 +107,59 @@ Three attempts were made to reduce cost by switching the question-answering mode
 
 ## 3. How this was reached, in order
 
-The numbers in steps 2 to 5 come from the first, small benchmark: 100 sympy issues, 40 development questions, 20 holdout questions. They are reported here because they are the numbers the decisions were made on at the time. They are not the final numbers. The final numbers are in section 1 and were produced by the larger benchmark described in steps 6 and 7, which superseded the small one.
+There were two rounds. The first round used a small benchmark on one repository and produced a version of the analyzer that looked finished. The second round rebuilt the benchmark six times larger, found that the first version was not finished, and produced the final version. Section 1 reports the second round. This section tells both in order, and every number below says which round it belongs to.
 
-### Step 1: profiling
+### Step 1: reading the code
 
-The starting point was reading the code. Issues were fetched from GitHub one at a time, written to Neo4j one at a time in their own sessions, read back after writing, and stored in a graph with no uniqueness constraints or indexes. The prompt that described this graph to the query-writing model documented the node types and relationships but not the values fields could take.
+Issues were fetched from GitHub one at a time, written to Neo4j one at a time in their own sessions, read back after writing, and stored in a graph with no uniqueness constraints or indexes. The prompt that described this graph to the query-writing model listed the node types and relationships but not the values fields could take.
 
-### Step 2: a first benchmark, small
+### Step 2: the first benchmark
 
-Before changing anything, a benchmark was built so that changes could be scored. It used 100 sympy issues selected through SWE-bench (SWE-bench was used only to pick issues with a known resolving pull request; no SWE-bench task was run). 60 issues went to a development corpus and 40 to a sealed holdout. 40 questions were written against the development corpus and 20 against the holdout, with answers computed directly from the corpus rather than from the system under test. Each question was asked three times and scored by exact match against that oracle. Five of the development questions and three of the holdout questions were judge-graded and reported separately.
+Before changing anything, a benchmark was built so that changes could be scored. It used 100 sympy issues chosen through SWE-bench, which was used only to pick issues with a known resolving pull request; no SWE-bench task was run. 60 issues went to a development corpus and 40 to a sealed holdout. 40 questions were written against the development corpus and 20 against the holdout, with answers computed directly from the issue data rather than from the analyzer. Each question was asked three times and scored by exact match. Five development questions and three holdout questions were judge-graded and reported separately.
 
 ### Step 3: the optimization loop
 
-Twelve hypotheses were tried, each stating in advance which metric it had to move and which it must not regress. Eight were kept, each scored against the benchmark before acceptance: uniqueness constraints and lookup indexes on the graph; `UNWIND`-batched writes in one managed transaction; scoping the orphan-cleanup query to the current issue instead of the whole graph; body-level extraction of solutions and workarounds with provenance; an opt-in bounded concurrency setting for GitHub fetches (off by default, and off in every benchmark run, so it contributes nothing to the numbers here); removing the read-after-write check by handing data off in memory; feeding Cypher errors back to the agent for a retry; and one line of schema guidance about the state field. One change, filtering bot and noise comments before extraction, raised cost without improving anything and was reverted. Three embedding-related hypotheses were skipped for lack of a resource budget.
+Twelve hypotheses were tried, each stating in advance which metric it had to move and which it must not regress. Eight were kept, each scored on the first benchmark before acceptance. Seven were code changes: uniqueness constraints and lookup indexes; `UNWIND`-batched writes in one transaction; scoping the orphan-cleanup query to the current issue; body-level extraction of solutions and workarounds; an opt-in concurrency setting for GitHub fetches, off by default and off in every benchmark run; removing the read-after-write check; and feeding Cypher errors back to the agent for a retry. The eighth was a prompt change: three lines of general guidance telling the agent to check enum casing and property names before treating an empty result as a real zero. One hypothesis, filtering bot comments before extraction, raised cost without improving anything and was reverted. Three embedding-related hypotheses were skipped for lack of a resource budget.
 
-The combined result on the small benchmark's 60-issue sympy development corpus, averaged over three runs: deterministic accuracy from 94.3% to 100%, Neo4j queries from 698 to 255.
+First-benchmark result on the 60-issue sympy development corpus, averaged over three runs: accuracy on the 35 exact-answer questions from 94.3% to 100%, Neo4j queries from 698 to 255.
 
 ![Database work per ingestion, first benchmark](assets/database-work.svg)
 
-*First benchmark, sympy development corpus, same GitHub and OpenAI calls in both versions. The larger benchmark in section 1 shows the same reduction on every repository.*
+*First benchmark, sympy development corpus, same GitHub and OpenAI calls in both versions.*
 
-### Step 4: re-verification on the small benchmark's sealed holdout
+### Step 4: the first benchmark's sealed holdout
 
-The 40 held-back sympy issues were ingested and their 20 questions scored once per version. Baseline 88.2%, optimized 100%. Queries 452 to 175. These are small-benchmark figures; the corresponding final-benchmark figures are the pylint row in section 1.
+The 40 held-back sympy issues were ingested and their 20 questions scored once per version. On the 17 exact-answer questions: baseline 88.2%, optimized 100%. Neo4j queries 452 to 175.
 
 ![Accuracy on unseen data](assets/accuracy-on-unseen-data.svg)
 
-*The first benchmark's development comparison: 100 sympy issues, three runs per version, three attempts per question. The whisker is the range across the three baseline runs.*
+*First benchmark, sympy development corpus, three runs per version. The whisker is the range across the three baseline runs.*
 
-This is where the first result stood when it was published, and it looked strong. It had three weaknesses that a careful reader would notice. The whole accuracy difference was 2 questions of 35, both about open and closed counts. There was no way to tell which of the eight changes had produced the gain. And 35 questions of one shape on one repository cannot find a mistake they never ask about.
+This is where the first round ended, and it looked strong. It had three weaknesses. The whole accuracy difference was 2 questions of 35, both about open and closed counts. There was no way to tell which of the eight changes had produced the gain. And 35 questions of one shape on one repository cannot find a mistake they never ask about. The second round addressed all three.
 
-### Step 5: the harness caught a problem in its own earlier run
+### Step 5: a grader defect found before the second round
 
-While preparing the larger benchmark, the grader was found to reject four kinds of correct answer: a number followed by a period, a count written as a word, an empty set expressed in a sentence, and a zero that echoed a date from the question. A repaired grader was applied to all 3,500 stored attempts. Exactly one outcome changed: a canary question in an earlier "reproduction" run that had been published as valid at 98.10% had in fact failed its canary. The corrected score is 99.05% with the canary passing. No headline number moved, but the run had been published with a broken integrity check, and that is recorded.
+While preparing the larger benchmark, the exact-match grader was found to reject four kinds of correct answer: a number followed by a period, a count written as a word, an empty set expressed in a sentence, and a zero that echoed a date from the question. A repaired grader was applied to all 3,500 stored attempts. Exactly one outcome changed: a canary question in an earlier reproduction run that had been published as valid at 98.10% had in fact failed its canary. The corrected score is 99.05% with the canary passing. No headline number moved, but the run had been published with a broken integrity check, and that is recorded. All second-round figures use the repaired grader.
 
-### Step 6: scaling up
+### Step 6: the second benchmark, and what it found
 
-The benchmark was rebuilt with 300 questions over six repositories, 50 per repository, each question labelled with what it tests: state fields, labels, authors, date ranges, aggregates, text search, two-hop traversals, questions whose true answer is zero, and paraphrases of the same question. Corpora mixed SWE-bench-linked issues with open issues from the same repository, because a corpus drawn only from SWE-bench is nearly 100% closed and cannot test the state field at all. Django was excluded because it uses Trac rather than GitHub Issues.
+The benchmark was rebuilt with 300 questions over six repositories, 50 per repository, 60 issues per repository. Each question is labelled with what it tests: state fields, labels, authors, date ranges, aggregates, text search, two-hop traversals, questions whose true answer is zero, and paraphrases. Corpora mixed SWE-bench-linked issues with open issues from the same repository, because SWE-bench issues are nearly all closed and cannot test the state field. Django was excluded because it uses Trac rather than GitHub Issues.
 
-Four versions were scored on 200 development questions from four of the repositories, and astropy was held sealed and scored once per version. That produced the ablation table in section 2, including its astropy column (86.0%, 94.0%, 94.0%, 98.0%), and showed the accuracy gain was the one enum line.
+Four repositories (sympy, requests, scikit-learn, matplotlib; 200 questions) were the development set. Astropy (50 questions) was sealed. Pylint (50 questions) was held back entirely for step 7.
 
-It also showed two question types failing in every version, including the shipped one: label names with mixed casing, and the label-to-commenter traversal. Both were the same defect as the state field.
+The first-round optimized version and three related versions were scored on the development set and once each on astropy. That produced the ablation table in section 2. It settled the first weakness: the gain was the prompt telling the agent about casing, and the seven code changes added nothing to accuracy. It also showed what the first benchmark had missed. The first-round optimized version, which had scored 100% on the first benchmark's holdout, scored 94.5% on the development set and 94.0% on astropy. The questions it failed were two types that failed in every version: label names with mixed casing, and the label-to-commenter traversal. Both are the same kind of defect as the state field.
 
-### Step 7: the second fix, and its own holdout
+### Step 7: the final fix, and its own sealed check
 
-Before writing the fix, pylint was chosen as the sealed test repository because it is the only SWE-bench repository with mixed-case labels, so it is the only one that can exercise the defect. Its corpus and questions were generated by the unchanged generator and checksummed before scoring. The two schema lines were then added and every corpus re-scored.
+Before writing the fix, pylint was chosen as the sealed test repository because it is the only SWE-bench repository with mixed-case labels, so it is the only one that can exercise the defect. Its corpus and questions were generated by the unchanged generator and checksummed before scoring. The two schema lines were then added and every corpus except astropy was re-scored.
 
-Development questions: 94% to 100%. Sealed pylint: 96% to 100%. Twelve questions gained, none lost, in any stratum on any repository. Across the whole path from baseline to final, 28 gained and none lost.
+Development set: 94% to 100%. Sealed pylint: 96% to 100%. Twelve questions gained, none lost. From the original baseline to this final version, across the same 200 development questions: 86% to 100%, 28 gained, none lost. These are the numbers in section 1.
 
 ### Where it stands
 
-The 250 questions scored on the final version are all at ceiling. The remaining 50, astropy, were the sealed check for the earlier ablation and were never scored on the final version, so there is no 300-question final result and this README does not claim one. The benchmark can no longer distinguish improvements; the next step needs harder questions and a fresh, directly recorded evaluation.
+The 250 questions scored on the final version are all at ceiling. Astropy, the remaining 50, was the sealed check for step 6 and was never scored on the final version, so there is no 300-question final result and this README does not claim one. The benchmark can no longer distinguish improvements; the next step needs harder questions and a fresh, directly recorded evaluation.
 
-The remaining caveats are these. The large run used one run per version per repository with three attempts per question, not the three full runs the small benchmark used, so run-to-run variance at scale is not characterised. The 200 development questions are where the two later defects were discovered, so the honest generalisation number for the final fix is the pylint result alone. And all of this was carried out and written up by the same agent that built the system; the sealed corpora and computed oracles are the guard against that, not a substitute for outside review.
+Three caveats. The second round used one run per version per repository with three attempts per question, not the three full runs of the first round, so run-to-run variance at scale is not characterised. The 200 development questions are where the two later defects were discovered, so the honest generalisation number for the final fix is the pylint result alone. And all of this was carried out and written up by the same agent that built the system; the sealed corpora and computed oracles are the guard against that, not a substitute for outside review.
 
 ---
 
