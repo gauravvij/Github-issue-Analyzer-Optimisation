@@ -10,7 +10,15 @@ The work was carried out autonomously by [NEO](https://heyneo.com), an AI engine
 
 ## 1. Final outcome
 
-The benchmark question bank contains 300 questions across six real repositories (sympy, requests, scikit-learn, matplotlib, astropy, pylint), with 60 issues per repository and three attempts per question. The recorded direct evaluation of the current `Final` version covers 250 questions: 200 development questions across four repositories (a regression check) and 50 sealed pylint questions. "Baseline" is the code as it was before any work started, reconstructed from its recorded source fingerprint. "Final" is the current HEAD of this branch.
+The benchmark contains 300 questions across six real repositories, 50 per repository, with 60 issues ingested per repository and every question asked three times. The 300 split three ways, and each part was used for a different purpose:
+
+| Questions | Repositories | Used for | Scored on final version? |
+|---:|---|---|---|
+| 200 | sympy, requests, scikit-learn, matplotlib | Development set. Ablation of the eight changes, and where the two later defects were found. | Yes |
+| 50 | astropy | Sealed check for the ablation of the enum line. Scored on the four ablation versions only. | No. See section 2. |
+| 50 | pylint | Sealed check for the final fix. Chosen before the fix was written, checksummed before scoring. | Yes |
+
+So the final version has recorded results on 250 questions, and those are what the table below reports. "Baseline" is the code as it was before any work started, reconstructed from its recorded source fingerprint. "Final" is the current HEAD of this branch.
 
 | Measure | Baseline | Final | What changed |
 |---|---:|---:|---|
@@ -38,7 +46,7 @@ The entire accuracy gain, all 28 questions, comes from one place: the text that 
 
 The first gap was the issue state field. The graph stores `OPEN` and `CLOSED`. The prompt did not say so. The model wrote `state = 'open'`, got nothing, and told users there were no open issues. On the first benchmark this was 2 questions out of 35; on the wider one it was 16 of the 28.
 
-The second gap was label names. Repositories store labels like `Bug`, `Enhancement ✨`, `status: confirmed bug`. Asked about "bug" issues, the model wrote `name = 'bug'`, matched nothing, and answered "there are currently no issues tagged bug" when there were 19. This failed in every arm of every run until it was fixed.
+The second gap was label names. Repositories store labels like `Bug`, `Enhancement ✨`, `status: confirmed bug`. Asked about "bug" issues, the model wrote `name = 'bug'`, matched nothing, and answered "there are currently no issues tagged bug" when, on the scikit-learn corpus, there were 19. This failed in every arm of every run until it was fixed.
 
 The third gap was traversal direction. Asked which users commented on issues with a given label, the model invented a relationship `(Label)-[:HAS_COMMENT]->(Comment)` that does not exist in the graph, got nothing, and reported no users. The real path goes from the label back to the issue and then to its comments.
 
@@ -50,12 +58,14 @@ The fix for all three is documentation. The schema block in `agent/config.ts` no
 
 This was established by ablation, not inference. Four versions were scored on the same 200 questions:
 
-| Version | Accuracy |
-|---|---:|
-| Baseline | 86.0% |
-| Baseline plus only the enum line | 94.0% |
-| All eight optimization changes, without the enum line | 94.5% |
-| All eight changes plus the enum line | 94.0% |
+| Version | 200 development questions | 50 sealed astropy questions |
+|---|---:|---:|
+| Baseline | 86.0% | 86.0% |
+| Baseline plus only the enum line | 94.0% | 94.0% |
+| All eight optimization changes, without the enum line | 94.5% | 94.0% |
+| All eight changes plus the enum line | 94.0% | 98.0% |
+
+The astropy column is the sealed check for this ablation. It was scored once per version and shows the same shape as the development set: the enum line alone accounts for the gain, and the other seven changes add nothing to accuracy. The final version was not scored on astropy, because by the time the final fix existed pylint had been chosen as its sealed check instead (section 3, step 7). The astropy run is small, so its version-to-version differences are not individually significant (McNemar p = 0.125 for baseline versus champion plus enum); its role is to confirm the development-set pattern on issues no fix was tuned against.
 
 ![Which change earned the accuracy gain](assets/which-change-earned-it.svg)
 
@@ -69,19 +79,15 @@ One check that mattered: the benchmark includes questions whose correct answer r
 
 The baseline wrote each issue to Neo4j in its own session with its own statements, and read back what it had just written. For 60 issues that produced roughly 780 queries across 122 sessions. The optimized ingestion collects all issues and writes them in a handful of `UNWIND` statements inside one transaction, with ten uniqueness constraints and two lookup indexes created once up front. That produces about 280 queries across 4 sessions. The saving is 61% to 67% on every repository tested, and 122 sessions to 4 on all of them.
 
-![Database work per ingestion](assets/database-work.svg)
-
-*Measured on the first benchmark's 60-issue sympy corpus, same GitHub and OpenAI calls in both versions. The large run in section 1 shows the same ratio on every repository.*
-
 This change and the accuracy change are independent. The batching touches ingestion code the question-answering path never reads. The prompt fix touches a config file the ingestion path never imports. The ablation confirmed this: versions differing only in the prompt were scored on byte-identical graphs.
 
 ### Ingestion time: unchanged, because the database was never the bottleneck
 
-Ingestion of 60 issues takes about 140 seconds in both versions. Of that, the issue-write stage took about 3 seconds in the baseline and takes about half a second now; all Neo4j work together was about 7 seconds of a 203-second baseline trace. The remaining time is 60 calls to `gpt-4o`, one per issue, to extract structured information from each issue body. Cutting database work by two thirds removed about 2 seconds from a 140-second job.
+Ingestion of 60 issues takes about 140 seconds in both versions on the final benchmark. The breakdown comes from a traced baseline ingestion on the first benchmark's sympy corpus, which took 203 seconds: all Neo4j work together was about 7 seconds of that, and the issue-write stage alone went from about 3 seconds in the baseline to about half a second after batching. The remaining time is 60 calls to `gpt-4o`, one per issue, to extract structured information from each issue body. Cutting database work by two thirds removed about 2 seconds from a 140-second job.
 
 ![Where ingestion time goes](assets/where-ingestion-time-goes.svg)
 
-*OpenTelemetry spans from one baseline ingestion. OpenAI calls account for about 90% of wall-clock time; Neo4j for under 4%. Spans overlap so shares sum to more than 100%.* The batching is still worth having, because the cost of per-issue sessions grows with corpus size while the cost of four sessions does not, but it does not make this system faster at this scale and the README does not claim it does.
+*OpenTelemetry spans from one baseline ingestion on the first benchmark's sympy corpus. OpenAI calls account for about 90% of wall-clock time; Neo4j for under 4%. Spans overlap so shares sum to more than 100%.* The batching is still worth having, because the cost of per-issue sessions grows with corpus size while the cost of four sessions does not, but it does not make this system faster at this scale and the README does not claim it does.
 
 ### Answer latency: unchanged
 
@@ -91,15 +97,17 @@ Each question attempt takes about 3.5 seconds, nearly all of it waiting for the 
 
 The baseline benchmark run cost about $1.34 in model calls. The final version costs about $1.60. Two things drove this. The longer schema prompt adds input tokens to every question. And the fixed version answers more questions correctly, which for list-type questions means longer answers.
 
-Three attempts were made to reduce cost by switching the question-answering model to cheaper alternatives. All three were rejected: `gpt-4o-mini` scored 95.9% with a 5.7-point spread between runs, and the other two were worse. The saving on the QA stage was 72%, but the quality was not acceptable.
+Three attempts were made to reduce cost by switching the question-answering model to cheaper alternatives. All three were rejected. On the first benchmark's sympy development corpus, `gpt-4o-mini` scored 95.9% with a 5.7-point spread across three runs, and the other two were worse. The saving on the QA stage was 72%, but the quality was not acceptable.
 
 ![Can a cheaper model answer the questions](assets/cheaper-models.svg)
 
-*Question-answering model swapped, same graph, three runs each. Whiskers show the run-to-run range.* Extraction cost, which is the largest cost in production use, was not optimized because until this branch there was no way to measure extraction quality. A first extraction metric now exists (`score-extraction.ts`, grounding precision against the issue body and recall against SWE-bench gold patches) and shows the optimized version extracting 13.6% more strings at unchanged precision. Cheaper extraction models can now be evaluated against it.
+*First benchmark, sympy development corpus. Question-answering model swapped, same graph, three runs each. Whiskers show the run-to-run range.* Extraction cost, which is the largest cost in production use, was not optimized because until this branch there was no way to measure extraction quality. A first extraction metric now exists (`score-extraction.ts`, grounding precision against the issue body and recall against SWE-bench gold patches) and shows the optimized version extracting 13.6% more strings at unchanged precision. Cheaper extraction models can now be evaluated against it.
 
 ---
 
 ## 3. How this was reached, in order
+
+The numbers in steps 2 to 5 come from the first, small benchmark: 100 sympy issues, 40 development questions, 20 holdout questions. They are reported here because they are the numbers the decisions were made on at the time. They are not the final numbers. The final numbers are in section 1 and were produced by the larger benchmark described in steps 6 and 7, which superseded the small one.
 
 ### Step 1: profiling
 
@@ -107,17 +115,21 @@ The starting point was reading the code. Issues were fetched from GitHub one at 
 
 ### Step 2: a first benchmark, small
 
-Before changing anything, a benchmark was built so that changes could be scored. It used 100 sympy issues selected through SWE-bench (SWE-bench was used only to pick issues with a known resolving pull request; no SWE-bench task was run). 60 issues went to a development corpus and 40 to a sealed holdout. 40 questions were written against the development corpus and 20 against the holdout, with answers computed directly from the corpus rather than from the system under test. Each question was asked three times and scored by exact match against that oracle. Five questions per corpus were judge-graded and reported separately.
+Before changing anything, a benchmark was built so that changes could be scored. It used 100 sympy issues selected through SWE-bench (SWE-bench was used only to pick issues with a known resolving pull request; no SWE-bench task was run). 60 issues went to a development corpus and 40 to a sealed holdout. 40 questions were written against the development corpus and 20 against the holdout, with answers computed directly from the corpus rather than from the system under test. Each question was asked three times and scored by exact match against that oracle. Five of the development questions and three of the holdout questions were judge-graded and reported separately.
 
 ### Step 3: the optimization loop
 
 Twelve hypotheses were tried, each stating in advance which metric it had to move and which it must not regress. Eight were kept, each scored against the benchmark before acceptance: uniqueness constraints and lookup indexes on the graph; `UNWIND`-batched writes in one managed transaction; scoping the orphan-cleanup query to the current issue instead of the whole graph; body-level extraction of solutions and workarounds with provenance; an opt-in bounded concurrency setting for GitHub fetches (off by default, and off in every benchmark run, so it contributes nothing to the numbers here); removing the read-after-write check by handing data off in memory; feeding Cypher errors back to the agent for a retry; and one line of schema guidance about the state field. One change, filtering bot and noise comments before extraction, raised cost without improving anything and was reverted. Three embedding-related hypotheses were skipped for lack of a resource budget.
 
-The combined result on the development corpus, averaged over three runs: deterministic accuracy from 94.3% to 100%, Neo4j queries from 698 to 255.
+The combined result on the small benchmark's 60-issue sympy development corpus, averaged over three runs: deterministic accuracy from 94.3% to 100%, Neo4j queries from 698 to 255.
 
-### Step 4: re-verification on the sealed holdout
+![Database work per ingestion, first benchmark](assets/database-work.svg)
 
-The 40 held-back issues were ingested and their 20 questions scored once per version. Baseline 88.2%, optimized 100%. Queries 452 to 175.
+*First benchmark, sympy development corpus, same GitHub and OpenAI calls in both versions. The larger benchmark in section 1 shows the same reduction on every repository.*
+
+### Step 4: re-verification on the small benchmark's sealed holdout
+
+The 40 held-back sympy issues were ingested and their 20 questions scored once per version. Baseline 88.2%, optimized 100%. Queries 452 to 175. These are small-benchmark figures; the corresponding final-benchmark figures are the pylint row in section 1.
 
 ![Accuracy on unseen data](assets/accuracy-on-unseen-data.svg)
 
@@ -133,7 +145,7 @@ While preparing the larger benchmark, the grader was found to reject four kinds 
 
 The benchmark was rebuilt with 300 questions over six repositories, 50 per repository, each question labelled with what it tests: state fields, labels, authors, date ranges, aggregates, text search, two-hop traversals, questions whose true answer is zero, and paraphrases of the same question. Corpora mixed SWE-bench-linked issues with open issues from the same repository, because a corpus drawn only from SWE-bench is nearly 100% closed and cannot test the state field at all. Django was excluded because it uses Trac rather than GitHub Issues.
 
-Four versions were scored on 200 development questions from four of the repositories, and astropy was held sealed. That produced the ablation table in section 2 and showed the accuracy gain was the one enum line.
+Four versions were scored on 200 development questions from four of the repositories, and astropy was held sealed and scored once per version. That produced the ablation table in section 2, including its astropy column (86.0%, 94.0%, 94.0%, 98.0%), and showed the accuracy gain was the one enum line.
 
 It also showed two question types failing in every version, including the shipped one: label names with mixed casing, and the label-to-commenter traversal. Both were the same defect as the state field.
 
@@ -145,7 +157,7 @@ Development questions: 94% to 100%. Sealed pylint: 96% to 100%. Twelve questions
 
 ### Where it stands
 
-The 250 questions directly evaluated on the final version are now at ceiling. That does not establish a 300-question final-version result: the 300-question bank includes a 50-question corpus used in earlier arms but not in the recorded final evaluation. The next improvement needs harder questions and a fresh, directly recorded evaluation.
+The 250 questions scored on the final version are all at ceiling. The remaining 50, astropy, were the sealed check for the earlier ablation and were never scored on the final version, so there is no 300-question final result and this README does not claim one. The benchmark can no longer distinguish improvements; the next step needs harder questions and a fresh, directly recorded evaluation.
 
 The remaining caveats are these. The large run used one run per version per repository with three attempts per question, not the three full runs the small benchmark used, so run-to-run variance at scale is not characterised. The 200 development questions are where the two later defects were discovered, so the honest generalisation number for the final fix is the pylint result alone. And all of this was carried out and written up by the same agent that built the system; the sealed corpora and computed oracles are the guard against that, not a substitute for outside review.
 
