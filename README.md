@@ -107,7 +107,7 @@ Three attempts were made to reduce cost by switching the question-answering mode
 
 ## 3. How this was reached, in order
 
-There were two rounds. The first round used a small benchmark on one repository and produced a version of the analyzer that looked finished. The second round rebuilt the benchmark six times larger, found that the first version was not finished, and produced the final version. Section 1 reports the second round. This section tells both in order, and every number below says which round it belongs to.
+There were two rounds. The first round used a small benchmark on one repository and produced a version of the analyzer that looked finished. The second round rebuilt the benchmark six times larger, found that the first version was not finished, and produced the final version. Section 1 reports the second round. This section tells both in order, and every number below says which round it belongs to, including two holdout sizes that are easy to conflate: 20 sealed questions in the first round, 50 each in the second. They are different benchmarks and are not comparable to each other.
 
 ### Step 1: reading the code
 
@@ -135,7 +135,7 @@ The 40 held-back sympy issues were ingested and their 20 questions scored once p
 
 *First benchmark, sympy development corpus, three runs per version. The whisker is the range across the three baseline runs.*
 
-This is where the first round ended, and it looked strong. It had three weaknesses. The whole accuracy difference was 2 questions of 35, both about open and closed counts. There was no way to tell which of the eight changes had produced the gain. And 35 questions of one shape on one repository cannot find a mistake they never ask about. The second round addressed all three.
+This is where the first round ended, and it looked strong. It had three weaknesses. The whole accuracy difference was 2 questions of 35, both about open and closed counts. There was no way to tell which of the eight changes had produced the gain. And 35 questions of one shape on one repository cannot find a mistake they never ask about. The second round addressed all three. The 20-question holdout above belongs only to this first, superseded benchmark; it is unrelated to the 50-question sealed astropy and pylint checks in section 1.
 
 ### Step 5: a grader defect found before the second round
 
